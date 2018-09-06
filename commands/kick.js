@@ -4,7 +4,7 @@ exports.run = (client, message, [mention, ...reason]) => {
         return console.log("The Staff role does not exist");
 
     if (!message.member.roles.has(StaffRole.id))
-        return message.reply("You can't use this command.");
+        return message.reply("Sick you thought");
 
     if (message.mentions.members.size === 0)
         return message.reply("Please mention a user to kick");
