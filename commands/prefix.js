@@ -6,6 +6,5 @@ exports.run = (client, message, args) => {
     config.prefix = newPrefix;
     // Now we have to save the file.
     fs.writeFile("./config.json", JSON.stringify(config), (err) => console.error);
-  } else
-  message.channel.send("Sick you thought!");
+  }
 }
