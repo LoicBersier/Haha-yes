@@ -5,6 +5,6 @@ exports.run = (client, message, args) => {
     // change the configuration in memory
     config.prefix = newPrefix;
     // Now we have to save the file.
-    fs.writeFile("./config.json", JSON.stringify(config), (err) => console.error);
+    fs.writeFile(".././config.json", JSON.stringify(config), (err) => console.error);
   }
 }
