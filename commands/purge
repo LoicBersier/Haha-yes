@@ -1,0 +1,22 @@
+exports.run = (client, message, args) => {
+
+    const StaffRole = message.guild.roles.find("name", "Staff");
+    if (!StaffRole)
+        return console.log("The Staff role does not exist");
+
+    if (!message.member.roles.has(StaffRole.id))
+        return message.reply("Sick you thought");
+
+    if (!message.GuildMember.hasPermission())
+    return message.reply(" ");
+
+    const amount = !!parseInt(message.content.split(' ')[1]) ? parseInt(message.content.split(' ')[1]) : parseInt(message.content.split(' ')[2])
+    if (!amount) return message.reply('Must specify an amount to delete!');
+    message.channel.fetchMessages({
+     limit: 100,
+    }).then((messages) => {
+     messages = messages.filter(m => m.author.id).array().slice(0, amount);
+     
+     message.channel.bulkDelete(messages).catch(error => console.log(error.stack));
+    })
+}
