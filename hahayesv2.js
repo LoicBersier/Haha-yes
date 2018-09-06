@@ -1,6 +1,7 @@
 const fs = require('fs');
 const Discord = require('discord.js');
 const { prefix, token } = require('./config.json');
+const responseObject = require("./reply.json");
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -20,6 +21,11 @@ client.on('ready', () => {
 });
 
 client.on('message', message => {
+    //  haha yes
+    if(responseObject[message.content]) {
+        message.channel.send(responseObject[message.content]);
+    }
+    
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
     const args = message.content.slice(prefix.length).split(/ +/);
