@@ -1,6 +1,10 @@
-exports.run = (client,message) => {
-    if (message.author.id == "267065637183029248") {
-        message.channel.send("haha yes im ded now k bye thx").catch(console.error);
-        process.exit();
-}
+module.exports = {
+    name: 'ded',
+    description: 'Reboot the bot',
+    aliases: ['shutdown', 'reboot'],
+    execute(message) {
+        if (message.author.id === '267065637183029248') {
+            process.exit();
+        }
+    },
 };

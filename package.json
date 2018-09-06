@@ -1,8 +1,8 @@
 {
-  "name": "DiscordJS",
+  "name": "DiscordBotV2",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "hahayesv2.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "discord.js": "^11.4.2",
-    "enmap": "^4.0.12"
+    "discord.js-commando": "^0.10.0",
+    "eslint": "^5.5.0"
   }
 }
