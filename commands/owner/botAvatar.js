@@ -1,10 +1,10 @@
 const { Command } = require('discord.js-commando');
-module.exports = class BotAvatarCommand extends Command {
+module.exports = class BotavatarCommand extends Command {
     constructor(client) {
         super(client, {
-            name: 'botAvatar',
+            name: 'botavatar',
             group: 'owner',
-            memberName: 'botAvatar',
+            memberName: 'botavatar',
             description: 'Change the avatar of the bot',
             ownerOnly: true,
             args: [
