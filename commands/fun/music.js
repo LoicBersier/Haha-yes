@@ -20,9 +20,9 @@ module.exports = class MusicCommand extends Command {
     run(message, { ytblink }) {
         const { voiceChannel } = message.member;
 
-        if (ytblink == 'stop') {
+        if (!voiceChannel && ytblink == 'stop') {
             voiceChannel.leave()
-        } else 
+        } else
         if (!voiceChannel) {
             return message.reply('please join a voice channel first!');
         }
