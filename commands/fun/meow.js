@@ -3,7 +3,7 @@ module.exports = class MeowCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'meow',
-            group: 'general',
+            group: 'fun',
             memberName: 'meow',
             description: 'Replies with a meow, kitty cat.',
         });
