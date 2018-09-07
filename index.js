@@ -4,7 +4,7 @@ const { token } = require('./config.json');
 
 
 const client = new CommandoClient({
-    commandPrefix: 'hoho ',
+    commandPrefix: 'hehe ',
     owner: '267065637183029248',
     invite: 'https://discord.gg/SsMCsVY',
 });
