@@ -20,7 +20,7 @@ module.exports = class MusicCommand extends Command {
     run(message, { ytblink }) {
         const { voiceChannel } = message.member;
 
-        if (!voiceChannel && ytblink == 'stop') {
+        if (ytblink == 'stop') {
             voiceChannel.leave()
         } else
         if (!voiceChannel) {
