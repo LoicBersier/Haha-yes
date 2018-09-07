@@ -5,7 +5,7 @@ const responseObject = require("./reply.json");
 
 //  Prefix and ownerID and invite to support server
 const client = new CommandoClient({
-    commandPrefix: 'hehe ',
+    commandPrefix: 'haha ',
     owner: '267065637183029248',
     invite: 'https://discord.gg/SsMCsVY',
 });
