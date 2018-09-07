@@ -24,10 +24,10 @@ client.registry
 //  Ready messages
     client.on('ready', () => {
         console.log(`Logged in as ${client.user.tag}! (${client.user.id})`);
-        console.log(`Ready to serve in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users.`);
+        console.log(`Ready to serve in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users. ${client.readyAt}`);
         client.user.setActivity('with nobody :(');
             const channel = client.channels.get('487766113292124160');
-            channel.send(`Ready to serve in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users.`);
+            channel.send(`Ready to serve in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users. ${client.readyAt}`);
     });
 //  Auto respond to messages
     client.on("message", (message) => {
