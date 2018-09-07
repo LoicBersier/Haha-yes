@@ -20,17 +20,16 @@ module.exports = class MusicCommand extends Command {
     run(message, { ytblink }) {
         const { voiceChannel } = message.member;
 
-        if (ytblink == 'stop') {
-            voiceChannel.leave()
-        } else
         if (!voiceChannel) {
             return message.reply('please join a voice channel first!');
         }
-
         voiceChannel.join().then(connection => {
             const stream = ytdl(ytblink, { filter: 'audioonly' });
             const dispatcher = connection.playStream(stream);
 
+            if (ytblink == 'stop') {
+                voiceChannel.leave()
+            } else
             
             dispatcher.on('end', () => voiceChannel.leave());
         });
