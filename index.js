@@ -26,6 +26,8 @@ client.registry
         console.log(`Logged in as ${client.user.tag}! (${client.user.id})`);
         console.log(`Ready to serve in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users.`);
         client.user.setActivity('with nobody :(');
+            const channel = client.channels.get('487766113292124160');
+            channel.send(`Ready to serve in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users.`);
     });
 //  Auto respond to messages
     client.on("message", (message) => {
@@ -33,7 +35,7 @@ client.registry
           message.channel.send(responseObject[message.content]);
         }
       });
-    
+
     client.on('error', console.error);
 
     client.login(token);
