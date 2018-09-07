@@ -22,7 +22,7 @@ module.exports = class KickCommand extends Command {
     run(message) {
         const member = message.mentions.members.first();
         member.kick(reason.join(" ")).then(member => {
-            message.reply(`${member.user.username} was succesfully banned.`);
+            message.reply(`${member.user.username} was succesfully kicked.`);
         });
     }
 };
