@@ -3,7 +3,7 @@ module.exports = class MeowCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'stats',
-            group: 'owner',
+            group: 'thing',
             memberName: 'stats',
             description: 'Show bot stats.',
         });
