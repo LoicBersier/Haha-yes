@@ -6,7 +6,7 @@ module.exports = class BadmemeCommand extends Command {
             name: 'badmeme',
             group: 'fun',
             memberName: 'badmeme',
-            description: 'test.',
+            description: 'Send some very bad memes.',
         });
     }
 
