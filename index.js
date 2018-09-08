@@ -23,14 +23,16 @@ client.registry
     .registerDefaultCommands()
     .registerCommandsIn(path.join(__dirname, 'commands'));
 //  Ready messages
-    client.on('ready', 'guildCreate', guild, () => {
+    client.on('ready', () => {
         console.log(`Logged in as ${client.user.tag}! (${client.user.id})`);
         console.log(`Ready to serve in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users. ${client.readyAt}`);
         client.user.setActivity(activity);
             const channel = client.channels.get('487766113292124160');
             channel.send(`Ready to serve in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users. ${client.readyAt}`);
+            client.on("guildCreate", guild => {
                     console.log(`${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner}`)
     });
+});
 //  when bot join a guild send embeds with detail about it
     client.on("guildCreate", guild => {
         const channel = client.channels.get('487766113292124160');
