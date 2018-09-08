@@ -1,7 +1,8 @@
 const { CommandoClient } = require('discord.js-commando');
 const path = require('path');
-const { token } = require('./config.json');
+const { activity, token } = require('./config.json');
 const responseObject = require("./reply.json");
+const fs = require("fs");
 
 //  Prefix and ownerID and invite to support server
 const client = new CommandoClient({
@@ -25,7 +26,7 @@ client.registry
     client.on('ready', () => {
         console.log(`Logged in as ${client.user.tag}! (${client.user.id})`);
         console.log(`Ready to serve in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users. ${client.readyAt}`);
-        client.user.setActivity('with nobody :(');
+        client.user.setActivity(activity);
             const channel = client.channels.get('487766113292124160');
             channel.send(`Ready to serve in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users. ${client.readyAt}`);
     });
