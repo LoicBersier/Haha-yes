@@ -1,4 +1,5 @@
 const { Command } = require('discord.js-commando');
+const responseObject = require("../../randVid.json");
 module.exports = class DespacitoCommand extends Command {
     constructor(client) {
         super(client, {
@@ -10,6 +11,8 @@ module.exports = class DespacitoCommand extends Command {
     }
 
     run(message) {
-        return message.say('https://www.youtube.com/watch?v=W3GrSMYbkBE');
-    }
+        const number = 2;
+        const vidNumber = Math.floor (Math.random() * (number - 1 + 1)) + 1;
+            message.channel.send(responseObject[vidNumber]);
+          }
 };
