@@ -24,11 +24,14 @@ client.registry
     .registerCommandsIn(path.join(__dirname, 'commands'));
 //  Ready messages
     client.on('ready', () => {
+//  Send stats to the console
         console.log(`Logged in as ${client.user.tag}! (${client.user.id})`);
         console.log(`Ready to serve in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users. ${client.readyAt}`);
 //  Send stats to the "stats" channel in the support server
         const channel = client.channels.get('487766113292124160');
         channel.send(`Ready to serve in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users. ${client.readyAt}`);
+
+        client.user.setActivity('"haha" or @me for help');
 });
 //  When bot join a guild send embeds with details about it.
     client.on("guildCreate", guild => {
