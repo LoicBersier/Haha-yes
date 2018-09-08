@@ -6,7 +6,7 @@ module.exports = class MusicCommand extends Command {
             name: 'music',
             group: 'fun',
             memberName: 'music',
-            description: 'Play youtube link in vocal',
+            description: 'Play youtube link in vocal ( DOSENT WORK RN TRYING TO FIX IT )',
             args: [
                 {
                     key: 'ytblink',
@@ -19,10 +19,12 @@ module.exports = class MusicCommand extends Command {
 
     run(message, { ytblink }) {
         const { voiceChannel } = message.member;
+
             if (!voiceChannel) {
                 return message.reply('please join a voice channel first!');
-            }
-    
+                
+            } else 
+
             if (ytblink == 'stop') {
                 voiceChannel.leave()
             } else 
@@ -33,6 +35,6 @@ module.exports = class MusicCommand extends Command {
                 
                 dispatcher.on('end', () => voiceChannel.leave());
             });
+
         }
     }
-};
