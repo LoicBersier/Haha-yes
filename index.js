@@ -29,12 +29,10 @@ client.registry
         client.user.setActivity(activity);
             const channel = client.channels.get('487766113292124160');
             channel.send(`Ready to serve in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users. ${client.readyAt}`);
-            client.on("guildCreate", guild => {
-                    console.log(`${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner}`)
-    });
 });
 //  when bot join a guild send embeds with detail about it
     client.on("guildCreate", guild => {
+        console.log(`${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner}`)
         const channel = client.channels.get('487766113292124160');
         const exampleEmbed = {
             color: 0x0099ff,
