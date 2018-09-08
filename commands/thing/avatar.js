@@ -3,7 +3,7 @@ module.exports = class AvatarCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'avatar',
-            group: 'general',
+            group: 'thing',
             memberName: 'avatar',
             description: 'Send the avatar of the mentionned user.',
         });
