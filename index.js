@@ -1,6 +1,6 @@
 const { CommandoClient } = require('discord.js-commando');
 const path = require('path');
-const { activity, token } = require('./config.json');
+const { token } = require('./config.json');
 const responseObject = require("./reply.json");
 const fs = require("fs");
 
@@ -26,11 +26,11 @@ client.registry
     client.on('ready', () => {
         console.log(`Logged in as ${client.user.tag}! (${client.user.id})`);
         console.log(`Ready to serve in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users. ${client.readyAt}`);
-        client.user.setActivity(activity);
-            const channel = client.channels.get('487766113292124160');
-            channel.send(`Ready to serve in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users. ${client.readyAt}`);
+//  Send stats to the "stats" channel in the support server
+        const channel = client.channels.get('487766113292124160');
+        channel.send(`Ready to serve in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users. ${client.readyAt}`);
 });
-//  when bot join a guild send embeds with detail about it
+//  When bot join a guild send embeds with details about it.
     client.on("guildCreate", guild => {
         console.log(`${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner}`);
         const channel = client.channels.get('487766113292124160');
@@ -43,7 +43,7 @@ client.registry
         
         channel.send({ embed: exampleEmbed });
     })
-
+//  When bot get kicked from a guild send embeds with details about it.
     client.on("guildDelete", guild => {
         console.log(`***BOT KICKED***\n${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner}\n***BOT KICKED***`);
         const channel = client.channels.get('487766113292124160');
