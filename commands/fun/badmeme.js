@@ -1,5 +1,5 @@
 const { Command } = require('discord.js-commando');
-const responseObject = require("../../picVid.json");
+const responseObject = require("../../randPic.json");
 module.exports = class BadmemeCommand extends Command {
     constructor(client) {
         super(client, {
