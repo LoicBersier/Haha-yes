@@ -10,7 +10,7 @@ module.exports = class BadmemeCommand extends Command {
     }
 
     run(message) {
-        const number = 11;
+        const number = 12;
         const imageNumber = Math.floor (Math.random() * (number - 1 + 1)) + 1;
         message.say( {files: ["./pictures/" + imageNumber + ".jpeg"]});
     }
