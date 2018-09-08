@@ -4,9 +4,9 @@ module.exports = class PruneCommand extends Command {
         super(client, {
             name: 'prune',
             aliases: ['purge'],
-            group: 'fun',
+            group: 'admin',
             memberName: 'prune',
-            description: 'Replies with a meow, kitty cat.',
+            description: 'Bulk delete messages.',
             clientPermissions: ['MANAGE_MESSAGES'],
             userPermissions: ['MANAGE_MESSAGES'],
             args: [
