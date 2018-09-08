@@ -3,7 +3,7 @@ module.exports = class UpDootCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'updoot',
-            aliases: 'vote',
+            aliases: ['vote'],
             group: 'thing',
             memberName: 'updoot',
             description: 'Send link to updoot my bot :D.',
