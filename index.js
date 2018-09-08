@@ -44,7 +44,7 @@ client.registry
         channel.send({ embed: exampleEmbed });
     })
 
-    client.on("guildDelte", guild => {
+    client.on("guildDelete", guild => {
         console.log(`***BOT KICKED***\n${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner}\n***BOT KICKED***`);
         const channel = client.channels.get('487766113292124160');
         const exampleEmbed = {
