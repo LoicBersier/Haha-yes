@@ -44,6 +44,19 @@ client.registry
         channel.send({ embed: exampleEmbed });
     })
 
+    client.on("guildDelte", guild => {
+        console.log(`***BOT KICKED***\n${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner}\n***BOT KICKED***`);
+        const channel = client.channels.get('487766113292124160');
+        const exampleEmbed = {
+            color: 0x0099ff,
+            title: 'Someone kicked the bot :(',
+            description: `${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner}`,
+            timestamp: new Date(),
+        };
+        
+        channel.send({ embed: exampleEmbed });
+    })
+
 //  Auto respond to messages
 //    client.on("message", (message) => {
 //        if(responseObject[message.content]) {
