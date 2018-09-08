@@ -35,8 +35,8 @@ client.registry
         console.log(`${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner}`);
         const channel = client.channels.get('487766113292124160');
         const exampleEmbed = {
-            color: 0x0099ff,
-            title: 'New guild!',
+            color: 0x008000,
+            title: 'Someone added the bot! :D YAY',
             description: `${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner}`,
             timestamp: new Date(),
         };
@@ -48,7 +48,7 @@ client.registry
         console.log(`***BOT KICKED***\n${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner}\n***BOT KICKED***`);
         const channel = client.channels.get('487766113292124160');
         const exampleEmbed = {
-            color: 0x0099ff,
+            color: 0xFF0000,
             title: 'Someone kicked the bot :(',
             description: `${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner}`,
             timestamp: new Date(),
