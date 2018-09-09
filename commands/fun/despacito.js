@@ -13,6 +13,6 @@ module.exports = class DespacitoCommand extends Command {
     run(message) {
         const number = 5;
         const vidNumber = Math.floor (Math.random() * (number - 1 + 1)) + 1;
-            message.channel.send(responseObject[vidNumber]);
+            message.channel.send(`${vidNumber}: ${responseObject[vidNumber]}`);
           }
 };

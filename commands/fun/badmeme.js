@@ -13,6 +13,6 @@ module.exports = class BadmemeCommand extends Command {
     run(message) {
         const number = 12;
         const picNumber = Math.floor (Math.random() * (number - 1 + 1)) + 1;
-            message.channel.send(responseObject[picNumber]);
+            message.channel.send(`${picNumber}: ${responseObject[picNumber]}`);
           }
 };
