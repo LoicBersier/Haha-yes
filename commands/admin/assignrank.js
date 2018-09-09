@@ -24,7 +24,7 @@ module.exports = class AssignRankCommand extends Command {
         });
     }
 
-    run(message, { rank, member }) {
+    async run(message, { rank, member }) {
         const role = message.guild.roles.find('name', rank);
         member = message.mentions.members.first();
         if (!role) {

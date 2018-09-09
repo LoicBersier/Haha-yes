@@ -10,7 +10,7 @@ module.exports = class UpDootCommand extends Command {
         });
     }
 
-    run(message) {
+    async run(message) {
         const upDoot = {
             color: 0x93C54B,
             title: 'Vote for my bot',

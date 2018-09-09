@@ -17,7 +17,8 @@ module.exports = class StatusCommand extends Command {
         });
     }
 
-    run(message, { status }) {
+    async run(message, { status }) {
         this.client.user.setActivity(status);
+        message.say(`Status have been set to ${status}`);
     }
 };

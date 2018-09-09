@@ -10,7 +10,7 @@ module.exports = class BadmemeCommand extends Command {
         });
     }
 
-    run(message) {
+    async run(message) {
         const number = Object.keys(responseObject).length;
         const picNumber = Math.floor (Math.random() * (number - 1 + 1)) + 1;
             message.channel.send(`${picNumber}: ${responseObject[picNumber]}`);

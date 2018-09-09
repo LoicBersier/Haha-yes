@@ -9,7 +9,7 @@ module.exports = class AvatarCommand extends Command {
         });
     }
 
-    run(message) {
+    async run(message) {
         if (!message.mentions.users.size) {
             return message.channel.send(`Your avatar: ${message.author.displayAvatarURL}`);
         }

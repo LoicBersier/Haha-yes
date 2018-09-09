@@ -17,7 +17,8 @@ module.exports = class BotavatarCommand extends Command {
         });
     }
 
-    run(message, { pic }) {
+    async run(message, { pic }) {
         this.client.user.setAvatar(pic);
+        message.say('The avatar have been changed succesfully');
     }
 };

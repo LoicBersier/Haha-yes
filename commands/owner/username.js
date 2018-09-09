@@ -17,8 +17,9 @@ module.exports = class UsernameCommand extends Command {
         });
     }
 
-    run(message, { username }) {
+    async run(message, { username }) {
         this.client.user.setUsername(username);
+        message.say(`The username have been changed sucessfully to ${username}`);
 
     }
 };

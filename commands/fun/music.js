@@ -17,7 +17,7 @@ module.exports = class MusicCommand extends Command {
         });
     }
 
-    run(message, { ytblink }) {
+    async run(message, { ytblink }) {
         const { voiceChannel } = message.member;
 
             if (!voiceChannel) {

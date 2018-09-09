@@ -9,7 +9,7 @@ module.exports = class MeowCommand extends Command {
         });
     }
 
-    run(message) {
+    async run(message) {
         return message.channel.send(`Servers: \`${this.client.guilds.size}\`\nChannels: \`${this.client.channels.size}\`\nUsers: \`${this.client.users.size}\`\nBot uptime: \`${process.uptime()}\``);
     }
 };

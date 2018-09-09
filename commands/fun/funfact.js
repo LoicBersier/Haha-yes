@@ -10,7 +10,7 @@ module.exports = class FunFactCommand extends Command {
         });
     }
 
-    run(message) {
+    async run(message) {
         const number = Object.keys(responseObject).length;
         const funFactNumber = Math.floor (Math.random() * (number - 1 + 1)) + 1;
             message.channel.send(`Fun fact: ${responseObject[funFactNumber]}`);

@@ -19,7 +19,7 @@ module.exports = class PruneCommand extends Command {
         });
     }
 
-    run(message, { amount }) {
+    async run(message, { amount }) {
         if (amount < 2 || amount > 100) {
             return message.reply('you need to input a number between 2 and 100.');
         }
