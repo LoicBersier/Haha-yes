@@ -6,7 +6,7 @@ module.exports = class MusicCommand extends Command {
             name: 'music',
             group: 'fun',
             memberName: 'music',
-            description: 'Play youtube link in vocal ( DOSENT WORK RN TRYING TO FIX IT )',
+            description: 'Play youtube link in vocal',
             args: [
                 {
                     key: 'ytblink',

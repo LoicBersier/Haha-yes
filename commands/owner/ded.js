@@ -12,7 +12,6 @@ module.exports = class DedCommand extends Command {
     }
 
     run(message) {
-        message.say('im ded now k bye thx');
+        message.say("i dont work :(");
         process.exit();
-    }
-};
+}}
