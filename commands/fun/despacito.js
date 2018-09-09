@@ -6,7 +6,7 @@ module.exports = class DespacitoCommand extends Command {
             name: 'despacito',
             group: 'fun',
             memberName: 'despacito',
-            description: 'despacito, what where you excepting?',
+            description: `despacito, what where you excepting? There is currently **${Object.keys(responseObject).length}** vid`,
         });
     }
 

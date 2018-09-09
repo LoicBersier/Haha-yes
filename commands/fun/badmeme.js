@@ -6,7 +6,7 @@ module.exports = class BadmemeCommand extends Command {
             name: 'badmeme',
             group: 'fun',
             memberName: 'badmeme',
-            description: 'Send some very bad memes.',
+            description: `Some very bad meme. There is currently **${Object.keys(responseObject).length}** meme`,
         });
     }
 
