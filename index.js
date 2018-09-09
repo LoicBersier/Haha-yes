@@ -52,7 +52,7 @@ client.registry
         const channel = client.channels.get('487766113292124160');
         const exampleEmbed = {
             color: 0xFF0000,
-            title: 'Someone kicked the bot :(',
+            title: 'Someone removed the bot :(',
             description: `${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner}`,
             timestamp: new Date(),
         };
