@@ -6,7 +6,7 @@ const fs = require("fs");
 
 //  Prefix and ownerID and invite to support server
 const client = new CommandoClient({
-    commandPrefix: 'h3h3',
+    commandPrefix: 'haha ',
     owner: '267065637183029248',
     invite: 'https://discord.gg/SsMCsVY',
 });
