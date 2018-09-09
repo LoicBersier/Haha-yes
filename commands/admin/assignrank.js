@@ -1,10 +1,10 @@
 const { Command } = require('discord.js-commando');
-module.exports = class GAssignRankCommand extends Command {
+module.exports = class AssignRankCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'assignrank',
             group: 'admin',
-            memberName: 'Assignrank',
+            memberName: 'assignrank',
             description: 'Assign a rank to the mentionned user',
             clientPermissions: ['MANAGE_ROLES'],
             userPermissions: ['MANAGE_ROLES'],
