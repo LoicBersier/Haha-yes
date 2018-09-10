@@ -9,6 +9,7 @@ const client = new CommandoClient({
     commandPrefix: 'haha ',
     owner: '267065637183029248',
     invite: 'https://discord.gg/SsMCsVY',
+    unknownCommandResponse: false,
 });
 //  Command groups
 client.registry
