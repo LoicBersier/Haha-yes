@@ -12,6 +12,6 @@ module.exports = class DedCommand extends Command {
     }
 
     async run(message) {
-        await message.say('im dead now k bye thx');
+        await message.say('https://i.redd.it/lw8hrvr0l4f11.jpg');
         process.exit();
 }}
