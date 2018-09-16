@@ -15,10 +15,11 @@ const client = new CommandoClient({
 client.registry
     .registerDefaultTypes()
     .registerGroups([
-        ['thing', 'some things i guess? i dont know how to name it'],
+        ['thing', 'Some things i guess? i dont know how to name it'],
         ['admin',   'Commands to make admin life easier'],
         ['owner',   'Commands the owner can use to manage the bot'],
         ['fun',     'Fun commands'],
+        ['utility', 'Some usefull commands'],
     ])
     .registerDefaultGroups()
     .registerDefaultCommands()
