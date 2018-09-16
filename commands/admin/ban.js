@@ -21,7 +21,7 @@ module.exports = class BanCommand extends Command {
 
     async run(message) {
         const member = message.mentions.members.first();
-        member.ban(reason.join(" ")).then(member => {
+        member.ban().then(member => {
             message.reply(`${member.user.username} was succesfully banned.`);
         });
     }

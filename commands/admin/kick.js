@@ -21,7 +21,7 @@ module.exports = class KickCommand extends Command {
 
     async run(message) {
         const member = message.mentions.members.first();
-        member.kick(reason.join(" ")).then(member => {
+        member.kick().then(member => {
             message.reply(`${member.user.username} was succesfully kicked.`);
         });
     }
