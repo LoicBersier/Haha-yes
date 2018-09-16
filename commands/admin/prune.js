@@ -7,22 +7,23 @@ module.exports = class PruneCommand extends Command {
             group: 'admin',
             memberName: 'prune',
             description: 'Bulk delete messages.',
-            clientPermissions: ['MANAGE_MESSAGES'],
-            userPermissions: ['MANAGE_MESSAGES'],
+            clientPermissions: ['READ_MESSAGE_HISTORY', 'MANAGE_MESSAGES'],
+			userPermissions: ['MANAGE_MESSAGES'],
+            args: [
+                {
+                    key: 'amount',
+                    prompt: 'How many messages would you like to delete? ( choose a number between 1 & 99 )',
+                    type: 'integer',
+                    min: '1',
+                    max: '99'
+                }
+            ]
         });
     }
 
-    async run(message, args) {
-        const amount = parseInt(args[0]) + 1;
+    run(message, { amount }) {
+        amount = amount+1
+        message.channel.bulkDelete(amount, true);
+    }
+};
 
-        if (isNaN(amount)) {
-            return message.reply('that dosen\'t seem to be a valid number.');
-        }
-        else if (amount <= 1 || amount > 100) {
-            return message.reply('you need to input a number between 1 and 99.');
-        }
-        message.channel.bulkDelete(amount, true).catch(err => {
-            console.error(err);
-            message.channel.send('there was an error trying to prune messages in this channel!');
-        });
-}}
