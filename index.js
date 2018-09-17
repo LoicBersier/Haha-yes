@@ -16,7 +16,7 @@ client.registry
     .registerDefaultTypes()
     .registerGroups([
         ['fun',     'Fun commands'],
-        ['utility', 'Some usefull commands'],
+        ['utility', 'Some useful commands'],
         ['admin',   'Commands to make admin life easier'],
         ['owner',   'Commands the owner can use to manage the bot'],
     ])
