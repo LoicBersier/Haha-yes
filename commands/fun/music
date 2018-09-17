@@ -7,6 +7,7 @@ module.exports = class MusicCommand extends Command {
             group: 'fun',
             memberName: 'music',
             description: 'Play youtube link in vocal',
+            guildOnly: true,
             args: [
                 {
                     key: 'ytblink',

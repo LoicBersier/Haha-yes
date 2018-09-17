@@ -32,7 +32,7 @@ client.registry
         const channel = client.channels.get('487766113292124160');
         channel.send(`Ready to serve in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users. ${client.readyAt}`);
 
-        client.user.setActivity('"haha" or @me for help');
+        client.user.setActivity('"haha help" or "@me help" for help');
 });
 //  When bot join a guild send embeds with details about it.
     client.on("guildCreate", guild => {

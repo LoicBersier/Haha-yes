@@ -8,7 +8,8 @@ module.exports = class PruneCommand extends Command {
             memberName: 'prune',
             description: 'Bulk delete messages.',
             clientPermissions: ['READ_MESSAGE_HISTORY', 'MANAGE_MESSAGES'],
-			userPermissions: ['MANAGE_MESSAGES'],
+            userPermissions: ['MANAGE_MESSAGES'],
+            guildOnly: true,
             args: [
                 {
                     key: 'amount',
