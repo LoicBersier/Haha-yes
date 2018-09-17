@@ -65,8 +65,9 @@ client.registry
 
 //  Auto respond to messages
     client.on("message", (message) => {
-        if(responseObject[message.content]) {
-          message.channel.send(responseObject[message.content]);
+        let message_content = message.content.toLowerCase();
+        if(responseObject[message_content]) {
+          message.channel.send(responseObject[message_content]);
         }
       });
 
