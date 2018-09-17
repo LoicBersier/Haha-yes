@@ -1,4 +1,4 @@
-# Project Title
+# A simple discord bot
 
 A simple discord bot made with discord.js and commando
 
