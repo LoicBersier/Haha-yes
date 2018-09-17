@@ -4,7 +4,7 @@ module.exports = class MusicCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'music',
-            aliases: 'play',
+            aliases: ['play'],
             group: 'fun',
             memberName: 'music',
             description: 'Play youtube link in vocal',
@@ -14,6 +14,7 @@ module.exports = class MusicCommand extends Command {
                     key: 'ytblink',
                     prompt: 'Wich Youtube link would you like to play?\nTo stop the bot just do "haha music stop"',
                     type: 'string',
+                    default: 'https://www.youtube.com/watch?v=kJQP7kiw5Fk'
                 }
             ]
         });
