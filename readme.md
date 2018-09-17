@@ -1,0 +1,1 @@
+<To use this bot you need discord.js and discord.js-commando>
