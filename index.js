@@ -1,15 +1,16 @@
 const { CommandoClient } = require('discord.js-commando');
 const path = require('path');
-const { token } = require('./config.json');
+const { token, prefix } = require('./config.json');
 const responseObject = require("./reply.json");
 const fs = require("fs");
 
 //  Prefix and ownerID and invite to support server
 const client = new CommandoClient({
-    commandPrefix: 'haha ',
+    commandPrefix: `${prefix}`,
     owner: '267065637183029248',
     invite: 'https://discord.gg/SsMCsVY',
     unknownCommandResponse: false,
+    disableEveryone: true,
 });
 //  Command groups
 client.registry
@@ -28,10 +29,11 @@ client.registry
 //  Send stats to the console
         console.log(`Logged in as ${client.user.tag}! (${client.user.id})`);
         console.log(`Ready to serve in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users. ${client.readyAt}`);
-//  Send stats to the "stats" channel in the support server
+//  Send stats to the "stats" channel in the support server if its not the test bot
+        if (client.user.id == 377563711927484418) {
         const channel = client.channels.get('487766113292124160');
         channel.send(`Ready to serve in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users. ${client.readyAt}`);
-
+        }
         client.user.setActivity('"haha help" or "@me help" for help');
 });
 //  When bot join a guild send embeds with details about it.
