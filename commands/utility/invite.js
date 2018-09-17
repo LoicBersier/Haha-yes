@@ -3,7 +3,7 @@ module.exports = class InviteCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'invite',
-            group: 'thing',
+            group: 'utility',
             memberName: 'invite',
             description: 'Send invite to add the bot',
         });

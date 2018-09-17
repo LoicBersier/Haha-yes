@@ -4,7 +4,7 @@ module.exports = class UpDootCommand extends Command {
         super(client, {
             name: 'updoot',
             aliases: ['vote'],
-            group: 'thing',
+            group: 'utility',
             memberName: 'updoot',
             description: 'Send link to updoot my bot :D.',
         });
