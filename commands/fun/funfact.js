@@ -1,5 +1,5 @@
 const { Command } = require('discord.js-commando');
-const responseObject = require("../../funFact.json");
+const responseObject = require("../../funfact.json");
 module.exports = class FunFactCommand extends Command {
     constructor(client) {
         super(client, {
