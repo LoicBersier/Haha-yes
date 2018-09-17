@@ -12,7 +12,7 @@ module.exports = class MusicCommand extends Command {
             args: [
                 {
                     key: 'ytblink',
-                    prompt: 'Wich Youtube link would you like to play?\nTo stop the bot just do "haha music stop"',
+                    prompt: 'Wich Youtube link would you like to play? (default: despacito)\nTo stop the bot just do "haha music stop"',
                     type: 'string',
                     default: 'https://www.youtube.com/watch?v=kJQP7kiw5Fk'
                 }
