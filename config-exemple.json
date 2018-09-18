@@ -1,0 +1,6 @@
+{
+    "token":    "Your token",
+    "prefix":   "your prefix",
+    "botID":    "ID of the bot",
+    "statsChannel": "ID of the channel that the bot are going to post its stats"
+}
