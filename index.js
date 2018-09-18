@@ -1,7 +1,6 @@
-const { CommandoClient } = require('discord.js-commando');
+const { CommandoClient, Command } = require('discord.js-commando');
 const path = require('path');
-const { token, prefix, botID, statsChannel, ownerID, supportServer } = require('./config.json');
-const responseObject = require("./reply.json");
+const { token, prefix, ownerID, supportServer } = require('./config.json');
 const fs = require("fs");
 
 //  Prefix and ownerID and invite to support server
@@ -24,52 +23,24 @@ client.registry
     .registerDefaultGroups()
     .registerDefaultCommands()
     .registerCommandsIn(path.join(__dirname, 'commands'));
-//  Ready messages
-    client.on('ready', () => {
-//  Send stats to the console
-        console.log(`Logged in as ${client.user.tag}! (${client.user.id})`);
-        console.log(`Ready to serve in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users. ${client.readyAt}`);
-//  Send stats to the "stats" channel in the support server if its not the test bot
-        if (client.user.id == botID) {
-        const channel = client.channels.get(statsChannel);
-        channel.send(`Ready to serve in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users. ${client.readyAt}`);
-        }
-        client.user.setActivity('"haha help" or "@me help" for help');
-});
-//  When bot join a guild send embeds with details about it.
-    client.on("guildCreate", guild => {
-        console.log(`${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner}`);
-        const channel = client.channels.get(statsChannel);
-        const addEmbed = {
-            color: 0x008000,
-            title: 'Someone added the bot! :D YAY',
-            description: `${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner}`,
-            timestamp: new Date(),
-        };
-        
-        channel.send({ embed: addEmbed });
-    })
-//  When bot get kicked from a guild send embeds with details about it.
-    client.on("guildDelete", guild => {
-        console.log(`***BOT KICKED***\n${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner}\n***BOT KICKED***`);
-        const channel = client.channels.get(statsChannel);
-        const kickEmbed = {
-            color: 0xFF0000,
-            title: 'Someone removed the bot :(',
-            description: `${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner}`,
-            timestamp: new Date(),
-        };
-        
-        channel.send({ embed: kickEmbed });
-    })
 
-//  Auto respond to messages
-//    client.on("message", (message) => {
-//        let message_content = message.content.toLowerCase();
-//        if(responseObject[message_content]) {
-//          message.channel.send(responseObject[message_content]);
-//        }
-//      });
+fs.readdir("./events/", (err, files) => {
+    if (err) return console.error(err);
+    files.forEach(file => {
+      // If the file is not a JS file, ignore it (thanks, Apple)
+      if (!file.endsWith(".js")) return;
+      // Load the event file itself
+      const event = require(`./events/${file}`);
+      // Get just the event name from the file name
+      let eventName = file.split(".")[0];
+      // super-secret recipe to call events with all their proper arguments *after* the `client` var.
+      // without going into too many details, this means each event will be called with the client argument,
+      // followed by its "normal" arguments, like message, member, etc etc.
+      // This line is awesome by the way. Just sayin'.
+      client.on(eventName, event.bind(null, client));
+      delete require.cache[require.resolve(`./events/${file}`)];
+    });
+  });
 
     client.on('error', console.error);
 
