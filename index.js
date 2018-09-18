@@ -1,14 +1,14 @@
 const { CommandoClient } = require('discord.js-commando');
 const path = require('path');
-const { token, prefix, botID, statsChannel } = require('./config.json');
+const { token, prefix, botID, statsChannel, ownerID, supportServer } = require('./config.json');
 const responseObject = require("./reply.json");
 const fs = require("fs");
 
 //  Prefix and ownerID and invite to support server
 const client = new CommandoClient({
-    commandPrefix: `${prefix}`,
-    owner: '267065637183029248',
-    invite: 'https://discord.gg/SsMCsVY',
+    commandPrefix: prefix,
+    owner: ownerID,
+    invite: supportServer,
     unknownCommandResponse: false,
     disableEveryone: true,
 });
