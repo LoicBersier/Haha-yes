@@ -5,21 +5,22 @@ module.exports = class ServerCommand extends Command {
         super(client, {
             name: 'server',
             group: 'utility',
+            guildOnly: 'true',
             memberName: 'server',
-            description: 'very yes',
+            description: 'Show some stats about the server',
         });
     }
 
     async run(message) {
-        const serverStatsEmbed = new Discord.RichEmbed()
-    .setColor('#0099ff')
-    .setTitle('Stats of the server')
-    .setDescription('Some description here')
-    .setThumbnail(message.guild.iconURL)
-    .addField(`Member: **${message.guild.memberCount}** \n Channel: **${message.guild.channels}**`)
-    .addBlankField()
-    .setTimestamp()
-
-    message.say(serverStatsEmbed);
+    const addEmbed = {
+        color: 0x0099ff,
+        title: 'Stats of the server',
+        thumbnail: {
+        url: `${message.guild.iconURL}`,
+    },
+        description: `Member: **${message.guild.memberCount}** \nChannel number: **${message.guild.channels.size}**\nGuild created at **${message.guild.createdAt}**\nOwner: **${message.guild.owner}**`,
+    };
+    
+    message.say({ embed: addEmbed });
     }
 };
