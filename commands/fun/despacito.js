@@ -6,13 +6,14 @@ module.exports = class DespacitoCommand extends Command {
             name: 'despacito',
             group: 'fun',
             memberName: 'despacito',
-            description: `despacito, what where you excepting? There is currently **${Object.keys(responseObject).length}** vid`,
+            description: `despacito`,
         });
     }
 
     async run(message) {
-        const number = Object.keys(responseObject).length;
-        const vidNumber = Math.floor (Math.random() * (number - 1 + 1)) + 1;
-            message.channel.send(`${vidNumber}: ${responseObject[vidNumber]}`);
+        message.say("DES\nPA\nCITO");
+        message.say("https://images-eu.ssl-images-amazon.com/images/I/619fzjO1rmL._SS500.jpg");
+        message.say("https://cdn.dopl3r.com/memes_files/despacito-eS6Lm.jpg");
+        message.say("https://www.youtube.com/watch?v=kJQP7kiw5Fk");
           }
 };
