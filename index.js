@@ -1,6 +1,6 @@
 const { CommandoClient } = require('discord.js-commando');
 const path = require('path');
-const { token, prefix, botid, statsChannel } = require('./config.json');
+const { token, prefix, botID, statsChannel } = require('./config.json');
 const responseObject = require("./reply.json");
 const fs = require("fs");
 
@@ -30,7 +30,7 @@ client.registry
         console.log(`Logged in as ${client.user.tag}! (${client.user.id})`);
         console.log(`Ready to serve in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users. ${client.readyAt}`);
 //  Send stats to the "stats" channel in the support server if its not the test bot
-        if (client.user.id == botid) {
+        if (client.user.id == botID) {
         const channel = client.channels.get(statsChannel);
         channel.send(`Ready to serve in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users. ${client.readyAt}`);
         }
