@@ -19,7 +19,6 @@ module.exports = class ServerCommand extends Command {
         url: `${message.guild.iconURL}`,
     },
         description: `Member: **${message.guild.memberCount}** \nChannel number: **${message.guild.channels.size}**\nGuild created at **${message.guild.createdAt}**\nOwner: **${message.guild.owner}**`,
-        timestamp: new Date(),
     };
     
     message.say({ embed: addEmbed });
