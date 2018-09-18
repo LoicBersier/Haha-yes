@@ -64,12 +64,12 @@ client.registry
     })
 
 //  Auto respond to messages
-    client.on("message", (message) => {
-        let message_content = message.content.toLowerCase();
-        if(responseObject[message_content]) {
-          message.channel.send(responseObject[message_content]);
-        }
-      });
+//    client.on("message", (message) => {
+//        let message_content = message.content.toLowerCase();
+//        if(responseObject[message_content]) {
+//          message.channel.send(responseObject[message_content]);
+//        }
+//      });
 
     client.on('error', console.error);
 
