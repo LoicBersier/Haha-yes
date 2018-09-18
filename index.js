@@ -1,6 +1,6 @@
 const { CommandoClient } = require('discord.js-commando');
 const path = require('path');
-const { token, prefix } = require('./config.json');
+const { token, prefix, botid, statsChannel } = require('./config.json');
 const responseObject = require("./reply.json");
 const fs = require("fs");
 
@@ -30,8 +30,8 @@ client.registry
         console.log(`Logged in as ${client.user.tag}! (${client.user.id})`);
         console.log(`Ready to serve in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users. ${client.readyAt}`);
 //  Send stats to the "stats" channel in the support server if its not the test bot
-        if (client.user.id == 377563711927484418) {
-        const channel = client.channels.get('487766113292124160');
+        if (client.user.id == botid) {
+        const channel = client.channels.get(statsChannel);
         channel.send(`Ready to serve in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users. ${client.readyAt}`);
         }
         client.user.setActivity('"haha help" or "@me help" for help');
@@ -39,7 +39,7 @@ client.registry
 //  When bot join a guild send embeds with details about it.
     client.on("guildCreate", guild => {
         console.log(`${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner}`);
-        const channel = client.channels.get('487766113292124160');
+        const channel = client.channels.get(statsChannel);
         const addEmbed = {
             color: 0x008000,
             title: 'Someone added the bot! :D YAY',
@@ -52,7 +52,7 @@ client.registry
 //  When bot get kicked from a guild send embeds with details about it.
     client.on("guildDelete", guild => {
         console.log(`***BOT KICKED***\n${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner}\n***BOT KICKED***`);
-        const channel = client.channels.get('487766113292124160');
+        const channel = client.channels.get(statsChannel);
         const kickEmbed = {
             color: 0xFF0000,
             title: 'Someone removed the bot :(',
