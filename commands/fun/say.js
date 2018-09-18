@@ -1,5 +1,4 @@
 const { Command } = require('discord.js-commando');
-const responseObject = require("../../randVid.json");
 module.exports = class sayCommand extends Command {
     constructor(client) {
         super(client, {
