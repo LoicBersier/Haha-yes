@@ -20,7 +20,7 @@ module.exports = class MusicCommand extends Command {
         });
     }
 
-    async run(message, { ytblink }) {
+    async run(message, { ytblink, repeat }) {
         const { voiceChannel } = message.member;
 
 //  If not in voice channel ask user to join
@@ -31,14 +31,12 @@ module.exports = class MusicCommand extends Command {
 //  If user say "stop" make the bot leave voice channel
             if (ytblink == 'stop') {
                 voiceChannel.leave()
-            } else 
+            } else
             voiceChannel.join().then(connection => {
                 const stream = ytdl(ytblink, { filter: 'audioonly' });
                 const dispatcher = connection.playStream(stream);
-    
 //  End at then end of the audio stream
                 dispatcher.on('end', () => voiceChannel.leave());
             });
-
         }
     }
