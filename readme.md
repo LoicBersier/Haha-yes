@@ -20,5 +20,5 @@ npm install node-opus ytdl-core
 
 Special thanks to
 
-discord.js (https://github.com/discordjs) for providing discord.js, commande and the discord.js guide
+discord.js (https://github.com/discordjs) for providing discord.js, commande and the discord.js guide<br>
 [TG/LW] Tina the Cyclops#5861 for inspiring me to make this bot
