@@ -1,8 +1,7 @@
 const { CommandoClient } = require('discord.js-commando');
 const path = require('path');
-const { token, prefix, botID, statsChannel, ownerID, supportServer } = require('./config.json');
+const { token, prefix, botID, statsChannel, ownerID, supportServer, activity } = require('./config.json');
 const responseObject = require("./reply.json");
-const fs = require("fs");
 
 //  Prefix and ownerID and invite to support server
 const client = new CommandoClient({
@@ -25,7 +24,7 @@ client.registry
     .registerDefaultCommands()
     .registerCommandsIn(path.join(__dirname, 'commands'));
 //  Ready messages
-    client.on('ready', () => {
+    client.on('ready', async () => {
 //  Send stats to the console
         console.log(`Logged in as ${client.user.tag}! (${client.user.id})`);
         console.log(`Ready to serve in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users. ${client.readyAt}`);
@@ -37,7 +36,7 @@ client.registry
         client.user.setActivity('"haha help" or "@me help" for help');
 });
 //  When bot join a guild send embeds with details about it.
-    client.on("guildCreate", guild => {
+    client.on("guildCreate", async guild => {
         console.log(`${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner}`);
         const channel = client.channels.get(statsChannel);
         const addEmbed = {
@@ -50,7 +49,7 @@ client.registry
         channel.send({ embed: addEmbed });
     })
 //  When bot get kicked from a guild send embeds with details about it.
-    client.on("guildDelete", guild => {
+    client.on("guildDelete", async guild => {
         console.log(`***BOT KICKED***\n${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner}\n***BOT KICKED***`);
         const channel = client.channels.get(statsChannel);
         const kickEmbed = {
@@ -64,7 +63,7 @@ client.registry
     })
 
 //  Auto respond to messages
-    client.on("message", (message) => {
+    client.on("message", async (message) => {
         let message_content = message.content.toLowerCase();
         if(responseObject[message_content]) {
           message.channel.send(responseObject[message_content]);
