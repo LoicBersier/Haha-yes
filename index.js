@@ -70,11 +70,11 @@ client.registry
 //  Delete the messages that triggered it and send a messages
 //      if(delresponseObject[message_content]) {
 //          message.delete();
-//          message.say(delresponseObject[message_content]);
+//          message.channel.send(delresponseObject[message_content]);
 //        } else 
 //  React to the message and send an auto response with it
         if(responseObject[message_content] && reactObject[message_content]) {
-            message.say(responseObject[message_content]);
+            message.channel.send(responseObject[message_content]);
             message.react(reactObject[message_content]);
 //  React only to the messages
         } 
@@ -83,7 +83,7 @@ client.registry
         }
 //  auto respond to messages
         else if(responseObject[message_content]) {
-          message.say(responseObject[message_content]);
+            message.channel.send(responseObject[message_content]);
         } 
     });
 
