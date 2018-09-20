@@ -66,14 +66,17 @@ client.registry
 //  Auto respond to messages
     client.on("message", async (message) => {
         let message_content = message.content.toLowerCase();
-        if(responseObject[message_content]) {
-          message.channel.send(responseObject[message_content]);
-        };
-
-        if(reactObject[message_content]) {
-          message.react(reactObject[message_content]);
+        if(responseObject[message_content] && reactObject[message_content]) {
+            message.channel.send(responseObject[message_content]);
+            message.react(reactObject[message_content]);
+        } 
+        else if(reactObject[message_content]) {
+            message.react(reactObject[message_content]);
         }
-      });
+        else if(responseObject[message_content]) {
+          message.channel.send(responseObject[message_content]);
+        } 
+    });
 
     client.on('error', console.error);
 
