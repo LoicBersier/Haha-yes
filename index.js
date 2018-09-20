@@ -1,7 +1,8 @@
 const { CommandoClient } = require('discord.js-commando');
 const path = require('path');
-const { token, prefix, botID, statsChannel, ownerID, supportServer, activity } = require('./config.json');
+const { token, prefix, botID, statsChannel, ownerID, supportServer } = require('./config.json');
 const responseObject = require("./reply.json");
+const delresponseObject = require("./delreply.json");
 const reactObject = require("./react.json");
 
 //  Prefix and ownerID and invite to support server
@@ -63,16 +64,24 @@ client.registry
         channel.send({ embed: kickEmbed });
     })
 
-//  Auto respond to messages
     client.on("message", async (message) => {
         let message_content = message.content.toLowerCase();
+
+//  Delete the messages that triggered it and send a messages
+//      if(delresponseObject[message_content]) {
+//          message.delete();
+//          message.channel.send(delresponseObject[message_content]);
+//        } else 
+//  React to the message and send an auto response with it
         if(responseObject[message_content] && reactObject[message_content]) {
             message.channel.send(responseObject[message_content]);
             message.react(reactObject[message_content]);
+//  React only to the messages
         } 
         else if(reactObject[message_content]) {
             message.react(reactObject[message_content]);
         }
+//  auto respond to messages
         else if(responseObject[message_content]) {
           message.channel.send(responseObject[message_content]);
         } 
