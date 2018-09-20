@@ -2,6 +2,7 @@ const { CommandoClient } = require('discord.js-commando');
 const path = require('path');
 const { token, prefix, botID, statsChannel, ownerID, supportServer, activity } = require('./config.json');
 const responseObject = require("./reply.json");
+const reactObject = require("./react.json");
 
 //  Prefix and ownerID and invite to support server
 const client = new CommandoClient({
@@ -67,6 +68,10 @@ client.registry
         let message_content = message.content.toLowerCase();
         if(responseObject[message_content]) {
           message.channel.send(responseObject[message_content]);
+        };
+
+        if(reactObject[message_content]) {
+          message.react(reactObject[message_content]);
         }
       });
 
