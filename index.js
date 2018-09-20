@@ -1,9 +1,9 @@
 const { CommandoClient } = require('discord.js-commando');
 const path = require('path');
 const { token, prefix, botID, statsChannel, ownerID, supportServer } = require('./config.json');
-const responseObject = require("./reply.json");
-const delresponseObject = require("./delreply.json");
-const reactObject = require("./react.json");
+const responseObject = require("./json/reply.json");
+const delresponseObject = require("./json/delreply.json");
+const reactObject = require("./json/react.json");
 
 //  Prefix and ownerID and invite to support server
 const client = new CommandoClient({
@@ -70,11 +70,11 @@ client.registry
 //  Delete the messages that triggered it and send a messages
 //      if(delresponseObject[message_content]) {
 //          message.delete();
-//          message.channel.send(delresponseObject[message_content]);
+//          message.say(delresponseObject[message_content]);
 //        } else 
 //  React to the message and send an auto response with it
         if(responseObject[message_content] && reactObject[message_content]) {
-            message.channel.send(responseObject[message_content]);
+            message.say(responseObject[message_content]);
             message.react(reactObject[message_content]);
 //  React only to the messages
         } 
@@ -83,7 +83,7 @@ client.registry
         }
 //  auto respond to messages
         else if(responseObject[message_content]) {
-          message.channel.send(responseObject[message_content]);
+          message.say(responseObject[message_content]);
         } 
     });
 
