@@ -88,5 +88,6 @@ client.registry
     });
 
     client.on('error', console.error);
+    process.on('unhandledRejection', error => console.error('Uncaught Promise Rejection', error));
 
     client.login(token);
