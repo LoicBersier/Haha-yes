@@ -73,6 +73,8 @@ client.registry
 //          message.channel.send(delresponseObject[message_content]);
 //        } else 
 //  React to the message and send an auto response with it
+        if (message.author.bot) return; {
+
         if(responseObject[message_content] && reactObject[message_content]) {
             message.channel.send(responseObject[message_content]);
             message.react(reactObject[message_content]);
@@ -85,7 +87,7 @@ client.registry
         else if(responseObject[message_content]) {
             message.channel.send(responseObject[message_content]);
         } 
-    });
+    }});
 
     client.on('error', console.error);
     process.on('unhandledRejection', error => console.error('Uncaught Promise Rejection', error));
