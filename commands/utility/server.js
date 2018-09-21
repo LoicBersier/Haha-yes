@@ -7,6 +7,7 @@ module.exports = class ServerCommand extends Command {
             guildOnly: 'true',
             memberName: 'server',
             description: 'Show some stats about the server',
+            guildOnly: true,
         });
     }
 
