@@ -20,8 +20,10 @@ module.exports = class BanCommand extends Command {
         });
     }
 
-    async run(message) {
-        const member = message.mentions.members.first();
+    async run(message, { member }) {
+        if(member.id === message.author.id) {
+            message.say("Why would you ban yourself ?")
+        } else
         member.ban().then(member => {
             message.reply(`${member.user.username} was succesfully banned.`);
         });
