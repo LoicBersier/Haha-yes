@@ -9,7 +9,7 @@ module.exports = class listEmoteCommand extends Command {
         });
     }
 
-    async run(message, { text }) {
+    async run(message) {
             const emojiList = message.guild.emojis.map((e, x) => (x + ' = ' + e) + ' | ' +e.name).join('\n');
             message.channel.send(emojiList);
           }
