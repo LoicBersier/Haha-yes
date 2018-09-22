@@ -5,7 +5,7 @@ module.exports = class sayCommand extends Command {
             name: 'say',
             group: 'fun',
             memberName: 'say',
-            description: `repeat the text`,
+            description: `Repeat the text you send`,
             args: [
                 {
                     key: 'text',
