@@ -1,4 +1,5 @@
 const { Command } = require('discord.js-commando');
+const { supportServer } = require('../../config.json')
 module.exports = class InviteCommand extends Command {
     constructor(client) {
         super(client, {
@@ -10,6 +11,6 @@ module.exports = class InviteCommand extends Command {
     }
 
     async run(message) {
-        return message.say(`You can add me from here: https://discordapp.com/oauth2/authorize?client_id=${this.client.user.id}&scope=bot&permissions=27654\nYou can join my support server over here: https://discord.gg/SsMCsVY come and say hi :)`);
+        return message.say(`You can add me from here: https://discordapp.com/oauth2/authorize?client_id=${this.client.user.id}&scope=bot&permissions=0\nYou can join my support server over here: ${supportServer} come and say hi :)`);
     }
 };
