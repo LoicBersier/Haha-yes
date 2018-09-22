@@ -1,6 +1,6 @@
 const { Command } = require('discord.js-commando');
 const emojiCharacters = require('../../emojiCharacters');
-module.exports = class testCommand extends Command {
+module.exports = class emoteSayCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'emotesay',
