@@ -3,7 +3,7 @@ module.exports = class listEmoteCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'listemote',
-            group: 'fun',
+            group: 'utility',
             memberName: 'listemote',
             description: `List the emotes available on the server`,
         });
