@@ -68,11 +68,6 @@ client.registry
     client.on("message", async (message) => {
         let message_content = message.content.toLowerCase();
 
-//  Delete the messages that triggered it and send a messages
-//      if(delresponseObject[message_content]) {
-//          message.delete();
-//          message.channel.send(delresponseObject[message_content]);
-//        } else 
 //  React to the message and send an auto response with it
         if (message.author.bot) return; {
 //  Reply with images as attachement
