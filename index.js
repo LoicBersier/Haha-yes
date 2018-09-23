@@ -31,20 +31,18 @@ client.registry
         console.log(`Logged in as ${client.user.tag}! (${client.user.id})`);
         console.log(`Ready to serve in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users. ${client.readyAt}`);
 //  Send stats to the "stats" channel in the support server if its not the test bot
-        if (client.user.id == botID) {
         const channel = client.channels.get(statsChannel);
         channel.send(`Ready to serve in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users. ${client.readyAt}`);
-        }
         client.user.setActivity('"haha help" or "@me help" for help');
 });
 //  When bot join a guild send embeds with details about it.
     client.on("guildCreate", async guild => {
-        console.log(`${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner}`);
+        console.log(`${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\nOwner ID: ${guild.owner}`);
         const channel = client.channels.get(statsChannel);
         const addEmbed = {
             color: 0x008000,
             title: 'Someone added the bot! :D YAY',
-            description: `${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner}`,
+            description: `${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\nOwner ID: ${guild.owner}`,
             timestamp: new Date(),
         };
         
@@ -52,12 +50,12 @@ client.registry
     })
 //  When bot get kicked from a guild send embeds with details about it.
     client.on("guildDelete", async guild => {
-        console.log(`***BOT KICKED***\n${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner}\n***BOT KICKED***`);
+        console.log(`***BOT KICKED***\n${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\nOwner ID: ${guild.owner}\n***BOT KICKED***`);
         const channel = client.channels.get(statsChannel);
         const kickEmbed = {
             color: 0xFF0000,
             title: 'Someone removed the bot :(',
-            description: `${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner}`,
+            description: `${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\nOwner ID: ${guild.owner}`,
             timestamp: new Date(),
         };
         
