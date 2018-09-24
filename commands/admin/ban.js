@@ -26,6 +26,9 @@ module.exports = class BanCommand extends Command {
         } else
         member.ban().then(member => {
             message.reply(`${member.user.username} was succesfully banned.`);
+
+            //TODO
+            //Send a message when the bot didint manage to kick
         });
     }
 };
