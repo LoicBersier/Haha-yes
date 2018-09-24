@@ -1,5 +1,5 @@
 const { CommandoClient } = require('discord.js-commando');
-const path = require('path');
+const path = require('path'); 
 const { token, prefix, botID, statsChannel, ownerID, supportServer } = require('./config.json');
 const responseObject = require("./json/reply.json");
 const reactObject = require("./json/react.json");
