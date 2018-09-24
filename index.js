@@ -43,7 +43,7 @@ client.registry
         const channel = client.channels.get(statsChannel);
         const addEmbed = {
             color: 0x008000,
-            title: 'Someone added the bot! :D YAY',
+            title: 'Im in a new guild! :D YAY',
             description: `${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\nOwner ID: ${guild.owner}`,
             timestamp: new Date(),
         };
@@ -56,7 +56,7 @@ client.registry
         const channel = client.channels.get(statsChannel);
         const kickEmbed = {
             color: 0xFF0000,
-            title: 'Someone removed the bot :(',
+            title: 'They kicked me out :(',
             description: `${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\nOwner ID: ${guild.owner}`,
             timestamp: new Date(),
         };
