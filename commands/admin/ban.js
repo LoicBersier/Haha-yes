@@ -24,11 +24,10 @@ module.exports = class BanCommand extends Command {
         if(member.id === message.author.id) {
             message.say("Why would you ban yourself ?")
         } else
-        member.ban().then(member => {
-            message.reply(`${member.user.username} was succesfully banned.`);
+        member.ban()
+            .then(() => message.reply(`${member.user.username} was succesfully banned.`));
 
             //TODO
             //Send a message when the bot didint manage to kick
-        });
-    }
+        };
 };

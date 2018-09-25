@@ -24,8 +24,10 @@ module.exports = class KickCommand extends Command {
         if(member.id === message.author.id) {
             message.say("Why would you kick yourself ?")
         } else
-        member.kick().then(member => {
-            message.reply(`${member.user.username} was succesfully kicked.`);
-        });
-    }
+        member.kick()
+        .then(() => message.reply(`${member.user.username} was succesfully kicked.`));
+
+            //TODO
+            //Send a message when the bot didint manage to kick
+        };
 };
