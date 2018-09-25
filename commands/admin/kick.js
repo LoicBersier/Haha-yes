@@ -25,8 +25,5 @@ module.exports = class KickCommand extends Command {
         } else
         member.kick()
         .then(() => message.reply(`${member.user.username} was succesfully kicked.`));
-
-            //TODO
-            //Send a message when the bot didint manage to kick
         };
 };
