@@ -1,6 +1,7 @@
 const { Command } = require('discord.js-commando');
 const Discord = require('discord.js');
 const snekfetch = require('snekfetch');
+const { openweatherAPI } = require('./config.json');
 module.exports = class WeatherCommand extends Command {
     constructor(client) {
         super(client, {
@@ -19,7 +20,7 @@ module.exports = class WeatherCommand extends Command {
     }
 
     async run(message, { city }) {
-        const { body } = await snekfetch.get('https://api.openweathermap.org/data/2.5/weather?q='+ city +'&units=metric&APPID=688e6d7bcdfdc4b71d921a3de461f76b');
+        const { body } = await snekfetch.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&APPID=${openweatherAPI}`);
         if (!body.main.temp) {
             return message.say(`No results found for **${city}**`);
         }
