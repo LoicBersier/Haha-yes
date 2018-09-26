@@ -1,4 +1,5 @@
 const { CommandoClient } = require('discord.js-commando');
+const Discord = require('discord.js');
 const path = require('path'); 
 const { token, prefix, botID, statsChannel, ownerID, supportServer } = require('./config.json');
 const responseObject = require("./json/reply.json");
@@ -41,12 +42,11 @@ client.registry
     client.on("guildCreate", async guild => {
         console.log(`${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\nOwner ID: ${guild.owner}`);
         const channel = client.channels.get(statsChannel);
-        const addEmbed = {
-            color: 0x008000,
-            title: 'Im in a new guild! :D YAY',
-            description: `${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\nOwner ID: ${guild.owner}`,
-            timestamp: new Date(),
-        };
+        const addEmbed = new Discord.RichEmbed()
+        .setColor("#FF0000")
+        .setTitle('Someone added me ! YAY :D')
+        .setDescription(`${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\nOwner ID: ${guild.owner}`)
+        .setTimestamp()
         
         channel.send({ embed: addEmbed });
     })
@@ -54,13 +54,12 @@ client.registry
     client.on("guildDelete", async guild => {
         console.log(`***BOT KICKED***\n${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\nOwner ID: ${guild.owner}\n***BOT KICKED***`);
         const channel = client.channels.get(statsChannel);
-        const kickEmbed = {
-            color: 0xFF0000,
-            title: 'They kicked me out :(',
-            description: `${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\nOwner ID: ${guild.owner}`,
-            timestamp: new Date(),
-        };
-        
+        const kickEmbed = new Discord.RichEmbed()
+        .setColor("#FF0000")
+        .setTitle('They kicked me out :(')
+        .setDescription(`${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\nOwner ID: ${guild.owner}`)
+        .setTimestamp()
+
         channel.send({ embed: kickEmbed });
     })
 
