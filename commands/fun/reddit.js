@@ -13,7 +13,6 @@ module.exports = class redditCommand extends Command {
                     key: 'sub',
                     prompt: 'Wich subreddit would you like to see?',
                     type: 'string',
-                    default: 'random',
                 }
             ]
         });
