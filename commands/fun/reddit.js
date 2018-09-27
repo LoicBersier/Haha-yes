@@ -34,7 +34,8 @@ module.exports = class redditCommand extends Command {
             const redditEmbed = new Discord.RichEmbed()
             .setColor("#ff9900")
             .setTitle(body.data.children[i].data.title)
-            .setImage(body.data.children[i].data.preview.images[0].source.url)
+            .setImage(body.data.children[i].data.url)
+            .setURL('https://reddit.com' + body.data.children[i].data.permalink)
             .setFooter(`⬆ ${body.data.children[i].data.ups}     💬 ${body.data.children[i].data.num_comments}`)
             
             message.say(redditEmbed);
