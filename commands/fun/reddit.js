@@ -22,8 +22,7 @@ module.exports = class redditCommand extends Command {
     async run(message, { sub }) {
         const { body } = await snekfetch.get('https://www.reddit.com/r/' + sub + '.json');
         let /* the bodies hit the floor */ i = Math.floor((Math.random() * 10) + 1);
-        console.log(body.data.children[i].data.post_hint)
-        if (body.data.dist == '0') {
+        if (!body.data.children[1]) {
             return message.say('Not a valid subreddit')
         }
         while (body.data.children[i].data.post_hint !== 'image') {
