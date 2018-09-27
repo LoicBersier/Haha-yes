@@ -19,13 +19,17 @@ module.exports = class redditCommand extends Command {
     }
 
     async run(message, { sub }) {
-        const { body } = await snekfetch.get('https://www.reddit.com/r/' + sub + '.json?limit=100');
+        const body = await snekfetch.get('https://www.reddit.com/r/' + sub + '.json?limit=100')
         let /* the bodies hit the floor */ i = Math.floor((Math.random() * 10) + 1);
+        let a = 0
         if (!body.data.children[1]) {
             return message.say('Not a valid subreddit')
+        } else if (!body.data.children[i].data) {
+            return console.log('please try again')
         }
-        while (body.data.children[i].data.post_hint !== 'image') {
+        while (body.data.children[i].data.post_hint !== 'image' && a == 5) {
             i = Math.floor((Math.random() * 100) + 1);
+            a++
         }
             if (body.data.children[i].data.over_18 == true) {
                 return message.say("No nsfw ( if you want a nsfw version of this commands use the feedback commands \"haha feedback <your feedback>\")")
