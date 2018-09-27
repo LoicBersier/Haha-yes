@@ -26,9 +26,7 @@ module.exports = class RandoCatCommand extends Command {
         while (body.data.children[i].data.post_hint !== 'image') {
             i = Math.floor((Math.random() * 10) + 1);
         }
-            if (body.data.children[i].data.crosspost_parent_list == true) {
-                return message.say('test')
-            }else if (body.data.children[i].data.over_18 == true) {
+            if (body.data.children[i].data.over_18 == true) {
                 return message.say("No nsfw")
             } 
             const dogEmbed = new Discord.RichEmbed()
