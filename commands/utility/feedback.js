@@ -10,7 +10,7 @@ module.exports = class sayCommand extends Command {
             args: [
                 {
                     key: 'text',
-                    prompt: 'What do you want to send as a feedback?',
+                    prompt: 'What would you want to send as feedback?',
                     type: 'string',
                 }
             ]
@@ -20,6 +20,6 @@ module.exports = class sayCommand extends Command {
     async run(message, { text }) {
         const channel = this.client.channels.get(feedbackChannel);
         channel.send(`from ${message.author}: ${text}`);
-            message.say('Your feedback have been sent!');
+            message.say('Your feedback has been sent!');
           }
 };
