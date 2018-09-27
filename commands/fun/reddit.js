@@ -29,11 +29,11 @@ module.exports = class redditCommand extends Command {
             if (body.data.children[i].data.over_18 == true) {
                 return message.say("No nsfw")
             } 
-            const dogEmbed = new Discord.RichEmbed()
+            const redditEmbed = new Discord.RichEmbed()
             .setColor("#ff9900")
             .setTitle(body.data.children[i].data.title)
             .setImage(body.data.children[i].data.preview.images[0].source.url)
             
-            message.say(dogEmbed);
+            message.say(redditEmbed);
         }
     }
