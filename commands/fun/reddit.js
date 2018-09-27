@@ -1,7 +1,7 @@
 const { Command } = require('discord.js-commando');
 const Discord = require('discord.js');
 const snekfetch = require('snekfetch');
-module.exports = class RandoCatCommand extends Command {
+module.exports = class redditCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'reddit',
