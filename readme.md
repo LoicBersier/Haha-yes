@@ -9,7 +9,7 @@ To install the bot do the following commands
 ```
 git clone https://gitlab.com/loicbersier/discordbot
 npm init -y
-npm install discord.js discord.js-commando
+npm install
 ```
 If you want to play music with the bot you will to first enable the music command by renaming  "music" to "music.js" and after that you need node-opus and ytdl-core
 ```
