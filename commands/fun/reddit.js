@@ -22,16 +22,16 @@ module.exports = class redditCommand extends Command {
         const { body } = await snekfetch.get('https://www.reddit.com/r/' + sub + '.json?limit=100');
         let /* the bodies hit the floor */ i = Math.floor((Math.random() * 10) + 1);
         let a = 0
-        if (!body.data.children[1]) {
+        if (!body.data.children[1])
             return message.say('Not a valid subreddit')
-        }
-        while (body.data.children[i].data.post_hint !== 'image' || a == 5) {
+        while (body.data.children[i].data.post_hint !== 'image') {
             i = Math.floor((Math.random() * 100) + 1);
             a++
+            if (a == 5)
+                return message.say("Could not find any images")
         }
-            if (body.data.children[i].data.over_18 == true) {
+            if (body.data.children[i].data.over_18 == true)
                 return message.say("No nsfw ( if you want a nsfw version of this commands use the feedback commands \"haha feedback <your feedback>\")")
-            } 
             const redditEmbed = new Discord.RichEmbed()
             .setColor("#ff9900")
             .setTitle(body.data.children[i].data.title)
