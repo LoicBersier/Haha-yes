@@ -13,9 +13,6 @@ module.exports = class RandoCatCommand extends Command {
 
     async run(message, { city }) {
         const { body } = await snekfetch.get(`http://aws.random.cat/meow`);
-        if (body.cod == '404') {
-            return message.say(`No results found for **${city}**`);
-        }
         const dogEmbed = new Discord.RichEmbed()
         .setColor("#ff9900")
         .setTitle('Meow')

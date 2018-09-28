@@ -20,9 +20,8 @@ module.exports = class KickCommand extends Command {
     }
 
     async run(message, { member }) {
-        if(member.id === message.author.id) {
-            message.say("Why would you kick yourself ?")
-        } else
+        if(member.id === message.author.id)
+            return message.say("Why would you kick yourself ?")
         member.kick()
         .then(() => message.reply(`${member.user.username} was succesfully kicked.`));
         };

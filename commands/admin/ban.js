@@ -20,9 +20,8 @@ module.exports = class BanCommand extends Command {
     }
 
     async run(message, { member }) {
-        if(member.id === message.author.id) {
-            message.say("Why would you ban yourself ?")
-        } else
+        if(member.id === message.author.id)
+            return message.say("Why would you ban yourself ?")
         member.ban()
             .then(() => message.reply(`${member.user.username} was succesfully banned.`));
         };
