@@ -23,11 +23,12 @@ module.exports = class redditCommand extends Command {
         let a = 0
         fetch('https://www.reddit.com/r/' + sub + '.json?limit=100').then((response) => {
             return response.json();
-          }).then((response) => { 
+        }).then((response) => { 
             if (!response.data)
                 return message.say('Not a valid subreddit')
             while (response.data.children[i].data.post_hint !== 'image') {
-                i = Math.floor((Math.random() * 100) + 1);
+                i = Math.floor((Math.random() * response.data.children.length));
+
                 a++
                 if (a == 5)
                     return message.say("Could not find any images")
