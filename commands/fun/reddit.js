@@ -1,6 +1,6 @@
 const { Command } = require('discord.js-commando');
 const Discord = require('discord.js');
-const snekfetch = require('snekfetch');
+const fetch = require('node-fetch');
 module.exports = class redditCommand extends Command {
     constructor(client) {
         super(client, {
@@ -19,26 +19,29 @@ module.exports = class redditCommand extends Command {
     }
 
     async run(message, { sub }) {
-        const { body } = await snekfetch.get('https://www.reddit.com/r/' + sub + '.json?limit=100');
         let /* the bodies hit the floor */ i = Math.floor((Math.random() * 10) + 1);
         let a = 0
-        if (!body.data.children[1])
-            return message.say('Not a valid subreddit')
-        while (body.data.children[i].data.post_hint !== 'image') {
-            i = Math.floor((Math.random() * 100) + 1);
-            a++
-            if (a == 5)
-                return message.say("Could not find any images")
-        }
-            if (body.data.children[i].data.over_18 == true)
-                return message.say("No nsfw ( if you want a nsfw version of this commands use the feedback commands \"haha feedback <your feedback>\")")
-            const redditEmbed = new Discord.RichEmbed()
-            .setColor("#ff9900")
-            .setTitle(body.data.children[i].data.title)
-            .setImage(body.data.children[i].data.url)
-            .setURL('https://reddit.com' + body.data.children[i].data.permalink)
-            .setFooter(`⬆ ${body.data.children[i].data.ups}     💬 ${body.data.children[i].data.num_comments}`)
-            
-            message.say(redditEmbed);
-        }
-    }
+        fetch('https://www.reddit.com/r/' + sub + '.json?limit=100').then((response) => {
+            return response.json();
+          }).then((response) => { 
+            if (!response.data)
+                return message.say('Not a valid subreddit')
+            while (response.data.children[i].data.post_hint !== 'image') {
+                i = Math.floor((Math.random() * 100) + 1);
+                a++
+                if (a == 5)
+                    return message.say("Could not find any images")
+            }
+                if (response.data.children[i].data.over_18 == true)
+                    return message.say("No nsfw ( if you want a nsfw version of this commands use the feedback commands \"haha feedback <your feedback>\")")
+                const redditEmbed = new Discord.RichEmbed()
+                .setColor("#ff9900")
+                .setTitle(response.data.children[i].data.title)
+                .setImage(response.data.children[i].data.url)
+                .setURL('https://reddit.com' + response.data.children[i].data.permalink)
+                .setFooter(`⬆ ${response.data.children[i].data.ups}     💬 ${response.data.children[i].data.num_comments}`)
+                
+                message.say(redditEmbed);
+            }
+        
+)}}

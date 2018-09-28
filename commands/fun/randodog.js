@@ -1,24 +1,27 @@
 const { Command } = require('discord.js-commando');
 const Discord = require('discord.js');
-const snekfetch = require('snekfetch');
-module.exports = class RandoDogCommand extends Command {
+const fetch = require('node-fetch')
+module.exports = class RandoCatCommand extends Command {
     constructor(client) {
         super(client, {
-            name: 'randodog',
+            name: 'randocat',
             group: 'fun',
-            memberName: 'randodog',
-            description: `Show a random doggy`,
+            memberName: 'randocat',
+            description: `Show a random cat`,
         });
     }
 
-    async run(message, { city }) {
-        const { body } = await snekfetch.get(`https://random.dog/woof.json`);
+    async run(message) {
+
+        fetch("https://random.dog/woof.json").then((response) => {
+  return response.json();
+}).then((response) => {
         const dogEmbed = new Discord.RichEmbed()
         .setColor("#ff9900")
-        .setTitle('Woof')
-        .setImage(body.url)
+        .setTitle('Meow')
+        .setImage(response.file)
 
 
             message.say(dogEmbed);
-          }
-};
+          });
+}};

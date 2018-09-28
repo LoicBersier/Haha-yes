@@ -20,6 +20,6 @@
   "dependencies": {
     "discord.js": "^11.4.2",
     "discord.js-commando": "^0.10.0",
-    "snekfetch": "^4.0.4"
+    "node-fetch": "^2.2.0"
   }
 }
