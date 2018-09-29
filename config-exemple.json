@@ -2,7 +2,6 @@
     "token":    "Your token",
     "prefix":   "your prefix",
     "ownerID":  "Your id",
-    "botID":    "ID of the bot",
     "statsChannel": "ID of the channel that the bot are going to post its stats",
     "supportServer": "Invite link for the support server of the bot"
 }
