@@ -15,7 +15,7 @@ module.exports = class MeowCommand extends Command {
         let hours = Math.floor(totalSeconds / 3600);
         totalSeconds %= 3600;
         let minutes = Math.floor(totalSeconds / 60);
-        let seconds = totalSeconds % 60;
+        let seconds = totalSeconds.toFixed(0) % 60;
         let uptime = `${days} days, ${hours} hours, ${minutes} minutes and ${seconds} seconds`;
         return message.channel.send(`Servers: \`${this.client.guilds.size}\`\nChannels: \`${this.client.channels.size}\`\nUsers: \`${this.client.users.size}\`\nBot uptime: \`${uptime}\``);
     }
