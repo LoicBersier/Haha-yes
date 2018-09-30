@@ -19,7 +19,7 @@ module.exports = class redditCommand extends Command {
     }
 
     async run(message, { sub }) {
-        let /* the bodies hit the floor */ i = Math.floor((Math.random() * 10) + 1);
+        let /* the bodies hit the */ i = Math.floor((Math.random() * 10) + 1);
         let a = 0
         fetch('https://www.reddit.com/r/' + sub + '.json?limit=100').then((response) => {
             return response.json();
