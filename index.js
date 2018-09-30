@@ -69,18 +69,13 @@ client.registry
 
     client.on("message", async (message) => {
         let message_content = message.content.toLowerCase();
-
 //  React to the message and send an auto response with it
         if (message.author.bot) return; {
 //  Reply with images as attachement
         if(imgResponseObject[message_content]) {
             message.channel.send({files: [imgResponseObject[message_content]]}); 
-        }
-        else if(responseObject[message_content] && reactObject[message_content]) {
-            message.channel.send(responseObject[message_content]);
-            message.react(reactObject[message_content]);
-//  React only to the messages
         } 
+//  React only to the messages
         else if(reactObject[message_content]) {
             message.react(reactObject[message_content]);
         }
