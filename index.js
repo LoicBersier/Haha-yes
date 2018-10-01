@@ -46,7 +46,7 @@ client.registry
         .setColor("#52e80d")
         .setTitle('Someone added me ! YAY :D')
         .setThumbnail(guild.iconURL)
-        .setDescription(`${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\nOwner ID: ${guild.owner}`)
+        .setDescription(`${guild.name}\n${guild.id}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\n(${guild.owner})`)
         .setTimestamp()
         
         channel.send({ embed: addEmbed });
@@ -61,7 +61,7 @@ client.registry
         .setColor("#FF0000")
         .setTitle('They kicked me out :(')
         .setThumbnail(guild.iconURL)
-        .setDescription(`${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\nOwner ID: ${guild.owner}`)
+        .setDescription(`${guild.name}\n${guild.id}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\n(${guild.owner})`)
         .setTimestamp()
 
         channel.send({ embed: kickEmbed });
