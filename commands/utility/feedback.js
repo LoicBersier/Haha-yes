@@ -1,6 +1,6 @@
 const { Command } = require('discord.js-commando');
 const { feedbackChannel } = require('../../config.json');
-module.exports = class sayCommand extends Command {
+module.exports = class feedbackCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'feedback',
