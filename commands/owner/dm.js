@@ -25,6 +25,6 @@ module.exports = class dmCommand extends Command {
     async run(message, { id, text }) {
         const user = this.client.users.get(id);
         user.send(`**Message from the dev**\n${text}`)
-        message.send('DM sent')
+        message.say('DM sent')
     }
 };
