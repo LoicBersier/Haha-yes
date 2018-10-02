@@ -1,5 +1,4 @@
 const { Command } = require('discord.js-commando');
-const Discord = require('discord.js');
 const fetch = require('node-fetch')
 module.exports = class BadMemeCommand extends Command {
     constructor(client) {
@@ -7,7 +6,7 @@ module.exports = class BadMemeCommand extends Command {
             name: 'badmeme',
             group: 'fun',
             memberName: 'badmeme',
-            description: `Show a random dog`,
+            description: `Take random images from imgur`,
         });
     }
 
