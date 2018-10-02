@@ -12,7 +12,7 @@ module.exports = class BadMemeCommand extends Command {
 
     async run(message) {
 
-        fetch("https://api.imgur.com/3/gallery/hot/top/day?showViral=true&mature=false&perPage=100&album_previews=true", {
+        fetch("https://api.imgur.com/3/gallery/hot/day?showViral=true&mature=false&perPage=100&album_previews=true", {
             headers: { "Authorization": "Client-ID e4cb6948f80f295" },
         }).then((response) => {
   return response.json();
