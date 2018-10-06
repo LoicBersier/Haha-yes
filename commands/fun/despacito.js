@@ -1,4 +1,5 @@
 const { Command } = require('discord.js-commando');
+const responseObject = require("../../json/despacito.json");
 module.exports = class DespacitoCommand extends Command {
     constructor(client) {
         super(client, {
@@ -10,9 +11,8 @@ module.exports = class DespacitoCommand extends Command {
     }
 
     async run(message) {
-        message.say("DES\nPA\nCITO");
-        message.channel.send({files: ["https://images-eu.ssl-images-amazon.com/images/I/619fzjO1rmL._SS500.jpg"]}); 
-        message.channel.send({files: ["https://cdn.dopl3r.com/memes_files/despacito-eS6Lm.jpg"]}); 
-        message.say("https://www.youtube.com/watch?v=kJQP7kiw5Fk");
+        const number = Object.keys(responseObject).length;
+        const despacitoNumber = Math.floor (Math.random() * (number - 1 + 1)) + 1;
+            message.channel.send({files: [responseObject[despacitoNumber]]});
           }
 };
