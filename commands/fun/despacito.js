@@ -7,12 +7,23 @@ module.exports = class DespacitoCommand extends Command {
             group: 'fun',
             memberName: 'despacito',
             description: `despacito`,
+            args: [
+                {
+                    key: 'user',
+                    prompt: 'What do you want me to say',
+                    type: 'member',
+                    default: ''
+                }
+            ]
         });
     }
 
-    async run(message) {
+    async run(message, { user }) {
+        if (!user) {
         const number = Object.keys(responseObject).length;
         const despacitoNumber = Math.floor (Math.random() * (number - 1 + 1)) + 1;
             message.channel.send({files: [responseObject[despacitoNumber]]});
-          }
+          } else 
+          message.say(`${user}, you have been despacitoad`)
+        } 
 };
