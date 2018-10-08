@@ -24,7 +24,9 @@ client.registry
         ['owner',   'Owner'],
     ])
     .registerDefaultGroups()
-    .registerDefaultCommands()
+    .registerDefaultCommands({
+        help: false
+    })
     .registerCommandsIn(path.join(__dirname, 'commands'));
 //  Ready messages
     client.on('ready', async () => {
