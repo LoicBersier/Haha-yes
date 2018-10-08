@@ -25,6 +25,8 @@ module.exports = class DespacitoCommand extends Command {
             message.channel.send({files: [responseObject[despacitoNumber]]});
           } else if (user.id === message.author.id) {
            message.say(`Did you just try to despacitoad yourself?`)
+        } else if (user.id === this.client.user.id) {
+            message.say('Nice try but you wont get me :^)')
         } else
         message.say(`${user}, you have been despacitoad`)
         } 
