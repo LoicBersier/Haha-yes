@@ -19,10 +19,9 @@ module.exports = class emoteSayCommand extends Command {
 
     async run(message, { text }) {
         message.delete();
-        text.toLowerCase().split('')
         let emojiArray = [];
         for (let i = 0; i < text.length; i++)
-            emojiArray[i] = emojiCharacters[text[i]];
+            emojiArray[i] = emojiCharacters[text.toLowerCase().split('')[i]];
         message.say(emojiArray.join(""))
         
 

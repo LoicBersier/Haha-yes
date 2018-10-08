@@ -82,7 +82,11 @@ client.registry
 //  auto respond to messages
         else if(responseObject[message_content]) {
             message.channel.send(responseObject[message_content]);
-        } 
+        } else if (message_content.includes("like if")) {
+            message.react("\u{1F44D}")
+        } else if (message_content.includes("jeff")) {
+            message.react("496028845967802378")
+        }
     }});
 
     client.on('error', console.error);
