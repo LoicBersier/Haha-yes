@@ -3,7 +3,7 @@ module.exports = class supportMeCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'supportme',
-            group: 'fun',
+            group: 'utility',
             memberName: 'supportme',
             description: `Support me and my bot`,
         });
