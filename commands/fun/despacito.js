@@ -22,11 +22,12 @@ module.exports = class DespacitoCommand extends Command {
         if (!user) {
         const number = Object.keys(responseObject).length;
         const despacitoNumber = Math.floor (Math.random() * (number - 1 + 1)) + 1;
-            message.channel.send({files: [responseObject[despacitoNumber]]});
+        if (!user)
+            return message.channel.send({files: [responseObject[despacitoNumber]]});
           } else if (user.id === message.author.id) {
-           message.say(`Did you just try to despacitoad yourself?`);
+           return message.say(`Did you just try to despacitoad yourself?`);
         } else if (user.id === this.client.user.id) {
-            message.say('Nice try but you wont get me :^)');
+            return message.say('Nice try but you wont get me :^)');
         } else
         message.delete();
         message.say(`${user}, you have been despacitoad`);
