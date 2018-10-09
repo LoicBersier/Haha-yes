@@ -66,6 +66,7 @@ client.registry
         .setDescription(`${guild.name}\n${guild.id}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\n(${guild.owner})`)
         .setTimestamp()
 
+        console.log('***BOT KICKED***')
         channel.send({ embed: kickEmbed });
     });
 
