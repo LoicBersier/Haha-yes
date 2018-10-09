@@ -25,7 +25,8 @@ client.registry
     ])
     .registerDefaultGroups()
     .registerDefaultCommands({
-        help: false
+        help: false,
+        ping: false
     })
     .registerCommandsIn(path.join(__dirname, 'commands'));
 //  Ready messages
