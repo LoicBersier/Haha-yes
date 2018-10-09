@@ -25,7 +25,8 @@ client.registry
     ])
     .registerDefaultGroups()
     .registerDefaultCommands({
-        help: false
+        help: false,
+        ping: false
     })
     .registerCommandsIn(path.join(__dirname, 'commands'));
 //  Ready messages
@@ -66,6 +67,7 @@ client.registry
         .setDescription(`${guild.name}\n${guild.id}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\n(${guild.owner})`)
         .setTimestamp()
 
+        console.log('***BOT KICKED***')
         channel.send({ embed: kickEmbed });
     });
 

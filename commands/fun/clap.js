@@ -19,5 +19,5 @@ module.exports = class clapCommand extends Command {
     async run(message, { text }) {
             let clap = text.replace(/ /g, ' 👏 ');
             message.delete();
-            message.say(clap);
+            message.say(`${clap} 👏`);
 }};
