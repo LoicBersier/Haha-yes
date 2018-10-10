@@ -13,14 +13,19 @@ module.exports = class faceappCommand extends Command {
                     key: 'url',
                     prompt: 'Wich image would you want to process',
                     type: 'string',
+                },
+                {
+                    key: 'type',
+                    prompt: 'How the face should change ?',
+                    type: 'string',
                 }
             ]
         });
     }
 
-    async run(message, { url }) {
+    async run(message, { url, type }) {
         let { body } = await superagent.get(url)
-        let image = await faceapp.process(body, 'hot')
+        let image = await faceapp.process(body, type)
         message.channel.sendFile(image)
           }
 };
