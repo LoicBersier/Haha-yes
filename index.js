@@ -32,8 +32,8 @@ client.registry
 //  Ready messages
     client.on('ready', async () => {
 //  Send stats to the console
-        console.log(`Logged in as ${client.user.tag}! (${client.user.id})`);
-        console.log(`Ready to serve in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users. ${client.readyAt}`);
+        console.log(`\x1b[32mLogged in as \x1b[34m${client.user.tag}\x1b[0m! (\x1b[33m${client.user.id}\x1b[0m)`);
+        console.log(`Ready to serve in \x1b[33m${client.channels.size}\x1b[0m channels on \x1b[33m${client.guilds.size}\x1b[0m servers, for a total of \x1b[33m${client.users.size}\x1b[0m users. \x1b${client.readyAt}\x1b[0m`);
 //  Send stats to the "stats" channel in the support server if its not the test bot
         if (client.user.id == 377563711927484418) {
         const channel = client.channels.get(statsChannel);
