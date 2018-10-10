@@ -24,8 +24,10 @@ module.exports = class youtubeCommand extends Command {
             .pipe(fs.createWriteStream('video.mp4'))
             setTimeout(function(){
             message.channel.sendFile("./video.mp4")
+            .catch(error => {
+                message.say('Video too long')
+            })
             }, 2000)
-            process.on('unhandledRejection',error => message.say('Video too long'));
         }
 
 }
