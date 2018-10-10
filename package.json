@@ -20,7 +20,9 @@
   "dependencies": {
     "discord.js": "^11.4.2",
     "discord.js-commando": "^0.10.0",
+    "faceapp": "^0.4.4",
     "node-fetch": "^2.2.0",
+    "superagent": "^4.0.0-beta.5",
     "ytdl-core": "^0.26.1"
   }
 }
