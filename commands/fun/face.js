@@ -24,8 +24,9 @@ module.exports = class faceappCommand extends Command {
     }
 
     async run(message, { url, type }) {
+        let face = type.toLowerCase();
         let { body } = await superagent.get(url)
-        let image = await faceapp.process(body, type)
+        let image = await faceapp.process(body, face)
         message.channel.sendFile(image)
           }
 };
