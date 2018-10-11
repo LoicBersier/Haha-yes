@@ -20,6 +20,7 @@ module.exports = class youtubeCommand extends Command {
     }
 
     async run(message, { link }) {
+        if(link.includes("http") || link.includes("www")) {
             ytdl(link, { filter: (format) => format.container === 'mp4' })
             .pipe(fs.createWriteStream('video.mp4'))
             setTimeout(function(){
@@ -27,7 +28,8 @@ module.exports = class youtubeCommand extends Command {
             .catch(error => {
                 message.say('Video too long')
             })
-            }, 2000)
+            }, 5000)
         }
+    }
 
 }
