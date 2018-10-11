@@ -33,8 +33,7 @@ module.exports = class InfoCommand extends Command {
     .addField("Topic", response.meta.topic)
     .setImage(response.Image)
     .setTimestamp()
-    .setFooter("Provided to you by DuckDuckgo", "https://i.imgur.com/POGt26Z.png")
-    
+        
     message.say(ddgEmbed);
 });
 }};
