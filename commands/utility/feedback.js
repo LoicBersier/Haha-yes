@@ -8,6 +8,10 @@ module.exports = class feedbackCommand extends Command {
             group: 'utility',
             memberName: 'feedback',
             description: `Send feedback`,
+            throttling: {
+                usages: 1,
+                duration: 60,
+            },
             args: [
                 {
                     key: 'text',
