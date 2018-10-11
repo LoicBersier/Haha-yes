@@ -29,7 +29,8 @@ module.exports = class youtubeCommand extends Command {
                 message.say('Video too long')
             })
             }, 5000)
-        }
+        } else 
+            message.say("You need to input a valid youtube link")
     }
 
 }
