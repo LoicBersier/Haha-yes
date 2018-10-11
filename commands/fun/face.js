@@ -16,8 +16,9 @@ module.exports = class faceappCommand extends Command {
                 },
                 {
                     key: 'type',
-                    prompt: 'How the face should change ?',
+                    prompt: 'How the face should change ? (default to female)',
                     type: 'string',
+                    oneOf: ["no-filter", "smile", "smile_2", "hot", "old", "young", "hollywood", "fun_glasses", "hitman", "mustache_free", "pan", "heisenberg", "female", "female_2", "male", "impression", "goatee", "mustache", "hipster", "lion", "bangs", "glasses", "wave", "makeup"]
                 }
             ]
         });
@@ -29,7 +30,7 @@ module.exports = class faceappCommand extends Command {
         let { body } = await superagent.get(url)
         let image = await faceapp.process(body, face)
         message.channel.sendFile(image)
-    } else 
-    message.say("You need to input a link")
-          }
+    } else
+        message.say("You need to input a link")
+    }
 };
