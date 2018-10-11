@@ -24,9 +24,12 @@ module.exports = class faceappCommand extends Command {
     }
 
     async run(message, { url, type }) {
+        if(url.includes("http") || url.includes("www")) {
         let face = type.toLowerCase();
         let { body } = await superagent.get(url)
         let image = await faceapp.process(body, face)
         message.channel.sendFile(image)
+    } else 
+    message.say("You need to input a link")
           }
 };
