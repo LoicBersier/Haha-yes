@@ -18,6 +18,7 @@ module.exports = class faceappCommand extends Command {
                     key: 'type',
                     prompt: 'How the face should change ? (default to female)',
                     type: 'string',
+                    default: 'female',
                     oneOf: ["no-filter", "smile", "smile_2", "hot", "old", "young", "hollywood", "fun_glasses", "hitman", "mustache_free", "pan", "heisenberg", "female", "female_2", "male", "impression", "goatee", "mustache", "hipster", "lion", "bangs", "glasses", "wave", "makeup"]
                 }
             ]
