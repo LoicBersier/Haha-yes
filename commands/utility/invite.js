@@ -11,6 +11,6 @@ module.exports = class InviteCommand extends Command {
     }
 
     async run(message) {
-        return message.say(`You can add me from here: https://discordapp.com/oauth2/authorize?client_id=${this.client.user.id}&scope=bot&permissions=0\nYou can join my support server over here: ${supportServer} come and say hi :)`);
+        return message.say(`You can add me from here: https://discordapp.com/oauth2/authorize?client_id=${this.client.user.id}&scope=bot&permissions=0\nYou can also join my support server over here: ${supportServer} come and say hi :)`);
     }
 };
