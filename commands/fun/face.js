@@ -30,6 +30,10 @@ module.exports = class faceappCommand extends Command {
         let face = type.toLowerCase();
         let { body } = await superagent.get(url)
         let image = await faceapp.process(body, face)
+        .catch(error => {
+            message.say('Cant recognize the face')
+            console.error(error)
+        })
         message.channel.sendFile(image)
     } else
         message.say("You need to input a link")
