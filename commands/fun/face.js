@@ -29,25 +29,20 @@ module.exports = class faceappCommand extends Command {
     async run(message, { url, type }) {
 
         let Attachment = (message.attachments).array();
+        let origin = null;
         if(!Attachment[0] && !url) {
             return message.say("You need to send an image")
         } else if(url.includes("http") || url.includes("www")) {
+            origin = url;
+    } else 
+        origin = Attachment[0].url
+
         let face = type.toLowerCase();
-        let { body } = await superagent.get(url)
+        let { body } = await superagent.get(origin)
         let image = await faceapp.process(body, face)
         .catch(error => {
             message.say('Cant recognize the face')
             console.error(error)
         })
         return message.channel.send({files: [image]});
-    } else {
-        let face = type.toLowerCase();
-        let { body } = await superagent.get(Attachment[0].url)
-        let image = await faceapp.process(body, face)
-        .catch(error => {
-            message.say('Cant recognize the face')
-            console.error(error)
-        })
-        return message.channel.send({files: [image]});
-    }
 }};
