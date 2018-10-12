@@ -9,7 +9,7 @@ module.exports = class feedbackCommand extends Command {
             memberName: 'feedback',
             description: `Send feedback`,
             throttling: {
-                usages: 1,
+                usages: 2,
                 duration: 60,
             },
             args: [
@@ -24,7 +24,7 @@ module.exports = class feedbackCommand extends Command {
 
     async run(message, { text }) {
         const channel = this.client.channels.get(feedbackChannel);
-        channel.send(`from ${message.author} (${message.author.id}): ${text}`);
+        channel.send(`from ${message.author.username} (${message.author} : ${message.author.id}): ${text}`);
             message.say('Your feedback has been sent!');
     }
 };
