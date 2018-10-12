@@ -10,17 +10,17 @@ module.exports = class faceappCommand extends Command {
             description: `use faceapp to change the face of someone, Here the available filter https://goo.gl/5LLbJJ`,
             args: [
                 {
-                    key: 'url',
-                    prompt: 'Wich image would you want to process (default to empty so you can also send an image without the adress)',
-                    type: 'string',
-                    default: ''
-                },
-                {
                     key: 'type',
                     prompt: 'How the face should change ? (default to female)',
                     type: 'string',
                     default: 'female',
                     oneOf: ["no-filter", "smile", "smile_2", "hot", "old", "young", "hollywood", "fun_glasses", "hitman", "mustache_free", "pan", "heisenberg", "female", "female_2", "male", "impression", "goatee", "mustache", "hipster", "lion", "bangs", "glasses", "wave", "makeup"]
+                },
+                {
+                    key: 'url',
+                    prompt: 'Wich image would you want to process (default to empty so you can also send an image without the adress)',
+                    type: 'string',
+                    default: ''
                 }
             ]
         });
