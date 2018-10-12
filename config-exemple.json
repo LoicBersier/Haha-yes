@@ -1,7 +1,9 @@
 {
-    "token":    "Your token",
-    "prefix":   "your prefix",
-    "ownerID":  "Your id",
-    "statsChannel": "ID of the channel that the bot are going to post its stats",
-    "supportServer": "Invite link for the support server of the bot"
+    "token": "Your token",
+    "prefix": "Your prefix ",
+    "ownerID":  "Id of the owner ( probably you )",
+    "botID":    "id of the bot",
+    "statsChannel": "channel where the bot send his stats",
+    "supportServer":    "Invite to the support server of the bot",
+    "feedbackChannel": "id of the channel where the feedback goes"
 }
