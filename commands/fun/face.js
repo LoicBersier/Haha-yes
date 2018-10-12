@@ -10,11 +10,6 @@ module.exports = class faceappCommand extends Command {
             description: `use faceapp to change the face of someone, Here the available filter https://goo.gl/5LLbJJ`,
             args: [
                 {
-                    key: 'url',
-                    prompt: 'Wich image would you want to process',
-                    type: 'string',
-                },
-                {
                     key: 'type',
                     prompt: 'How the face should change ? (default to female)',
                     type: 'string',
@@ -25,9 +20,9 @@ module.exports = class faceappCommand extends Command {
         });
     }
 
-    async run(message, { url, type }) {
+    async run(message, { type }) {
 
-        var Attachment = (message.attachments).array();
+        let Attachment = (message.attachments).array();
 
         let face = type.toLowerCase();
         let { body } = await superagent.get(Attachment[0].url)
