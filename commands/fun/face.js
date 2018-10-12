@@ -10,6 +10,12 @@ module.exports = class faceappCommand extends Command {
             description: `use faceapp to change the face of someone, Here the available filter https://goo.gl/5LLbJJ`,
             args: [
                 {
+                    key: 'url',
+                    prompt: 'Wich image would you want to process',
+                    type: 'string',
+                    default: ''
+                },
+                {
                     key: 'type',
                     prompt: 'How the face should change ? (default to female)',
                     type: 'string',
@@ -20,12 +26,21 @@ module.exports = class faceappCommand extends Command {
         });
     }
 
-    async run(message, { type }) {
+    async run(message, { url, type }) {
 
         let Attachment = (message.attachments).array();
         console.log(Attachment)
-        if(!Attachment[0]) {
+        if(!Attachment[0] && !url) {
             return message.say("You need to send an image")
+        } else if(url.includes("http") || url.includes("www")) {
+        let face = type.toLowerCase();
+        let { body } = await superagent.get(url)
+        let image = await faceapp.process(body, face)
+        .catch(error => {
+            message.say('Cant recognize the face')
+            console.error(error)
+        })
+        message.channel.sendFile(image)
         } else {
         let face = type.toLowerCase();
         let { body } = await superagent.get(Attachment[0].url)
