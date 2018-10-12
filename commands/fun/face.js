@@ -11,7 +11,7 @@ module.exports = class faceappCommand extends Command {
             args: [
                 {
                     key: 'url',
-                    prompt: 'Wich image would you want to process',
+                    prompt: 'Wich image would you want to process (default to empty so you can also send an image without the adress)',
                     type: 'string',
                     default: ''
                 },
