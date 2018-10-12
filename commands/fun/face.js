@@ -23,7 +23,10 @@ module.exports = class faceappCommand extends Command {
     async run(message, { type }) {
 
         let Attachment = (message.attachments).array();
-
+        console.log(Attachment)
+        if(!Attachment[0]) {
+            return message.say("You need to send an image")
+        } else {
         let face = type.toLowerCase();
         let { body } = await superagent.get(Attachment[0].url)
         let image = await faceapp.process(body, face)
@@ -32,4 +35,5 @@ module.exports = class faceappCommand extends Command {
             console.error(error)
         })
         message.channel.sendFile(image)
+    }
 }};
