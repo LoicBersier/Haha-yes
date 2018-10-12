@@ -29,7 +29,6 @@ module.exports = class faceappCommand extends Command {
     async run(message, { url, type }) {
 
         let Attachment = (message.attachments).array();
-        console.log(Attachment)
         if(!Attachment[0] && !url) {
             return message.say("You need to send an image")
         } else if(url.includes("http") || url.includes("www")) {
