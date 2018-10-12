@@ -26,6 +26,8 @@ module.exports = class BanCommand extends Command {
     }
 
     async run(message, { member, reasons }) {
+        if(!reasons)
+            reasons = 'Nothing have been specified'
         if(member.id === message.author.id)
             return message.say("Why would you ban yourself ?")
         member.ban(reasons)
