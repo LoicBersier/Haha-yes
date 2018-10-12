@@ -14,15 +14,21 @@ module.exports = class KickCommand extends Command {
                     key: 'member',
                     prompt: 'Wich member would you like to kick?',
                     type: 'member',
-                }
+                },
+                {
+                    key: 'reasons',
+                    prompt: 'What is the reasons of the kick',
+                    type: 'string',
+                    default: ''
+                } 
             ]
         });
     }
 
-    async run(message, { member }) {
+    async run(message, { member, reasons }) {
         if(member.id === message.author.id)
             return message.say("Why would you kick yourself ?")
-        member.kick()
-        .then(() => message.reply(`${member.user.username} was succesfully kicked.`));
+        member.kick(reasons)
+        .then(() => message.reply(`${member.user.username} was succesfully kicked with the following reasons "${reasons}".`));
         };
 };

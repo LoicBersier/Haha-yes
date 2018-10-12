@@ -14,15 +14,21 @@ module.exports = class BanCommand extends Command {
                     key: 'member',
                     prompt: 'Wich member would you like to ban?',
                     type: 'member',
-                }
+                },
+                {
+                    key: 'reasons',
+                    prompt: 'What is the reasons of the kick',
+                    type: 'string',
+                    default: ''
+                } 
             ]
         });
     }
 
-    async run(message, { member }) {
+    async run(message, { member, reasons }) {
         if(member.id === message.author.id)
             return message.say("Why would you ban yourself ?")
-        member.ban()
-            .then(() => message.reply(`${member.user.username} was succesfully banned.`));
+        member.ban(reasons)
+            .then(() => message.reply(`${member.user.username} was succesfully banned with the following reasons "${reasons}".`));
         };
 };
