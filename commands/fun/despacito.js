@@ -1,5 +1,8 @@
 const { Command } = require('discord.js-commando');
 const responseObject = require("../../json/despacito.json");
+const { createCanvas, loadImage, getContext } = require('canvas')
+const superagent = require('superagent')
+const Discord = require('discord.js');
 module.exports = class DespacitoCommand extends Command {
     constructor(client) {
         super(client, {
@@ -11,7 +14,7 @@ module.exports = class DespacitoCommand extends Command {
                 {
                     key: 'user',
                     prompt: 'What do you want me to say',
-                    type: 'member',
+                    type: 'user',
                     default: ''
                 }
             ]
@@ -19,6 +22,15 @@ module.exports = class DespacitoCommand extends Command {
     }
 
     async run(message, { user }) {
+        const canvas = createCanvas(660, 660);
+        const ctx = canvas.getContext('2d');
+        const background = await loadImage(user.avatarURL);
+        ctx.drawImage(background, 5, 12, canvas.width, canvas.height);
+        const { body: buffer } = await superagent.get('https://image.noelshack.com/fichiers/2018/41/6/1539381851-untitled.png');
+        const bg = await loadImage(buffer);
+        ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
+        const attachment = new Discord.Attachment(canvas.toBuffer(), 'despacito.png');
+
         if (!user) {
         const number = Object.keys(responseObject).length;
         const despacitoNumber = Math.floor (Math.random() * (number - 1 + 1)) + 1;
@@ -28,8 +40,11 @@ module.exports = class DespacitoCommand extends Command {
            return message.say(`Did you just try to despacitoad yourself?`);
         } else if (user.id === this.client.user.id) {
             return message.say('Nice try but you wont get me :^)');
-        } else
+        } else {
         message.delete();
-        message.say(`${user}, you have been despacitoad`);
-        } 
+        message.say(`${user}, you have been despacitoad`, attachment);
+    }
+
+        
+} 
 };
