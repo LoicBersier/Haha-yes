@@ -6,16 +6,23 @@ module.exports = class AvatarCommand extends Command {
             group: 'utility',
             memberName: 'avatar',
             description: 'Send the avatar of the mentionned user.',
+            memberName: 'say',
+            description: `Repeat the text you send`,
+            args: [
+                {
+                    key: 'user',
+                    prompt: 'What do you want me to say',
+                    type: 'user',
+                    default: ''
+                }
+            ]
         });
     }
 
-    async run(message) {
-        if (!message.mentions.users.size)
-            return message.channel.send(`Your avatar: ${message.author.displayAvatarURL}`);
-
-        const avatarList = message.mentions.users.map(user => {
-            return `${user.username}'s avatar: ${user.displayAvatarURL}`;
-        });
-        message.channel.send(avatarList);
+    async run(message, { user }) {
+        if (!user)
+            return message.say(`Your avatar:\n${message.author.displayAvatarURL}`);
+        else
+            return message.say(`${user.username}'s avatar:\n${user.displayAvatarURL}`);
     }
 };
