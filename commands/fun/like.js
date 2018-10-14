@@ -10,7 +10,7 @@ module.exports = class likeCommand extends Command {
             name: 'like',
             group: 'fun',
             memberName: 'like',
-            description: `Put the text you send in idubbbz piece of paper`,
+            description: `What the hell is this and why did my grandsone like it`,
         });
     }
 

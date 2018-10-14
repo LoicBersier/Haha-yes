@@ -11,7 +11,7 @@ module.exports = class idubbbzpaintCommand extends Command {
             aliases: ['idubbzpaint', 'edupspaint'],
             group: 'fun',
             memberName: 'painting',
-            description: `Put the text you send in idubbbz piece of paper`,
+            description: `Put the image you send or you in idubbbz painting`,
             args: [
                 {
                     key: 'text',
