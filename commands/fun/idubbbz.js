@@ -54,13 +54,10 @@ module.exports = class idubbbzCommand extends Command {
         const bg = await loadImage(buffer);
         ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
         ctx.font = applyText(canvas, test)
-        //ctx.font = '40px sans-serif';
-    // Select the style that will be used to fill the text in
         ctx.fillStyle = '#000000';
-    // Actually fill the text with a solid color
         ctx.fillText(test, canvas.width / 2.1, canvas.height / 1.5);
 
-        const attachment = new Discord.Attachment(canvas.toBuffer(), 'test.png');
+        const attachment = new Discord.Attachment(canvas.toBuffer(), 'edups.png');
 
         message.say(attachment);
 
