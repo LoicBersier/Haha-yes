@@ -4,17 +4,17 @@ const { createCanvas, loadImage, getContext } = require('canvas')
 const superagent = require('superagent')
 
 
-module.exports = class idubbbzCommand extends Command {
+module.exports = class idubbbzpaintCommand extends Command {
     constructor(client) {
         super(client, {
-            name: 'painting',
+            name: 'idubbbzpaint',
             aliases: ['idubbzpaint', 'edupspaint'],
             group: 'fun',
             memberName: 'painting',
             description: `Put the text you send in idubbbz piece of paper`,
             args: [
                 {
-                    key: 'test',
+                    key: 'text',
                     prompt: 'What do you the paper to say?',
                     type: 'string',
                     default: 'Perfection'
@@ -23,7 +23,7 @@ module.exports = class idubbbzCommand extends Command {
         });
     }
 
-    async run(message, { test }) {
+    async run(message, { text }) {
         let Attachment = (message.attachments).array();
         let image = null
         if (!Attachment[0])
@@ -53,9 +53,9 @@ module.exports = class idubbbzCommand extends Command {
         const { body: buffer } = await superagent.get('https://image.noelshack.com/fichiers/2018/41/7/1539533685-untitled.png');
         const bg = await loadImage(buffer);
         ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
-        ctx.font = applyText(canvas, test)
+        ctx.font = applyText(canvas, text)
         ctx.fillStyle = '#ffffff';
-        ctx.fillText(test, canvas.width / 3, canvas.height / 1.1);
+        ctx.fillText(text, canvas.width / 3, canvas.height / 1.1);
 
         const attachment = new Discord.Attachment(canvas.toBuffer(), 'edupspaint.png');
 
