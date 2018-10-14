@@ -4,12 +4,12 @@ const { createCanvas, loadImage, getContext } = require('canvas')
 const superagent = require('superagent')
 
 
-module.exports = class idubbbzCommand extends Command {
+module.exports = class likeCommand extends Command {
     constructor(client) {
         super(client, {
-            name: 'test',
+            name: 'like',
             group: 'fun',
-            memberName: 'test',
+            memberName: 'like',
             description: `Put the text you send in idubbbz piece of paper`,
         });
     }
