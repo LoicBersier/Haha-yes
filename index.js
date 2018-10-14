@@ -19,9 +19,11 @@ client.registry
     .registerDefaultTypes()
     .registerGroups([
         ['fun',     'Fun'],
+        ['images',     'Images'],
         ['utility', 'Utility'],
         ['admin',   'Admins'],
         ['owner',   'Owner'],
+
     ])
     .registerDefaultGroups()
     .registerDefaultCommands({

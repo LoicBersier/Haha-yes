@@ -8,7 +8,7 @@ module.exports = class godCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'god',
-            group: 'fun',
+            group: 'images',
             memberName: 'god',
             description: `Retweet if you aren't afraid to have a picture of god on your timeline`,
         });

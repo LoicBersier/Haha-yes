@@ -4,20 +4,20 @@ const { createCanvas, loadImage, getContext } = require('canvas')
 const superagent = require('superagent')
 
 
-module.exports = class idubbbzCommand extends Command {
+module.exports = class idubbbzpaintCommand extends Command {
     constructor(client) {
         super(client, {
-            name: 'idubbbz',
-            aliases: ['idubbz', 'edups'],
-            group: 'fun',
-            memberName: 'idubbbz',
-            description: `Put the text you send in idubbbz piece of paper`,
+            name: 'idubbbzpaint',
+            aliases: ['idubbzpaint', 'edupspaint'],
+            group: 'images',
+            memberName: 'painting',
+            description: `Put the image you send or you in idubbbz painting`,
             args: [
                 {
                     key: 'text',
                     prompt: 'What do you the paper to say?',
                     type: 'string',
-                    default: 'Nigger Faggot'
+                    default: 'Perfection'
                 }
             ]
         });
@@ -31,17 +31,17 @@ module.exports = class idubbbzCommand extends Command {
         else 
             image = Attachment[0].url
 
-            const canvas = createCanvas(1281, 627)
+            const canvas = createCanvas(1024, 544)
             const applyText = (canvas, text) => {
                 const ctx = canvas.getContext('2d');
             
                 // Declare a base size of the font
-                let fontSize = 50;
+                let fontSize = 100;
             
                 do {
                     // Assign the font to the context and decrement it so it can be measured again
                     ctx.font = `${fontSize -= 10}px sans-serif`;
-                } while (ctx.measureText(text).width > 700 - 300);
+                } while (ctx.measureText(text).width > 800 - 300);
             
                 // Return the result to use in the actual canvas
                 return ctx.font;
@@ -49,15 +49,15 @@ module.exports = class idubbbzCommand extends Command {
 
         const ctx = canvas.getContext('2d')
         const background = await loadImage(image);
-        ctx.drawImage(background, 620, 100, 200, 200);
-        const { body: buffer } = await superagent.get('https://image.noelshack.com/fichiers/2018/41/7/1539510207-untitled.png');
+        ctx.drawImage(background, 140, 30, 400, 400);
+        const { body: buffer } = await superagent.get('https://image.noelshack.com/fichiers/2018/41/7/1539533685-untitled.png');
         const bg = await loadImage(buffer);
         ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
         ctx.font = applyText(canvas, text)
-        ctx.fillStyle = '#000000';
-        ctx.fillText(text, canvas.width / 2.1, canvas.height / 1.5);
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText(text, canvas.width / 3, canvas.height / 1.1);
 
-        const attachment = new Discord.Attachment(canvas.toBuffer(), 'edups.png');
+        const attachment = new Discord.Attachment(canvas.toBuffer(), 'edupspaint.png');
 
         message.say(attachment);
 
