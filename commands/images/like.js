@@ -8,7 +8,7 @@ module.exports = class likeCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'like',
-            group: 'fun',
+            group: 'images',
             memberName: 'like',
             description: `What the hell is this and why did my grandsone like it`,
         });
