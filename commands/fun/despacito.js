@@ -25,7 +25,10 @@ module.exports = class DespacitoCommand extends Command {
         if (!user) {
         const number = Object.keys(responseObject).length;
         const despacitoNumber = Math.floor (Math.random() * (number - 1 + 1)) + 1;
-        return message.channel.send({files: [responseObject[despacitoNumber]]});
+        return message.channel.send({files: [responseObject[despacitoNumber]]}).catch(error => {
+            message.say('an error as occured')
+        })
+
         } else if (user.id === message.author.id) {
            return message.say(`Did you just try to despacitoad yourself?`);
         } else if (user.id === this.client.user.id) {
@@ -41,7 +44,9 @@ module.exports = class DespacitoCommand extends Command {
             const attachment = new Discord.Attachment(canvas.toBuffer(), 'despacito.png');
             
         message.delete();
-        message.say(`${user}, you have been despacitoad`, attachment);
+        message.say(`${user}, you have been despacitoad`, attachment).catch(error => {
+            message.say('an error as occured')
+        })
     }
 
         
