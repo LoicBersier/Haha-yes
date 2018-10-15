@@ -26,7 +26,9 @@ module.exports = class godCommand extends Command {
         const ctx = canvas.getContext('2d')
         const background = await loadImage(image);
         ctx.drawImage(background, 20, 80, 275, 250);
-        const { body: buffer } = await superagent.get('https://image.noelshack.com/fichiers/2018/42/1/1539555260-untitled.png');
+        const { body: buffer } = await superagent.get('https://image.noelshack.com/fichiers/2018/42/1/1539555260-untitled.png').catch(error => {
+            message.say('an error as occured. please try again.')
+        });
         const bg = await loadImage(buffer);
         ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
     
