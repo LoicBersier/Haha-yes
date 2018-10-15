@@ -32,7 +32,9 @@ module.exports = class humanCommand extends Command {
     
         const attachment = new Discord.Attachment(canvas.toBuffer(), 'edupspaint.png');
 
-        message.say(attachment);
+        message.say(attachment).catch(error => {
+            message.say('an error as occured. Check the bot/channel permissions')
+        })
 
           }
 };
