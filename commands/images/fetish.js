@@ -1,0 +1,46 @@
+const { Command } = require('discord.js-commando');
+const Discord = require('discord.js');
+const { createCanvas, loadImage, getContext } = require('canvas')
+const superagent = require('superagent')
+const blacklist = require('../../json/blacklist.json')
+
+
+
+module.exports = class fetishCommand extends Command {
+    constructor(client) {
+        super(client, {
+            name: 'fetish',
+            group: 'images',
+            memberName: 'fetish',
+            description: `My fetish`,
+        });
+    }
+
+    async run(message) {
+        if(blacklist[message.author.id])
+        return message.channel.send("You are blacklisted")
+        let Attachment = (message.attachments).array();
+        let image = null
+        if (!Attachment[0])
+            image = message.author.displayAvatarURL
+        else 
+            image = Attachment[0].url
+
+        const canvas = createCanvas(528, 559)
+        const ctx = canvas.getContext('2d')
+        const background = await loadImage('https://image.noelshack.com/fichiers/2018/42/2/1539644291-my-fetish-5910119d988512.png').catch(error => {
+            return message.say('An error as occured, please try again')
+        })
+        ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+        const { body: buffer } = await superagent.get(image);
+        const bg = await loadImage(buffer);
+        ctx.drawImage(bg, 50, 50, 450, 450);
+    
+        const attachment = new Discord.Attachment(canvas.toBuffer(), 'edupspaint.png');
+
+        message.say(attachment).catch(error => {
+            message.say('an error as occured. Check the bot/channel permissions')
+        })
+
+          }
+};
