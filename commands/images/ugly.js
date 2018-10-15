@@ -28,7 +28,9 @@ module.exports = class uglyCommand extends Command {
 
         const canvas = createCanvas(323, 400)
         const ctx = canvas.getContext('2d')
-        const background = await loadImage('https://image.noelshack.com/fichiers/2018/42/1/1539598678-untitled.png');
+        const background = await loadImage('https://image.noelshack.com/fichiers/2018/42/1/1539598678-untitled.png').catch(error => {
+            return message.say('An error as occured, please try again')
+        })
         ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
         const { body: buffer } = await superagent.get(image);
         const bg = await loadImage(buffer);
