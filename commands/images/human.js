@@ -24,9 +24,7 @@ module.exports = class humanCommand extends Command {
 
         const canvas = createCanvas(578, 400)
         const ctx = canvas.getContext('2d')
-        const background = await loadImage('https://image.noelshack.com/fichiers/2018/42/1/1539594726-untitled.png').catch(error => {
-            message.say('an error as occured. please try again.')
-        });
+        const background = await loadImage('https://image.noelshack.com/fichiers/2018/42/1/1539594726-untitled.png');
         ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
         const { body: buffer } = await superagent.get(image);
         const bg = await loadImage(buffer);

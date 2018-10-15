@@ -50,9 +50,7 @@ module.exports = class idubbbzpaintCommand extends Command {
         const ctx = canvas.getContext('2d')
         const background = await loadImage(image);
         ctx.drawImage(background, 140, 30, 400, 400);
-        const { body: buffer } = await superagent.get('https://image.noelshack.com/fichiers/2018/41/7/1539533685-untitled.png').catch(error => {
-            message.say('an error as occured. please try again.')
-        });
+        const { body: buffer } = await superagent.get('https://image.noelshack.com/fichiers/2018/41/7/1539533685-untitled.png');
         const bg = await loadImage(buffer);
         ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
         ctx.font = applyText(canvas, text)
