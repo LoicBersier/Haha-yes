@@ -3,6 +3,8 @@ const responseObject = require("../../json/despacito.json");
 const { createCanvas, loadImage, getContext } = require('canvas')
 const superagent = require('superagent')
 const Discord = require('discord.js');
+const blacklist = require('../../json/blacklist.json')
+
 module.exports = class DespacitoCommand extends Command {
     constructor(client) {
         super(client, {
@@ -22,6 +24,8 @@ module.exports = class DespacitoCommand extends Command {
     }
 
     async run(message, { user }) {
+        if(blacklist[message.author.id])
+        return message.channel.send("You are blacklisted")
         if (!user) {
         const number = Object.keys(responseObject).length;
         const despacitoNumber = Math.floor (Math.random() * (number - 1 + 1)) + 1;

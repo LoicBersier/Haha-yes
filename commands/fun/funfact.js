@@ -1,5 +1,7 @@
 const { Command } = require('discord.js-commando');
 const responseObject = require("../../json/funfact.json");
+const blacklist = require('../../json/blacklist.json')
+
 module.exports = class FunFactCommand extends Command {
     constructor(client) {
         super(client, {
@@ -11,6 +13,8 @@ module.exports = class FunFactCommand extends Command {
     }
 
     async run(message) {
+        if(blacklist[message.author.id])
+        return message.channel.send("You are blacklisted")
         const number = Object.keys(responseObject).length;
         const funFactNumber = Math.floor (Math.random() * (number - 1 + 1)) + 1;
             message.channel.send(`Fun fact: ${responseObject[funFactNumber]}`);

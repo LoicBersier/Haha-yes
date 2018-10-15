@@ -1,6 +1,8 @@
 const { Command } = require('discord.js-commando');
 const faceapp = require('faceapp')
 const superagent = require('superagent')
+const blacklist = require('../../json/blacklist.json')
+
 module.exports = class faceappCommand extends Command {
     constructor(client) {
         super(client, {
@@ -27,6 +29,8 @@ module.exports = class faceappCommand extends Command {
     }
 
     async run(message, { url, type }) {
+        if(blacklist[message.author.id])
+        return message.channel.send("You are blacklisted")
 
         let Attachment = (message.attachments).array();
         let origin = null;

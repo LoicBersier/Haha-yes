@@ -1,4 +1,6 @@
 const { Command } = require('discord.js-commando');
+const blacklist = require('../../json/blacklist.json')
+
 module.exports = class sayCommand extends Command {
     constructor(client) {
         super(client, {
@@ -17,6 +19,8 @@ module.exports = class sayCommand extends Command {
     }
 
     async run(message, { text }) {
+        if(blacklist[message.author.id])
+        return message.channel.send("You are blacklisted")
             message.delete();
             message.say(text);
           }

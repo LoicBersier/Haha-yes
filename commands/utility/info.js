@@ -1,6 +1,8 @@
 const { Command } = require('discord.js-commando');
 const Discord = require('discord.js');
 const fetch = require('node-fetch')
+const blacklist = require('../../json/blacklist.json')
+
 module.exports = class InfoCommand extends Command {
     constructor(client) {
         super(client, {
@@ -19,6 +21,8 @@ module.exports = class InfoCommand extends Command {
     }
 
     async run(message, { search }) {
+        if(blacklist[message.author.id])
+        return message.channel.send("You are blacklisted")
         let searchURL = encodeURI(search)
         fetch("https://api.duckduckgo.com/?q=" + searchURL + "&format=json").then((response) => {
   return response.json();

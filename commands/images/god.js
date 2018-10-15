@@ -2,6 +2,8 @@ const { Command } = require('discord.js-commando');
 const Discord = require('discord.js');
 const { createCanvas, loadImage, getContext } = require('canvas')
 const superagent = require('superagent')
+const blacklist = require('../../json/blacklist.json')
+
 
 
 module.exports = class godCommand extends Command {
@@ -15,6 +17,8 @@ module.exports = class godCommand extends Command {
     }
 
     async run(message) {
+        if(blacklist[message.author.id])
+        return message.channel.send("You are blacklisted")
         let Attachment = (message.attachments).array();
         let image = null
         if (!Attachment[0])

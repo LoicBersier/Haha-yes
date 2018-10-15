@@ -1,4 +1,6 @@
 const { Command } = require('discord.js-commando');
+const blacklist = require('../../json/blacklist.json')
+
 module.exports = class AvatarCommand extends Command {
     constructor(client) {
         super(client, {
@@ -20,6 +22,8 @@ module.exports = class AvatarCommand extends Command {
     }
 
     async run(message, { user }) {
+        if(blacklist[message.author.id])
+        return message.channel.send("You are blacklisted")
         if (!user)
             return message.say(`Your avatar:\n${message.author.displayAvatarURL}`);
         else

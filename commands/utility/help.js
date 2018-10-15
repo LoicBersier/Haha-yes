@@ -1,5 +1,7 @@
 const { stripIndents, oneLine } = require('common-tags');
 const { Command, disambiguation } = require('discord.js-commando');
+const blacklist = require('../../json/blacklist.json')
+
 
 module.exports = class HelpCommand extends Command {
 	constructor(client) {
@@ -27,6 +29,9 @@ module.exports = class HelpCommand extends Command {
 	}
 
 	async run(msg, args) { // eslint-disable-line complexity
+		if(blacklist[message.author.id])
+        return message.channel.send("You are blacklisted")
+		
 		const groups = this.client.registry.groups;
 		const commands = this.client.registry.findCommands(args.command, false, msg);
 		const showAll = args.command && args.command.toLowerCase() === 'all';

@@ -1,5 +1,6 @@
 const { oneLine } = require('common-tags');
 const { Command } = require('discord.js-commando');
+const blacklist = require('../../json/blacklist.json')
 
 module.exports = class PingCommand extends Command {
 	constructor(client) {
@@ -16,6 +17,8 @@ module.exports = class PingCommand extends Command {
 	}
 
 	async run(msg) {
+		if(blacklist[msg.author.id])
+    return msg.channel.send("You are blacklisted")
 		if(!msg.editable) {
 			const pingMsg = await msg.say('Pinging...');
 			return pingMsg.edit(oneLine`

@@ -1,6 +1,8 @@
 const { Command } = require('discord.js-commando');
 const fs = require('fs');
 const ytdl = require('ytdl-core')
+const blacklist = require('../../json/blacklist.json')
+
 module.exports = class youtubeCommand extends Command {
     constructor(client) {
         super(client, {
@@ -20,6 +22,8 @@ module.exports = class youtubeCommand extends Command {
     }
 
     async run(message, { link }) {
+        if(blacklist[message.author.id])
+        return message.channel.send("You are blacklisted")
         if(link.includes("http") || link.includes("www")) {
             ytdl(link, { filter: (format) => format.container === 'mp4' })
             .pipe(fs.createWriteStream('video.mp4'))

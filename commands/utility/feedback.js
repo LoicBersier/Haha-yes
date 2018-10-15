@@ -1,5 +1,7 @@
 const { Command } = require('discord.js-commando');
 const { feedbackChannel } = require('../../config.json');
+const blacklist = require('../../json/blacklist.json')
+
 const fs = require('fs');
 module.exports = class feedbackCommand extends Command {
     constructor(client) {
@@ -23,6 +25,8 @@ module.exports = class feedbackCommand extends Command {
     }
 
     async run(message, { text }) {
+        if(blacklist[msg.author.id])
+        return msg.channel.send("You are blacklisted")
         const channel = this.client.channels.get(feedbackChannel);
         channel.send(`from ${message.author.username} (${message.author} : ${message.author.id}): ${text}`);
             message.say('Your feedback has been sent!');

@@ -1,6 +1,8 @@
 const { Command } = require('discord.js-commando');
 const Discord = require('discord.js');
 const fetch = require('node-fetch')
+const blacklist = require('../../json/blacklist.json')
+
 module.exports = class RandoCatCommand extends Command {
     constructor(client) {
         super(client, {
@@ -12,6 +14,8 @@ module.exports = class RandoCatCommand extends Command {
     }
 
     async run(message) {
+        if(blacklist[message.author.id])
+        return message.channel.send("You are blacklisted")
 
         fetch("https://random.dog/woof.json").then((response) => {
   return response.json();

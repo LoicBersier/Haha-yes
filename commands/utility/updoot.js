@@ -1,4 +1,6 @@
 const { Command } = require('discord.js-commando');
+const blacklist = require('../../json/blacklist.json')
+
 module.exports = class UpDootCommand extends Command {
     constructor(client) {
         super(client, {
@@ -11,6 +13,8 @@ module.exports = class UpDootCommand extends Command {
     }
 
     async run(message) {
+        if(blacklist[message.author.id])
+        return message.channel.send("You are blacklisted")
         const upDoot = {
             color: 0x93C54B,
             title: 'Vote for my bot',
