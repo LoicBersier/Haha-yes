@@ -55,7 +55,7 @@ module.exports = class idubbbzpaintCommand extends Command {
 
         const ctx = canvas.getContext('2d')
         const background = await loadImage(image);
-        ctx.drawImage(background, 140, 30, 400, 400);
+        ctx.drawImage(background, 140, 40, 400, 340);
         const { body: buffer } = await superagent.get('https://image.noelshack.com/fichiers/2018/41/7/1539533685-untitled.png').catch(error => {
             return message.say('An error as occured, please try again')
         })
