@@ -23,8 +23,10 @@ module.exports = class fetishCommand extends Command {
         let image = null
         if (!Attachment[0])
             image = message.author.displayAvatarURL
+        else if(Attachment[0] && Attachment[0].url.endsWith('gif'))
+            return message.say('Gif dosent work, sorry')
         else 
-            image = Attachment[0].url
+        image = Attachment[0].url
 
         const canvas = createCanvas(528, 559)
         const ctx = canvas.getContext('2d')

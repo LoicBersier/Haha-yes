@@ -31,9 +31,11 @@ module.exports = class idubbbzCommand extends Command {
         let Attachment = (message.attachments).array();
         let image = null
         if (!Attachment[0])
-            image = message.author.displayAvatarURL
-        else 
-            image = Attachment[0].url
+        image = message.author.displayAvatarURL
+    else if(Attachment[0] && Attachment[0].url.endsWith('gif'))
+        return message.say('Gif dosent work, sorry')
+    else 
+    image = Attachment[0].url
 
             const canvas = createCanvas(1281, 627)
             const applyText = (canvas, text) => {

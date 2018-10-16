@@ -23,9 +23,11 @@ module.exports = class humanCommand extends Command {
         let image = null
         if (!Attachment[0])
             image = message.author.displayAvatarURL
+        else if(Attachment[0] && Attachment[0].url.endsWith('gif'))
+            return message.say('Gif dosent work, sorry')
         else 
-            image = Attachment[0].url
-
+        image = Attachment[0].url
+        
         const canvas = createCanvas(578, 400)
         const ctx = canvas.getContext('2d')
         const background = await loadImage('https://image.noelshack.com/fichiers/2018/42/1/1539594726-untitled.png').catch(error => {
