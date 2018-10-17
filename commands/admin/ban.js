@@ -30,7 +30,7 @@ module.exports = class BanCommand extends Command {
             reasons = 'Nothing have been specified'
         if(member.id === message.author.id)
             return message.say("Why would you ban yourself ?")
-        member.ban(reasons)
+        member.ban(`Banned by : ${message.author.username} for the following reasons : ${reasons}`)
             .then(() => message.reply(`${member.user.username} was succesfully banned with the following reasons "${reasons}".`));
         };
 };
