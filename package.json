@@ -18,7 +18,7 @@
   },
   "homepage": "https://gitlab.com/loicbersier/discordbot#readme",
   "dependencies": {
-    "canvas": "^2.0.0-alpha.18",
+    "canvas": "^2.0.1",
     "discord.js": "^11.4.2",
     "discord.js-commando": "^0.10.0",
     "faceapp": "^0.4.4",
