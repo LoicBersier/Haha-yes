@@ -4,7 +4,7 @@ A simple discord bot made with discord.js and commando
 
 ### Installing
 
-To install you need the dependency for **node-canvas** https://github.com/Automattic/node-canvas and node gyp
+To install you need the dependency for **node-canvas** https://github.com/Automattic/node-canvas
 
 then for the bot do the following commands
 
