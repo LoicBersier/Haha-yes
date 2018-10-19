@@ -6,7 +6,6 @@ module.exports = class cbCommand extends Command {
             group: 'admin',
             memberName: 'cb',
             description: 'spam a bunch of dot to quickly make something disspear',
-            clientPermissions: ['MANAGE_MESSAGES'],
             userPermissions: ['MANAGE_MESSAGES'],
             guildOnly: true,
         });
