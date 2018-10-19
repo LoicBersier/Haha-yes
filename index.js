@@ -5,6 +5,7 @@ const { token, prefix, statsChannel, ownerID, supportServer } = require('./confi
 const responseObject = require("./json/reply.json");
 const reactObject = require("./json/react.json");
 const imgResponseObject = require("./json/imgreply.json");
+const autoresponse = require("./json/autoresponse.json");
 
 //  Prefix and ownerID and invite to support server
 const client = new CommandoClient({
@@ -81,18 +82,28 @@ client.registry
         if (message.author.bot) return; {
 //  Reply with images as attachement
         if(imgResponseObject[message_content]) {
+            if(autoresponse[message.channel.id] == 'disable')
+            return message.channel.send('test')
             message.channel.send({files: [imgResponseObject[message_content]]}); 
         } 
 //  React only to the messages
         else if(reactObject[message_content]) {
+            if(autoresponse[message.channel.id] == 'disable')
+            return message.channel.send('test')
             message.react(reactObject[message_content]);
         }
 //  auto respond to messages
         else if(responseObject[message_content]) {
+            if(autoresponse[message.channel.id] == 'disable')
+            return message.channel.send('test')
             message.channel.send(responseObject[message_content]);
         } else if (message_content.includes("like if")) {
+            if(autoresponse[message.channel.id] == 'disable')
+            return message.channel.send('test')
             message.react("\u{1F44D}")
         } else if (message_content.includes("jeff")) {
+            if(autoresponse[message.channel.id] == 'disable')
+            return message.channel.send('test')
             message.react("496028845967802378")
         }
     }});
