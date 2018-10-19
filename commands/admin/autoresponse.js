@@ -1,8 +1,6 @@
 const { Command } = require('discord.js-commando');
 const blacklist = require('../../json/blacklist.json');
 const fs = require('fs');
-const autoresponse = require('../../json/autoresponse.json')
-
 module.exports = class sayCommand extends Command {
     constructor(client) {
         super(client, {
