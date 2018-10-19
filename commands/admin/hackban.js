@@ -5,7 +5,7 @@ module.exports = class BanCommand extends Command {
             name: 'hackban',
             group: 'admin',
             memberName: 'hackban',
-            description: 'ban the mentionned user even if they are not in the server (with id)',
+            description: 'ban the id of the  user even if they are not in the server',
             guildOnly: true,
             clientPermissions: ['BAN_MEMBERS'],
             userPermissions: ['BAN_MEMBERS'],
