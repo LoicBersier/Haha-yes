@@ -15,6 +15,7 @@ module.exports = class InviteCommand extends Command {
     async run(message) {
         if(blacklist[message.author.id])
         return message.channel.send("You are blacklisted")
-        return message.say(`You can add me from here: https://discordapp.com/oauth2/authorize?client_id=${this.client.user.id}&scope=bot&permissions=0\nYou can also join my support server over here: ${supportServer} come and say hi :)`);
+        message.say('Check your dm')
+        return message.author.send(`You can add me from here: https://discordapp.com/oauth2/authorize?client_id=${this.client.user.id}&scope=bot&permissions=0\nYou can also join my support server over here: ${supportServer} come and say hi :)`);
     }
 };
