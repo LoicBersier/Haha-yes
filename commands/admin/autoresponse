@@ -24,16 +24,16 @@ module.exports = class sayCommand extends Command {
         if(blacklist[message.author.id])
         return message.channel.send("You are blacklisted")
 
-            let test = {}
-            let json = JSON.stringify(test)
+            let autoresponse = {}
+            let json = JSON.stringify(autoresponse)
 
             fs.readFile('json/autoresponse.json', 'utf8', function readFileCallback(err, data){
                 if (err){
                     console.log(err);
                 } else {
-                test = JSON.parse(data); //now it an object
-                test [message.channel.id] = text
-                json = JSON.stringify(test); //convert it back to json
+                autoresponse = JSON.parse(data); //now it an object
+                autoresponse [message.channel.id] = text
+                json = JSON.stringify(autoresponse); //convert it back to json
                 fs.writeFile('json/autoresponse.json', json, 'utf8', function(err) {
                     if(err) {
                         return console.log(err);
