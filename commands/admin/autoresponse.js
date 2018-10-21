@@ -8,11 +8,11 @@ module.exports = class sayCommand extends Command {
             group: 'admin',
             memberName: 'autoresponse',
             userPermissions: ['MANAGE_MESSAGES'],
-            description: `Repeat the text you send`,
+            description: `Can disable autoresponse in the channel`,
             args: [
                 {
                     key: 'text',
-                    prompt: 'What do you want me to say',
+                    prompt: 'Disable or enable?',
                     type: 'string',
                     oneOf: ['disable', 'enable'],
                 }
@@ -40,6 +40,6 @@ module.exports = class sayCommand extends Command {
                     } 
             })}});
             
-            message.say(text);
+            message.say(`Autoresponse have been ${text}d`);
           }
 };
