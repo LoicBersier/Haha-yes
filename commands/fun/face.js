@@ -9,7 +9,7 @@ module.exports = class faceappCommand extends Command {
             name: 'face',
             group: 'fun',
             memberName: 'face',
-            description: `use faceapp to change the face of someone, Here the available filter https://goo.gl/5LLbJJ`,
+            description: `use faceapp to change the face of someone, Here the available filter <https://goo.gl/5LLbJJ>`,
             args: [
                 {
                     key: 'type',
