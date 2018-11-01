@@ -8,6 +8,14 @@ module.exports = class AvatarCommand extends Command {
             group: 'utility',
             memberName: 'avatar',
             description: 'Send the avatar of the mentionned user.',
+            args: [
+                {
+                    key: 'user',
+                    prompt: 'What do you want me to say',
+                    type: 'user',
+                    default: ''
+                }
+            ]
         });
     }
 
