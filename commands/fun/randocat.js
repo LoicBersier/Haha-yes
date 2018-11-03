@@ -6,10 +6,10 @@ const blacklist = require('../../json/blacklist.json')
 module.exports = class RandoDogCommand extends Command {
     constructor(client) {
         super(client, {
-            name: 'randodog',
+            name: 'randocat',
             group: 'fun',
-            memberName: 'randodog',
-            description: `Show a random dog`,
+            memberName: 'randocat',
+            description: `Show a random cat`,
         });
     }
 
