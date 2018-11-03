@@ -25,7 +25,7 @@ module.exports = class feedbackCommand extends Command {
     }
 
     async run(message, { text }) {
-        if(blacklist[msg.author.id])
+        if(blacklist[message.author.id])
         return message.channel.send("You are blacklisted")
         const channel = this.client.channels.get(feedbackChannel);
         channel.send(`from ${message.author.username} (${message.author} : ${message.author.id}): ${text}`);
