@@ -6,10 +6,10 @@ const blacklist = require('../../json/blacklist.json')
 module.exports = class RandoCatCommand extends Command {
     constructor(client) {
         super(client, {
-            name: 'randocat',
+            name: 'randodog',
             group: 'fun',
-            memberName: 'randocat',
-            description: `Show a random cat`,
+            memberName: 'randodog',
+            description: `Show a random dog`,
         });
     }
 
@@ -22,8 +22,8 @@ module.exports = class RandoCatCommand extends Command {
 }).then((response) => {
         const dogEmbed = new Discord.RichEmbed()
         .setColor("#ff9900")
-        .setTitle('Meow')
-        .setImage(response.file)
+        .setTitle('woof')
+        .setImage(response.url)
 
 
             message.say(dogEmbed);

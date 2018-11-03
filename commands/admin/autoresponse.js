@@ -7,7 +7,7 @@ module.exports = class AutoresponseCommand extends Command {
             name: 'autoresponse',
             group: 'admin',
             memberName: 'autoresponse',
-            userPermissions: ['MANAGE_MESSAGES'],
+            userPermissions: ['ADMINISTRATOR'],
             description: `Can disable autoresponse in the channel`,
             args: [
                 {
