@@ -38,7 +38,7 @@ module.exports = class likeCommand extends Command {
         const bg = await loadImage(buffer);
         ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
     
-        const attachment = new Discord.Attachment(canvas.toBuffer(), 'edupspaint.png');
+        const attachment = new Discord.Attachment(canvas.toBuffer(), 'like.png');
 
         message.say(attachment).catch(error => {
             message.say('an error as occured. Check the bot/channel permissions')

@@ -38,7 +38,7 @@ module.exports = class fetishCommand extends Command {
         const bg = await loadImage(buffer);
         ctx.drawImage(bg, 50, 50, 450, 450);
     
-        const attachment = new Discord.Attachment(canvas.toBuffer(), 'edupspaint.png');
+        const attachment = new Discord.Attachment(canvas.toBuffer(), 'myfetish.png');
 
         message.say(attachment).catch(error => {
             message.say('an error as occured. Check the bot/channel permissions')
