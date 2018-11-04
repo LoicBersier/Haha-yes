@@ -9,7 +9,7 @@ module.exports = class feedbackCommand extends Command {
             name: 'feedback',
             group: 'utility',
             memberName: 'feedback',
-            description: `Send feedback`,
+            description: `Send feedback ( if you abuse you will get blacklisted )`,
             throttling: {
                 usages: 2,
                 duration: 60,
