@@ -17,14 +17,22 @@ module.exports = class dmCommand extends Command {
                     key: 'text',
                     prompt: 'Wich user would you like to dm?',
                     type: 'string',
+                    default: ''
                 }
             ]
         });
     }
 
     async run(message, { id, text }) {
+        let Attachment = (message.attachments).array();
         const user = this.client.users.get(id);
-        user.send(`**Message from the dev**\n${text}`)
-        message.say('DM sent')
+        if (Attachment[0]) {
+            user.send(`**Message from the dev**\n${text}\n${Attachment[0].url}`)
+            message.say('DM sent')
+        }
+        else {
+            user.send(`**Message from the dev**\n${text}`)
+            message.say('DM sent')
+        }
     }
 };
