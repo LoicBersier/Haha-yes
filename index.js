@@ -51,7 +51,7 @@ client.registry
         .setTitle('Someone added me ! YAY :D')
         .setURL('https://www.youtube.com/watch?v=6n3pFFPSlW4')
         .setThumbnail(guild.iconURL)
-        .setDescription(`${guild.name}\n${guild.id}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\n(${guild.owner})`)
+        .setDescription(`${guild.name}\n${guild.id}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\n(${guild.owner.id})`)
         .setTimestamp()
         
         channel.send({ embed: addEmbed });
@@ -67,7 +67,7 @@ client.registry
         .setTitle('They kicked me out :(')
         .setURL('https://www.youtube.com/watch?v=6n3pFFPSlW4')
         .setThumbnail(guild.iconURL)
-        .setDescription(`${guild.name}\n${guild.id}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\n(${guild.owner})`)
+        .setDescription(`${guild.name}\n${guild.id}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\n(${guild.owner.id})`)
         .setTimestamp()
 
         console.log('***BOT KICKED***')
