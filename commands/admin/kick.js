@@ -30,6 +30,7 @@ module.exports = class KickCommand extends Command {
             reasons = 'Nothing have been specified.'
         if(member.id === message.author.id)
             return message.say("Why would you kick yourself ?")
+        await member.send(`You have been kicked for the following reasons: "${reasons}"`);
         member.kick(`Kicked by : ${message.author.username} for the following reasons : ${reasons}`)
         .then(() => message.reply(`${member.user.username} was succesfully kicked with the following reasons "${reasons}".`));
         };
