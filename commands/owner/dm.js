@@ -5,6 +5,7 @@ module.exports = class dmCommand extends Command {
             name: 'dm',
             group: 'owner',
             memberName: 'dm',
+            aliases: ['pm'],
             description: 'Dm the user id',
             ownerOnly: true,
             args: [
