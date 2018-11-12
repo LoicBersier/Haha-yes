@@ -98,11 +98,13 @@ client.registry
             if(autoresponse[message.channel.id] == 'disable')
             return console.log('disable')
             message.channel.send(responseObject[message_content]);
+//  If it contain "like if" react with 👍
         } else if (message_content.includes("like if")) {
             var autoresponse = new SelfReloadJSON('./json/autoresponse.json');
             if(autoresponse[message.channel.id] == 'disable')
             return console.log('disable')
             message.react("\u{1F44D}")
+//  If it contain "jeff" react with a jeff emote
         } else if (message_content.includes("jeff")) {
             var autoresponse = new SelfReloadJSON('./json/autoresponse.json');
             if(autoresponse[message.channel.id] == 'disable')
