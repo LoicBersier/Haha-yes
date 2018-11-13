@@ -13,7 +13,7 @@ module.exports = class BanCommand extends Command {
                 {
                     key: 'member',
                     prompt: 'Wich member would you like to ban?',
-                    type: 'member',
+                    type: 'user',
                 },
                 {
                     key: 'reasons',
