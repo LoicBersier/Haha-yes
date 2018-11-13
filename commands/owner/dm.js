@@ -10,30 +10,28 @@ module.exports = class dmCommand extends Command {
             ownerOnly: true,
             args: [
                 {
-                    key: 'id',
+                    key: 'user',
                     prompt: 'Wich user would you like to dm?',
-                    type: 'string',
+                    type: 'user',
                 },
                 {
                     key: 'text',
-                    prompt: 'Wich user would you like to dm?',
+                    prompt: 'What do you want to say to the user',
                     type: 'string',
-                    default: ''
                 }
             ]
         });
     }
 
-    async run(message, { id, text }) {
+    async run(message, { user, text }) {
         let Attachment = (message.attachments).array();
-        const user = this.client.users.get(id);
         if (Attachment[0]) {
-            user.send(`**Message from the dev**\n${text}\n${Attachment[0].url}`)
-            message.say('DM sent')
+            user.send(`**Message from the dev:**\n${text}\n${Attachment[0].url}`)
+            message.say(`DM sent to ${user.username}`)
         }
         else {
-            user.send(`**Message from the dev**\n${text}`)
-            message.say('DM sent')
+            user.send(`**Message from the dev:**\n${text}`)
+            message.say(`DM sent to ${user.username}`)
         }
     }
 };
