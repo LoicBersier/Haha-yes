@@ -33,8 +33,6 @@ module.exports = class DespacitoCommand extends Command {
             message.say('an error as occured')
         })
 
-        } else if (user.id === message.author.id) {
-           return message.say(`Did you just try to despacitoad yourself?`);
         } else if (user.id === this.client.user.id) {
             return message.say('Nice try but you wont get me :^)');
         } else {
@@ -48,7 +46,7 @@ module.exports = class DespacitoCommand extends Command {
             const attachment = new Discord.Attachment(canvas.toBuffer(), 'despacito.png');
             
         message.delete();
-        message.say(`${user}, you have been despacitoad`, attachment).catch(error => {
+        message.say(`${user.username}, you have been despacito'd`, attachment).catch(error => {
             message.say('an error as occured')
         })
     }
