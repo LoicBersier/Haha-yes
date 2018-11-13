@@ -13,28 +13,18 @@ module.exports = class uglyCommand extends Command {
             group: 'images',
             memberName: 'ugly',
             description: `You are very ugly!`,
-            args: [
-                {
-                    key: 'user',
-                    prompt: 'What do you want me to say',
-                    type: 'user',
-                    default: ''
-                }
-            ]
         });
     }
 
-    async run(message, { user }) {
+    async run(message) {
         if(blacklist[message.author.id])
         return message.channel.send("You are blacklisted")
         let Attachment = (message.attachments).array();
         let image = null
-        if (!Attachment[0] && !user)
-            image = message.author.displayAvatarURL;
-        else if (!Attachment[0])
-            image = user.displayAvatarURL;
-        else if(Attachment[0].url.endsWith('gif'))
-            return message.say('Gif dosent work, sorry');
+        if (!Attachment[0])
+            image = message.author.displayAvatarURL
+        else if(Attachment[0] && Attachment[0].url.endsWith('gif'))
+            return message.say('Gif dosent work, sorry')
         else 
         image = Attachment[0].url
 
