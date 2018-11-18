@@ -26,13 +26,16 @@ module.exports = class downloadCommand extends Command {
         if(blacklist[message.author.id])
         return message.channel.send("You are blacklisted")
         if(link.includes("http") || link.includes("www")) {
-            message.say('Downloading...')
+            message.say('Downloading...').then(msg => {
+                video.on('end', function() {
+                msg.delete()
+                })
+              })
             let video = youtubedl(link, [`--username=${fbuser}`,`--password=${fbpasswd}`])
             video.pipe(fs.createWriteStream('video.mp4'))
             video.on('end', function() {
-                message.channel.bulkDelete(2);
-                message.say(`Download by ${message.author.username}`)
-                message.channel.send({files: ["./video.mp4"]})
+                message.delete();
+                message.channel.send(`Downloaded by ${message.author.username}`, {files: ["./video.mp4"]})
                 .catch(error => message.say('An error has occured, the file might be too big or i cant download the link you provided'))
             })
         } else 
