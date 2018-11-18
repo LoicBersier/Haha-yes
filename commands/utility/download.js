@@ -30,8 +30,8 @@ module.exports = class downloadCommand extends Command {
             let video = youtubedl(link, [`--username=${fbuser}`,`--password=${fbpasswd}`])
             video.pipe(fs.createWriteStream('video.mp4'))
             video.on('end', function() {
-            message.delete();
-            message.delete();
+                message.channel.bulkDelete(2);
+
             message.channel.send({files: ["./video.mp4"]})
             .catch(error => message.say('An error has occured, the file might be too big or i cant download the link you provided'))
             })
