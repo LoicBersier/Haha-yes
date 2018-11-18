@@ -5,5 +5,7 @@
     "botID":    "id of the bot",
     "statsChannel": "channel where the bot send his stats",
     "supportServer":    "Invite to the support server of the bot",
-    "feedbackChannel": "id of the channel where the feedback goes"
+    "feedbackChannel": "id of the channel where the feedback goes",
+    "fbuser": "Facebook email",
+    "fbpasswd": "Facebook passwd"
 }
