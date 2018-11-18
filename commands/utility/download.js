@@ -31,9 +31,9 @@ module.exports = class downloadCommand extends Command {
             video.pipe(fs.createWriteStream('video.mp4'))
             video.on('end', function() {
                 message.channel.bulkDelete(2);
-
-            message.channel.send({files: ["./video.mp4"]})
-            .catch(error => message.say('An error has occured, the file might be too big or i cant download the link you provided'))
+                message.say(`Download by ${message.author.username}`)
+                message.channel.send({files: ["./video.mp4"]})
+                .catch(error => message.say('An error has occured, the file might be too big or i cant download the link you provided'))
             })
         } else 
             message.say("You need to input a valid link")
