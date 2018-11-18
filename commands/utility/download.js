@@ -4,12 +4,12 @@ const youtubedl = require('youtube-dl');
 const blacklist = require('../../json/blacklist.json');
 const { fbuser, fbpasswd } = require('../../config.json');
 
-module.exports = class youtubeCommand extends Command {
+module.exports = class downloadCommand extends Command {
     constructor(client) {
         super(client, {
-            name: 'youtube',
+            name: 'download',
             group: 'utility',
-            memberName: 'youtube',
+            memberName: 'download',
             description: `Download any video from the link you provided.`,
             args: [
                 {
@@ -30,6 +30,8 @@ module.exports = class youtubeCommand extends Command {
             let video = youtubedl(link, [`--username=${fbuser}`,`--password=${fbpasswd}`])
             video.pipe(fs.createWriteStream('video.mp4'))
             video.on('end', function() {
+            message.delete();
+            message.delete();
             message.channel.send({files: ["./video.mp4"]})
             .catch(error => message.say('An error has occured, the file might be too big or i cant download the link you provided'))
             })
