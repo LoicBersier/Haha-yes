@@ -17,7 +17,7 @@ module.exports = class AutoresponseCommand extends Command {
                     oneOf: ['disable', 'enable','disable all', 'enable all'],
                 },
                 {
-                    key: 'testt',
+                    key: 'all',
                     prompt: 'Disable or enable in every channel? (EXPERIMENTAL)',
                     type: 'string',
                     oneOf: ['all', ''],
