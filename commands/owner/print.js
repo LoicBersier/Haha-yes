@@ -29,5 +29,7 @@ module.exports = class printCommand extends Command {
 	}
 	, error:function(err){console.log(err);}
 });
+
+message.say("Printing now!")
     }
 };
