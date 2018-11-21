@@ -27,5 +27,5 @@ npm install
 ##### Special thanks to
 
 discord.js (https://github.com/discordjs) for providing discord.js, commando and the discord.js guide<br>
-All the people who made the node modules<br>
+All the people who made all the node modules<br>
 [TG/LW] Tina the Cyclops#5861 for inspiring me to make this bot
