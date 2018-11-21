@@ -30,6 +30,6 @@ module.exports = class printCommand extends Command {
 	, error:function(err){console.log(err);}
 });
 
-message.say("Printing now!")
+message.say("Printing now! ( if everything have gone correctly )")
     }
 };
