@@ -22,7 +22,7 @@ module.exports = class printCommand extends Command {
     }
 
     async run(message, { text }) {
-        printer.printDirect({data:`Printed by: ${message.author.username}\n${text}`
+        printer.printDirect({data:`Printed by: ${message.author.username}\n\n${text}`
 	, type: 'TEXT' // type: RAW, TEXT, PDF, JPEG, .. depends on platform
 	, success:function(jobID){
         console.log("sent to printer with ID: "+jobID);
