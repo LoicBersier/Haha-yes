@@ -25,11 +25,10 @@ module.exports = class printCommand extends Command {
         printer.printDirect({data:text
 	, type: 'TEXT' // type: RAW, TEXT, PDF, JPEG, .. depends on platform
 	, success:function(jobID){
-		console.log("sent to printer with ID: "+jobID);
+        console.log("sent to printer with ID: "+jobID);
+        message.say("Printing now! ( if everything have gone correctly )")
 	}
 	, error:function(err){console.log(err);}
 });
-
-message.say("Printing now! ( if everything have gone correctly )")
     }
 };
