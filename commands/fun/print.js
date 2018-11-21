@@ -28,7 +28,7 @@ module.exports = class printCommand extends Command {
         console.log("sent to printer with ID: "+jobID);
         message.say("Printing now!")
 	}
-	, error:function(err){console.log(err); message.say("An error has occured, the printer is most likely disconnectd try again later")}
+	, error:function(err){console.log(err); message.say("An error has occured, the printer is most likely disconnected, try again later")}
 });
     }
 };
