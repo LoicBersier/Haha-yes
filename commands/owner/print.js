@@ -4,14 +4,17 @@ module.exports = class printCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'print',
-            group: 'owner',
+            group: 'fun',
             memberName: 'print',
-            description: 'print what you write',
-            ownerOnly: true,
+            description: 'print whatever you want using the dev printer ! ( yea really, send a feedback requesting the image and i\'il send it to you.',
+            throttling: {
+                usages: 1,
+                duration: 86400,
+            },
             args: [
                 {
                     key: 'text',
-                    prompt: 'What do you want to print',
+                    prompt: 'What do you want to print? ( text only )',
                     type: 'string',
                 }
             ]

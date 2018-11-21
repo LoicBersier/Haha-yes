@@ -23,6 +23,8 @@
     "discord.js-commando": "^0.10.0",
     "faceapp": "^0.4.4",
     "node-fetch": "^2.2.0",
+    "node-gyp": "^3.8.0",
+    "printer": "^0.2.2",
     "self-reload-json": "^0.4.0",
     "superagent": "^4.0.0-beta.5",
     "youtube-dl": "^1.12.2"
