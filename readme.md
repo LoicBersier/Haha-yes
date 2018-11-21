@@ -10,6 +10,7 @@ A simple discord bot made with discord.js and commando
 -   take images from reddit & imgur
 -   can make the bot write thing in emote or just repeat what the user say
 -   Print thing from the printer dev ( yes really, to disable simple delete print.js or disable with "${prefix} disable print")
+-   autoresponse ( that can be disable with a simple command "${prefix} autoresponse disable ("all" for server wide))
 -   and more !
 
 ### Installing
