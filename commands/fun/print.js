@@ -22,7 +22,7 @@ module.exports = class printCommand extends Command {
     }
 
     async run(message, { text }) {
-        printer.printDirect({data:text, printer:'HP-Color-LaserJet-CM1312-MFP'
+        printer.printDirect({data:text
 	, type: 'TEXT' // type: RAW, TEXT, PDF, JPEG, .. depends on platform
 	, success:function(jobID){
 		console.log("sent to printer with ID: "+jobID);
