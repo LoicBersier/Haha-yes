@@ -26,9 +26,9 @@ module.exports = class printCommand extends Command {
 	, type: 'TEXT' // type: RAW, TEXT, PDF, JPEG, .. depends on platform
 	, success:function(jobID){
         console.log("sent to printer with ID: "+jobID);
-        message.say("Printing now! ( if everything have gone correctly )")
+        message.say("Printing now!")
 	}
-	, error:function(err){console.log(err);}
+	, error:function(err){console.log(err); message.say("An error has occured, the printer is most likely disconnectd try again later")}
 });
     }
 };
