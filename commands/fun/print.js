@@ -1,5 +1,6 @@
 const { Command } = require('discord.js-commando');
 const printer = require('printer');
+const { printChannel } = require('../../config.json')
 module.exports = class printCommand extends Command {
     constructor(client) {
         super(client, {
@@ -27,7 +28,9 @@ module.exports = class printCommand extends Command {
 	, type: 'TEXT' // type: RAW, TEXT, PDF, JPEG, .. depends on platform
 	, success:function(jobID){
         console.log("sent to printer with ID: "+jobID);
-        message.say("Printing now! ( ask with 'haha feedback <text>' if you want to see it !)")
+        message.say("Printing now! ( You will receive your print shortly ( if the dev isint sleeping that is ))");
+        const channel = this.client.channels.get(printChannel);
+        channel.send(`${message.author.username} (${message.author.id}) Asked for a print with the following text: ${text}`);
 	}
 	, error:function(err){console.log(err); message.say("An error has occured, the printer is most likely disconnected, try again later")}
 });
