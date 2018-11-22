@@ -4,7 +4,7 @@ module.exports = class printCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'print',
-            aliases: ['dundermiffline', 'wasteDevInkAndMoney'],
+            aliases: ['dundermiffline', 'wastedevinkandmoney'],
             group: 'fun',
             memberName: 'print',
             description: 'print whatever you want using the dev printer ! ( yea really, send a feedback requesting the image and i\'il send it to you.',
