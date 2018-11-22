@@ -32,11 +32,9 @@ module.exports = class printCommand extends Command {
 	, success:function(jobID){
         console.log("sent to printer with ID: "+jobID);
         message.say("Printing now! ( You will receive your print shortly ( if the dev isint sleeping that is ))");
+        channel.send(`${message.author.username} (${message.author.id}) Asked for a print with the following text: ${text}`);
 	}
 	, error:function(err){console.log(err); message.say("An error has occured, the printer is most likely disconnected, try again later")}
 });
-
-channel.send(`${message.author.username} (${message.author.id}) Asked for a print with the following text: ${text}`);
-
     }
 };
