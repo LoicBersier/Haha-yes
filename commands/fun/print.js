@@ -8,7 +8,7 @@ module.exports = class printCommand extends Command {
             aliases: ['dundermiffline', 'wastedevinkandmoney'],
             group: 'fun',
             memberName: 'print',
-            description: 'print whatever you want using the dev printer ! ( yea really, send a feedback requesting the image and i\'il send it to you.',
+            description: 'print whatever you want using the dev printer ! ( yea really, send a feedback requesting the image and i\'il send it to you. )',
             throttling: {
                 usages: 1,
                 duration: 86400,
@@ -24,15 +24,19 @@ module.exports = class printCommand extends Command {
     }
 
     async run(message, { text }) {
+        const channel = this.client.channels.get(printChannel);
+
+    
         printer.printDirect({data:`Printed by: ${message.author.username}\n\n${text}`
 	, type: 'TEXT' // type: RAW, TEXT, PDF, JPEG, .. depends on platform
 	, success:function(jobID){
         console.log("sent to printer with ID: "+jobID);
         message.say("Printing now! ( You will receive your print shortly ( if the dev isint sleeping that is ))");
-        const channel = this.client.channels.get(printChannel);
-        channel.send(`${message.author.username} (${message.author.id}) Asked for a print with the following text: ${text}`);
 	}
 	, error:function(err){console.log(err); message.say("An error has occured, the printer is most likely disconnected, try again later")}
 });
+
+channel.send(`${message.author.username} (${message.author.id}) Asked for a print with the following text: ${text}`);
+
     }
 };
