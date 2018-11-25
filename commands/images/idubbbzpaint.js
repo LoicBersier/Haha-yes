@@ -46,7 +46,7 @@ module.exports = class idubbbzpaintCommand extends Command {
             
                 do {
                     // Assign the font to the context and decrement it so it can be measured again
-                    ctx.font = `${fontSize -= 10}px sans-serif`;
+                    ctx.font = `${fontSize -= 10}px ubuntu`;
                 } while (ctx.measureText(text).width > 800 - 300);
             
                 // Return the result to use in the actual canvas
