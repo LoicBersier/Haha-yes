@@ -6,3 +6,4 @@ node_modules\
 .vscode
 video.mp4
 json/autoresponse.json
+json/blacklist.json
