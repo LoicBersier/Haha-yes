@@ -1,6 +1,7 @@
 const { Command } = require('discord.js-commando');
 const printer = require('printer');
-const { printChannel } = require('../../config.json')
+const { printChannel } = require('../../config.json');
+const blacklist = require('../../json/blacklist.json');
 module.exports = class printCommand extends Command {
     constructor(client) {
         super(client, {
@@ -24,6 +25,10 @@ module.exports = class printCommand extends Command {
     }
 
     async run(message, { text }) {
+        if(blacklist[message.author.id])
+        return message.channel.send("You are blacklisted")
+
+
         const channel = this.client.channels.get(printChannel);
 
     
