@@ -43,7 +43,7 @@ module.exports = class sayCommand extends Command {
         text = text.replace(/\[adjective\]/, adjective[randNumber(adjective)])
         text = text.replace(/\[member\]/, message.guild.members.random().user.username)
         text = text.replace(/\[number\]/, Math.floor((Math.random() * 10) + 1))
-        } while( text.includes('[verb]') || text.includes('[adverb]') || text.includes('[noun]') || text.includes('[adjective]') || text.includes('[member]' || text.includes('[number]')) )
+        } while( text.includes('[verb]') || text.includes('[adverb]') || text.includes('[noun]') || text.includes('[adjective]') || text.includes('[member]') || text.includes('[number]') )
 
 //      Send the final text
         message.say(text);
