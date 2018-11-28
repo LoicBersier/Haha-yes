@@ -2,7 +2,7 @@ const { Command } = require('discord.js-commando');
 const fs = require('fs');
 const youtubedl = require('youtube-dl');
 const SelfReloadJSON = require('self-reload-json');
-const blacklist = require('../../blacklist');
+const blacklist = require('blacklist');
 const { fbuser, fbpasswd } = require('../../config.json');
 
 module.exports = class downloadCommand extends Command {

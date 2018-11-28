@@ -2,7 +2,7 @@ const { Command } = require('discord.js-commando');
 const Discord = require('discord.js');
 const fetch = require('node-fetch')
 const SelfReloadJSON = require('self-reload-json');
-const blacklist = require('../../blacklist');
+const blacklist = require('blacklist');
 module.exports = class InfoCommand extends Command {
     constructor(client) {
         super(client, {

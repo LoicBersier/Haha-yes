@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const { createCanvas, loadImage, getContext } = require('canvas')
 const superagent = require('superagent')
 const SelfReloadJSON = require('self-reload-json');
-const blacklist = require('../../blacklist');
+const blacklist = require('blacklist');
 
 
 module.exports = class uglyCommand extends Command {

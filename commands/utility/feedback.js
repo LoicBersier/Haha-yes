@@ -1,7 +1,7 @@
 const { Command } = require('discord.js-commando');
 const { feedbackChannel } = require('../../config.json');
 const SelfReloadJSON = require('self-reload-json');
-const blacklist = require('../../blacklist');
+const blacklist = require('blacklist');
 const fs = require('fs');
 module.exports = class feedbackCommand extends Command {
     constructor(client) {
