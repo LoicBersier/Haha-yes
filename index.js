@@ -81,34 +81,29 @@ client.registry
 //  Reply with images as attachement
         if(imgResponseObject[message_content]) {
             var autoresponse = new SelfReloadJSON('./json/autoresponse.json');
-            if(autoresponse[message.channel.id] == 'disable')
-            return console.log('disable')
+            if(autoresponse[message.channel.id] == 'enable')
             message.channel.send({files: [imgResponseObject[message_content]]}); 
         } 
 //  React only to the messages
         else if(reactObject[message_content]) {
             var autoresponse = new SelfReloadJSON('./json/autoresponse.json');
-            if(autoresponse[message.channel.id] == 'disable')
-            return console.log('disable')
+            if(autoresponse[message.channel.id] == 'enable')
             message.react(reactObject[message_content]);
         }
 //  auto respond to messages
         else if(responseObject[message_content]) {
             var autoresponse = new SelfReloadJSON('./json/autoresponse.json');
-            if(autoresponse[message.channel.id] == 'disable')
-            return console.log('disable')
+            if(autoresponse[message.channel.id] == 'enable')
             message.channel.send(responseObject[message_content]);
 //  If it contain "like if" react with 👍
         } else if (message_content.includes("like if")) {
             var autoresponse = new SelfReloadJSON('./json/autoresponse.json');
-            if(autoresponse[message.channel.id] == 'disable')
-            return console.log('disable')
+            if(autoresponse[message.channel.id] == 'enable')
             message.react("\u{1F44D}")
 //  If it contain "jeff" react with a jeff emote
         } else if (message_content.includes("jeff")) {
             var autoresponse = new SelfReloadJSON('./json/autoresponse.json');
-            if(autoresponse[message.channel.id] == 'disable')
-            return console.log('disable')
+            if(autoresponse[message.channel.id] == 'enable')
             message.react("496028845967802378")
         }
     }});
