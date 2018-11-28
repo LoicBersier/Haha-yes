@@ -2,8 +2,8 @@ const { Command } = require('discord.js-commando');
 const Discord = require('discord.js');
 const { createCanvas, loadImage, getContext } = require('canvas')
 const superagent = require('superagent')
-const blacklist = require('../../json/blacklist.json')
-
+const SelfReloadJSON = require('self-reload-json');
+const blacklist = require('../../blacklist');
 
 
 module.exports = class uglyCommand extends Command {
@@ -17,8 +17,10 @@ module.exports = class uglyCommand extends Command {
     }
 
     async run(message) {
-        if(blacklist[message.author.id])
-        return message.channel.send("You are blacklisted")
+        let blacklistJson = new SelfReloadJSON('json/blacklist.json');
+        if(blacklistJson[message.author.id])
+        return blacklist(blacklistJson[message.author.id] , message)
+        
         let Attachment = (message.attachments).array();
         let image = null
         if (!Attachment[0])

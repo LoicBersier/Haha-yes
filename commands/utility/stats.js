@@ -1,6 +1,6 @@
 const { Command } = require('discord.js-commando');
-const blacklist = require('../../json/blacklist.json')
-
+const SelfReloadJSON = require('self-reload-json');
+const blacklist = require('../../blacklist');
 module.exports = class statsCommand extends Command {
     constructor(client) {
         super(client, {
@@ -12,8 +12,10 @@ module.exports = class statsCommand extends Command {
     }
 
     async run(message) {
-        if(blacklist[message.author.id])
-        return message.channel.send("You are blacklisted")
+        let blacklistJson = new SelfReloadJSON('json/blacklist.json');
+        if(blacklistJson[message.author.id])
+        return blacklist(blacklistJson[message.author.id] , message)
+        
         let totalSeconds = (this.client.uptime / 1000);
         let days = Math.floor(totalSeconds / 86400);
         let hours = Math.floor(totalSeconds / 3600);

@@ -1,7 +1,8 @@
 const { Command } = require('discord.js-commando');
 const fs = require('fs');
 const youtubedl = require('youtube-dl');
-const blacklist = require('../../json/blacklist.json');
+const SelfReloadJSON = require('self-reload-json');
+const blacklist = require('../../blacklist');
 const { fbuser, fbpasswd } = require('../../config.json');
 
 module.exports = class downloadCommand extends Command {
@@ -23,8 +24,10 @@ module.exports = class downloadCommand extends Command {
     }
 
     async run(message, { link }) {
-        if(blacklist[message.author.id])
-        return message.channel.send("You are blacklisted")
+        let blacklistJson = new SelfReloadJSON('json/blacklist.json');
+        if(blacklistJson[message.author.id])
+        return blacklist(blacklistJson[message.author.id] , message)
+        
         if(link.includes("http") || link.includes("www")) {
             message.say('Downloading...').then(msg => {
                 video.on('end', function() {
