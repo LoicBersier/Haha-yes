@@ -5,7 +5,7 @@ const { token, prefix, statsChannel, ownerID, supportServer } = require('./confi
 const responseObject = require("./json/reply.json");
 const reactObject = require("./json/react.json");
 const imgResponseObject = require("./json/imgreply.json");
-var SelfReloadJSON = require('self-reload-json');
+const SelfReloadJSON = require('self-reload-json');
 //  Prefix and ownerID and invite to support server
 const client = new CommandoClient({
     commandPrefix: prefix,

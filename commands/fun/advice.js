@@ -1,7 +1,8 @@
 const { Command } = require('discord.js-commando');
 const Discord = require('discord.js');
 const fetch = require('node-fetch')
-const blacklist = require('../../json/blacklist.json')
+const SelfReloadJSON = require('self-reload-json');
+const blacklist = require('../../blacklist');
 
 module.exports = class AdviceCommand extends Command {
     constructor(client) {
@@ -14,8 +15,10 @@ module.exports = class AdviceCommand extends Command {
     }
 
     async run(message) {
-        if(blacklist[message.author.id])
-        return message.channel.send("You are blacklisted")
+        let blacklistJson = new SelfReloadJSON('../../json/blacklist.json');
+        if(blacklistJson[message.author.id])
+        return blacklist(blacklistJson[message.author.id] , message)
+        
         fetch("http://api.adviceslip.com/advice").then((response) => {
   return response.json();
 }).then((response) => {

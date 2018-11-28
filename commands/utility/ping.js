@@ -1,7 +1,7 @@
 const { oneLine } = require('common-tags');
 const { Command } = require('discord.js-commando');
-const blacklist = require('../../json/blacklist.json')
-
+const SelfReloadJSON = require('self-reload-json');
+const blacklist = require('../../blacklist');
 module.exports = class PingCommand extends Command {
 	constructor(client) {
 		super(client, {
@@ -16,20 +16,22 @@ module.exports = class PingCommand extends Command {
 		});
 	}
 
-	async run(msg) {
-		if(blacklist[msg.author.id])
-    return msg.channel.send("You are blacklisted")
-		if(!msg.editable) {
-			const pingMsg = await msg.say('Pinging...');
+	async run(message) {
+        let blacklistJson = new SelfReloadJSON('../../json/blacklist.json');
+        if(blacklistJson[message.author.id])
+		return blacklist(blacklistJson[message.author.id] , message)
+		
+		if(!message.editable) {
+			const pingMsg = await message.say('Pinging...');
 			return pingMsg.edit(oneLine`
-				${msg.channel.type !== 'dm' ? `${msg.author},` : ''}
-				<:ping:499226870047571978> Pong! The message round-trip took **${pingMsg.createdTimestamp - msg.createdTimestamp}**ms.
+				${message.channel.type !== 'dm' ? `${message.author},` : ''}
+				<:ping:499226870047571978> Pong! The message round-trip took **${pingMsg.createdTimestamp - message.createdTimestamp}**ms.
 				${this.client.ping ? `The heartbeat ping is **${Math.round(this.client.ping)}**ms.` : ''}
 			`);
 		} else {
-			await msg.edit('Pinging...');
-			return msg.edit(oneLine`
-				Pong! The message round-trip took **${msg.editedTimestamp - msg.createdTimestamp}**ms.
+			await message.edit('Pinging...');
+			return message.edit(oneLine`
+				Pong! The message round-trip took **${message.editedTimestamp - message.createdTimestamp}**ms.
 				${this.client.ping ? `The heartbeat ping is **${Math.round(this.client.ping)}**ms.` : ''}
 			`);
 		}

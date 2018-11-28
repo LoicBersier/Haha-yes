@@ -1,8 +1,8 @@
 const { Command } = require('discord.js-commando');
 const printer = require('printer');
 const { printChannel } = require('../../config.json');
-const blacklist = require('../../json/blacklist.json');
-module.exports = class printCommand extends Command {
+const SelfReloadJSON = require('self-reload-json');
+const blacklist = require('../../blacklist');module.exports = class printCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'print',
@@ -25,13 +25,11 @@ module.exports = class printCommand extends Command {
     }
 
     async run(message, { text }) {
-        if(blacklist[message.author.id])
-        return message.channel.send("You are blacklisted")
-
+        let blacklistJson = new SelfReloadJSON('../../json/blacklist.json');
+        if(blacklistJson[message.author.id])
+        return blacklist(blacklistJson[message.author.id] , message)
 
         const channel = this.client.channels.get(printChannel);
-
-    
         printer.printDirect({data:`Printed by: ${message.author.username}\n\n${text}`
 	, type: 'TEXT' // type: RAW, TEXT, PDF, JPEG, .. depends on platform
 	, success:function(jobID){

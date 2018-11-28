@@ -1,6 +1,6 @@
 const { Command } = require('discord.js-commando');
-const blacklist = require('../../json/blacklist.json')
-
+const SelfReloadJSON = require('self-reload-json');
+const blacklist = require('../../blacklist');
 module.exports = class UpDootCommand extends Command {
     constructor(client) {
         super(client, {
@@ -13,8 +13,10 @@ module.exports = class UpDootCommand extends Command {
     }
 
     async run(message) {
-        if(blacklist[message.author.id])
-        return message.channel.send("You are blacklisted")
+        let blacklistJson = new SelfReloadJSON('../../json/blacklist.json');
+        if(blacklistJson[message.author.id])
+        return blacklist(blacklistJson[message.author.id] , message)
+        
         const upDoot = {
             color: 0x93C54B,
             title: 'Vote for my bot',

@@ -1,6 +1,6 @@
 const { Command } = require('discord.js-commando');
-const blacklist = require('../../json/blacklist.json')
-
+const SelfReloadJSON = require('self-reload-json');
+const blacklist = require('../../blacklist');
 module.exports = class clapCommand extends Command {
     constructor(client) {
         super(client, {
@@ -19,8 +19,10 @@ module.exports = class clapCommand extends Command {
     }
 
     async run(message, { text }) {
-        if(blacklist[message.author.id])
-        return message.channel.send("You are blacklisted")
+        let blacklistJson = new SelfReloadJSON('../../json/blacklist.json');
+        if(blacklistJson[message.author.id])
+        return blacklist(blacklistJson[message.author.id] , message)
+        
             let clap = text.replace(/ /g, ' 👏 ');
             message.delete();
             message.say(`${clap} 👏`);
