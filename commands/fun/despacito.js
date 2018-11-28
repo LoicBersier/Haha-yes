@@ -3,8 +3,8 @@ const responseObject = require("../../json/despacito.json");
 const { createCanvas, loadImage, getContext } = require('canvas')
 const superagent = require('superagent')
 const Discord = require('discord.js');
-const SelfReloadJSON = require('self-reload-json');
-const blacklist = require('blacklist');
+const blacklist = require('../../json/blacklist.json')
+
 module.exports = class DespacitoCommand extends Command {
     constructor(client) {
         super(client, {
@@ -24,10 +24,8 @@ module.exports = class DespacitoCommand extends Command {
     }
 
     async run(message, { user }) {
-        let blacklistJson = new SelfReloadJSON('../../json/blacklist.json');
-        if(blacklistJson[message.author.id])
-        return blacklist(blacklistJson[message.author.id] , message)
-        
+        if(blacklist[message.author.id])
+        return message.channel.send("You are blacklisted")
         if (!user) {
         const number = Object.keys(responseObject).length;
         const despacitoNumber = Math.floor (Math.random() * (number - 1 + 1)) + 1;

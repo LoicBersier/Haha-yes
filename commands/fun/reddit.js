@@ -1,8 +1,8 @@
 const { Command } = require('discord.js-commando');
 const Discord = require('discord.js');
 const fetch = require('node-fetch');
-const SelfReloadJSON = require('self-reload-json');
-const blacklist = require('blacklist');
+const blacklist = require('../../json/blacklist.json')
+
 module.exports = class redditCommand extends Command {
     constructor(client) {
         super(client, {
@@ -21,10 +21,8 @@ module.exports = class redditCommand extends Command {
     }
 
     async run(message, { sub }) {
-        let blacklistJson = new SelfReloadJSON('../../json/blacklist.json');
-        if(blacklistJson[message.author.id])
-        return blacklist(blacklistJson[message.author.id] , message)
-        
+        if(blacklist[message.author.id])
+        return message.channel.send("You are blacklisted")
         let /* the bodies hit the */ i = Math.floor((Math.random() * 10) + 1);
         let a = 0
         fetch('https://www.reddit.com/r/' + sub + '.json?limit=100').then((response) => {

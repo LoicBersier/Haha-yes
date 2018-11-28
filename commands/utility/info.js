@@ -1,8 +1,8 @@
 const { Command } = require('discord.js-commando');
 const Discord = require('discord.js');
 const fetch = require('node-fetch')
-const SelfReloadJSON = require('self-reload-json');
-const blacklist = require('blacklist');
+const blacklist = require('../../json/blacklist.json')
+
 module.exports = class InfoCommand extends Command {
     constructor(client) {
         super(client, {
@@ -21,10 +21,8 @@ module.exports = class InfoCommand extends Command {
     }
 
     async run(message, { search }) {
-        let blacklistJson = new SelfReloadJSON('../../json/blacklist.json');
-        if(blacklistJson[message.author.id])
-        return blacklist(blacklistJson[message.author.id] , message)
-        
+        if(blacklist[message.author.id])
+        return message.channel.send("You are blacklisted")
         let searchURL = encodeURI(search)
         fetch("https://api.duckduckgo.com/?q=" + searchURL + "&format=json").then((response) => {
   return response.json();

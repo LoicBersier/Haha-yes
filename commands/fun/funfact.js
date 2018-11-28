@@ -1,7 +1,7 @@
 const { Command } = require('discord.js-commando');
 const responseObject = require("../../json/funfact.json");
-const SelfReloadJSON = require('self-reload-json');
-const blacklist = require('blacklist');
+const blacklist = require('../../json/blacklist.json')
+
 module.exports = class FunFactCommand extends Command {
     constructor(client) {
         super(client, {
@@ -13,10 +13,8 @@ module.exports = class FunFactCommand extends Command {
     }
 
     async run(message) {
-        let blacklistJson = new SelfReloadJSON('../../json/blacklist.json');
-        if(blacklistJson[message.author.id])
-        return blacklist(blacklistJson[message.author.id] , message)
-        
+        if(blacklist[message.author.id])
+        return message.channel.send("You are blacklisted")
         const number = Object.keys(responseObject).length;
         const funFactNumber = Math.floor (Math.random() * (number - 1 + 1)) + 1;
             message.channel.send(`Fun fact: ${responseObject[funFactNumber]}`);

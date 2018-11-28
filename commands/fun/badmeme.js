@@ -1,7 +1,6 @@
 const { Command } = require('discord.js-commando');
 const fetch = require('node-fetch')
-const SelfReloadJSON = require('self-reload-json');
-const blacklist = require('blacklist');
+const blacklist = require('../../json/blacklist.json')
 
 module.exports = class BadMemeCommand extends Command {
     constructor(client) {
@@ -14,9 +13,8 @@ module.exports = class BadMemeCommand extends Command {
     }
 
     async run(message) {
-        let blacklistJson = new SelfReloadJSON('../../json/blacklist.json');
-        if(blacklistJson[message.author.id])
-        return blacklist(blacklistJson[message.author.id] , message)
+        if(blacklist[message.author.id])
+        return message.channel.send("You are blacklisted")
 
         fetch("https://api.imgur.com/3/gallery/hot/day?showViral=true&mature=false&perPage=100&album_previews=true", {
             headers: { "Authorization": "Client-ID e4cb6948f80f295" },

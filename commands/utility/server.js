@@ -1,6 +1,6 @@
 const { Command } = require('discord.js-commando');
-const SelfReloadJSON = require('self-reload-json');
-const blacklist = require('blacklist');
+const blacklist = require('../../json/blacklist.json')
+
 module.exports = class ServerCommand extends Command {
     constructor(client) {
         super(client, {
@@ -14,10 +14,8 @@ module.exports = class ServerCommand extends Command {
     }
 
     async run(message) {
-        let blacklistJson = new SelfReloadJSON('../../json/blacklist.json');
-        if(blacklistJson[message.author.id])
-        return blacklist(blacklistJson[message.author.id] , message)
-        
+        if(blacklist[message.author.id])
+        return message.channel.send("You are blacklisted")
     const addEmbed = {
         color: 0x0099ff,
         title: 'Stats of the server',

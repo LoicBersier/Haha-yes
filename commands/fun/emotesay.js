@@ -1,7 +1,7 @@
 const { Command } = require('discord.js-commando');
 const emojiCharacters = require('../../emojiCharacters');
-const SelfReloadJSON = require('self-reload-json');
-const blacklist = require('blacklist');
+const blacklist = require('../../json/blacklist.json')
+
 module.exports = class emoteSayCommand extends Command {
     constructor(client) {
         super(client, {
@@ -20,10 +20,8 @@ module.exports = class emoteSayCommand extends Command {
     }
 
     async run(message, { text }) {
-        let blacklistJson = new SelfReloadJSON('../../json/blacklist.json');
-        if(blacklistJson[message.author.id])
-        return blacklist(blacklistJson[message.author.id] , message)
-        
+        if(blacklist[message.author.id])
+        return message.channel.send("You are blacklisted")
         message.delete();
         let emojiArray = [];
         for (let i = 0; i < text.length; i++)

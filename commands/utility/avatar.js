@@ -1,6 +1,5 @@
 const { Command } = require('discord.js-commando');
-const SelfReloadJSON = require('self-reload-json');
-const blacklist = require('blacklist');
+const blacklist = require('../../json/blacklist.json')
 
 module.exports = class AvatarCommand extends Command {
     constructor(client) {
@@ -21,10 +20,8 @@ module.exports = class AvatarCommand extends Command {
     }
 
     async run(message, { user }) {
-        let blacklistJson = new SelfReloadJSON('../../json/blacklist.json');
-        if(blacklistJson[message.author.id])
-        return blacklist(blacklistJson[message.author.id] , message)
-        
+        if(blacklist[message.author.id])
+        return message.channel.send("You are blacklisted")
         if (!user)
             return message.say(`Your avatar:\n${message.author.displayAvatarURL}`);
         else
