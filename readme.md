@@ -15,7 +15,7 @@ A simple discord bot made with discord.js and commando
 
 ### Installing
 
-To install you need the dependency for **node-canvas** https://github.com/Automattic/node-canvas and for **node-printer ( for ubuntu )** https://github.com/tojocky/node-printer
+To install you need the dependency for [**node-canvas**](https://github.com/Automattic/node-canvas) and for [**node-printer ( for ubuntu )**](https://github.com/tojocky/node-printer)
 
 then for the bot do the following commands
 
