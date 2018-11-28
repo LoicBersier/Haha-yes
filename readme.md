@@ -9,7 +9,7 @@ A simple discord bot made with discord.js and commando
 -   put images into other images ( i dont know how to explain so here a picture of it: <img src="https://cdn.discordapp.com/attachments/488094005071183913/514869492615086113/edupspaint.png">)
 -   take images from reddit & imgur
 -   can make the bot write thing in emote or just repeat what the user say
--   Print thing from the printer dev ( yes really, to disable simple delete print.js or disable with "${prefix} disable print")
+-   Print thing from the printer dev ( yes really, to disable simple delete print.js or disable with "${prefix} unload print")
 -   autoresponse ( that can be disable with a simple command "${prefix} autoresponse disable ("all" for server wide))
 -   and more !
 
