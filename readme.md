@@ -29,3 +29,5 @@ npm install
 discord.js (https://github.com/discordjs) for providing discord.js, commando and the discord.js guide<br>
 All the people who made all the node modules<br>
 [TG/LW] Tina the Cyclops#5861 for inspiring me to make this bot
+
+[You can also support me on patreon](https://patreon.com/user?u=15330358&utm_medium=social&utm_source=twitter&utm_campaign=creatorshare)
