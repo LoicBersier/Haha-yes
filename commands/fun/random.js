@@ -42,7 +42,7 @@ module.exports = class RandomCommand extends Command {
         text = text.replace(/\[noun\]/, noun[randNumber(noun)])
         text = text.replace(/\[adjective\]/, adjective[randNumber(adjective)])
         text = text.replace(/\[member\]/, message.guild.members.random().user.username)
-        } while( text.includes('[verb]') || text.includes('[adverb]') || text.includes('[noun]') || text.includes('[adjective]' || text.includes('[member]' || text-includes('[adjectives]'))) )
+        } while( text.includes('[verb]') || text.includes('[adverb]') || text.includes('[noun]') || text.includes('[adjective]') || text.includes('[member]') )
 
 //      Send the final text
         message.say(text);
