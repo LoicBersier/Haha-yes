@@ -108,6 +108,34 @@ client.registry
         }
     }});
 
+//  Very basic starboard
+    client.on('messageReactionAdd', async (reaction, message) => {
+        let messageContent = reaction.message.content;
+        let messageAttachments = reaction.message.attachments.map(u=> `${u.url}`);
+        let messageAuthor = reaction.message.author.username;
+        let messageChannel = reaction.message.channel.name;
+
+        if (reaction.emoji.name === '🌟' && reaction.count === 4) {
+            const channel = client.channels.find(channel => channel.name === "starboard");
+            try {
+            channel.send(`From the channel: **${messageChannel}**\n${messageAuthor}\n${messageContent}\n${messageAttachments}`)
+            }
+            catch {
+                console.error('There is no starboard')
+            }
+        }
+
+        if (reaction.emoji.name === '✡' && reaction.count === 4) {
+            const channel = client.channels.find(channel => channel.name === "shameboard");
+            try {
+            channel.send(`From the channel: **${messageChannel}**\n${messageAuthor}\n${messageContent}\n${messageAttachments}`)
+            }
+            catch {
+                console.error('There is no shameboard')
+            }
+        }
+     })
+    
     client.on('error', console.error);
     process.on('unhandledRejection', error => console.error('Uncaught Promise Rejection', error));
 
