@@ -5,7 +5,7 @@ module.exports = class saydCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'sayd',
-            aliases: ['repeat'],
+            aliases: ['repeatd'],
             group: 'fun',
             memberName: 'sayd',
             description: `Repeat the text you send and delete your message( can also use [verb] [noun] [adverb] [adjective] [member] and [number] to get random thing )`,
