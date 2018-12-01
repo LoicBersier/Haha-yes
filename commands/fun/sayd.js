@@ -57,7 +57,7 @@ module.exports = class saydCommand extends Command {
         text = text.replace(/\[noun\]/, noun[randNumber(noun)])
         text = text.replace(/\[adjective\]/, adjective[randNumber(adjective)])
         text = text.replace(/\[activitie\]/, activities[randNumber(activities)])
-        text = text.replace(/\[celebreties\]/, celebreties[randNumber(celebreties)])
+        text = text.replace(/\[celebrities\]/, celebreties[randNumber(celebreties)])
         text = text.replace(/\[countrie\]/, countries[randNumber(countries)])
         text = text.replace(/\[diseases\]/, diseases[randNumber(diseases)])
         text = text.replace(/\[elements\]/, elements[randNumber(elements)])
@@ -71,7 +71,7 @@ module.exports = class saydCommand extends Command {
         text = text.replace(/\[member\]/, message.guild.members.random().user.username)
         text = text.replace(/\[number\]/, Math.floor((Math.random() * 9) + 1))
 //      Verify if it replaced everything
-        } while( text.includes('[verb]') || text.includes('[adverb]') || text.includes('[noun]') || text.includes('[adjective]') || text.includes('[member]') || text.includes('[number]') || text.includes('[activitie]') || text.includes('[celebreties]') || text.includes('[countrie]') || text.includes('[diseases]') || text.includes('[elements]') || text.includes('[hobbie]') || text.includes('[music]') || text.includes('[prefixe]') || text.includes('[pronoun]') || text.includes('[state]') || text.includes('[title]') || text.includes('[unit]'))
+        } while( text.includes('[verb]') || text.includes('[adverb]') || text.includes('[noun]') || text.includes('[adjective]') || text.includes('[member]') || text.includes('[number]') || text.includes('[activitie]') || text.includes('[celebrities]') || text.includes('[countrie]') || text.includes('[diseases]') || text.includes('[elements]') || text.includes('[hobbie]') || text.includes('[music]') || text.includes('[prefixe]') || text.includes('[pronoun]') || text.includes('[state]') || text.includes('[title]') || text.includes('[unit]'))
 
 //      Send the final text
         message.delete();
