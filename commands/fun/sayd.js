@@ -1,13 +1,13 @@
 const { Command } = require('discord.js-commando');
 const SelfReloadJSON = require('self-reload-json');
 const blacklist = require('../../blacklist');
-module.exports = class sayCommand extends Command {
+module.exports = class saydCommand extends Command {
     constructor(client) {
         super(client, {
-            name: 'say',
+            name: 'sayd',
             aliases: ['repeat'],
             group: 'fun',
-            memberName: 'say',
+            memberName: 'sayd',
             description: `Repeat the text you send ( can also use [verb] [noun] [adverb] [adjective] [member] and [number] to get random thing )`,
             args: [
                 {
