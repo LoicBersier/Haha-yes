@@ -56,14 +56,14 @@ module.exports = class sayCommand extends Command {
         text = text.replace(/\[adverb\]/, adverb[randNumber(adverb)])
         text = text.replace(/\[noun\]/, noun[randNumber(noun)])
         text = text.replace(/\[adjective\]/, adjective[randNumber(adjective)])
-        text = text.replace(/\[activitie\]/, activities[randNumber(activities)])
+        text = text.replace(/\[activities\]/, activities[randNumber(activities)])
         text = text.replace(/\[celebrities\]/, celebreties[randNumber(celebreties)])
-        text = text.replace(/\[countrie\]/, countries[randNumber(countries)])
+        text = text.replace(/\[countries\]/, countries[randNumber(countries)])
         text = text.replace(/\[diseases\]/, diseases[randNumber(diseases)])
         text = text.replace(/\[elements\]/, elements[randNumber(elements)])
-        text = text.replace(/\[hobbie\]/, hobbies[randNumber(hobbies)])
+        text = text.replace(/\[hobbies\]/, hobbies[randNumber(hobbies)])
         text = text.replace(/\[music\]/, music[randNumber(music)])
-        text = text.replace(/\[prefixe\]/, prefixes[randNumber(prefixes)])
+        text = text.replace(/\[prefixes\]/, prefixes[randNumber(prefixes)])
         text = text.replace(/\[pronoun\]/, pronouns[randNumber(pronouns)])
         text = text.replace(/\[state\]/, states[randNumber(states)])
         text = text.replace(/\[title\]/, titles[randNumber(titles)])
@@ -71,7 +71,7 @@ module.exports = class sayCommand extends Command {
         text = text.replace(/\[member\]/, message.guild.members.random().user.username)
         text = text.replace(/\[number\]/, Math.floor((Math.random() * 9) + 1))
 //      Verify if it replaced everything
-        } while( text.includes('[verb]') || text.includes('[adverb]') || text.includes('[noun]') || text.includes('[adjective]') || text.includes('[member]') || text.includes('[number]') || text.includes('[activitie]') || text.includes('[celebrities]') || text.includes('[countrie]') || text.includes('[diseases]') || text.includes('[elements]') || text.includes('[hobbie]') || text.includes('[music]') || text.includes('[prefixe]') || text.includes('[pronoun]') || text.includes('[state]') || text.includes('[title]') || text.includes('[unit]'))
+        } while( text.includes('[verb]') || text.includes('[adverb]') || text.includes('[noun]') || text.includes('[adjective]') || text.includes('[member]') || text.includes('[number]') || text.includes('[activities]') || text.includes('[celebrities]') || text.includes('[countries]') || text.includes('[diseases]') || text.includes('[elements]') || text.includes('[hobbies]') || text.includes('[music]') || text.includes('[prefixes]') || text.includes('[pronoun]') || text.includes('[state]') || text.includes('[title]') || text.includes('[unit]'))
 
 //      Send the final text
         message.say(text);
