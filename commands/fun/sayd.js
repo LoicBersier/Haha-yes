@@ -8,8 +8,7 @@ module.exports = class saydCommand extends Command {
             aliases: ['repeatd'],
             group: 'fun',
             memberName: 'sayd',
-            description: `Repeat the text you send and delete your message( can also use [verb] [noun] [adverb] [adjective] [member] and [number] to get random thing )`,
-            args: [
+            description: `Repeat the text you send ( can also use [verb] [noun] [adverb] [adjective] [activitie] [celebreties] [countrie] [diseases] [elements] [hobbie] [music] [prefixe] [pronoun] [state] [title] [unit] [member] [number] to replace it with something else )`,            args: [
                 {
                     key: 'text',
                     prompt: 'What do you want me to say',
