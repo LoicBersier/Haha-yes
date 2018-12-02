@@ -18,17 +18,24 @@ module.exports = class translationCommand extends Command {
                     key: 'text',
                     prompt: 'What do you want me to translate',
                     type: 'string',
+                },
+                {
+                    key: 'language',
+                    prompt: 'In what language do you want me to translate to? ( You can get the list here https://tech.yandex.com/translate/doc/dg/concepts/api-overview-docpage/)',
+                    type: 'string',
+                    default: 'en',
+                    oneOf: ["az","ml","sq","mt","am","mk","en","mi","ar","mr","hy","mhr","af","mn","eu","de","ba","ne","be","no","bn","pa","my","pap","bg","fa","bs","pl","cy","pt","hu","ro","vi","ru","ht","ceb","gl","sr","nl","si","mrj","sk","el","sl","ka","sw","gu","su","da","tg","he","th","yi","tl","id","ta","ga","tt","it","te","is","tr","es","udm","kk","uz","kn","uk","ca","ur","ky","fi","zh","fr","ko","hi","xh","hr","km","cs","lo","sv","la","gd","lv","et","lt","eo","lb","jv","mg","ja","ms"]
                 }
             ]
         });
     }
 
-    async run(message, { text }) {
+    async run(message, { text, language }) {
         let blacklistJson = new SelfReloadJSON('json/blacklist.json');
         if(blacklistJson[message.author.id])
         return blacklist(blacklistJson[message.author.id] , message)
         
-        fetch(`https://translate.yandex.net/api/v1.5/tr.json/translate?key=${yandexAPI}&text=${text}&lang=en&options=1`,{
+        fetch(`https://translate.yandex.net/api/v1.5/tr.json/translate?key=${yandexAPI}&text=${text}&lang=${language}&options=1`,{
         }).then((response) => {
   return response.json();
 }).then((response) => {
