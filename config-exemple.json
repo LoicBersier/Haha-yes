@@ -8,5 +8,6 @@
     "feedbackChannel": "id of the channel where the feedback goes",
     "printChannel": "Channel of where it will send the id of people who asked for print",
     "fbuser": "Facebook email",
-    "fbpasswd": "Facebook passwd"
+    "fbpasswd": "Facebook passwd",
+    "yandexAPI": "yandex api key"
 }
