@@ -35,7 +35,8 @@ module.exports = class translationCommand extends Command {
         if(blacklistJson[message.author.id])
         return blacklist(blacklistJson[message.author.id] , message)
         
-        fetch(`https://translate.yandex.net/api/v1.5/tr.json/translate?key=${yandexAPI}&text=${text}&lang=${language}&options=1`,{
+        let textURI = encodeURI(text)
+        fetch(`https://translate.yandex.net/api/v1.5/tr.json/translate?key=${yandexAPI}&text=${textURI}&lang=${language}&options=1`,{
         }).then((response) => {
   return response.json();
 }).then((response) => {
