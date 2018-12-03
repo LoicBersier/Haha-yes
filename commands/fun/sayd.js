@@ -8,7 +8,7 @@ module.exports = class saydCommand extends Command {
             aliases: ['repeatd'],
             group: 'fun',
             memberName: 'sayd',
-            description: `Repeat the text you send and dellete it afterward ( can also use [verb] [noun] [adverb] [adjective] [activitie] [celebreties] [countrie] [diseases] [elements] [hobbie] [music] [prefixe] [pronoun] [state] [title] [unit] [member] [number] to replace it with something else )`,
+            description: `Repeat the text you send and dellete it afterward ( can also use [verb] [noun] [adverbs] [adjective] [activitie] [celebreties] [countrie] [diseases] [elements] [hobbie] [music] [prefixe] [pronoun] [state] [title] [unit] [member] [number] to replace it with something else )`,
             args: [
                 {
                     key: 'text',
@@ -28,8 +28,8 @@ module.exports = class saydCommand extends Command {
 //      Load all the different files
         const verb = require('../../dictionary/verbs.json')
         const noun = require('../../dictionary/noun.json')
-        const adverb = require('../../dictionary/adjectives.json')
-        const adjective = require('../../dictionary/adverbs.json')
+        const adverbs = require('../../dictionary/adjectives.json')
+        const adjective = require('../../dictionary/adverbss.json')
         const activities = require('../../dictionary/activities.json')
         const celebreties = require('../../dictionary/celebreties.json')
         const countries = require('../../dictionary/countries.json')
@@ -53,7 +53,7 @@ module.exports = class saydCommand extends Command {
 //      Replace with a random word from the json
         do {
         text = text.replace(/\[verb\]/, verb[randNumber(verb)])
-        text = text.replace(/\[adverb\]/, adverb[randNumber(adverb)])
+        text = text.replace(/\[adverbs\]/, adverbs[randNumber(adverbs)])
         text = text.replace(/\[noun\]/, noun[randNumber(noun)])
         text = text.replace(/\[adjective\]/, adjective[randNumber(adjective)])
         text = text.replace(/\[activities\]/, activities[randNumber(activities)])
@@ -71,7 +71,7 @@ module.exports = class saydCommand extends Command {
         text = text.replace(/\[member\]/, message.guild.members.random().user.username)
         text = text.replace(/\[number\]/, Math.floor((Math.random() * 9) + 1))
 //      Verify if it replaced everything
-        } while( text.includes('[verb]') || text.includes('[adverb]') || text.includes('[noun]') || text.includes('[adjective]') || text.includes('[member]') || text.includes('[number]') || text.includes('[activities]') || text.includes('[celebrities]') || text.includes('[countries]') || text.includes('[diseases]') || text.includes('[elements]') || text.includes('[hobbies]') || text.includes('[music]') || text.includes('[prefixes]') || text.includes('[pronoun]') || text.includes('[state]') || text.includes('[title]') || text.includes('[unit]'))
+        } while( text.includes('[verb]') || text.includes('[adverbs]') || text.includes('[noun]') || text.includes('[adjective]') || text.includes('[member]') || text.includes('[number]') || text.includes('[activities]') || text.includes('[celebrities]') || text.includes('[countries]') || text.includes('[diseases]') || text.includes('[elements]') || text.includes('[hobbies]') || text.includes('[music]') || text.includes('[prefixes]') || text.includes('[pronoun]') || text.includes('[state]') || text.includes('[title]') || text.includes('[unit]'))
 
 //      Send the final text
         message.delete();
