@@ -1,7 +1,7 @@
 const { Command } = require('discord.js-commando');
 const responseObject = require("../../json/funfact.json");
 const SelfReloadJSON = require('self-reload-json');
-const blacklist = require('../../blacklist');
+
 module.exports = class FunFactCommand extends Command {
     constructor(client) {
         super(client, {

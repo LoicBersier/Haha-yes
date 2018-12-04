@@ -1,6 +1,6 @@
 const { Command } = require('discord.js-commando');
 const SelfReloadJSON = require('self-reload-json');
-const blacklist = require('../../blacklist');
+
 module.exports = class saydCommand extends Command {
     constructor(client) {
         super(client, {

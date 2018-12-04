@@ -2,7 +2,7 @@ const { Command } = require('discord.js-commando');
 const faceapp = require('faceapp')
 const superagent = require('superagent')
 const SelfReloadJSON = require('self-reload-json');
-const blacklist = require('../../blacklist');
+
 
 module.exports = class faceappCommand extends Command {
     constructor(client) {

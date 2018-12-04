@@ -1,7 +1,7 @@
 const { Command } = require('discord.js-commando');
 const { supportServer } = require('../../config.json')
 const SelfReloadJSON = require('self-reload-json');
-const blacklist = require('../../blacklist');
+
 module.exports = class InviteCommand extends Command {
     constructor(client) {
         super(client, {

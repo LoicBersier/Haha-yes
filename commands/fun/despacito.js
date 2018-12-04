@@ -4,7 +4,7 @@ const { createCanvas, loadImage, getContext } = require('canvas')
 const superagent = require('superagent')
 const Discord = require('discord.js');
 const SelfReloadJSON = require('self-reload-json');
-const blacklist = require('../../blacklist');
+
 module.exports = class DespacitoCommand extends Command {
     constructor(client) {
         super(client, {
