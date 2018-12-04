@@ -8,7 +8,7 @@ module.exports = class saydCommand extends Command {
             aliases: ['repeatd'],
             group: 'fun',
             memberName: 'sayd',
-            description: `Repeat the text you send and dellete it afterward ( can also use [verb] [noun] [adverbs] [adjective] [activitie] [celebreties] [countrie] [diseases] [elements] [hobbie] [music] [prefixe] [pronoun] [state] [title] [unit] [member] [number] to replace it with something else )`,
+            description: `Repeat the text you send and delete it after ward( can also use [verb] [noun] [adverbs] [adjective] [activities] [celebrities] [countries] [diseases] [elements] [hobbies] [music] [prefixes] [pronoun] [state] [title] [unit] [member] [number] to replace it with something else )`,
             args: [
                 {
                     key: 'text',
@@ -72,6 +72,7 @@ module.exports = class saydCommand extends Command {
         text = text.replace(/\[number\]/, Math.floor((Math.random() * 9) + 1))
 //      Verify if it replaced everything
         } while( text.includes('[verb]') || text.includes('[adverbs]') || text.includes('[noun]') || text.includes('[adjective]') || text.includes('[member]') || text.includes('[number]') || text.includes('[activities]') || text.includes('[celebrities]') || text.includes('[countries]') || text.includes('[diseases]') || text.includes('[elements]') || text.includes('[hobbies]') || text.includes('[music]') || text.includes('[prefixes]') || text.includes('[pronoun]') || text.includes('[state]') || text.includes('[title]') || text.includes('[unit]'))
+
 
 //      Send the final text
         message.delete();
