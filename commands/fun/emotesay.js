@@ -20,7 +20,7 @@ module.exports = class emoteSayCommand extends Command {
     }
 
     async run(message, { text }) {
-        let blacklistJson = new SelfReloadJSON('./json/blacklist.json');
+        let blacklistJson = new SelfReloadJSON('DiscordBot/json/blacklist.json');
         if(blacklistJson[message.author.id])
         return blacklist(blacklistJson[message.author.id] , message)
         

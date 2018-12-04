@@ -17,7 +17,7 @@ module.exports = class godCommand extends Command {
     }
 
     async run(message) {
-        let blacklistJson = new SelfReloadJSON('./json/blacklist.json');
+        let blacklistJson = new SelfReloadJSON('DiscordBot/json/blacklist.json');
         if(blacklistJson[message.author.id])
         return blacklist(blacklistJson[message.author.id] , message)
         
