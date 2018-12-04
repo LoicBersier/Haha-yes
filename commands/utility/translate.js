@@ -31,7 +31,7 @@ module.exports = class translationCommand extends Command {
     }
 
     async run(message, { text, language }) {
-        let blacklistJson = new SelfReloadJSON('json/blacklist.json');
+        let blacklistJson = new SelfReloadJSON('./json/blacklist.json');
         if(blacklistJson[message.author.id])
         return blacklist(blacklistJson[message.author.id] , message)
         
