@@ -2,7 +2,6 @@ const { Command } = require('discord.js-commando');
 const fs = require('fs');
 const youtubedl = require('youtube-dl');
 const SelfReloadJSON = require('self-reload-json');
-
 const { fbuser, fbpasswd } = require('../../config.json');
 
 module.exports = class downloadCommand extends Command {
@@ -35,7 +34,7 @@ module.exports = class downloadCommand extends Command {
                 })
               })
             let video = youtubedl(link, [`--username=${fbuser}`,`--password=${fbpasswd}`])
-            video.pipe(fs.createWriteStream('video.mp4'))
+            video.pipe(fs.createWriteStream('./video.mp4'))
             video.on('error', function error(err) {
                 console.log('error 2:', err);
                 message.say("An error has occured, i can't download from the link you provided.")
