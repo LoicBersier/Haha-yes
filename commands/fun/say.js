@@ -8,7 +8,7 @@ module.exports = class sayCommand extends Command {
             aliases: ['repeat'],
             group: 'fun',
             memberName: 'say',
-            description: `Repeat the text you send ( can also use [verb] [noun] [adverbs] [adjective] [activities] [celebrities] [countrie] [diseases] [elements] [hobbies] [music] [prefixe] [pronoun] [state] [title] [unit] [member] [number] to replace it with something else )`,
+            description: `Repeat the text you send ( can also use [verb] [noun] [adverbs] [adjective] [activities] [celebrities] [countries] [diseases] [elements] [hobbies] [music] [prefixe] [pronoun] [state] [title] [unit] [member] [number] to replace it with something else )`,
             args: [
                 {
                     key: 'text',
