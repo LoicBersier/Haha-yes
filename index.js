@@ -81,7 +81,6 @@ client.registry
 //  Reply with images as attachement
         if(imgResponseObject[message_content]) {
             var autoresponse = new SelfReloadJSON('DiscordBot/json/autoresponse.json');
-            var customresponse = new SelfReloadJSON('DiscordBot/json/customresponse.json');
             if(autoresponse[message.channel.id] == 'enable')
             message.channel.send({files: [imgResponseObject[message_content]]}); 
         } 
@@ -94,6 +93,7 @@ client.registry
 //  auto respond to messages
         else if(responseObject[message_content]) {
             var autoresponse = new SelfReloadJSON('DiscordBot/json/autoresponse.json');
+            var customresponse = new SelfReloadJSON('DiscordBot/json/customresponse.json');
             if(autoresponse[message.channel.id] == 'enable')
             message.channel.send(responseObject[message_content]);
             message.channel.send(customresponse[message.guild.id]['response'])
