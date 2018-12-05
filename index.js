@@ -92,10 +92,11 @@ client.registry
             message.react(reactObject[message_content]);
         }
 //  auto respond to messages
-        else if(responseObject[message_content] || customresponse[message_content]) {
+        else if(responseObject[message_content] || customresponse[message.guild.id]['text'] == message_content) {
             var autoresponse = new SelfReloadJSON('DiscordBot/json/autoresponse.json');
             if(autoresponse[message.channel.id] == 'enable')
             message.channel.send(responseObject[message_content]);
+            message.channel.send(customresponse[message.guild.id]['response'])
 //  If it contain "like if" react with 👍
         } else if (message_content.includes("like if")) {
             var autoresponse = new SelfReloadJSON('DiscordBot/json/autoresponse.json');
