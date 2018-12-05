@@ -5,7 +5,6 @@ const { token, prefix, statsChannel, ownerID, supportServer } = require('./confi
 const responseObject = require("./json/reply.json");
 const reactObject = require("./json/react.json");
 const imgResponseObject = require("./json/imgreply.json");
-const customresponse = require('./json/customresponse.json');
 const SelfReloadJSON = require('self-reload-json');
 //  Prefix and ownerID and invite to support server
 const client = new CommandoClient({
@@ -82,6 +81,7 @@ client.registry
 //  Reply with images as attachement
         if(imgResponseObject[message_content]) {
             var autoresponse = new SelfReloadJSON('DiscordBot/json/autoresponse.json');
+            var customresponse = new SelfReloadJSON('DiscordBot/json/customresponse.json');
             if(autoresponse[message.channel.id] == 'enable')
             message.channel.send({files: [imgResponseObject[message_content]]}); 
         } 
@@ -92,7 +92,7 @@ client.registry
             message.react(reactObject[message_content]);
         }
 //  auto respond to messages
-        else if(responseObject[message_content] || customresponse[message.guild.id]['text'] == message_content) {
+        else if(responseObject[message_content]) {
             var autoresponse = new SelfReloadJSON('DiscordBot/json/autoresponse.json');
             if(autoresponse[message.channel.id] == 'enable')
             message.channel.send(responseObject[message_content]);
