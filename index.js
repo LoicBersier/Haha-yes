@@ -6,6 +6,7 @@ const responseObject = require("./json/reply.json");
 const reactObject = require("./json/react.json");
 const imgResponseObject = require("./json/imgreply.json");
 const SelfReloadJSON = require('self-reload-json');
+var customresponse = new SelfReloadJSON('DiscordBot/json/customresponse.json');
 //  Prefix and ownerID and invite to support server
 const client = new CommandoClient({
     commandPrefix: prefix,
@@ -93,10 +94,13 @@ client.registry
 //  auto respond to messages
         else if(responseObject[message_content]) {
             var autoresponse = new SelfReloadJSON('DiscordBot/json/autoresponse.json');
-            var customresponse = new SelfReloadJSON('DiscordBot/json/customresponse.json');
             if(autoresponse[message.channel.id] == 'enable')
             message.channel.send(responseObject[message_content]);
-            message.channel.send(customresponse[message.guild.id]['response'])
+//  User autoresponse
+//        } else if(customresponse[message.guild.id]['text']) {
+//            var autoresponse = new SelfReloadJSON('DiscordBot/json/autoresponse.json');
+//            if(autoresponse[message.channel.id] == 'enable')
+//            message.channel.send(customresponse[message.guild.id]['response'])
 //  If it contain "like if" react with 👍
         } else if (message_content.includes("like if")) {
             var autoresponse = new SelfReloadJSON('DiscordBot/json/autoresponse.json');
