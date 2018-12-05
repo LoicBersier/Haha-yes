@@ -5,6 +5,7 @@ const { token, prefix, statsChannel, ownerID, supportServer } = require('./confi
 const responseObject = require("./json/reply.json");
 const reactObject = require("./json/react.json");
 const imgResponseObject = require("./json/imgreply.json");
+const customresponse = require('./json/customresponse.json');
 const SelfReloadJSON = require('self-reload-json');
 //  Prefix and ownerID and invite to support server
 const client = new CommandoClient({
@@ -80,29 +81,29 @@ client.registry
         if (message.author.bot) return; {
 //  Reply with images as attachement
         if(imgResponseObject[message_content]) {
-            var autoresponse = new SelfReloadJSON('./json/autoresponse.json');
+            var autoresponse = new SelfReloadJSON('DiscordBot/json/autoresponse.json');
             if(autoresponse[message.channel.id] == 'enable')
             message.channel.send({files: [imgResponseObject[message_content]]}); 
         } 
 //  React only to the messages
         else if(reactObject[message_content]) {
-            var autoresponse = new SelfReloadJSON('./json/autoresponse.json');
+            var autoresponse = new SelfReloadJSON('DiscordBot/json/autoresponse.json');
             if(autoresponse[message.channel.id] == 'enable')
             message.react(reactObject[message_content]);
         }
 //  auto respond to messages
-        else if(responseObject[message_content]) {
-            var autoresponse = new SelfReloadJSON('./json/autoresponse.json');
+        else if(responseObject[message_content] || customresponse[message_content]) {
+            var autoresponse = new SelfReloadJSON('DiscordBot/json/autoresponse.json');
             if(autoresponse[message.channel.id] == 'enable')
             message.channel.send(responseObject[message_content]);
 //  If it contain "like if" react with 👍
         } else if (message_content.includes("like if")) {
-            var autoresponse = new SelfReloadJSON('./json/autoresponse.json');
+            var autoresponse = new SelfReloadJSON('DiscordBot/json/autoresponse.json');
             if(autoresponse[message.channel.id] == 'enable')
             message.react("\u{1F44D}")
 //  If it contain "jeff" react with a jeff emote
         } else if (message_content.includes("jeff")) {
-            var autoresponse = new SelfReloadJSON('./json/autoresponse.json');
+            var autoresponse = new SelfReloadJSON('DiscordBot/json/autoresponse.json');
             if(autoresponse[message.channel.id] == 'enable')
             message.react("496028845967802378")
         }
