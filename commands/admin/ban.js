@@ -32,6 +32,8 @@ module.exports = class BanCommand extends Command {
             return message.say("Why would you ban yourself ?")
         await member.send(`https://youtu.be/55-mHgUjZfY\nYou have been banned for the following reasons: "${reasons}"`);
         member.ban(`Banned by : ${message.author.username} for the following reasons : ${reasons}`)
-            .then(() => message.reply(`${member.user.username} was succesfully banned with the following reasons "${reasons}".`));
+            .then(() => message.reply(`${member.user.username} was succesfully banned with the following reasons "${reasons}".`))
+            .error(message.say('Cant ban me fool'))
+
         };
 };
