@@ -14,9 +14,12 @@ module.exports = class ServerCommand extends Command {
     }
 
     async run(message) {
-        let blacklistJson = new SelfReloadJSON('DiscordBot/json/blacklist.json');
+        let blacklistJson = new SelfReloadJSON('./json/blacklist.json');
         if(blacklistJson[message.author.id])
         return blacklist(blacklistJson[message.author.id] , message)
+
+        let customresponse = new SelfReloadJSON(`./tag/${message.guild.id}.json`);
+        let count = Object.keys(customresponse).length
         
     const addEmbed = {
         color: 0x0099ff,
@@ -24,7 +27,7 @@ module.exports = class ServerCommand extends Command {
         thumbnail: {
         url: `${message.guild.iconURL}`,
     },
-        description: `Member: **${message.guild.memberCount}** \nChannel number: **${message.guild.channels.size}**\nGuild created at **${message.guild.createdAt}**\nOwner: **${message.guild.owner}**`,
+        description: `Member: **${message.guild.memberCount}** \nChannel number: **${message.guild.channels.size}**\nGuild created at **${message.guild.createdAt}**\nOwner: **${message.guild.owner}**\nTag number: **${count}**`,
     };
     
     message.say({ embed: addEmbed });
