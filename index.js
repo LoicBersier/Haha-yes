@@ -94,8 +94,6 @@ client.registry
         }
 //  auto respond to messages
         else if(responseObject[message_content]) {
-            var autoresponse = new SelfReloadJSON('DiscordBot/json/autoresponse.json');
-            if(autoresponse[message.channel.id] == 'enable')
             message.channel.send(responseObject[message_content]);
 //  User autoresponse
         } else if(customresponse[message_content]) {
