@@ -30,7 +30,7 @@ module.exports = class faceappCommand extends Command {
     }
 
     async run(message, { url, type }) {
-        let blacklistJson = new SelfReloadJSON('DiscordBot/json/blacklist.json');
+        let blacklistJson = new SelfReloadJSON('./json/blacklist.json');
         if(blacklistJson[message.author.id])
         return blacklist(blacklistJson[message.author.id] , message)
 

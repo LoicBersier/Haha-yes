@@ -21,7 +21,7 @@ module.exports = class redditCommand extends Command {
     }
 
     async run(message, { sub }) {
-        let blacklistJson = new SelfReloadJSON('DiscordBot/json/blacklist.json');
+        let blacklistJson = new SelfReloadJSON('./json/blacklist.json');
         if(blacklistJson[message.author.id])
         return blacklist(blacklistJson[message.author.id] , message)
         

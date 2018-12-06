@@ -36,7 +36,7 @@ module.exports = class AutoresponseCommand extends Command {
 
             if (all == 'all') {
                 const guild = this.client.guilds.get(message.guild.id);
-                fs.readFile('DiscordBot/json/autoresponse.json', 'utf8', function readFileCallback(err, data){
+                fs.readFile('./json/autoresponse.json', 'utf8', function readFileCallback(err, data){
                     if (err){
                         console.log(err);
                     } else {
@@ -44,7 +44,7 @@ module.exports = class AutoresponseCommand extends Command {
                     guild.channels.forEach(channel => autoresponse [channel] = text)
                     json = JSON.stringify(autoresponse); //convert it back to json
                     json = json.replace(/[<#>]/g, '')
-                    fs.writeFile('DiscordBot/json/autoresponse.json', json, 'utf8', function(err) {
+                    fs.writeFile('./json/autoresponse.json', json, 'utf8', function(err) {
                         if(err) {
                             return console.log(err);
                         } 
@@ -52,14 +52,14 @@ module.exports = class AutoresponseCommand extends Command {
 
             return message.say('Auto response have been disable/enable on every channel')
             } else if(text == 'disable' || 'enable') {
-            fs.readFile('DiscordBot/json/autoresponse.json', 'utf8', function readFileCallback(err, data){
+            fs.readFile('./json/autoresponse.json', 'utf8', function readFileCallback(err, data){
                 if (err){
                     console.log(err);
                 } else {
                 autoresponse = JSON.parse(data); //now it an object
                 autoresponse [message.channel.id] = text
                 json = JSON.stringify(autoresponse); //convert it back to json
-                fs.writeFile('DiscordBot/json/autoresponse.json', json, 'utf8', function(err) {
+                fs.writeFile('./json/autoresponse.json', json, 'utf8', function(err) {
                     if(err) {
                         return console.log(err);
                     } 

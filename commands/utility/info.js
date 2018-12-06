@@ -21,7 +21,7 @@ module.exports = class InfoCommand extends Command {
     }
 
     async run(message, { search }) {
-        let blacklistJson = new SelfReloadJSON('DiscordBot/json/blacklist.json');
+        let blacklistJson = new SelfReloadJSON('./json/blacklist.json');
         if(blacklistJson[message.author.id])
         return blacklist(blacklistJson[message.author.id] , message)
         

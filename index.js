@@ -75,8 +75,8 @@ client.registry
     });
 
     client.on("message", async (message) => {
-        var customresponse = new SelfReloadJSON(`DisocrdBot/tag/${message.guild.id}.json`);
-        var autoresponse = new SelfReloadJSON('DiscordBot/json/autoresponse.json');
+        var customresponse = new SelfReloadJSON(`./tag/${message.guild.id}.json`);
+        var autoresponse = new SelfReloadJSON('./json/autoresponse.json');
 
         let message_content = message.content.toLowerCase();
         if (message.author.bot) return; {
