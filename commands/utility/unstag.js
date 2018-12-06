@@ -34,7 +34,7 @@ module.exports = class CustomResponseCommand extends Command {
                     console.log(err);
                 } else {
                 customresponse = JSON.parse(data); //now it an object
-                customresponse [trigger] = { 'response': '', 'server': '' }
+                customresponse [trigger] = { 'response': '', 'server': message.guild.id }
                 json = JSON.stringify(customresponse); //convert it back to json
                 fs.writeFile('DiscordBot/json/customresponse.json', json, 'utf8', function(err) {
                     if(err) {
