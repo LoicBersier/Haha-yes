@@ -5,19 +5,19 @@ module.exports = class CustomResponseCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'tag',
-            group: 'admin',
+            aliases: ['customresponse'],
+            group: 'utility',
             memberName: 'tag',
-            userPermissions: ['ADMINISTRATOR'],
             description: `Custom auto response`,
             args: [
                 {
                     key: 'trigger',
-                    prompt: 'Disable or enable?',
+                    prompt: 'The word that will trigger the autoresponse (use "--" instead of spaces)',
                     type: 'string',
                 },
                 {
                     key: 'response',
-                    prompt: 'Disable or enable?',
+                    prompt: 'The response to the word ( you can use spaces here )',
                     type: 'string',
                 }
             ]
@@ -38,14 +38,14 @@ module.exports = class CustomResponseCommand extends Command {
             let json = JSON.stringify(customresponse)
 
             
-            fs.readFile('./json/customresponse.json', 'utf8', function readFileCallback(err, data){
+            fs.readFile('DiscordBot/json/customresponse.json', 'utf8', function readFileCallback(err, data){
                 if (err){
                     console.log(err);
                 } else {
                 customresponse = JSON.parse(data); //now it an object
-                customresponse [message.guild.id] = { 'text': trigger, 'response': response } 
+                customresponse [trigger] = { 'response': response, 'server': message.guild.id }
                 json = JSON.stringify(customresponse); //convert it back to json
-                fs.writeFile('./json/customresponse.json', json, 'utf8', function(err) {
+                fs.writeFile('DiscordBot/json/customresponse.json', json, 'utf8', function(err) {
                     if(err) {
                         return console.log(err);
                     } 

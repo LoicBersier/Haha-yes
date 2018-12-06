@@ -97,10 +97,12 @@ client.registry
             if(autoresponse[message.channel.id] == 'enable')
             message.channel.send(responseObject[message_content]);
 //  User autoresponse
-//        } else if(customresponse[message.guild.id]['text']) {
-//            var autoresponse = new SelfReloadJSON('DiscordBot/json/autoresponse.json');
-//            if(autoresponse[message.channel.id] == 'enable')
-//            message.channel.send(customresponse[message.guild.id]['response'])
+        } else if(customresponse[message_content]) {
+            var autoresponse = new SelfReloadJSON('DiscordBot/json/autoresponse.json');
+            if(autoresponse[message.channel.id] == 'enable') {
+                if(customresponse[message_content].server == message.guild.id)
+                message.channel.send(customresponse[message_content].response)
+            }
 //  If it contain "like if" react with 👍
         } else if (message_content.includes("like if")) {
             var autoresponse = new SelfReloadJSON('DiscordBot/json/autoresponse.json');
