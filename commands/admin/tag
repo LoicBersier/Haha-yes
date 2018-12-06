@@ -4,11 +4,11 @@ const fs = require('fs');
 module.exports = class CustomResponseCommand extends Command {
     constructor(client) {
         super(client, {
-            name: 'customresponse',
+            name: 'tag',
             group: 'admin',
-            memberName: 'customresponse',
+            memberName: 'tag',
             userPermissions: ['ADMINISTRATOR'],
-            description: `Can disable autoresponse in the channel (you can add "ALL" like this "haha enable/disable all" to enable/disable in every channel (EXPERIMENTAL))`,
+            description: `Custom auto response`,
             args: [
                 {
                     key: 'trigger',
@@ -30,10 +30,14 @@ module.exports = class CustomResponseCommand extends Command {
 
             trigger = trigger.toLowerCase();
             response = response.toLowerCase()
-            trigger = trigger.replace('--', ' ')
+            do {
+                trigger = trigger.replace('--', ' ')
+            } while (trigger.includes('--'))
+            
             let customresponse = {}
             let json = JSON.stringify(customresponse)
 
+            
             fs.readFile('./json/customresponse.json', 'utf8', function readFileCallback(err, data){
                 if (err){
                     console.log(err);
