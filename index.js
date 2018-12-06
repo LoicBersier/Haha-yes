@@ -80,6 +80,11 @@ client.registry
 
         let message_content = message.content.toLowerCase();
         if (message.author.bot) return; {
+
+//  User autoresponse
+            if(customresponse[message_content])
+                message.channel.send(customresponse[message_content])
+
 //  If autoresponse is enable send the response
             if(autoresponse[message.channel.id] == 'enable') {
 //  Reply with images as attachement
@@ -101,10 +106,6 @@ client.registry
                     message.react("496028845967802378")
                 }
             }
-
-//  User autoresponse
-        if(customresponse[message_content])
-            message.channel.send(customresponse[message_content])
     }});
 
 //  Very basic starboard
