@@ -19,7 +19,7 @@ module.exports = class CustomResponseCommand extends Command {
         });
     }
 
-    async run(message, { trigger, response }) {
+    async run(message, { trigger }) {
         if(blacklist[message.author.id])
         return message.channel.send("You are blacklisted")
 
@@ -29,14 +29,14 @@ module.exports = class CustomResponseCommand extends Command {
             let json = JSON.stringify(customresponse)
 
             
-            fs.readFile('DiscordBot/json/customresponse.json', 'utf8', function readFileCallback(err, data){
+            fs.readFile(`DiscordBot/tag/${message.guild.id}.json`, 'utf8', function readFileCallback(err, data){
                 if (err){
                     console.log(err);
                 } else {
                 customresponse = JSON.parse(data); //now it an object
-                customresponse [trigger] = { 'response': '', 'server': message.guild.id }
+                customresponse [trigger] = ''
                 json = JSON.stringify(customresponse); //convert it back to json
-                fs.writeFile('DiscordBot/json/customresponse.json', json, 'utf8', function(err) {
+                fs.writeFile(`DiscordBot/tag/${message.guild.id}.json`, json, 'utf8', function(err) {
                     if(err) {
                         return console.log(err);
                     } 

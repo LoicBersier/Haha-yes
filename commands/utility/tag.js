@@ -38,14 +38,20 @@ module.exports = class CustomResponseCommand extends Command {
             let json = JSON.stringify(customresponse)
 
             
-            fs.readFile('DiscordBot/json/customresponse.json', 'utf8', function readFileCallback(err, data){
+            fs.writeFile(`DiscordBot/tag/${message.guild.id}.json`, '{}', function (err) {
+                if (err){
+                    console.log(err);
+                }
+            })
+
+            fs.readFile(`DiscordBot/tag/${message.guild.id}.json`, 'utf8', function readFileCallback(err, data){
                 if (err){
                     console.log(err);
                 } else {
                 customresponse = JSON.parse(data); //now it an object
-                customresponse [trigger] = { 'response': response, 'server': message.guild.id }
+                customresponse [trigger] = response
                 json = JSON.stringify(customresponse); //convert it back to json
-                fs.writeFile('DiscordBot/json/customresponse.json', json, 'utf8', function(err) {
+                fs.writeFile(`DiscordBot/tag/${message.guild.id}.json`, json, 'utf8', function(err) {
                     if(err) {
                         return console.log(err);
                     } 
