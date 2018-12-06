@@ -51,6 +51,6 @@ module.exports = class CustomResponseCommand extends Command {
                     } 
             })}});
             
-            return message.say(`autoresponse have been set`);
+            return message.say(`autoresponse have been set to ${trigger} : ${response}`);
         }
 };
