@@ -9,7 +9,7 @@ module.exports = class CustomResponseCommand extends Command {
             group: 'utility',
             memberName: 'tag',
             description: `Custom auto response`,
-            clientPermissions: ['MANAGE_MESSAGES'],
+            userPermissions: ['MANAGE_MESSAGES'],
             args: [
                 {
                     key: 'trigger',
