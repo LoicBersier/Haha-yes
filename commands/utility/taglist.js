@@ -25,7 +25,7 @@ module.exports = class taglistCommand extends Command {
                     console.log(err);
                 let json = JSON.stringify(data)
                 json = json.replace(/[{}"\\]+/g, '')
-                json = json.replace(',', '\n')
+                json = json.replace(/,+/g, '\n')
                 const tagEmbed = new Discord.RichEmbed()
                 .setColor("#ff9900")
                 .setTitle('Tags list')
