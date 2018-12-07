@@ -9,6 +9,7 @@ module.exports = class CustomResponseCommand extends Command {
             group: 'utility',
             memberName: 'untag',
             description: `remove custom autoresponse`,
+            clientPermissions: ['MANAGE_MESSAGES'],
             args: [
                 {
                     key: 'trigger',
