@@ -50,9 +50,7 @@ module.exports = class BadMemeCommand extends Command {
                 return;
               }
               console.log('Audio content written to file: tts.mp3');
+              message.say({files: ['./tts.mp3']})
             });
           });
-          setTimeout(function(){
-          message.say({files: ['./tts.mp3']})
-      }, 2000)
 }}
