@@ -1,11 +1,9 @@
 const { Command } = require('discord.js-commando');
-const googleTTS = require('google-tts-api');
+const textToSpeech = require('@google-cloud/text-to-speech');
+const gclient = new textToSpeech.TextToSpeechClient();
 const SelfReloadJSON = require('self-reload-json');
 const fs = require('fs');
-const path = require('path');
-const http = require('http');
-const https = require('https');
-const urlParse  = require('url').parse;
+
 
 module.exports = class BadMemeCommand extends Command {
     constructor(client) {
@@ -19,7 +17,6 @@ module.exports = class BadMemeCommand extends Command {
                     key: 'text',
                     prompt: 'What do you want to be said',
                     type: 'string',
-                    validate: text => text.length < 201,
                 }
             ]
         });
@@ -30,62 +27,31 @@ module.exports = class BadMemeCommand extends Command {
         if(blacklistJson[message.author.id])
         return blacklist(blacklistJson[message.author.id] , message)
 
-        function downloadFile (url, dest) {
-            return new Promise(function (resolve, reject) {
-              var info = urlParse(url);
-              var httpClient = info.protocol === 'https:' ? https : http;
-              var options = {
-                host: info.host,
-                path: info.path,
-                headers: {
-                  'user-agent': 'WHAT_EVER'
-                }
-              };
-          
-              httpClient.get(options, function(res) {
-                // check status code
-                if (res.statusCode !== 200) {
-                  reject(new Error('request to ' + url + ' failed, status code = ' + res.statusCode + ' (' + res.statusMessage + ')'));
-                  return;
-                }
-          
-                var file = fs.createWriteStream(dest);
-                file.on('finish', function() {
-                  // close() is async, call resolve after close completes.
-                  file.close(resolve);
-                });
-                file.on('error', function (err) {
-                  // Delete the file async. (But we don't check the result)
-                  fs.unlink(dest);
-                  reject(err);
-                });
-          
-                res.pipe(file);
-              })
-              .on('error', function(err) {
-                reject(err);
-              })
-              .end();
-            });
-          }
-          
-          // start
-          googleTTS(text)
-          .then(function (url) {
-            console.log(url);
-          
-            var dest = path.resolve(__dirname, '../../tts.mp3'); // file destination
-            console.log('Download to ' + dest + ' ...');
-          
-            return downloadFile(url, dest);
-          })
-          .then(function () {
-            console.log('Download success');
-          })
-          .catch(function (err) {
-            console.error(err.stack);
-          });
+          // Construct the request
+          const request = {
+            input: {text: text},
+            // Select the language and SSML Voice Gender (optional)
+            voice: {languageCode: 'en-US', ssmlGender: 'NEUTRAL'},
+            // Select the type of audio encoding
+            audioConfig: {audioEncoding: 'MP3'},
+          };
 
+          // Performs the Text-to-Speech request
+          gclient.synthesizeSpeech(request, (err, response) => {
+            if (err) {
+              console.error('ERROR:', err);
+              return;
+            }
+
+            // Write the binary audio content to a local file
+            fs.writeFile('tts.mp3', response.audioContent, 'binary', err => {
+              if (err) {
+                console.error('ERROR:', err);
+                return;
+              }
+              console.log('Audio content written to file: tts.mp3');
+            });
+          });
           setTimeout(function(){
           message.say({files: ['./tts.mp3']})
       }, 2000)
