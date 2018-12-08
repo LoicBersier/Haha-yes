@@ -74,12 +74,14 @@ client.registry
         channel.send({ embed: kickEmbed });
     });
 
+
     client.on("message", async (message) => {
         try {
             var customresponse = new SelfReloadJSON(`./tag/${message.guild.id}.json`)
             var autoresponse = new SelfReloadJSON('./json/autoresponse.json');
 
             let message_content = message.content.toLowerCase();
+            if (message_content.includes('stop')) return;
             if (message.author.bot) return; {
     
     //  User autoresponse
