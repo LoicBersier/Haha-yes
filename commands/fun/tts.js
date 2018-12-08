@@ -14,8 +14,6 @@ module.exports = class BadMemeCommand extends Command {
             group: 'fun',
             memberName: 'tts',
             description: `Return what you type in a tts file`,
-            ownerOnly: true,
-
             args: [
                 {
                     key: 'text',
