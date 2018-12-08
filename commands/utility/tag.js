@@ -30,7 +30,6 @@ module.exports = class CustomResponseCommand extends Command {
         return message.channel.send("You are blacklisted")
 
             trigger = trigger.toLowerCase();
-            response = response.toLowerCase()
             do {
                 trigger = trigger.replace('--', ' ')
             } while (trigger.includes('--'))
