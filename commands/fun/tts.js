@@ -47,6 +47,7 @@ module.exports = class BadMemeCommand extends Command {
             fs.writeFile('tts.mp3', response.audioContent, 'binary', err => {
               if (err) {
                 console.error('ERROR:', err);
+                message.say('An error has occured, the message is probably too long')
                 return;
               }
               console.log('Audio content written to file: tts.mp3');
