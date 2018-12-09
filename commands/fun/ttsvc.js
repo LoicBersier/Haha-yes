@@ -63,8 +63,7 @@ module.exports = class ttsvcCommand extends Command {
                               voiceChannel.leave()
                               message.say('I leaved the channel');
                           } else
-                          voiceChannel.join().then(connection => {
-                              const dispatcher = connection.playStream('./tts.mp3');
+                          voiceChannel.join().then(connection =>{const dispatcher = connection.playFile('./tts.mp3');}).catch(err => console.log(err));   
+                          dispatcher.on("end", end => {voiceChannel.leave();});
             });
-          });
-})}}
+          })}}
