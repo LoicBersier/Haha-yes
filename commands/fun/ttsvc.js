@@ -67,7 +67,7 @@ module.exports = class ttsvcCommand extends Command {
                               const stream = "./tts.mp3"
                               const dispatcher = connection.playStream('./tts.mp3');
               //  End at then end of the audio stream
-                              dispatcher.on('end', () => voiceChannel.leave());
+                              await dispatcher.on('end', () => voiceChannel.leave());
                           });
             });
           });
