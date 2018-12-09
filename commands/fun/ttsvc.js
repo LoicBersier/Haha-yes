@@ -68,7 +68,7 @@ module.exports = class ttsvcCommand extends Command {
               //  End at then end of the audio stream
                             setTimeout(function(){
                                 dispatcher.on('end', () => voiceChannel.leave());
-                            }, 3000);
+                            }, 2000);
                           });
             });
           });
