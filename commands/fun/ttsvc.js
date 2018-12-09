@@ -27,6 +27,8 @@ module.exports = class ttsvcCommand extends Command {
         if(blacklistJson[message.author.id])
         return blacklist(blacklistJson[message.author.id] , message)
 
+        voiceChannel.leave();
+
           // Construct the request
           const request = {
             input: {text: text},
@@ -65,8 +67,6 @@ module.exports = class ttsvcCommand extends Command {
                           } else
                           voiceChannel.join().then(connection => {
                               const dispatcher = connection.playStream('./tts.mp3');
-              //  End at then end of the audio stream
-                                dispatcher.on('end', () => voiceChannel.leave());
                           });
             });
           });
