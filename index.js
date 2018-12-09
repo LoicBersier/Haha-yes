@@ -81,14 +81,15 @@ client.registry
             var autoresponse = new SelfReloadJSON('./json/autoresponse.json');
 
             let message_content = message.content.toLowerCase();
-            if (message_content.includes('stop')) return;
+            if (message_content == ('stop')) return;
+            if (message_content == ('is')) return;
+            if (message_content == ('on')) return;
             if (message.author.bot) return; {
     
     //  User autoresponse
-                if(customresponse[message_content])
+                if(customresponse[message_content]) {
                     message.channel.send(customresponse[message_content])
-                    
-    
+                }
     //  If autoresponse is enable send the response
                 if(autoresponse[message.channel.id] == 'enable') {
     //  Reply with images as attachement
