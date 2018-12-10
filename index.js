@@ -81,9 +81,12 @@ client.registry
             var autoresponse = new SelfReloadJSON('./json/autoresponse.json');
 
             let message_content = message.content.toLowerCase();
+// fix a stupid bug that happen for idk wich reasons
             if (message_content == ('stop')) return;
             if (message_content == ('is')) return;
             if (message_content == ('on')) return;
+            if (message_content == ('once')) return;
+            
             if (message.author.bot) return; {
     
     //  User autoresponse
