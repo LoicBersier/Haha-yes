@@ -39,7 +39,7 @@ client.registry
         if (client.user.id == 377563711927484418) {
         const channel = client.channels.get(statsChannel);
         channel.send(`Ready to serve in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users. ${client.readyAt}`);
-        client.user.setActivity('haha feedback <feedback> to tell me what you think of the bot! | haha help');    }
+        client.user.setActivity(`${prefix} feedback <feedback> to tell me what you think of the bot! | ${prefix} help`);    }
 });
 
 //  When bot join a guild send embeds with details about it.

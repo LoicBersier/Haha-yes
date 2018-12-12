@@ -1,6 +1,7 @@
 const { Command } = require('discord.js-commando');
 const blacklist = require('../../json/blacklist.json');
 const fs = require('fs');
+const { prefix } = require('../../config.json')
 module.exports = class AutoresponseCommand extends Command {
     constructor(client) {
         super(client, {
@@ -8,7 +9,7 @@ module.exports = class AutoresponseCommand extends Command {
             group: 'admin',
             memberName: 'autoresponse',
             userPermissions: ['ADMINISTRATOR'],
-            description: `Can disable autoresponse in the channel (you can add "ALL" like this "haha enable/disable all" to enable/disable in every channel (EXPERIMENTAL))`,
+            description: `Can disable autoresponse in the channel (you can add "ALL" like this "${prefix} enable/disable all" to enable/disable in every channel (EXPERIMENTAL))`,
             args: [
                 {
                     key: 'text',

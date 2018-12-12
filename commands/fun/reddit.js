@@ -2,6 +2,7 @@ const { Command } = require('discord.js-commando');
 const Discord = require('discord.js');
 const fetch = require('node-fetch');
 const SelfReloadJSON = require('self-reload-json');
+const { prefix } = require('../../config.json')
 
 module.exports = class redditCommand extends Command {
     constructor(client) {
@@ -40,7 +41,7 @@ module.exports = class redditCommand extends Command {
                     return message.say("Could not find any images")
             }
                 if (response.data.children[i].data.over_18 == true)
-                    return message.say("No nsfw ( if you want a nsfw version of this commands use the feedback commands \"haha feedback <your feedback>\")")
+                    return message.say(`No nsfw ( if you want a nsfw version of this commands use the feedback commands "${prefix} feedback <your feedback>")`)
                 const redditEmbed = new Discord.RichEmbed()
                 .setColor("#ff9900")
                 .setTitle(response.data.children[i].data.title)
