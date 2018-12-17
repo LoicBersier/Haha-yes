@@ -22,8 +22,6 @@
     "canvas": "^2.0.1",
     "discord.js": "^11.4.2",
     "discord.js-commando": "^0.10.0",
-    "faceapp": "^0.4.4",
-    "google-tts-api": "0.0.4",
     "node-fetch": "^2.2.0",
     "node-gyp": "^3.8.0",
     "node-opus": "^0.3.1",
