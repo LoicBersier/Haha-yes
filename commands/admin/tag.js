@@ -6,7 +6,7 @@ module.exports = class CustomResponseCommand extends Command {
         super(client, {
             name: 'tag',
             aliases: ['customresponse'],
-            group: 'utility',
+            group: 'admin',
             memberName: 'tag',
             description: `Custom auto response`,
             userPermissions: ['MANAGE_MESSAGES'],
@@ -42,14 +42,14 @@ module.exports = class CustomResponseCommand extends Command {
 
             fs.readFile(`./tag/${message.guild.id}.json`, 'utf8', function readFileCallback(err, data){
                 if (err){
-                    fs.writeFile(`./tag/${message.guild.id}.json`, `{"${trigger}": {"response":"${response}","owner":"${message.author.id}"}}`, function (err) {
+                    fs.writeFile(`./tag/${message.guild.id}.json`, `{"${trigger}":"${response}"}`, function (err) {
                         if (err){
                             console.log(err);
                         }
                     })
                 } else {
                 customresponse = JSON.parse(data); //now it an object
-                customresponse.trigger = `response":${response},"owner":"${message.author.id}`
+                customresponse [trigger] = response
                 json = JSON.stringify(customresponse); //convert it back to json
                 fs.writeFile(`./tag/${message.guild.id}.json`, json, 'utf8', function(err) {
                     if(err) {
