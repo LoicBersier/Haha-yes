@@ -18,8 +18,13 @@ module.exports = class ServerCommand extends Command {
         if(blacklistJson[message.author.id])
         return blacklist(blacklistJson[message.author.id] , message)
 
-        let customresponse = new SelfReloadJSON(`./tag/${message.guild.id}.json`);
-        let count = Object.keys(customresponse).length
+        try {
+            let customresponse = new SelfReloadJSON(`./tag/${message.guild.id}.json`);
+            var count = Object.keys(customresponse).length
+        } catch {
+            var count = 'None'
+        }
+
         
     const addEmbed = {
         color: 0x0099ff,
