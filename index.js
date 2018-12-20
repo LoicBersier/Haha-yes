@@ -21,6 +21,7 @@ client.registry
         ['fun',     'Fun'],
         ['images',     'Images'],
         ['utility', 'Utility'],
+        ['reserved',   'Reserved'],
         ['admin',   'Admins'],
         ['owner',   'Owner'],
 
