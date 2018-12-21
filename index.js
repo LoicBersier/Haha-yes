@@ -55,7 +55,7 @@ client.registry
         .setDescription(`${guild.name}\n${guild.id}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\n(${guild.owner.id})`)
         .setTimestamp()
         
-        channel.send({ embed: addEmbed });
+        channel.send({ embed: addEmbed }`\n\nIm now in **${client.guilds.size}** servers with **${client.users.size}** users`);
     });
 
 //  When bot get kicked from a guild send embeds with details about it.
@@ -72,7 +72,7 @@ client.registry
         .setTimestamp()
 
         console.log('***BOT KICKED***')
-        channel.send({ embed: kickEmbed });
+        channel.send({ embed: kickEmbed }`\n\nIm now in **${client.guilds.size}** servers with **${client.users.size}** users`);
     });
 
 
