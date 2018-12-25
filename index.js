@@ -54,9 +54,7 @@ client.registry
         .setThumbnail(guild.iconURL)
         .setDescription(`${guild.name}\n${guild.id}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\n(${guild.owner.id})`)
         .setTimestamp()
-        
-        channel.send({ embed: addEmbed }`\n\nIm now in **${client.guilds.size}** servers with **${client.users.size}** users`);
-    });
+        });
 
 //  When bot get kicked from a guild send embeds with details about it.
     client.on("guildDelete", async guild => {
@@ -70,25 +68,18 @@ client.registry
         .setThumbnail(guild.iconURL)
         .setDescription(`${guild.name}\n${guild.id}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\n(${guild.owner.id})`)
         .setTimestamp()
-
+        
         console.log('***BOT KICKED***')
-        channel.send({ embed: kickEmbed }`\n\nIm now in **${client.guilds.size}** servers with **${client.users.size}** users`);
     });
 
 
     client.on("message", async (message) => {
-        try {
-            var customresponse = new SelfReloadJSON(`./tag/${message.guild.id}.json`)
+            var customresponse = new SelfReloadJSON(`./tag/${message.guild.id}.json`);
+            customresponse.on('error', function(err) { console.log('test') })
             var autoresponse = new SelfReloadJSON('./json/autoresponse.json');
 
             let message_content = message.content.toLowerCase();
-// fix a stupid bug that happen for idk wich reasons pls why tf it happen
-            if (message_content == ('stop')) return;
-            if (message_content == ('is')) return;
-            if (message_content == ('on')) return;
-            if (message_content == ('once')) return;
-            if (message_content == ('save')) return;
-            
+
             if (message.author.bot) return; {
     
     //  User autoresponse
@@ -116,9 +107,6 @@ client.registry
                         message.react("496028845967802378")
                     }
                 }}
-        } catch(err) {
-            console.error(err)
-        }
     })
 
 //  Very basic starboard
