@@ -54,6 +54,8 @@ client.registry
         .setThumbnail(guild.iconURL)
         .setDescription(`${guild.name}\n${guild.id}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\n(${guild.owner.id})`)
         .setTimestamp()
+
+        channel.send({ embed: addEmbed });
         });
 
 //  When bot get kicked from a guild send embeds with details about it.
@@ -68,7 +70,8 @@ client.registry
         .setThumbnail(guild.iconURL)
         .setDescription(`${guild.name}\n${guild.id}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\n(${guild.owner.id})`)
         .setTimestamp()
-        
+
+        channel.send({ embed: kickEmbed });
         console.log('***BOT KICKED***')
     });
 
