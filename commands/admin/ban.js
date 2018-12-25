@@ -1,4 +1,6 @@
 const { Command } = require('discord.js-commando');
+const blacklist = require('../../json/blacklist.json');
+
 module.exports = class BanCommand extends Command {
     constructor(client) {
         super(client, {
@@ -13,7 +15,7 @@ module.exports = class BanCommand extends Command {
                 {
                     key: 'member',
                     prompt: 'Wich member would you like to ban?',
-                    type: 'user',
+                    type: 'member',
                 },
                 {
                     key: 'reasons',
@@ -32,8 +34,13 @@ module.exports = class BanCommand extends Command {
             reasons = 'Nothing have been specified'
         if(member.id === message.author.id)
             return message.say("Why would you ban yourself ?")
-        await member.send(`https://youtu.be/55-mHgUjZfY\nYou have been banned for the following reasons: "${reasons}"`)
-        .error(err => console.error(`Could not dm the user, probably disabled\n${err}`))
+
+        try {
+            await member.send(`https://youtu.be/55-mHgUjZfY\nYou have been banned for the following reasons: "${reasons}"`)
+        } catch(err) {
+            console.error(`Could not dm the user, probably disabled\n${err}`)
+        }
+
         member.ban(`Banned by : ${message.author.username} for the following reasons : ${reasons}`)
             .then(() => message.reply(`${member.user.username} was succesfully banned with the following reasons "${reasons}".`))
 

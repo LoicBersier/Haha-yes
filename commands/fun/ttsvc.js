@@ -3,6 +3,7 @@ const textToSpeech = require('@google-cloud/text-to-speech');
 const gclient = new textToSpeech.TextToSpeechClient();
 const SelfReloadJSON = require('self-reload-json');
 const fs = require('fs');
+const blacklist = require('../../json/blacklist.json');
 
 
 module.exports = class ttsvcCommand extends Command {

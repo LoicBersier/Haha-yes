@@ -3,6 +3,7 @@ const Discord = require('discord.js');
 const { createCanvas, loadImage, getContext } = require('canvas')
 const superagent = require('superagent')
 const SelfReloadJSON = require('self-reload-json');
+const blacklist = require('../../json/blacklist.json');
 
 
 

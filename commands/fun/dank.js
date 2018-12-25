@@ -1,6 +1,7 @@
 const { Command } = require('discord.js-commando');
 const responseObject = require("../../json/randVid.json");
 const SelfReloadJSON = require('self-reload-json');
+const blacklist = require('../../json/blacklist.json');
 
 module.exports = class dankCommand extends Command {
     constructor(client) {

@@ -2,6 +2,8 @@ const { Command } = require('discord.js-commando');
 const printer = require('printer');
 const { printChannel } = require('../../config.json');
 const SelfReloadJSON = require('self-reload-json');
+const blacklist = require('../../json/blacklist.json');
+
 module.exports = class printCommand extends Command {
     constructor(client) {
         super(client, {

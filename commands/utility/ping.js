@@ -1,6 +1,8 @@
 const { oneLine } = require('common-tags');
 const { Command } = require('discord.js-commando');
 const SelfReloadJSON = require('self-reload-json');
+const blacklist = require('../../json/blacklist.json');
+
 
 module.exports = class PingCommand extends Command {
 	constructor(client) {

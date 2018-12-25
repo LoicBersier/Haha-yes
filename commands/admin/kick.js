@@ -1,4 +1,6 @@
 const { Command } = require('discord.js-commando');
+const blacklist = require('../../json/blacklist.json');
+
 module.exports = class KickCommand extends Command {
     constructor(client) {
         super(client, {

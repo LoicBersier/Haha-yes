@@ -3,6 +3,8 @@ const fs = require('fs');
 const youtubedl = require('youtube-dl');
 const SelfReloadJSON = require('self-reload-json');
 const { fbuser, fbpasswd } = require('../../config.json');
+const blacklist = require('../../json/blacklist.json');
+
 
 module.exports = class downloadCommand extends Command {
     constructor(client) {

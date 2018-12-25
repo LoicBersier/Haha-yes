@@ -1,6 +1,7 @@
 const { Command } = require('discord.js-commando');
 const emojiCharacters = require('../../emojiCharacters');
 const SelfReloadJSON = require('self-reload-json');
+const blacklist = require('../../json/blacklist.json');
 
 module.exports = class emoteSayCommand extends Command {
     constructor(client) {

@@ -1,7 +1,7 @@
 const { Command } = require('discord.js-commando');
 const fetch = require('node-fetch')
 const SelfReloadJSON = require('self-reload-json');
-
+const blacklist = require('../../json/blacklist.json');
 const Discord = require('discord.js');
 const { yandexAPI } = require('../../config.json');
 

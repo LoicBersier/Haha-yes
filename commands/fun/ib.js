@@ -1,6 +1,7 @@
 const { Command } = require('discord.js-commando');
 const fetch = require('node-fetch')
 const SelfReloadJSON = require('self-reload-json');
+const blacklist = require('../../json/blacklist.json');
 
 
 module.exports = class BadMemeCommand extends Command {

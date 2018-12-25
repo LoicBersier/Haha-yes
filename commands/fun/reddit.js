@@ -3,6 +3,7 @@ const Discord = require('discord.js');
 const fetch = require('node-fetch');
 const SelfReloadJSON = require('self-reload-json');
 const { prefix } = require('../../config.json')
+const blacklist = require('../../json/blacklist.json');
 
 module.exports = class redditCommand extends Command {
     constructor(client) {
