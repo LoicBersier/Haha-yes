@@ -83,6 +83,13 @@ client.registry
 
             let message_content = message.content.toLowerCase();
 
+            // fix a stupid bug that happen for idk wich reasons pls why tf it happen
+            if (message_content == ('stop')) return;
+            if (message_content == ('is')) return;
+            if (message_content == ('on')) return;
+            if (message_content == ('once')) return;
+            if (message_content == ('save')) return;
+
             if (message.author.bot) return; {
     
     //  User autoresponse
