@@ -21,6 +21,8 @@ module.exports = class CustomResponseCommand extends Command {
     }
 
     async run(message, { slowmodeNumber }) {
+        if (slowmodeNumber < 120)
+            message.say("Slowmode can only be set to 120 seconds or lower!");
         message.channel.setRateLimitPerUser(slowmodeNumber);
         message.say(`Slowmode have been set to ${slowmodeNumber} seconds`);
         }
