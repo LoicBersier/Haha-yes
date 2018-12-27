@@ -22,5 +22,6 @@ module.exports = class CustomResponseCommand extends Command {
 
     async run(message, { slowmodeNumber }) {
         message.channel.setRateLimitPerUser(slowmodeNumber);
+        message.say(`Slowmode have been set to ${slowmodeNumber} seconds`);
         }
 };
