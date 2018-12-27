@@ -20,7 +20,7 @@
   "dependencies": {
     "@google-cloud/text-to-speech": "^0.4.0",
     "canvas": "^2.0.1",
-    "discord.js": "^11.4.2",
+    "discord.js": "file:../discord.js-11.4-dev",
     "discord.js-commando": "^0.10.0",
     "node-fetch": "^2.2.0",
     "node-gyp": "^3.8.0",
