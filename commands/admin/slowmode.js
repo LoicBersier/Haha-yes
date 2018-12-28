@@ -15,15 +15,37 @@ module.exports = class CustomResponseCommand extends Command {
                     key: 'slowmodeNumber',
                     prompt: 'How many seconds should the slowmode be? ( 0 to remove it )',
                     type: 'integer',
+                },
+                {
+                    key: 'realtime',
+                    prompt: 'How long shoud it remain',
+                    default: '',
+                    type: 'integer',
                 }
             ]
         });
     }
 
-    async run(message, { slowmodeNumber }) {
-        if (slowmodeNumber < 120)
-            message.say("Slowmode can only be set to 120 seconds or lower!");
+    async run(message, { slowmodeNumber, realtime }) {
+        if (slowmodeNumber > 120)
+            return message.say("Slowmode can only be set to 120 seconds or lower!");
+
         message.channel.setRateLimitPerUser(slowmodeNumber);
-        message.say(`Slowmode have been set to ${slowmodeNumber} seconds`);
+
+        if (realtime) {
+            let time = 60000 * realtime;
+            message.say(`Slowmode have been set to ${slowmodeNumber} seconds and will end in ${realtime} minutes!`);
+            var interval = setInterval (function (){
+                message.channel.setRateLimitPerUser(0);
+                message.say("Slowmode is now disabled!")
+             }, time);
+        } else {
+            if (slowmodeNumber == 0)
+                return message.say("Slowmode have been disabled!")
+            return message.say(`Slowmode have been set to ${slowmodeNumber} seconds!`);
+        }
+
+        
+
         }
 };
