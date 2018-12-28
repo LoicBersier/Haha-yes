@@ -35,9 +35,9 @@ module.exports = class CustomResponseCommand extends Command {
         if (realtime) {
             let time = 60000 * realtime;
             message.say(`Slowmode have been set to ${slowmodeNumber} seconds and will end in ${realtime} minutes!`);
-            var interval = setInterval (function (){
+            setTimeout (function (){
                 message.channel.setRateLimitPerUser(0);
-                message.say("Slowmode is now disabled!")
+                return message.say("Slowmode is now disabled!")
              }, time);
         } else {
             if (slowmodeNumber == 0)
