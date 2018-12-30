@@ -28,15 +28,15 @@ class EvalCommand extends Command {
     async exec(message, args) {
         let user = args.user;
         let message = args.message;
-        
+
         let Attachment = (message.attachments).array();
         if (Attachment[0]) {
             user.send(`**Message from the dev:**\n${message}\n${Attachment[0].url}`)
-            message.say(`DM sent to ${user.username}`)
+            message.channel.send(`DM sent to ${user.username}`)
         }
         else {
             user.send(`**Message from the dev:**\n${message}`)
-            message.say(`DM sent to ${user.username}`)
+            message.channel.send(`DM sent to ${user.username}`)
         }
 
     }

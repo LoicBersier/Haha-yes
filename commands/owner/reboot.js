@@ -16,7 +16,7 @@ class RebootCommand extends Command {
     }
 
     async exec(message) {
-        await message.say('k bye thx\nhttps://i.redd.it/lw8hrvr0l4f11.jpg');
+        await message.channel.send('k bye thx\nhttps://i.redd.it/lw8hrvr0l4f11.jpg');
         process.exit();
 
     }
