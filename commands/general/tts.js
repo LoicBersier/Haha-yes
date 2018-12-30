@@ -23,6 +23,7 @@ class TtsCommand extends Command {
     }
 
     async exec(message, args) {
+        let text = args.text;
         
             // Construct the request
             const request = {
