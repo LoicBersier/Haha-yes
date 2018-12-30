@@ -5,6 +5,7 @@ class KickCommand extends Command {
         super('kick', {
            aliases: ['kick'],
            category: 'admin',
+           split: 'quoted',
            args: [
                {
                    id: 'member',
