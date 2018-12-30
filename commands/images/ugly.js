@@ -28,6 +28,9 @@ class UglyCommand extends Command {
         else if (!image)
             image = Attachment[0].url
 
+            message.channel.send('Processing <a:loadingmin:527579785212329984>')
+            .then(loadingmsg => loadingmsg.delete(1000))
+
         const canvas = createCanvas(323, 400)
         const ctx = canvas.getContext('2d')
         const background = await loadImage('https://image.noelshack.com/fichiers/2018/42/1/1539598678-untitled.png').catch(error => {

@@ -26,6 +26,9 @@ class FetishCommand extends Command {
             return message.channel.send('Gif dosent work, sorry')
         else if (!image)
             image = Attachment[0].url
+        
+        message.channel.send('Processing <a:loadingmin:527579785212329984>')
+        .then(loadingmsg => loadingmsg.delete(1000))
 
         const canvas = createCanvas(528, 559)
         const ctx = canvas.getContext('2d')
