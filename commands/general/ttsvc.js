@@ -1,6 +1,7 @@
 const { Command } = require('discord-akairo');
 const textToSpeech = require('@google-cloud/text-to-speech');
 const gclient = new textToSpeech.TextToSpeechClient();
+const fs = require('fs');
 
 class TtsvcCommand extends Command {
     constructor() {
