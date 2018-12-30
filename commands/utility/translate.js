@@ -9,7 +9,6 @@ class TranslationCommand extends Command {
             aliases: ['translation', 'trn'],
             category: 'utility',
             description: 'Translate the text you send into the lanuguage you selected',
-            split: 'none',
             args: [
                 {
                     id: 'language',
