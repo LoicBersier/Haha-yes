@@ -1,33 +1,28 @@
-const { Command } = require('discord.js-commando');
+const { Command } = require('discord-akairo');
 const textToSpeech = require('@google-cloud/text-to-speech');
 const gclient = new textToSpeech.TextToSpeechClient();
-const SelfReloadJSON = require('self-reload-json');
-const fs = require('fs');
-const blacklist = require('../../json/blacklist.json');
 
-
-module.exports = class ttsvcCommand extends Command {
-    constructor(client) {
-        super(client, {
-            name: 'ttsvc',
-            group: 'fun',
-            memberName: 'ttsvc',
-            description: `Play what you write in tts in vc`,
+class TtsvcCommand extends Command {
+    constructor() {
+        super('ttsvc', {
+            aliases: ['ttsvc'],
+            category: 'general',
+            split: 'none',
             args: [
                 {
-                    key: 'text',
-                    prompt: 'What do you want to be said',
-                    type: 'string',
+                    id: 'text',
+                    type: 'string'
                 }
-            ]
+            ],
+            description: {
+                content: 'Say what you wrote in voice channel',
+                usage: '[text]',
+                examples: ['hello']
+            }
         });
     }
 
-    async run(message, { text }) {
-        let blacklistJson = new SelfReloadJSON('./json/blacklist.json');
-        if(blacklistJson[message.author.id])
-        return blacklist(blacklistJson[message.author.id] , message)
-
+    async exec(message, args) {
           // Construct the request
           const request = {
             input: {text: text},
@@ -73,4 +68,6 @@ module.exports = class ttsvcCommand extends Command {
                           });
             });
           });
-}}
+    }
+}
+module.exports = TtsvcCommand;

@@ -1,42 +1,39 @@
-const { Command } = require('discord.js-commando');
-const SelfReloadJSON = require('self-reload-json');
-const blacklist = require('../../json/blacklist.json');
+const { Command } = require('discord-akairo');
 
-
-module.exports = class ServerCommand extends Command {
-    constructor(client) {
-        super(client, {
-            name: 'server',
-            group: 'utility',
-            guildOnly: 'true',
-            memberName: 'server',
-            description: 'Show some stats about the server',
-            guildOnly: true,
+class ServerCommand extends Command {
+    constructor() {
+        super('server', {
+            aliases: ['server', 'serverinfo'],
+            category: 'utility',
+            channelRestriction: 'guild',
+            description: {
+				content: 'Show info about the server',
+				usage: '',
+				examples: ['']
+			}
         });
     }
 
-    async run(message) {
-        let blacklistJson = new SelfReloadJSON('./json/blacklist.json');
-        if(blacklistJson[message.author.id])
-        return blacklist(blacklistJson[message.author.id] , message)
-
+    async exec(message) {
         try {
-            let customresponse = new SelfReloadJSON(`./tag/${message.guild.id}.json`);
+            const customresponse = require(`../tag/${message.guild.id}.json`);
             var count = Object.keys(customresponse).length
         } catch {
             var count = 'None'
         }
-
         
-    const addEmbed = {
+        
+        const addEmbed = {
         color: 0x0099ff,
         title: 'Stats of the server',
         thumbnail: {
         url: `${message.guild.iconURL}`,
-    },
+        },
         description: `Member: **${message.guild.memberCount}** \nChannel number: **${message.guild.channels.size}**\nGuild created at **${message.guild.createdAt}**\nOwner: **${message.guild.owner}**\nTag number: **${count}**`,
-    };
-    
-    message.say({ embed: addEmbed });
+        };
+        
+        message.channel.send({ embed: addEmbed });
     }
-};
+}
+
+module.exports = ServerCommand;

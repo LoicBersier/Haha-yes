@@ -1,24 +1,20 @@
-const { Command } = require('discord.js-commando');
-const SelfReloadJSON = require('self-reload-json');
-const blacklist = require('../../json/blacklist.json');
+const { Command } = require('discord-akairo');
 
-
-module.exports = class UpDootCommand extends Command {
-    constructor(client) {
-        super(client, {
-            name: 'updoot',
-            aliases: ['vote'],
-            group: 'utility',
-            memberName: 'updoot',
-            description: 'Send link to updoot my bot :D.',
+class UpdootCommand extends Command {
+    constructor() {
+        super('updoot', {
+            aliases: ['updoot', 'upvote', 'vote'],
+            category: 'utility',
+            channelRestriction: 'guild',
+            description: {
+				content: 'Send a link to vote for my bot',
+				usage: '',
+				examples: ['']
+			}
         });
     }
 
-    async run(message) {
-        let blacklistJson = new SelfReloadJSON('./json/blacklist.json');
-        if(blacklistJson[message.author.id])
-        return blacklist(blacklistJson[message.author.id] , message)
-        
+    async exec(message) {
         const upDoot = {
             color: 0x93C54B,
             title: 'Vote for my bot',
@@ -33,4 +29,6 @@ module.exports = class UpDootCommand extends Command {
         
         message.channel.send({ embed: upDoot });
     }
-};
+}
+
+module.exports = UpdootCommand;

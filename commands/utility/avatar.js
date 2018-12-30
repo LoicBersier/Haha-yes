@@ -1,34 +1,30 @@
-const { Command } = require('discord.js-commando');
-const SelfReloadJSON = require('self-reload-json');
-const blacklist = require('../../json/blacklist.json');
+const { Command } = require('discord-akairo');
 
-
-module.exports = class AvatarCommand extends Command {
-    constructor(client) {
-        super(client, {
-            name: 'avatar',
-            group: 'utility',
-            memberName: 'avatar',
-            description: 'Send the avatar of the mentionned user.',
+class AvatarCommand extends Command {
+    constructor() {
+        super('avatar', {
+            aliases: ['avatar', 'avy'],
+            category: 'utility',
             args: [
                 {
-                    key: 'user',
-                    prompt: 'What do you want me to say',
-                    type: 'user',
-                    default: ''
+                    id: 'user',
+                    type: 'user'
                 }
-            ]
+            ],
+            description: {
+				content: 'Show avatar of the mentioned user or you',
+				usage: '(optional) [@user]',
+				examples: ['', '@user']
+			}
         });
     }
 
-    async run(message, { user }) {
-        let blacklistJson = new SelfReloadJSON('./json/blacklist.json');
-        if(blacklistJson[message.author.id])
-        return blacklist(blacklistJson[message.author.id] , message)
-        
-        if (!user)
-            return message.say(`Your avatar:\n${message.author.displayAvatarURL}`);
+    async exec(message, args) {
+        if (!args.user)
+            return message.channel.send(`Your avatar:\n${message.author.displayAvatarURL}`);
         else
-            return message.say(`${user.username}'s avatar:\n${user.displayAvatarURL}`);
+            return message.channel.send(`${args.user.username}'s avatar:\n${args.user.displayAvatarURL}`);
     }
-};
+}
+
+module.exports = AvatarCommand;

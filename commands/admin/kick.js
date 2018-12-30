@@ -1,42 +1,47 @@
-const { Command } = require('discord.js-commando');
-const blacklist = require('../../json/blacklist.json');
+const { Command } = require('discord-akairo');
 
-module.exports = class KickCommand extends Command {
-    constructor(client) {
-        super(client, {
-            name: 'kick',
-            group: 'admin',
-            memberName: 'kick',
-            description: 'Kick the mentionned user',
-            guildOnly: true,
-            clientPermissions: ['KICK_MEMBERS'],
-            userPermissions: ['KICK_MEMBERS'],
-            args: [
-                {
-                    key: 'member',
-                    prompt: 'Wich member would you like to kick?',
-                    type: 'member',
-                },
-                {
-                    key: 'reasons',
-                    prompt: 'What is the reasons of the kick',
-                    type: 'string',
-                    default: ''
-                } 
-            ]
+class KickCommand extends Command {
+    constructor() {
+        super('kick', {
+           aliases: ['kick'],
+           category: 'admin',
+           strip: 'none',
+           args: [
+               {
+                   id: 'member',
+                   type: 'member'
+               },
+               {
+                   id: 'reasons',
+                   type: 'string'
+               }
+           ],
+           clientPermissions: ['KICK_MEMBERS'],
+           userPermissions: ['KICK_MEMBERS'],
+           channelRestriction: 'guild',
+           description: {
+            content: 'Kick user',
+            usage: '[@user]',
+            examples: ['@user big dumb dumb']
+        }
         });
     }
 
-    async run(message, { member, reasons }) {
-        if(member == this.client) 
-            message.say('Cant kick me fool')
-        if(!reasons)
-            reasons = 'Nothing have been specified.'
+    async exec(message, args) {
+        let member = args.member;
+        let reasons = args.reasons;
+
+        if(member === this.client.user) 
+            return message.channel.say('Cant kick me fool');
         if(member.id === message.author.id)
-            return message.say("Why would you kick yourself ?")
-        await member.send(`You have been kicked for the following reasons: "${reasons}"`)
-        .error(err => console.error(`Could not dm the user, probably disabled\n${err}`))
-        member.kick(`Kicked by : ${message.author.username} for the following reasons : ${reasons}`)
+            return message.channel.say("Why would you kick yourself ?");
+        if(!reasons)
+            reasons = 'Nothing have been specified.';
+
+        await member.kick(`Kicked by : ${message.author.username} for the following reasons : ${reasons}`)
         .then(() => message.reply(`${member.user.username} was succesfully kicked with the following reasons "${reasons}".`))
-        };
-};
+        .catch(err => console.error(err))
+    }
+}
+
+module.exports = KickCommand;

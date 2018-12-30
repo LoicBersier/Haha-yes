@@ -1,36 +1,36 @@
-const { Command } = require('discord.js-commando');
-const blacklist = require('../../json/blacklist.json');
+const { Command } = require('discord-akairo');
 const fs = require('fs');
 
-module.exports = class CustomResponseCommand extends Command {
-    constructor(client) {
-        super(client, {
-            name: 'tag',
-            aliases: ['customresponse'],
-            group: 'admin',
-            memberName: 'tag',
-            description: `Custom auto response`,
-            userPermissions: ['MANAGE_MESSAGES'],
+class TagCommand extends Command {
+    constructor() {
+        super('tag', {
+            aliases: ['tag'],
+            category: 'admin',
+            split: 'quoted',
             args: [
                 {
-                    key: 'trigger',
-                    prompt: 'The word that will trigger the autoresponse (use "--" instead of spaces)',
-                    type: 'string',
+                    id: "trigger",
+                    type: "string"
                 },
                 {
-                    key: 'response',
-                    prompt: 'The response to the word ( you can use spaces here )',
-                    type: 'string',
+                    id: "response",
+                    type: "string"
                 }
-            ]
+            ],
+            channelRestriction: 'guild',
+            description: {
+                content: 'Create custom autoresponse',
+                usage: '[trigger] [response]',
+                examples: ['"do you know da wea" "Fuck off dead meme"']
+            }
         });
     }
 
-    async run(message, { trigger, response }) {
-        if(blacklist[message.author.id])
-        return message.channel.send("You are blacklisted")
+    async exec(message, args) {
+        let trigger = args.trigger;
+        let response = args.response;
 
-            trigger = trigger.toLowerCase();
+        trigger = trigger.toLowerCase();
             do {
                 trigger = trigger.replace('--', ' ')
             } while (trigger.includes('--'))
@@ -58,6 +58,8 @@ module.exports = class CustomResponseCommand extends Command {
                     } 
             })}});
             
-            return message.say(`autoresponse have been set to ${trigger} : ${response}`);
-        }
-};
+            return message.channel.send(`autoresponse have been set to ${trigger} : ${response}`);
+    }
+}
+
+module.exports = TagCommand;

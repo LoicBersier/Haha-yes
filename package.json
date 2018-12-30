@@ -1,33 +1,23 @@
 {
-  "name": "discordbot",
+  "name": "djs12",
   "version": "1.0.0",
-  "description": "A simple discord bot made with discord.js and commando",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://gitlab.com/loicbersier/discordbot.git"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://gitlab.com/loicbersier/discordbot/issues"
-  },
-  "homepage": "https://gitlab.com/loicbersier/discordbot#readme",
   "dependencies": {
     "@google-cloud/text-to-speech": "^0.4.0",
-    "canvas": "^2.0.1",
-    "discord.js": "file:../discord.js-11.4-dev",
-    "discord.js-commando": "^0.10.0",
-    "node-fetch": "^2.2.0",
-    "node-gyp": "^3.8.0",
-    "node-opus": "^0.3.1",
-    "printer": "^0.2.2",
+    "canvas": "^2.2.0",
+    "discord-akairo": "^7.5.5",
+    "discord.js": "^11.4.2",
+    "node-fetch": "^2.3.0",
+    "reload-json": "^0.3.1",
     "self-reload-json": "^0.4.0",
-    "superagent": "^4.0.0-beta.5",
+    "superagent": "^4.1.0",
     "youtube-dl": "^1.12.2"
   }
 }

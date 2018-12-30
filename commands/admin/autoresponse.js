@@ -1,46 +1,46 @@
-const { Command } = require('discord.js-commando');
-const blacklist = require('../../json/blacklist.json');
 const fs = require('fs');
-const { prefix } = require('../../config.json')
-module.exports = class AutoresponseCommand extends Command {
-    constructor(client) {
-        super(client, {
-            name: 'autoresponse',
-            group: 'admin',
-            memberName: 'autoresponse',
-            userPermissions: ['ADMINISTRATOR'],
-            description: `Can disable autoresponse in the channel (you can add "ALL" like this "${prefix} enable/disable all" to enable/disable in every channel (EXPERIMENTAL))`,
+const { Command } = require('discord-akairo');
+
+class autoresponseCommand extends Command {
+    constructor() {
+        super('autoresponse', {
+            aliases: ['autoresponse'],
+            category: 'admin',
             args: [
                 {
-                    key: 'text',
-                    prompt: 'Disable or enable?',
-                    type: 'string',
-                    oneOf: ['disable', 'enable','disable all', 'enable all'],
+                    id: 'text',
+                    type: 'string'
                 },
                 {
-                    key: 'all',
-                    prompt: 'Disable or enable in every channel? (EXPERIMENTAL)',
-                    type: 'string',
-                    oneOf: ['all', ''],
-                    default: ''
+                    id: 'all',
+                    type: 'string'
                 }
-            ]
+            ],
+            userPermissions: ['ADMINISTRATOR'],
+            channelRestriction: 'guild',
+            description: {
+                content: 'enable/disable autoresponse',
+                usage: '[enable/disable] (optional) [all]',
+                examples: ['enable all']
+            }
         });
     }
 
-    async run(message, { text, all }) {
-        if(blacklist[message.author.id])
-        return message.channel.send("You are blacklisted")
+    async exec(message, args) {
+        let text = args.text;
+        let all = args.all;
 
             let autoresponse = {}
             let json = JSON.stringify(autoresponse)
 
             if (all == 'all') {
                 const guild = this.client.guilds.get(message.guild.id);
+
                 fs.readFile('./json/autoresponse.json', 'utf8', function readFileCallback(err, data){
                     if (err){
                         console.log(err);
                     } else {
+
                     autoresponse = JSON.parse(data); //now it an object
                     guild.channels.forEach(channel => autoresponse [channel] = text)
                     json = JSON.stringify(autoresponse); //convert it back to json
@@ -51,22 +51,22 @@ module.exports = class AutoresponseCommand extends Command {
                         } 
                 })}});
 
-            return message.say('Auto response have been disable/enable on every channel')
-            } else if(text == 'disable' || 'enable') {
-            fs.readFile('./json/autoresponse.json', 'utf8', function readFileCallback(err, data){
-                if (err){
-                    console.log(err);
-                } else {
-                autoresponse = JSON.parse(data); //now it an object
-                autoresponse [message.channel.id] = text
-                json = JSON.stringify(autoresponse); //convert it back to json
-                fs.writeFile('./json/autoresponse.json', json, 'utf8', function(err) {
-                    if(err) {
-                        return console.log(err);
-                    } 
-            })}});
+            return message.channel.send('Auto response have been disable/enable on every channel')
+
+            } else if (text == 'disable' || 'enable') {
+                fs.readFile('./json/autoresponse.json', 'utf8', function readFileCallback(err, data){
+                    if (err){
+                        console.log(err);
+                    } else {
+                    autoresponse = JSON.parse(data); //now it an object
+                    autoresponse [message.channel.id] = text
+                    json = JSON.stringify(autoresponse); //convert it back to json
+                    fs.writeFile('./json/autoresponse.json', json, 'utf8', function(err) {
+                        if(err) {
+                            return console.log(err);
+                        } 
+                })}})};
             
-            return message.say(`Autoresponse have been ${text}d`);
-        }
-          }
-};
+            return message.channel.send(`Autoresponse have been ${text}d`);
+}}
+module.exports = autoresponseCommand;

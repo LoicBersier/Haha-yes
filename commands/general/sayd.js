@@ -1,32 +1,30 @@
-const { Command } = require('discord.js-commando');
-const SelfReloadJSON = require('self-reload-json');
-const blacklist = require('../../json/blacklist.json');
+const { Command } = require('discord-akairo');
 
-module.exports = class sayCommand extends Command {
-    constructor(client) {
-        super(client, {
-            name: 'say',
-            aliases: ['repeat'],
-            group: 'fun',
-            memberName: 'say',
-            description: `Repeat the text you send ( can also use [verb] [noun] [adverbs] [adjective] [activities] [celebrities] [countries] [diseases] [elements] [hobbies] [music] [prefixes] [pronoun] [state] [title] [unit] [member] [number] to replace it with something else )`,
-            args: [
-                {
-                    key: 'text',
-                    prompt: 'What do you want me to say',
-                    type: 'string',
-                }
-            ]
+class SayCommand extends Command {
+    constructor() {
+        super('sayd', {
+           aliases: ['sayd'],
+           category: 'general',
+           split: 'none',
+           clientPermissions: 'MANAGE_MESSAGES',
+           args: [
+               {
+                   id: 'text',
+                   type: 'string'
+               }
+           ],
+           description: {
+            content: 'Repeat what you say but delete the text you sent',
+            usage: '[text]',
+            examples: ['[member] is a big [adverbs] [verb]']
+        }
         });
     }
 
-    async run(message, { text }) {
-        let blacklistJson = new SelfReloadJSON('./json/blacklist.json');
-        if(blacklistJson[message.author.id])
-        return blacklist(blacklistJson[message.author.id] , message)
+    async exec(message, args) {
+        let text = args.text;
 
-
-//      Load all the different files
+        //      Load all the different files
         const verb = require('../../dictionary/verbs.json')
         const noun = require('../../dictionary/noun.json')
         const adverbs = require('../../dictionary/adjectives.json')
@@ -75,6 +73,9 @@ module.exports = class sayCommand extends Command {
         } while( text.includes('[verb]') || text.includes('[adverbs]') || text.includes('[noun]') || text.includes('[adjective]') || text.includes('[member]') || text.includes('[number]') || text.includes('[activities]') || text.includes('[celebrities]') || text.includes('[countries]') || text.includes('[diseases]') || text.includes('[elements]') || text.includes('[hobbies]') || text.includes('[music]') || text.includes('[prefixes]') || text.includes('[pronoun]') || text.includes('[state]') || text.includes('[title]') || text.includes('[unit]'))
 
 //      Send the final text
-        message.say(text);
-          }
-};
+        message.delete();
+        return message.channel.send(text);
+    }
+}
+
+module.exports = SayCommand;

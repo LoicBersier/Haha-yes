@@ -1,59 +1,63 @@
-const { Command } = require('discord.js-commando');
-const fetch = require('node-fetch')
-const SelfReloadJSON = require('self-reload-json');
-const blacklist = require('../../json/blacklist.json');
+const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
+const fetch = require('node-fetch');
 const { yandexAPI } = require('../../config.json');
 
-module.exports = class translationCommand extends Command {
-    constructor(client) {
-        super(client, {
-            name: 'translation',
-            aliases: ['trn', 'translate'],
-            group: 'utility',
-            memberName: 'translation',
-            description: `Translate what you say in english`,
+class TranslationCommand extends Command {
+    constructor() {
+        super('translation', {
+            aliases: ['translation', 'trn'],
+            category: 'utility',
+            description: 'Translate the text you send into the lanuguage you selected',
+            split: 'none',
             args: [
                 {
-                    key: 'language',
-                    prompt: 'In what language do you want me to translate to? ( You can get the list here https://tech.yandex.com/translate/doc/dg/concepts/api-overview-docpage/)',
+                    id: 'language',
                     type: 'string',
-                    default: 'en',
-                    oneOf: ["az","ml","sq","mt","am","mk","en","mi","ar","mr","hy","mhr","af","mn","eu","de","ba","ne","be","no","bn","pa","my","pap","bg","fa","bs","pl","cy","pt","hu","ro","vi","ru","ht","ceb","gl","sr","nl","si","mrj","sk","el","sl","ka","sw","gu","su","da","tg","he","th","yi","tl","id","ta","ga","tt","it","te","is","tr","es","udm","kk","uz","kn","uk","ca","ur","ky","fi","zh","fr","ko","hi","xh","hr","km","cs","lo","sv","la","gd","lv","et","lt","eo","lb","jv","mg","ja","ms"]
+                    default: 'en'
                 },
                 {
-                    key: 'text',
-                    prompt: 'What do you want me to translate',
+                    id: 'text',
                     type: 'string',
                 }
-            ]
+            ],
+            description: {
+				content: 'Translate what you send in your desired language. You can find the language code here: https://tech.yandex.com/translate/doc/dg/concepts/api-overview-docpage/',
+				usage: '[language code] [Text to translate]',
+				examples: ['fr What are we doing today?', 'en Que faisons-nous aujourd\'hui?']
+			}
         });
     }
 
-    async run(message, { text, language }) {
-        let blacklistJson = new SelfReloadJSON('./json/blacklist.json');
-        if(blacklistJson[message.author.id])
-        return blacklist(blacklistJson[message.author.id] , message)
+    async exec(message, args) {
+        console.log(args.language , args.text)
+        let language = args.language;
+        let text = args.text;
         
         let textURI = encodeURI(text)
         fetch(`https://translate.yandex.net/api/v1.5/tr.json/translate?key=${yandexAPI}&text=${textURI}&lang=${language}&options=1`,{
         }).then((response) => {
-  return response.json();
-}).then((response) => {
-    if (response.code != '200')
-        return message.say('An error has occured')
-
-
+        return response.json();
+        }).then((response) => {
+        if (response.code == '502')
+            return message.channel.send(`${response.message}, you probably didin't input the correct language code, you can check them here! https://tech.yandex.com/translate/doc/dg/concepts/api-overview-docpage/`)
+        else if (response.code != '200')
+            return message.channel.send('An error has occured')
+        
+        
         const translationEmbed = new Discord.RichEmbed()
-    .setColor('#0099ff')
-    .setTitle('Asked for the following translation:')
-    .setAuthor(message.author.username)
-    .setDescription(response.text[0])
-    .addField('Original text', text)
-    .addField('Translated from', response.detected.lang)
-    .setTimestamp()
-    .setFooter('Powered by Yandex.Translate ');
-
-        message.say(translationEmbed)
+        .setColor('#0099ff')
+        .setTitle('Asked for the following translation:')
+        .setAuthor(message.author.username)
+        .setDescription(response.text[0])
+        .addField('Original text', text)
+        .addField('Translated from', response.detected.lang)
+        .setTimestamp()
+        .setFooter('Powered by Yandex.Translate ');
+        
+        message.channel.send(translationEmbed)
           });
-}};
+    }
+}
+
+module.exports = TranslationCommand;

@@ -1,38 +1,33 @@
-const { Command } = require('discord.js-commando');
+const { Command } = require('discord-akairo');
 const { feedbackChannel } = require('../../config.json');
-const SelfReloadJSON = require('self-reload-json');
-const blacklist = require('../../json/blacklist.json');
 
-
-const fs = require('fs');
-module.exports = class feedbackCommand extends Command {
-    constructor(client) {
-        super(client, {
-            name: 'feedback',
-            group: 'utility',
-            memberName: 'feedback',
-            description: `Send feedback ( if you abuse you will get blacklisted )`,
-            throttling: {
-                usages: 2,
-                duration: 60,
-            },
+class FeedbackCommand extends Command {
+    constructor() {
+        super('feedback', {
+            aliases: ['feedback'],
+            category: 'utility',
+            split: 'none',
             args: [
                 {
-                    key: 'text',
-                    prompt: 'What would you want to send as feedback?',
-                    type: 'string',
+                    id: "text",
+                    type: "string"
                 }
-            ]
+            ],
+            description: {
+				content: 'Send feedback to the bot owner',
+				usage: '[What do you want to say]',
+				examples: ['Hello, i just wanted to say hi!']
+			}
         });
     }
 
-    async run(message, { text }) {
-        let blacklistJson = new SelfReloadJSON('./json/blacklist.json');
-        if(blacklistJson[message.author.id])
-        return blacklist(blacklistJson[message.author.id] , message)
-        
+    async exec(message,args) {
+        let text = args.text;
+
         const channel = this.client.channels.get(feedbackChannel);
         channel.send(`from ${message.author.username} (${message.author.id}) : ${text}`);
-            message.say('Your feedback has been sent!');
+            message.channel.send('Your feedback has been sent!');
     }
-};
+}
+
+module.exports = FeedbackCommand;

@@ -1,23 +1,19 @@
-const { Command } = require('discord.js-commando');
-const SelfReloadJSON = require('self-reload-json');
-const blacklist = require('../../json/blacklist.json');
+const { Command } = require('discord-akairo');
 
-
-module.exports = class statsCommand extends Command {
-    constructor(client) {
-        super(client, {
-            name: 'stats',
-            group: 'utility',
-            memberName: 'stats',
-            description: 'Show bot stats.',
+class StatsCommand extends Command {
+    constructor() {
+        super('stats', {
+            aliases: ['stats'],
+            category: 'utility',
+            description: {
+				content: 'Show some stats about the bot',
+				usage: '',
+				examples: ['']
+			}
         });
     }
 
-    async run(message) {
-        let blacklistJson = new SelfReloadJSON('./json/blacklist.json');
-        if(blacklistJson[message.author.id])
-        return blacklist(blacklistJson[message.author.id] , message)
-        
+    async exec(message) {
         let totalSeconds = (this.client.uptime / 1000);
         let days = Math.floor(totalSeconds / 86400);
         let hours = Math.floor(totalSeconds / 3600);
@@ -27,4 +23,6 @@ module.exports = class statsCommand extends Command {
         let uptime = `${days} days, ${hours} hours, ${minutes} minutes and ${seconds} seconds`;
         return message.channel.send(`Servers: \`${this.client.guilds.size}\`\nChannels: \`${this.client.channels.size}\`\nUsers: \`${this.client.users.size}\`\nBot uptime: \`${uptime}\``);
     }
-};
+}
+
+module.exports = StatsCommand;

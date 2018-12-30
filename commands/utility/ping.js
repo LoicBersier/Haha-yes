@@ -1,41 +1,25 @@
-const { oneLine } = require('common-tags');
-const { Command } = require('discord.js-commando');
-const SelfReloadJSON = require('self-reload-json');
-const blacklist = require('../../json/blacklist.json');
+const { Command } = require('discord-akairo');
 
-
-module.exports = class PingCommand extends Command {
-	constructor(client) {
-		super(client, {
-			name: 'ping',
-			group: 'util',
-			memberName: 'ping',
-			description: 'Checks the bot\'s ping to the Discord server.',
-			throttling: {
-				usages: 5,
-				duration: 10
+class PingCommand extends Command {
+    constructor() {
+        super('ping', {
+            aliases: ['ping', 'hello'],
+            category: 'utility',
+            description: {
+				content: 'Ping the bot',
+				usage: '',
+				examples: ['']
 			}
-		});
-	}
+        });
+    }
 
-	async run(message) {
-        let blacklistJson = new SelfReloadJSON('./json/blacklist.json');
-        if(blacklistJson[message.author.id])
-		return blacklist(blacklistJson[message.author.id] , message)
-		
-		if(!message.editable) {
-			const pingMsg = await message.say('Pinging...');
-			return pingMsg.edit(oneLine`
-				${message.channel.type !== 'dm' ? `${message.author},` : ''}
-				<:ping:499226870047571978> Pong! The message round-trip took **${pingMsg.createdTimestamp - message.createdTimestamp}**ms.
-				${this.client.ping ? `The heartbeat ping is **${Math.round(this.client.ping)}**ms.` : ''}
-			`);
-		} else {
-			await message.edit('Pinging...');
-			return message.edit(oneLine`
-				Pong! The message round-trip took **${message.editedTimestamp - message.createdTimestamp}**ms.
-				${this.client.ping ? `The heartbeat ping is **${Math.round(this.client.ping)}**ms.` : ''}
-			`);
-		}
-	}
-};
+    async exec(message) {
+        return message.util.reply('Pong!').then(sent => {
+            const timeDiff = (sent.editedAt || sent.createdAt) - (message.editedAt || message.createdAt);
+            const text = `🔂\u2000**RTT**: ${timeDiff} ms\n💟\u2000**Heartbeat**: ${Math.round(this.client.ping)} ms`;
+            return message.util.reply(`Pong!\n${text}`);
+        });
+    }
+}
+
+module.exports = PingCommand;

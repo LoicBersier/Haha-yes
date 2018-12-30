@@ -1,32 +1,31 @@
-const { Command } = require('discord.js-commando');
-const blacklist = require('../../json/blacklist.json');
+const { Command } = require('discord-akairo');
 
-module.exports = class PruneCommand extends Command {
-    constructor(client) {
-        super(client, {
-            name: 'prune',
-            aliases: ['purge', 'clear', 'clean'],
-            group: 'admin',
-            memberName: 'prune',
-            description: 'Bulk delete messages.',
-            clientPermissions: ['READ_MESSAGE_HISTORY', 'MANAGE_MESSAGES'],
-            userPermissions: ['MANAGE_MESSAGES'],
-            guildOnly: true,
+class PruneCommand extends Command {
+    constructor() {
+        super('Prune', {
+            aliases: ['Prune'],
+            category: 'admin',
             args: [
                 {
-                    key: 'amount',
-                    prompt: 'How many messages would you like to delete? ( choose a number between 1 & 99 )',
-                    type: 'integer',
-                    min: '1',
-                    max: '99'
+                    id: "amount",
+                    type: "string"
                 }
-            ]
+            ],
+            clientPermissions: ['MANAGE_MESSAGES'],
+            userPermissions: ['MANAGE_MESSAGES'],
+            channelRestriction: 'guild',
+            description: {
+                content: 'Bulk delete messages',
+                usage: '[amount]',
+                examples: ['50']
+            }
         });
     }
 
-    run(message, { amount }) {
-        amount = amount+1
-        message.channel.bulkDelete(amount, true);
+    async exec(message,args) {
+        if (args.amount > 99) return;
+        message.channel.bulkDelete(args.amount + 1, true);
     }
-};
+}
 
+module.exports = PruneCommand;

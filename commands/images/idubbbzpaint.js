@@ -1,45 +1,25 @@
-const { Command } = require('discord.js-commando');
+const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
-const { createCanvas, loadImage, getContext } = require('canvas')
-const superagent = require('superagent')
-const SelfReloadJSON = require('self-reload-json');
-const blacklist = require('../../json/blacklist.json');
+const { createCanvas, loadImage, getContext } = require('canvas');
+const superagent = require('superagent');
 
-
-
-
-module.exports = class idubbbzpaintCommand extends Command {
-    constructor(client) {
-        super(client, {
-            name: 'idubbbzpaint',
-            aliases: ['idubbzpaint', 'edupspaint'],
-            group: 'images',
-            memberName: 'painting',
-            description: `Put the image you send or you in idubbbz painting`,
-            args: [
-                {
-                    key: 'text',
-                    prompt: 'What do you the paper to say?',
-                    type: 'string',
-                    default: 'Perfection'
-                }
-            ]
+class IdubbbzPaintCommand extends Command {
+    constructor() {
+        super('idubbbzpaint', {
+            aliases: ['idubbbzpaint', 'edupspaint'],
+            category: 'images',
         });
     }
 
-    async run(message, { text }) {
-        let blacklistJson = new SelfReloadJSON('./json/blacklist.json');
-        if(blacklistJson[message.author.id])
-        return blacklist(blacklistJson[message.author.id] , message)
-        
+    async exec(message) {
         let Attachment = (message.attachments).array();
-        let image = null
-        if (!Attachment[0])
+        let image = args.image;
+        if (!Attachment[0] && !image)
             image = message.author.displayAvatarURL
         else if(Attachment[0] && Attachment[0].url.endsWith('gif'))
-            return message.say('Gif dosent work, sorry')
-        else 
-        image = Attachment[0].url
+            return message.channel.send('Gif dosent work, sorry')
+        else if (!image)
+            image = Attachment[0].url
 
             const canvas = createCanvas(1024, 544)
             const applyText = (canvas, text) => {
@@ -61,7 +41,7 @@ module.exports = class idubbbzpaintCommand extends Command {
         const background = await loadImage(image);
         ctx.drawImage(background, 140, 40, 400, 340);
         const { body: buffer } = await superagent.get('https://image.noelshack.com/fichiers/2018/41/7/1539533685-untitled.png').catch(error => {
-            return message.say('An error as occured, please try again')
+            return message.channel.send('An error as occured, please try again')
         })
         const bg = await loadImage(buffer);
         ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
@@ -71,9 +51,10 @@ module.exports = class idubbbzpaintCommand extends Command {
 
         const attachment = new Discord.Attachment(canvas.toBuffer(), 'edupspaint.png');
 
-        message.say(attachment).catch(error => {
-            message.say('an error as occured. Check the bot/channel permissions')
+        message.channel.send(attachment).catch(error => {
+            message.channel.send('an error as occured. Check the bot/channel permissions')
         })
+    }
+}
 
-          }
-};
+module.exports = IdubbbzPaintCommand;

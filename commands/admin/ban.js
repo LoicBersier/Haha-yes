@@ -1,48 +1,45 @@
-const { Command } = require('discord.js-commando');
-const blacklist = require('../../json/blacklist.json');
+const { Command } = require('discord-akairo');
 
-module.exports = class BanCommand extends Command {
-    constructor(client) {
-        super(client, {
-            name: 'ban',
-            group: 'admin',
-            memberName: 'ban',
-            description: 'ban the mentionned user',
-            guildOnly: true,
-            clientPermissions: ['BAN_MEMBERS'],
-            userPermissions: ['BAN_MEMBERS'],
-            args: [
-                {
-                    key: 'member',
-                    prompt: 'Wich member would you like to ban?',
-                    type: 'member',
-                },
-                {
-                    key: 'reasons',
-                    prompt: 'What is the reasons of the kick',
-                    type: 'string',
-                    default: ''
-                } 
-            ]
+class BanCommand extends Command {
+    constructor() {
+        super('ban', {
+           aliases: ['ban'],
+           category: 'admin',
+           args: [
+               {
+                   id: 'member',
+                   type: 'member'
+               },
+               {
+                   id: 'reasons',
+                   type: 'string'
+               }
+           ],
+           clientPermissions: ['BAN_MEMBERS'],
+           userPermissions: ['BAN_MEMBERS'],
+           channelRestriction: 'guild',
+           description: {
+            content: 'Ban user',
+            usage: '[@user]',
+            examples: ['@user big dumb dumb']
+        }
         });
     }
 
-    async run(message, { member, reasons }) {
+    async exec(message, args) {
+        let member = args.member;
+        let reasons = args.reasons;
+
         if(member == this.client) 
-            return message.say('Cant kick me fool')
+            return message.channel.send('Cant ban me fool')
         if(!reasons)
             reasons = 'Nothing have been specified'
         if(member.id === message.author.id)
-            return message.say("Why would you ban yourself ?")
-
-        try {
-            await member.send(`https://youtu.be/55-mHgUjZfY\nYou have been banned for the following reasons: "${reasons}"`)
-        } catch(err) {
-            console.error(`Could not dm the user, probably disabled\n${err}`)
-        }
+            return message.channel.send("Why would you ban yourself ?")
 
         member.ban(`Banned by : ${message.author.username} for the following reasons : ${reasons}`)
             .then(() => message.reply(`${member.user.username} was succesfully banned with the following reasons "${reasons}".`))
+    }
+}
 
-        };
-};
+module.exports = BanCommand;

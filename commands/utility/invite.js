@@ -1,25 +1,24 @@
-const { Command } = require('discord.js-commando');
+const { Command } = require('discord-akairo');
 const { supportServer } = require('../../config.json');
-const SelfReloadJSON = require('self-reload-json');
-const blacklist = require('../../json/blacklist.json');
 
-
-module.exports = class InviteCommand extends Command {
-    constructor(client) {
-        super(client, {
-            name: 'invite',
-            group: 'utility',
-            memberName: 'invite',
-            description: 'Send invite to add the bot',
+class InviteCommand extends Command {
+    constructor() {
+        super('invite', {
+            aliases: ['invite'],
+            category: 'utility',
+            channelRestriction: 'guild',
+            description: {
+				content: 'Send invite link for the bot and support server',
+				usage: '',
+				examples: ['']
+			}
         });
     }
 
-    async run(message) {
-        let blacklistJson = new SelfReloadJSON('./json/blacklist.json');
-        if(blacklistJson[message.author.id])
-        return blacklist(blacklistJson[message.author.id] , message)
-        
-        message.say('Check your dm')
+    async exec(message) {
+        message.channel.send('Check your dm')
         return message.author.send(`You can add me from here: https://discordapp.com/oauth2/authorize?client_id=${this.client.user.id}&scope=bot&permissions=0\nYou can also join my support server over here: ${supportServer} come and say hi :)`);
     }
-};
+}
+
+module.exports = InviteCommand;
