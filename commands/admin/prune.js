@@ -8,7 +8,7 @@ class PruneCommand extends Command {
             args: [
                 {
                     id: "amount",
-                    type: "string"
+                    type: "integer"
                 }
             ],
             clientPermissions: ['MANAGE_MESSAGES'],
