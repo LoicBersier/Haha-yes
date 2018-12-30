@@ -12,7 +12,7 @@ class GodCommand extends Command {
         });
     }
 
-    async exec(message) {
+    async exec(message, args) {
         let Attachment = (message.attachments).array();
         let image = args.image;
         if (!Attachment[0] && !image)
