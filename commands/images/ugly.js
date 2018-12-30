@@ -12,7 +12,6 @@ class UglyCommand extends Command {
                 {
                     id: 'image',
                     type: 'string',
-                    optional: true,
                 }
             ]
         });

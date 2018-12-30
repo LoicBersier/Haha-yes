@@ -8,10 +8,22 @@ class IdubbbzCommand extends Command {
         super('idubbbz', {
             aliases: ['idubbbz', 'edups'],
             category: 'images',
+            split: 'quoted',
+            args: [
+                {
+                    id: 'text',
+                    type: 'string'
+                },
+                {
+                    id: 'image',
+                    type: 'string'
+                }
+            ]
         });
     }
 
     async exec(message, args) {
+        let text = args.text;
         let Attachment = (message.attachments).array();
         let image = args.image;
         if (!Attachment[0] && !image)

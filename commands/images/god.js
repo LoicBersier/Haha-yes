@@ -9,6 +9,12 @@ class GodCommand extends Command {
         super('god', {
             aliases: ['god'],
             category: 'images',
+            args: [
+                {
+                    id: 'image',
+                    type: 'string'
+                }
+            ]
         });
     }
 
@@ -21,7 +27,7 @@ class GodCommand extends Command {
             return message.channel.send('Gif dosent work, sorry')
         else if (!image)
             image = Attachment[0].url
-            
+
             message.channel.send('Processing <a:loadingmin:527579785212329984>')
             .then(loadingmsg => loadingmsg.delete(1000))
 
