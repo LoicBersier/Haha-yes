@@ -43,7 +43,7 @@ class TtsvcCommand extends Command {
             fs.writeFile('ttsvc.mp3', response.audioContent, 'binary', err => {
               if (err) {
                 console.error('ERROR:', err);
-                message.say('An error has occured, the message is probably too long')
+                message.channel.send('An error has occured, the message is probably too long')
                 return;
               }
               console.log('Audio content written to file: ttsvc.mp3');
@@ -57,7 +57,7 @@ class TtsvcCommand extends Command {
               //  If user say "stop" make the bot leave voice channel
                           if (text == 'stop') {
                               voiceChannel.leave();
-                              message.say('I leaved the channel');
+                              message.channel.send('I leaved the channel');
                           } else
                           voiceChannel.join().then(connection => {
                               const dispatcher = connection.playStream('./ttsvc.mp3');

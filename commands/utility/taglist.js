@@ -1,4 +1,7 @@
 const { Command } = require('discord-akairo');
+const Discord = require('discord.js');
+const SelfReloadJSON = require('self-reload-json');
+const fs = require('fs');
 
 class taglistCommand extends Command {
     constructor() {

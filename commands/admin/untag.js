@@ -44,7 +44,7 @@ class UnTagCommand extends Command {
                 } 
         })}});
         
-        return message.say(`The following autoresponse have been deleted: ${trigger}`);
+        return message.channel.send(`The following autoresponse have been deleted: ${trigger}`);
 
     }
 }

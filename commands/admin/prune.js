@@ -3,7 +3,7 @@ const { Command } = require('discord-akairo');
 class PruneCommand extends Command {
     constructor() {
         super('Prune', {
-            aliases: ['Prune'],
+            aliases: ['Prune', 'clean', 'purge'],
             category: 'admin',
             args: [
                 {
@@ -23,7 +23,7 @@ class PruneCommand extends Command {
     }
 
     async exec(message,args) {
-        if (args.amount > 99) return;
+        if (args.amount >= 100) return;
         message.channel.bulkDelete(args.amount + 1, true);
     }
 }
