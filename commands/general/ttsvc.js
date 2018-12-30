@@ -27,11 +27,6 @@ class TtsvcCommand extends Command {
         let text = args.text;
 
         const { voiceChannel } = message.member;
-        //  If user say "stop" make the bot leave voice channel
-        if (text == 'stop') {
-            voiceChannel.leave();
-            message.channel.send('I leaved the channel');
-        }
 
 
           // Construct the request
@@ -63,7 +58,12 @@ class TtsvcCommand extends Command {
                           if (!voiceChannel) {
                               return message.reply('please join a voice channel first!');
                               
-                          }  else {
+                          } else 
+              //  If user say "stop" make the bot leave voice channel
+                          if (text == 'stop') {
+                              voiceChannel.leave();
+                              message.channel.send('I leaved the channel');
+                          } else
                           voiceChannel.join().then(connection => {
                               const dispatcher = connection.playStream('./ttsvc.mp3');
               //  End at then end of the audio stream
@@ -71,7 +71,6 @@ class TtsvcCommand extends Command {
                                     voiceChannel.leave();
                                 }, 2000));
                           });
-                        }
             });
           });
     }
