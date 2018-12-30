@@ -33,7 +33,7 @@ class IdubbbzPaintCommand extends Command {
             image = Attachment[0].url
 
             message.channel.send('Processing <a:loadingmin:527579785212329984>')
-            .then(loadingmsg => loadingmsg.delete(1000))
+            .then(loadingmsg => loadingmsg.delete(2000))
             
             const canvas = createCanvas(1024, 544)
             const applyText = (canvas, text) => {
