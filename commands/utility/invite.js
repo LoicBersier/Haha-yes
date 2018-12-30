@@ -6,7 +6,6 @@ class InviteCommand extends Command {
         super('invite', {
             aliases: ['invite'],
             category: 'utility',
-            channelRestriction: 'guild',
             description: {
 				content: 'Send invite link for the bot and support server',
 				usage: '',
