@@ -62,14 +62,12 @@ class TtsvcCommand extends Command {
               //  If user say "stop" make the bot leave voice channel
                           if (text == 'stop') {
                               voiceChannel.leave();
-                              message.channel.send('I leaved the channel');
+                              message.channel.send('I left the channel');
                           } else
                           voiceChannel.join().then(connection => {
                               const dispatcher = connection.playStream('./ttsvc.mp3');
               //  End at then end of the audio stream
-                                dispatcher.on('end', () => setTimeout(function(){
-                                    voiceChannel.leave();
-                                }, 2000));
+                                dispatcher.on('end', () => voiceChannel.leave())
                           });
             });
           });
