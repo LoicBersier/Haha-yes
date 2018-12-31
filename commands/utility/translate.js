@@ -8,6 +8,7 @@ class TranslationCommand extends Command {
         super('translation', {
             aliases: ['translation', 'trn'],
             category: 'utility',
+            split: 'sticky',
             description: 'Translate the text you send into the lanuguage you selected',
             args: [
                 {
@@ -29,7 +30,6 @@ class TranslationCommand extends Command {
     }
 
     async exec(message, args) {
-        console.log(args.language , args.text)
         let language = args.language;
         let text = args.text;
         
