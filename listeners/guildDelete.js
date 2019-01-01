@@ -12,7 +12,7 @@ class guildCreateListener extends Listener {
 
     async exec(guild, client) {
         console.log(`***BOT KICKED***\n${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\nOwner ID: ${guild.owner}\n***BOT KICKED***`);
-        const channel = client.channels.get(statsChannel);
+        const channel = this.client.channels.get(statsChannel);
 
         const kickEmbed = new Discord.RichEmbed()
         .setColor("#FF0000")
