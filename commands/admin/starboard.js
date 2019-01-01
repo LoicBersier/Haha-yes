@@ -31,6 +31,7 @@ class StarBoardCommand extends Command {
                         if (err){
                             console.log(err);
                         }
+                        return message.channel.send(`This channel have been set as the starboard`);
                     })
                 } else {
                     if (args.delete == 'delete') {
