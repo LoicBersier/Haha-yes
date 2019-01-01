@@ -1,15 +1,15 @@
 const { Command } = require('discord-akairo');
 const fs = require('fs');
 
-class shamoeboardCommand extends Command {
+class shameboardCommand extends Command {
     constructor() {
-        super('shamoeboard', {
-            aliases: ['shamoeboard'],
+        super('shameboard', {
+            aliases: ['shameboard'],
             category: 'admin',
             channelRestriction: 'guild',
             userPermissions: ['ADMINISTRATOR'],
             description: {
-                content: 'Set shamoeboard',
+                content: 'Set shameboard',
                 usage: '[]',
                 examples: ['']
             }
@@ -17,27 +17,27 @@ class shamoeboardCommand extends Command {
     }
 
     async exec(message) {
-        let shamoeboardChannel = message.channel.id;
+        let shameboardChannel = message.channel.id;
 
-            fs.readFile(`./shamoeboard/${message.guild.id}.json`, 'utf8', function readFileCallback(err, data){
+            fs.readFile(`./starboard/${message.guild.id}.json`, 'utf8', function readFileCallback(err, data){
                 if (err){
-                    fs.writeFile(`./shamoeboard/${message.guild.id}.json`, `{"shamoeboard": "${shamoeboardChannel}"}`, function (err) {
+                    fs.writeFile(`./starboard/${message.guild.id}.json`, `{"shameboard": "${shameboardChannel}"}`, function (err) {
                         if (err){
                             console.log(err);
                         }
-                        return message.channel.send(`This channel have been set as the shamoeboard`);
+                        return message.channel.send(`This channel have been set as the shameboard`);
                     })
                 } else {
-                    let shamoeboard = JSON.parse(data); //now it an object
-                    shamoeboard ['shamoeboard'] = shamoeboardChannel;
-                    var json = JSON.stringify(shamoeboard); //convert it back to json
-                    fs.writeFile(`./shamoeboard/${message.guild.id}.json`, json, 'utf8', function(err) {
+                    let shameboard = JSON.parse(data); //now it an object
+                    shameboard ['shameboard'] = shameboardChannel;
+                    var json = JSON.stringify(shameboard); //convert it back to json
+                    fs.writeFile(`./starboard/${message.guild.id}.json`, json, 'utf8', function(err) {
                         if(err) {
                             return console.log(err);
                         } 
             })}});
-                return message.channel.send(`This channel have been set as the shamoeboard`);
+                return message.channel.send(`This channel have been set as the shameboard`);
     }
 }
 
-module.exports = shamoeboardCommand;
+module.exports = shameboardCommand;
