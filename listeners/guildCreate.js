@@ -10,7 +10,7 @@ class guildCreateListener extends Listener {
         });
     }
 
-    async exec(guild) {
+    async exec(guild, client) {
             console.log(`${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\nOwner ID: ${guild.owner}`);
             const channel = client.channels.get(statsChannel);
             const addEmbed = new Discord.RichEmbed()
