@@ -1,5 +1,5 @@
 const { Listener } = require('discord-akairo');
-const { statsChannel } = require('./config.json');
+const { statsChannel } = require('../config.json');
 
 
 class guildCreateListener extends Listener {
