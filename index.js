@@ -4,6 +4,8 @@ const { token, prefix, ownerID, statsChannel } = require('./config.json');
 const client = new AkairoClient({
     ownerID: ownerID,
     prefix: prefix,
+    allowMention: true,
+    handleEdits: true,
     emitters: {
         process
     },
