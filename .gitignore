@@ -9,5 +9,6 @@ json/autoresponse.json
 json/blacklist.json
 json/customresponse.json
 tag/*
+starboard/*
 tts.mp3
 ttsvc.mp3
