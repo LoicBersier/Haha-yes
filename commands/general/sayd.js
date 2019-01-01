@@ -27,8 +27,8 @@ class SayCommand extends Command {
         //      Load all the different files
         const verb = require('../../dictionary/verbs.json')
         const noun = require('../../dictionary/noun.json')
-        const adverbs = require('../../dictionary/adjectives.json')
-        const adjective = require('../../dictionary/adverbs.json')
+        const adjective = require('../../dictionary/adjectives.json')
+        const adverbs = require('../../dictionary/adverbs.json')
         const activities = require('../../dictionary/activities.json')
         const celebreties = require('../../dictionary/celebreties.json')
         const countries = require('../../dictionary/countries.json')
@@ -52,12 +52,12 @@ class SayCommand extends Command {
 //      Replace with a random word from the json
         do {
         text = text.replace(/\[verb\]/, verb[randNumber(verb)])
-        text = text.replace(/\[adverbs\]/, adverbs[randNumber(adverbs)])
+        text = text.replace(/\[adverb\]/, adverbs[randNumber(adverbs)])
         text = text.replace(/\[noun\]/, noun[randNumber(noun)])
         text = text.replace(/\[adjective\]/, adjective[randNumber(adjective)])
-        text = text.replace(/\[activities\]/, activities[randNumber(activities)])
-        text = text.replace(/\[celebrities\]/, celebreties[randNumber(celebreties)])
-        text = text.replace(/\[countries\]/, countries[randNumber(countries)])
+        text = text.replace(/\[activity\]/, activities[randNumber(activities)])
+        text = text.replace(/\[celebrity\]/, celebreties[randNumber(celebreties)])
+        text = text.replace(/\[country\]/, countries[randNumber(countries)])
         text = text.replace(/\[diseases\]/, diseases[randNumber(diseases)])
         text = text.replace(/\[elements\]/, elements[randNumber(elements)])
         text = text.replace(/\[hobbies\]/, hobbies[randNumber(hobbies)])
