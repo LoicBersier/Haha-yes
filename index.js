@@ -1,5 +1,5 @@
 const { AkairoClient } = require('discord-akairo');
-const { token, prefix, ownerID } = require('./config.json');
+const { token, prefix, ownerID, statsChannel } = require('./config.json');
 
 const client = new AkairoClient({
     ownerID: ownerID,
