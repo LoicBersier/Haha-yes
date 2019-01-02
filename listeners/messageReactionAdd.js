@@ -6,7 +6,7 @@ class MessageReactionAddListener extends Listener {
 	constructor() {
 		super('messagereactionadd', {
 			emitter: 'client',
-			eventName: 'messageReactionAdd'
+			event: 'messageReactionAdd'
 		});
 	}
 

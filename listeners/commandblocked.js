@@ -4,7 +4,7 @@ class CommandBlockedListener extends Listener {
 	constructor() {
 		super('commandBlocked', {
 			emitter: 'commandHandler',
-			eventName: 'commandBlocked'
+			event: 'commandBlocked'
 		});
 	}
 

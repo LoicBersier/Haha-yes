@@ -7,7 +7,7 @@ class guildCreateListener extends Listener {
 	constructor() {
 		super('guildCreate', {
 			emitter: 'client',
-			eventName: 'guildCreate'
+			event: 'guildCreate'
 		});
 	}
 

@@ -7,7 +7,7 @@ class guildCreateListener extends Listener {
 	constructor() {
 		super('guildDelete', {
 			emitter: 'client',
-			eventName: 'guildDelete'
+			event: 'guildDelete'
 		});
 	}
 
