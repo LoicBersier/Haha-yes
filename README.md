@@ -5,7 +5,6 @@ A simple discord bot made with discord.js and commando
 ## Feature
 
 -   Kick and ban user, you can provid a reasons and the user will know
--   Faceapp
 -   put images into other images ( i dont know how to explain so here a picture of it: <img src="https://cdn.discordapp.com/attachments/494942676521713684/529954642608521216/edupspaint.png">)
 -   take images from reddit & imgur
 -   can make the bot write thing in emote or just repeat what the user say
