@@ -17,8 +17,11 @@ class StatsCommand extends Command {
 
 	async exec(message) {
 		const autoresponse = reload('../../json/autoresponse.json');
-		if (autoresponse[message.channel.id] == undefined)
-			var autoresponseStatus = 'disable';
+		let autoresponseStatus;
+		if (autoresponse[message.channel.id] == undefined || autoresponse[message.channel.id] == 'disable')
+			autoresponseStatus = 'disabled';
+		else if (autoresponse[message.channel.id] == 'enable')
+			autoresponseStatus = 'enabled';
 
 		let totalSeconds = (this.client.uptime / 1000);
 		let days = Math.floor(totalSeconds / 86400);
