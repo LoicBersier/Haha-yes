@@ -14,7 +14,7 @@ class hahaYesClient extends AkairoClient {
 			directory: './commands/',
 			prefix: prefix,
 			commandUtil: true,
-			commandUtilLifetime: 600000,
+			commandUtilLifetime: 60000,
 			allowMention: true,
 			handleEdits: true,
 		});
