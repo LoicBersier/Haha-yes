@@ -38,7 +38,7 @@ class autoresponseCommand extends Command {
 
 			fs.readFile('./json/autoresponse.json', 'utf8', function readFileCallback(err, data) {
 				if (err) {
-					fs.close(2);
+					
 					console.log(err);
 				} else {
 
@@ -48,14 +48,14 @@ class autoresponseCommand extends Command {
 					json = json.replace(/[<#>]/g, '');
 					fs.writeFile('./json/autoresponse.json', json, 'utf8', function (err) {
 						if (err) {
-							fs.close(2);
+							
 							return console.log(err);
 						}
 					});
 				}
 			});
 
-			fs.close(2);
+			
 			return message.channel.send('Auto response have been disable/enable on every channel');
 
 		} else if (text == 'disable' || 'enable') {
@@ -68,7 +68,7 @@ class autoresponseCommand extends Command {
 					json = JSON.stringify(autoresponse); //convert it back to json
 					fs.writeFile('./json/autoresponse.json', json, 'utf8', function (err) {
 						if (err) {
-							fs.close(2);
+							
 							return console.log(err);
 						}
 					});
@@ -76,7 +76,7 @@ class autoresponseCommand extends Command {
 			});
 		}
 
-		fs.close(2);
+		
 		return message.channel.send(`Autoresponse have been ${text}d`);
 	}
 }

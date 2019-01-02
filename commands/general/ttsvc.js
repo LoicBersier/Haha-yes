@@ -50,7 +50,7 @@ class TtsvcCommand extends Command {
 				if (err) {
 					console.error('ERROR:', err);
 					message.channel.send('An error has occured, the message is probably too long');
-					fs.close(2);
+					
 					return;
 				}
 				console.log('Audio content written to file: ttsvc.mp3');
