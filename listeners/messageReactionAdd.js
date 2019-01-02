@@ -1,6 +1,6 @@
 const { Listener } = require('discord-akairo');
 const Discord = require('discord.js');
-const SelfReloadJSON = require('self-reload-json');
+const reload = require('auto-reload');
 
 class MessageReactionAddListener extends Listener {
     constructor() {
@@ -15,7 +15,7 @@ class MessageReactionAddListener extends Listener {
         let messageAttachments = reaction.message.attachments.map(u=> `${u.url}`);
 
         if (reaction.emoji.name === '🌟' && reaction.count === 4) {
-            let starboardChannel = new SelfReloadJSON(`./starboard/${reaction.message.guild.id}.json`);
+            let starboardChannel = reload(`../starboard/${reaction.message.guild.id}.json`);
             const channel = this.client.channels.get(starboardChannel['starboard']);
 
             const starEmbed = new Discord.RichEmbed()
@@ -28,7 +28,7 @@ class MessageReactionAddListener extends Listener {
             return channel.send(`From: ${reaction.message.channel}\n${messageAttachments}`);
         }
         if (reaction.emoji.name === '✡' && reaction.count === 4) {
-            let shameboardChannel = new SelfReloadJSON(`./starboard/${message.guild.id}.json`);
+            let shameboardChannel = reload(`../starboard/${message.guild.id}.json`);
             const channel = client.channels.get(shameboardChannel['shameboard']);
 
             const starEmbed = new Discord.RichEmbed()

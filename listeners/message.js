@@ -2,7 +2,7 @@ const { Listener } = require('discord-akairo');
 const responseObject = require("../json/reply.json");
 const reactObject = require("../json/react.json");
 const imgResponseObject = require("../json/imgreply.json");
-const SelfReloadJSON = require('self-reload-json');
+const reload = require('auto-reload');
 
 class MessageListener extends Listener {
     constructor() {
@@ -13,7 +13,7 @@ class MessageListener extends Listener {
     }
 
     async exec(message) {
-            let autoresponse = new SelfReloadJSON('./json/autoresponse.json');
+            let autoresponse = reload('../json/autoresponse.json');
             let message_content = message.content.toLowerCase();
 
             if (message.author.bot) return; {
@@ -39,7 +39,7 @@ class MessageListener extends Listener {
                         message.react("496028845967802378")
                     }
                 }
-                let customresponse = new SelfReloadJSON(`./tag/${message.guild.id}.json`);
+                let customresponse = reload(`./tag/${message.guild.id}.json`);
     //  User autoresponse
                 if(customresponse[message_content]) {
                     message.channel.send(customresponse[message_content])

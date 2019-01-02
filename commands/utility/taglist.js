@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
-const SelfReloadJSON = require('self-reload-json');
+const reload = require('auto-reload');
 const fs = require('fs');
 
 class taglistCommand extends Command {
@@ -19,7 +19,7 @@ class taglistCommand extends Command {
 
     async exec(message) {
         try {
-            let customresponse = new SelfReloadJSON(`./tag/${message.guild.id}.json`);
+            let customresponse = reload(`../../tag/${message.guild.id}.json`);
             let count = Object.keys(customresponse).length
 
 

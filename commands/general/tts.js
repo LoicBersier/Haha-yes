@@ -44,7 +44,7 @@ class TtsCommand extends Command {
             }
 
             // Write the binary audio content to a local file
-            await fs.writeFile('tts.mp3', response.audioContent, 'binary', err => {
+            fs.writeFile('tts.mp3', response.audioContent, 'binary', err => {
                 if (err) {
                     console.error('ERROR:', err);
                     message.channel.send('An error has occured, the message is probably too long');
