@@ -1,7 +1,6 @@
 {
   "name": "hahayes",
   "version": "2.1.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -28,5 +27,14 @@
     "eslint-plugin-node": "^8.0.0",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/LoicBersier/DiscordBot.git"
+  },
+  "bugs": {
+    "url": "https://gitlab.com/LoicBersier/DiscordBot/issues"
+  },
+  "homepage": "https://gitlab.com/LoicBersier/DiscordBot#readme",
+  "description": ""
 }
