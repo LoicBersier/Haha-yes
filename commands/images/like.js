@@ -22,13 +22,14 @@ class LikeCommand extends Command {
         let image = args.image;
         if (!Attachment[0] && !image)
             image = message.author.displayAvatarURL
-        else if(Attachment[0] && Attachment[0].url.endsWith('gif'))
+        else if (Attachment[0] && Attachment[0].url.endsWith('gif'))
             return message.channel.send('Gif dosent work, sorry')
-        else if (!image)
-            image = Attachment[0].url
+        else if (!image) { // you should be careful in what is included in your scopes, you didn't use the {}
+            image = Attachment[0].url;
 
             message.channel.send('Processing <a:loadingmin:527579785212329984>')
-            .then(loadingmsg => loadingmsg.delete(1000))
+                .then(loadingmsg => loadingmsg.delete(1000));
+        }
 
         const canvas = createCanvas(386, 399)
         const ctx = canvas.getContext('2d')
@@ -39,7 +40,7 @@ class LikeCommand extends Command {
         })
         const bg = await loadImage(buffer);
         ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
-    
+
         const attachment = new Discord.Attachment(canvas.toBuffer(), 'like.png');
 
         message.channel.send(attachment).catch(error => {

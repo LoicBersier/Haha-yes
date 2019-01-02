@@ -27,29 +27,30 @@ class IdubbbzPaintCommand extends Command {
         let image = args.image;
         if (!Attachment[0] && !image)
             image = message.author.displayAvatarURL
-        else if(Attachment[0] && Attachment[0].url.endsWith('gif'))
+        else if (Attachment[0] && Attachment[0].url.endsWith('gif'))
             return message.channel.send('Gif dosent work, sorry')
-        else if (!image)
-            image = Attachment[0].url
+        else if (!image) { // // you should be careful in what is included in your scopes, you didn't use the {}
+            image = Attachment[0].url;
 
             message.channel.send('Processing <a:loadingmin:527579785212329984>')
-            .then(loadingmsg => loadingmsg.delete(2000))
-            
+                .then(loadingmsg => loadingmsg.delete(2000))
+
             const canvas = createCanvas(1024, 544)
             const applyText = (canvas, text) => {
                 const ctx = canvas.getContext('2d');
-            
+
                 // Declare a base size of the font
                 let fontSize = 100;
-            
+
                 do {
                     // Assign the font to the context and decrement it so it can be measured again
                     ctx.font = `${fontSize -= 10}px ubuntu`;
                 } while (ctx.measureText(text).width > 800 - 300);
-            
+
                 // Return the result to use in the actual canvas
                 return ctx.font;
             };
+        }
 
         const ctx = canvas.getContext('2d')
         const background = await loadImage(image);

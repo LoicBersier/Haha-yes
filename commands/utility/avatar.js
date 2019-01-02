@@ -20,7 +20,7 @@ class AvatarCommand extends Command {
     }
 
     async exec(message, args) {
-        if (!args.user)
+        if (!args.user) // While these kind of statments work you really should use {}
             return message.channel.send(`Your avatar:\n${message.author.displayAvatarURL}`);
         else
             return message.channel.send(`${args.user.username}'s avatar:\n${args.user.displayAvatarURL}`);
