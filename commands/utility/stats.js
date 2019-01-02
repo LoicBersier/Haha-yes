@@ -1,5 +1,6 @@
 const { Command } = require('discord-akairo');
 const { MessageEmbed } = require('discord.js');
+const reload = require('auto-reload');
 
 class StatsCommand extends Command {
 	constructor() {
@@ -15,6 +16,10 @@ class StatsCommand extends Command {
 	}
 
 	async exec(message) {
+		const autoresponse = reload('../../json/autoresponse.json');
+		if (autoresponse[message.channel.id] == undefined)
+			var autoresponseStatus = 'disable';
+
 		let totalSeconds = (this.client.uptime / 1000);
 		let days = Math.floor(totalSeconds / 86400);
 		let hours = Math.floor(totalSeconds / 3600);
@@ -33,6 +38,7 @@ class StatsCommand extends Command {
 			.addField('Users', this.client.users.size, true)
 			.addField('Uptime', uptime, true)
 			.addField('Ram usage', `${Math.round(used * 100) / 100} MB`, true)
+			.addField('Autoresponse in this channel',autoresponseStatus,true)
 			.setTimestamp()
 			.setFooter('Powered by Yandex.Translate ');
 
