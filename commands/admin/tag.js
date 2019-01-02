@@ -31,34 +31,36 @@ class TagCommand extends Command {
         let response = args.response;
 
         trigger = trigger.toLowerCase();
-            do {
-                trigger = trigger.replace('--', ' ')
-            } while (trigger.includes('--'))
-            
-            let customresponse = {}
-            let json = JSON.stringify(customresponse)
+        do {
+            trigger = trigger.replace('--', ' ');
+        } while (trigger.includes('--'))
 
-            
+        let customresponse = {};
+        let json = JSON.stringify(customresponse);
 
-
-            fs.readFile(`./tag/${message.guild.id}.json`, 'utf8', function readFileCallback(err, data){
-                if (err){
-                    fs.writeFile(`./tag/${message.guild.id}.json`, `{"${trigger}":"${response}"}`, function (err) {
-                        if (err){
-                            console.log(err);
-                        }
-                    })
-                } else {
+        fs.readFile(`./tag/${message.guild.id}.json`, 'utf8', function readFileCallback(err, data) {
+            if (err) {
+                fs.writeFile(`./tag/${message.guild.id}.json`, `{"${trigger}":"${response}"}`, function (err) {
+                    if (err) {
+                        fs.close();
+                        console.log(err);
+                    }
+                })
+            } else {
                 customresponse = JSON.parse(data); //now it an object
-                customresponse [trigger] = response
+                customresponse[trigger] = response
                 json = JSON.stringify(customresponse); //convert it back to json
-                fs.writeFile(`./tag/${message.guild.id}.json`, json, 'utf8', function(err) {
-                    if(err) {
+                fs.writeFile(`./tag/${message.guild.id}.json`, json, 'utf8', function (err) {
+                    if (err) {
+                        fs.close();
                         return console.log(err);
-                    } 
-            })}});
-            
-            return message.channel.send(`autoresponse have been set to ${trigger} : ${response}`);
+                    }
+                })
+            }
+        });
+
+        fs.close();
+        return message.channel.send(`autoresponse have been set to ${trigger} : ${response}`);
     }
 }
 

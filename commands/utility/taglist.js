@@ -10,10 +10,10 @@ class taglistCommand extends Command {
             category: 'utility',
             channelRestriction: 'guild',
             description: {
-				content: 'Show the list of tag for this server.',
-				usage: '',
-				examples: ['']
-			}
+                content: 'Show the list of tag for this server.',
+                usage: '',
+                examples: ['']
+            }
         });
     }
 
@@ -21,25 +21,31 @@ class taglistCommand extends Command {
         try {
             let customresponse = new SelfReloadJSON(`./tag/${message.guild.id}.json`);
             let count = Object.keys(customresponse).length
-            
-        
-                fs.readFile(`./tag/${message.guild.id}.json`, 'utf8', function readFileCallback(err, data){
-                    if (err) {
-                        console.log(err);
-                    }
-                    let json = JSON.stringify(data)
-                    json = json.replace(/[{}"\\]+/g, '')
-                    json = json.replace(/,+/g, '\n')
-                    const tagEmbed = new Discord.RichEmbed()
+
+
+            await fs.readFile(`./tag/${message.guild.id}.json`, 'utf8', function readFileCallback(err, data) {
+                if (err) {
+                    console.log(err);
+                    /* do you need it to end here on error? if so uncomment the following code:
+                    fs.close();
+                    return;
+                    */
+                }
+                let json = JSON.stringify(data)
+                json = json.replace(/[{}"\\]+/g, '')
+                json = json.replace(/,+/g, '\n')
+                const tagEmbed = new Discord.RichEmbed()
                     .setColor("#ff9900")
                     .setTitle('Tags list')
                     .setDescription(`Trigger:Response\n\n${json}`)
                     .setFooter(`You have ${count} tags on this server`)
-            
-                    message.channel.send(tagEmbed);
-                });
+
+                message.channel.send(tagEmbed);
+            });
+            fs.close();
         } catch {
-            message.channel.send('An error has occured, do you have any tags on the server?')
+            fs.close();
+            message.channel.send('An error has occured, do you have any tags on the server?');
         }
     }
 }

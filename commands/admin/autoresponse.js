@@ -30,43 +30,54 @@ class autoresponseCommand extends Command {
         let text = args.text;
         let all = args.all;
 
-            let autoresponse = {}
-            let json = JSON.stringify(autoresponse)
+        let autoresponse = {};
+        let json = JSON.stringify(autoresponse);
 
-            if (all == 'all') {
-                const guild = this.client.guilds.get(message.guild.id);
+        if (all == 'all') {
+            const guild = this.client.guilds.get(message.guild.id);
 
-                fs.readFile('./json/autoresponse.json', 'utf8', function readFileCallback(err, data){
-                    if (err){
-                        console.log(err);
-                    } else {
+            fs.readFile('./json/autoresponse.json', 'utf8', function readFileCallback(err, data) {
+                if (err) {
+                    fs.close();
+                    console.log(err);
+                } else {
 
                     autoresponse = JSON.parse(data); //now it an object
-                    guild.channels.forEach(channel => autoresponse [channel] = text)
+                    guild.channels.forEach(channel => autoresponse[channel] = text);
                     json = JSON.stringify(autoresponse); //convert it back to json
-                    json = json.replace(/[<#>]/g, '')
-                    fs.writeFile('./json/autoresponse.json', json, 'utf8', function(err) {
-                        if(err) {
+                    json = json.replace(/[<#>]/g, '');
+                    fs.writeFile('./json/autoresponse.json', json, 'utf8', function (err) {
+                        if (err) {
+                            fs.close();
                             return console.log(err);
-                        } 
-                })}});
+                        }
+                    })
+                }
+            });
 
-            return message.channel.send('Auto response have been disable/enable on every channel')
+            fs.close();
+            return message.channel.send('Auto response have been disable/enable on every channel');
 
-            } else if (text == 'disable' || 'enable') {
-                fs.readFile('./json/autoresponse.json', 'utf8', function readFileCallback(err, data){
-                    if (err){
-                        console.log(err);
-                    } else {
+        } else if (text == 'disable' || 'enable') {
+            fs.readFile('./json/autoresponse.json', 'utf8', function readFileCallback(err, data) {
+                if (err) {
+                    console.log(err);
+                } else {
                     autoresponse = JSON.parse(data); //now it an object
-                    autoresponse [message.channel.id] = text
+                    autoresponse[message.channel.id] = text;
                     json = JSON.stringify(autoresponse); //convert it back to json
-                    fs.writeFile('./json/autoresponse.json', json, 'utf8', function(err) {
-                        if(err) {
+                    fs.writeFile('./json/autoresponse.json', json, 'utf8', function (err) {
+                        if (err) {
+                            fs.close();
                             return console.log(err);
-                        } 
-                })}})};
-            
-            return message.channel.send(`Autoresponse have been ${text}d`);
-}}
+                        }
+                    })
+                }
+            })
+        };
+
+        fs.close();
+        return message.channel.send(`Autoresponse have been ${text}d`);
+    }
+}
 module.exports = autoresponseCommand;
