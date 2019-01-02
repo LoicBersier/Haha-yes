@@ -1,33 +1,52 @@
-# A simple discord bot
 
-A simple discord bot made with discord.js and commando
+# Haha Yes
 
-## Feature
+A multi function discord bot.
 
--   Kick and ban user, you can provid a reasons and the user will know
--   put images into other images ( i dont know how to explain so here a picture of it: <img src="https://cdn.discordapp.com/attachments/494942676521713684/529954642608521216/edupspaint.png">)
--   take images from reddit & imgur
--   can make the bot write thing in emote or just repeat what the user say
--   Print thing from the printer dev ( yes really, to disable simple delete print.js or disable with "${prefix} unload print")
--   autoresponse ( that can be disable with a simple command "${prefix} autoresponse disable ("all" for server wide))
--   and more !
+## Getting Started
 
-### Installing
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-To install you need the dependency for [**node-canvas**](https://github.com/Automattic/node-canvas) and for [**node-printer ( for ubuntu )**](https://github.com/tojocky/node-printer)
+### Prerequisites
 
-then for the bot do the following commands
+You need to install the following
 
 ```
+https://github.com/Automattic/node-canvas
+https://github.com/tojocky/node-printer
+```
+
+### Installing
+```
 git clone https://gitlab.com/loicbersier/discordbot
+cd discordbot
 npm init -y
 npm install
 ```
+To run the bot either use pm2
+```
+npm install -g pm2
+pm2 start index.js --name(insert name)
+```
+or node
+```
+node index.js
+```
+## Built With
 
-##### Special thanks to
+* [Discord.JS](https://github.com/discordjs/discord.js) - The discord api used
+* [Discord-Akairo](https://github.com/1Computer1/discord-akairo) - The framework used for Discord.JS
 
-discord.js (https://github.com/discordjs) for providing discord.js, 1computer1 for discord-akairo (https://github.com/1Computer1/discord-akairo) and the discord.js guide<br>
-All the people who made all the node modules<br>
-[TG/LW] Tina the Cyclops#5861 for inspiring me to make this bot
+## Authors
 
-[You can also support me on patreon](https://patreon.com/user?u=15330358&utm_medium=social&utm_source=twitter&utm_campaign=creatorshare)
+* **Loïc Bersier**
+
+## License
+
+This project is licensed under the **GNU General Public License v2.0** License - see the [LICENSE](LICENSE) file for details
+
+## Acknowledgments
+
+* discord.JS team
+* 1computer1 for discord-akairo
+* Tina the Cyclops girl#0064 for inspiring me for making this bot
