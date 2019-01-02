@@ -1,4 +1,5 @@
 const { Command } = require('discord-akairo');
+const { MessageEmbed } = require('discord.js');
 
 class UpdootCommand extends Command {
 	constructor() {
@@ -15,17 +16,14 @@ class UpdootCommand extends Command {
 	}
 
 	async exec(message) {
-		const upDoot = {
-			color: 0x93C54B,
-			title: 'Vote for my bot',
-			url: 'https://discordbots.org/bot/377563711927484418/vote',
-			description: 'You can vote for my bot if you think the bot is awesome!',
-			timestamp: new Date(),
-			footer: {
-				text: 'Thanks for the updoots',
-				icon_url: 'https://cdn.discordapp.com/avatars/377563711927484418/1335d202aa466dbeaa4ed2e4b616484a.png?size=2048',
-			},
-		};
+		const upDoot = new MessageEmbed()
+			.setColor('#0099ff')
+			.setTitle('Vote for my bot')
+			.setURL('https://discordbots.org/bot/377563711927484418/vote')
+			.setAuthor(message.author.username)
+			.setDescription('You can vote for my bot if you think the bot is awesome!')
+			.setTimestamp()
+			.setFooter('Thanks for the updoots', 'https://cdn.discordapp.com/avatars/377563711927484418/1335d202aa466dbeaa4ed2e4b616484a.png?size=2048');
 		
 		message.channel.send({ embed: upDoot });
 	}

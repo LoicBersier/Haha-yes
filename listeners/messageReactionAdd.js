@@ -1,5 +1,5 @@
 const { Listener } = require('discord-akairo');
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const reload = require('auto-reload');
 
 class MessageReactionAddListener extends Listener {
@@ -18,11 +18,11 @@ class MessageReactionAddListener extends Listener {
 			let starboardChannel = reload(`../starboard/${reaction.message.guild.id}.json`);
 			const channel = this.client.channels.get(starboardChannel['starboard']);
 
-			const starEmbed = new Discord.RichEmbed()
-			.setColor()
-			.setDescription(messageContent)
-			.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL)
-			.setTimestamp()
+			const starEmbed = new MessageEmbed()
+				.setColor()
+				.setDescription(messageContent)
+				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL)
+				.setTimestamp();
 
 			channel.send({ embed: starEmbed});
 			return channel.send(`From: ${reaction.message.channel}\n${messageAttachments}`);
@@ -31,11 +31,11 @@ class MessageReactionAddListener extends Listener {
 			let shameboardChannel = reload(`../starboard/${message.guild.id}.json`);
 			const channel = client.channels.get(shameboardChannel['shameboard']);
 
-			const starEmbed = new Discord.RichEmbed()
-			.setColor()
-			.setDescription(messageContent)
-			.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL)
-			.setTimestamp()
+			const starEmbed = new MessageEmbed()
+				.setColor()
+				.setDescription(messageContent)
+				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL)
+				.setTimestamp();
 
 			try {
 				channel.send({ embed: starEmbed});

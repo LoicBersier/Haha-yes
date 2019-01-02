@@ -1,4 +1,5 @@
 const { Command } = require('discord-akairo');
+const { MessageEmbed } = require('discord.js');
 
 class ServerCommand extends Command {
 	constructor() {
@@ -15,19 +16,17 @@ class ServerCommand extends Command {
 	}
 
 	async exec(message) {
-		const customresponse = require(`../tag/${message.guild.id}.json`);
+		const customresponse = require(`../../tag/${message.guild.id}.json`);
 		var count = Object.keys(customresponse).length;
 
-		
-		
-		const addEmbed = {
-			color: 0x0099ff,
-			title: 'Stats of the server',
-			thumbnail: {
-				url: `${message.guild.iconURL}`,
-			},
-			description: `Member: **${message.guild.memberCount}** \nChannel number: **${message.guild.channels.size}**\nGuild created at **${message.guild.createdAt}**\nOwner: **${message.guild.owner}**\nTag number: **${count}**`,
-		};
+		const addEmbed = new MessageEmbed()
+			.setColor('#0099ff')
+			.setTitle('Stats of the server')
+			.setAuthor(message.author.username)
+			.setDescription(`Member: **${message.guild.memberCount}** \nChannel number: **${message.guild.channels.size}**\nGuild created at **${message.guild.createdAt}**\nOwner: **${message.guild.owner}**\nTag number: **${count}**`)
+			.setTimestamp();
+        
+
 		
 		message.channel.send({ embed: addEmbed });
 	}

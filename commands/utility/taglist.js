@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const reload = require('auto-reload');
 const fs = require('fs');
 
@@ -31,8 +31,7 @@ class taglistCommand extends Command {
 			let json = JSON.stringify(data);
 			json = json.replace(/[{}'\\]+/g, '');
 			json = json.replace(/,+/g, '\n');
-			const tagEmbed = new Discord.RichEmbed()
-				.setColor('#ff9900')
+			const tagEmbed = new MessageEmbed()				.setColor('#ff9900')
 				.setTitle('Tags list')
 				.setDescription(`Trigger:Response\n\n${json}`)
 				.setFooter(`You have ${count} tags on this server`);
