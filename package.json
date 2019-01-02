@@ -1,32 +1,37 @@
 {
-  "name": "hahayes",
-  "version": "2.0.0",
-  "description": "",
+  "name": "discordbot",
+  "version": "1.0.0",
+  "description": "A simple discord bot made with discord.js and commando",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "@discordjs/uws": "^11.149.1",
-    "@google-cloud/text-to-speech": "^0.4.0",
     "auto-reload": "^0.1.0",
     "canvas": "^2.2.0",
-    "discord-akairo": "^7.5.5",
-    "discord.js": "^11.4.2",
+    "discord-akairo": "^8.0.0-dev",
+    "discord.js": "^12.0.0-dev",
+    "eslint": "^5.11.1",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "eslint-config-standard": "^12.0.0",
     "node-fetch": "^2.3.0",
     "reload-json": "^0.3.1",
     "superagent": "^4.1.0",
     "youtube-dl": "^1.12.2"
   },
-  "devDependencies": {
-    "eslint": "^5.11.1",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-node": "^8.0.0",
-    "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-standard": "^4.0.0"
-  }
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/LoicBersier/DiscordBot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/LoicBersier/DiscordBot/issues"
+  },
+  "homepage": "https://gitlab.com/LoicBersier/DiscordBot#readme"
 }

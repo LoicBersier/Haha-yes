@@ -1,5 +1,4 @@
 config.json
-package-lock.json
 .DS_Store
 node_modules
 node_modules\
@@ -12,3 +11,4 @@ tag/*
 starboard/*
 tts.mp3
 ttsvc.mp3
+package.json
