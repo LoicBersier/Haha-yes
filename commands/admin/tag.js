@@ -37,9 +37,9 @@ class TagCommand extends Command {
 
 		fs.readFile(`./tag/${message.guild.id}.json`, 'utf8', function readFileCallback(err, data) {
 			if (err) {
-				fs.writeFile(`./tag/${message.guild.id}.json`, `{'${trigger}':'${response}'}`, function (err) {
+				fs.writeFile(`./tag/${message.guild.id}.json`, `{"${trigger}":"${response}"}`, function (err) {
 					if (err) {
-						fs.close();
+						
 						console.log(err);
 					}
 				});
@@ -49,14 +49,13 @@ class TagCommand extends Command {
 				json = JSON.stringify(customresponse); //convert it back to json
 				fs.writeFile(`./tag/${message.guild.id}.json`, json, 'utf8', function (err) {
 					if (err) {
-						fs.close();
 						return console.log(err);
 					}
 				});
 			}
 		});
 
-		fs.close();
+		
 		return message.channel.send(`autoresponse have been set to ${trigger} : ${response}`);
 	}
 }

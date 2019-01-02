@@ -40,14 +40,14 @@ class UnTagCommand extends Command {
 				json = JSON.stringify(customresponse); //convert it back to json
 				fs.writeFile(`./tag/${message.guild.id}.json`, json, 'utf8', function (err) {
 					if (err) {
-						fs.close();
+						
 						return console.log(err);
 					}
 				});
 			}
 		});
 
-		fs.close();
+		
 		return message.channel.send(`The following autoresponse have been deleted: ${trigger}`);
 
 	}

@@ -11,7 +11,10 @@ class RedditCommand extends Command {
 			args: [
 				{
 					id: 'sub',
-					type: 'string'
+					type: 'string',
+					prompt: {
+						retry: 'That\'s not a valid subreddit! try again.'
+					},
 				}
 			],
 			description: {

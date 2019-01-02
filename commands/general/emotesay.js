@@ -23,6 +23,8 @@ class EmotesayCommand extends Command {
 
 	async exec(message, args) {
 		let text = args.text;
+		if (!text)
+			return;
 		
 		message.delete();
 		let emojiArray = [];

@@ -1,4 +1,5 @@
 const { Command } = require('discord-akairo');
+const { MessageEmbed } = require('discord.js');
 
 class StatsCommand extends Command {
 	constructor() {
@@ -21,7 +22,21 @@ class StatsCommand extends Command {
 		let minutes = Math.floor(totalSeconds / 60);
 		let seconds = totalSeconds.toFixed(0) % 60;
 		let uptime = `${days} days, ${hours} hours, ${minutes} minutes and ${seconds} seconds`;
-		return message.channel.send(`Servers: \`${this.client.guilds.size}\`\nChannels: \`${this.client.channels.size}\`\nUsers: \`${this.client.users.size}\`\nBot uptime: \`${uptime}\``);
+		const used = process.memoryUsage().heapUsed / 1024 / 1024;
+
+		const statsEmbed = new MessageEmbed()
+			.setColor('#0099ff')
+			.setTitle('Bot stats')
+			.setAuthor('Haha yes')
+			.addField('Servers', this.client.guilds.size, true)
+			.addField('Channels', this.client.channels.size, true)
+			.addField('Users', this.client.users.size, true)
+			.addField('Uptime', uptime, true)
+			.addField('Ram usage', `${Math.round(used * 100) / 100} MB`, true)
+			.setTimestamp()
+			.setFooter('Powered by Yandex.Translate ');
+
+		return message.channel.send(statsEmbed);
 	}
 }
 

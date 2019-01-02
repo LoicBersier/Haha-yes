@@ -43,10 +43,10 @@ class DownloadCommand extends Command {
 				message.delete();
 				message.channel.send(`Downloaded by ${message.author.username}`, { files: ['./video.mp4'] })
 					.catch(() => message.channel.send('File too big'));
-				fs.close();
+				
 			});
 		} else {
-			fs.close();
+			
 			message.channel.send('You need to input a valid link');
 		}
 	}

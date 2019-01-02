@@ -23,6 +23,8 @@ class SaydCommand extends Command {
 
 	async exec(message, args) {
 		let text = args.text;
+		if (!text)
+			return;
 
 		//	  Load all the different files
 		const verb = require('../../dictionary/verbs.json');

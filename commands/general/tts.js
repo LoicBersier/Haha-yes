@@ -38,7 +38,7 @@ class TtsCommand extends Command {
 		// Performs the Text-to-Speech request
 		gclient.synthesizeSpeech(request, (err, response) => {
 			if (err) {
-				fs.close();
+				
 				console.error('ERROR:', err);
 				return;
 			}
@@ -48,13 +48,13 @@ class TtsCommand extends Command {
 				if (err) {
 					console.error('ERROR:', err);
 					message.channel.send('An error has occured, the message is probably too long');
-					fs.close();
+					
 					return;
 				}
 				console.log('Audio content written to file: tts.mp3');
 				message.channel.send({ files: ['./tts.mp3'] });
 			});
-			fs.close();
+			
 		});
 	}
 }

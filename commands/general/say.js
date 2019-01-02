@@ -15,13 +15,15 @@ class SayCommand extends Command {
 			description: {
 				content: 'Repeat what you say but can also replace ',
 				usage: '[text]',
-				examples: ['[member] is a big [adverbs] [verb]']
+				examples: ['[member] is a big [adverb] [verb]']
 			}
 		});
 	}
 
 	async exec(message, args) {
 		let text = args.text;
+		if (!text)
+			return;
 
 		//	  Load all the different files
 		const verb = require('../../dictionary/verbs.json');

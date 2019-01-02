@@ -19,7 +19,8 @@ class AdviceCommand extends Command {
 		fetch('http://api.adviceslip.com/advice').then((response) => {
 			return response.json();
 		}).then((response) => {
-			const adviceEmbed = new MessageEmbed()				.setColor('#ff9900')
+			const adviceEmbed = new MessageEmbed()
+				.setColor('#ff9900')
 				.setTitle(response.slip.slip_id)
 				.setDescription(response.slip.advice);
   
