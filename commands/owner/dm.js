@@ -4,7 +4,6 @@ class EvalCommand extends Command {
 	constructor() {
 		super('dm', {
 			aliases: ['dm', 'pm'],
-			split: 'none',
 			category: 'owner',
 			args: [
 				{
@@ -31,11 +30,11 @@ class EvalCommand extends Command {
 
 		let Attachment = (message.attachments).array();
 		if (Attachment[0]) {
-			user.send(`**Message from the dev:**\n${text}\n${Attachment[0].url}`);
+			this.client.users.get(user).send(`**Message from the dev:**\n${text}\n${Attachment[0].url}`);
 			message.channel.send(`DM sent to ${user.username}`);
 		}
 		else {
-			user.send(`**Message from the dev:**\n${text}`);
+			this.client.users.get(user.id).send(`**Message from the dev:**\n${text}`);
 			message.channel.send(`DM sent to ${user.username}`);
 		}
 
