@@ -12,9 +12,6 @@ class RedditCommand extends Command {
 				{
 					id: 'sub',
 					type: 'string',
-					prompt: {
-						retry: 'That\'s not a valid subreddit! try again.'
-					},
 				}
 			],
 			description: {
@@ -28,6 +25,8 @@ class RedditCommand extends Command {
 	async exec(message, args) {
 		let sub = args.sub;
 		let i, a;
+		if (!sub)
+			return;
 		
 		fetch('https://www.reddit.com/r/' + sub + '.json?limit=100').then((response) => {
 			return response.json();
