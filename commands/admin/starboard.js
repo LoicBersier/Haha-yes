@@ -25,7 +25,7 @@ class StarBoardCommand extends Command {
 					if (err) {
 						console.log(err);
 					}
-					fs.close();
+					fs.close(2);
 					return message.channel.send('This channel have been set as the starboard');
 				});
 			} else {
@@ -34,13 +34,13 @@ class StarBoardCommand extends Command {
 				var json = JSON.stringify(starboard); //convert it back to json
 				fs.writeFile(`./starboard/${message.guild.id}.json`, json, 'utf8', function (err) {
 					if (err) {
-						fs.close();
+						fs.close(2);
 						return console.log(err);
 					}
 				});
 			}
 		});
-		fs.close();
+		fs.close(2);
 		return message.channel.send('This channel have been set as the starboard');
 	}
 }

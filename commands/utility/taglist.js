@@ -25,7 +25,7 @@ class taglistCommand extends Command {
 		await fs.readFile(`./tag/${message.guild.id}.json`, 'utf8', function readFileCallback(err, data) {
 			if (err) {
 				console.log(err);
-				fs.close();
+				fs.close(2);
 				return;
 			}
 			let json = JSON.stringify(data);
@@ -39,7 +39,7 @@ class taglistCommand extends Command {
 
 			message.channel.send(tagEmbed);
 		});
-		fs.close();
+		fs.close(2);
 		message.channel.send('An error has occured, do you have any tags on the server?');
 	}
 }
