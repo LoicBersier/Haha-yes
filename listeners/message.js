@@ -39,7 +39,7 @@ class MessageListener extends Listener {
                         message.react("496028845967802378")
                     }
                 }
-                let customresponse = reload(`./tag/${message.guild.id}.json`);
+                let customresponse = reload(`../tag/${message.guild.id}.json`);
     //  User autoresponse
                 if(customresponse[message_content]) {
                     message.channel.send(customresponse[message_content])
