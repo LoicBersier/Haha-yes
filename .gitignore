@@ -5,10 +5,8 @@ node_modules
 node_modules\
 .vscode
 video.mp4
-json/autoresponse.json
 json/blacklist.json
 json/customresponse.json
-tag/*
-starboard/*
 tts.mp3
 ttsvc.mp3
+starboard/487640086859743232.json
