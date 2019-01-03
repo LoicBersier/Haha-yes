@@ -2,15 +2,7 @@
   "name": "hahayes",
   "version": "2.1.0",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "@discordjs/uws": "^11.149.1",
-    "@google-cloud/text-to-speech": "^0.4.0",
     "auto-reload": "^0.1.0",
     "canvas": "^2.2.0",
     "discord-akairo": "github:1Computer1/discord-akairo#master",
