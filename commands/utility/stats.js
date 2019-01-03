@@ -42,9 +42,8 @@ class StatsCommand extends Command {
 			.addField('Uptime', uptime, true)
 			.addField('Ram usage', `${Math.round(used * 100) / 100} MB`, true)
 			.addField('Autoresponse in this channel',autoresponseStatus,true)
-			.setTimestamp()
-			.setFooter('Powered by Yandex.Translate ');
-
+			.setTimestamp();
+			
 		return message.channel.send(statsEmbed);
 	}
 }
