@@ -11,14 +11,11 @@ class MessageReactionAddListener extends Listener {
 		});
 	}
 
-	async exec(reaction, message) {
+	async exec(reaction) {
 		let messageContent = reaction.message.content;
 		let messageAttachments = reaction.message.attachments.map(u=> `${u.url}`);
 
-		if (message.author.id === reaction.message.author.id)
-			return;
-
-		if (reaction.emoji.name === '🌟' && reaction.count === 1) {
+		if (reaction.emoji.name === '🌟' && reaction.count === 4) {
 			if (messageID.includes(reaction.message.id))
 				return console.log('Message already in starboard!');
 
@@ -36,7 +33,7 @@ class MessageReactionAddListener extends Listener {
 			channel.send({ embed: starEmbed});
 			return channel.send(`From: ${reaction.message.channel} ID: ${reaction.message.id} \n${messageAttachments}`);
 		}
-		if (reaction.emoji.name === '✡' && reaction.count === 1) {
+		if (reaction.emoji.name === '✡' && reaction.count === 4) {
 			if (messageID.includes(reaction.message.id))
 				return console.log('Message already in starboard!');
 
