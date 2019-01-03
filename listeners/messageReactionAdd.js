@@ -11,7 +11,7 @@ class MessageReactionAddListener extends Listener {
 		});
 	}
 
-	async exec(reaction, message, client) {
+	async exec(reaction) {
 		let messageContent = reaction.message.content;
 		let messageAttachments = reaction.message.attachments.map(u=> `${u.url}`);
 
@@ -36,26 +36,21 @@ class MessageReactionAddListener extends Listener {
 		if (reaction.emoji.name === '✡' && reaction.count === 4) {
 			if (messageID.includes(reaction.message.id))
 				return console.log('Message already in starboard!');
-	
+
 			messageID.push(reaction.message.id);
 
-			let shameboardChannel = reload(`../starboard/${message.guild.id}.json`);
-			const channel = client.channels.get(shameboardChannel['shameboard']);
+			let shameboardChannel = reload(`../starboard/${reaction.message.guild.id}.json`);
+			const channel = this.client.channels.get(shameboardChannel['shameboard']);
 
-			const starEmbed = new MessageEmbed()
+			const shameEmbed = new MessageEmbed()
 				.setColor()
 				.setDescription(messageContent)
 				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL)
 				.setTimestamp();
 
-			try {
-				channel.send({ embed: starEmbed});
-				await channel.send(messageAttachments);
-			} catch(err) {
-				console.error('There is no shameboard');
-			}
+			channel.send({ embed: shameEmbed});
+			return channel.send(`From: ${reaction.message.channel} ID: ${reaction.message.id} \n${messageAttachments}`);
 		}
-
 	}
 }
 
