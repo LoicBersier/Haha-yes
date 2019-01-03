@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const reload = require('auto-reload');
 const fs = require('fs');
 
@@ -18,10 +18,13 @@ class taglistCommand extends Command {
 	}
 
 	async exec(message) {
-		let customresponse = reload(`../../tag/${message.guild.id}.json`);
-		let count = Object.keys(customresponse).length;
-
-
+		try {
+			var customresponse = reload(`../../tag/${message.guild.id}.json`);
+			var count = Object.keys(customresponse).length;
+		} catch (err) {
+			message.channel.send('An error has occured, do you have any tags on the server?');
+			console.error(err);
+		}
 		await fs.readFile(`./tag/${message.guild.id}.json`, 'utf8', function readFileCallback(err, data) {
 			if (err) {
 				console.log(err);
@@ -31,7 +34,7 @@ class taglistCommand extends Command {
 			let json = JSON.stringify(data);
 			json = json.replace(/[{}'\\]+/g, '');
 			json = json.replace(/,+/g, '\n');
-			const tagEmbed = new Discord.RichEmbed()
+			const tagEmbed = new MessageEmbed()
 				.setColor('#ff9900')
 				.setTitle('Tags list')
 				.setDescription(`Trigger:Response\n\n${json}`)
@@ -40,7 +43,6 @@ class taglistCommand extends Command {
 			message.channel.send(tagEmbed);
 		});
 		
-		message.channel.send('An error has occured, do you have any tags on the server?');
 	}
 }
 

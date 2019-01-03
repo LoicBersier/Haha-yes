@@ -21,6 +21,8 @@ class ClapCommand extends Command {
 	}
 
 	async exec(message, args) {
+		if (!args.text)
+			return;
 		let clap = args.text.replace(/ /g, ' 👏 ');
 		message.delete();
 		message.channel.send(`${clap} 👏`);

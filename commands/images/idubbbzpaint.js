@@ -11,7 +11,8 @@ class IdubbbzPaintCommand extends Command {
 			args: [
 				{
 					id: 'text',
-					type: 'string'
+					type: 'string',
+					default: 'Perfection'
 				},
 				{
 					id: 'image',

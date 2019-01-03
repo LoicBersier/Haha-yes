@@ -16,7 +16,7 @@ class PingCommand extends Command {
 	async exec(message) {
 		return message.util.reply('Pong!').then(sent => {
 			const timeDiff = (sent.editedAt || sent.createdAt) - (message.editedAt || message.createdAt);
-			const text = `🔂\u2000**RTT**: ${timeDiff} ms\n💟\u2000**Heartbeat**: ${Math.round(this.client.ping)} ms`;
+			const text = `🔂\u2000**PING**: ${timeDiff} ms`;
 			return message.util.reply(`Pong!\n${text}`);
 		});
 	}

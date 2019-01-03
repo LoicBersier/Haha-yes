@@ -4,20 +4,26 @@ const reactObject = require('../json/react.json');
 const imgResponseObject = require('../json/imgreply.json');
 const reload = require('auto-reload');
 
-class MessageListener extends Listener {
+class messageListener extends Listener {
 	constructor() {
 		super('message', {
 			emitter: 'client',
-			eventName: 'message'
+			event: 'message'
 		});
 	}
 
 	async exec(message) {
 		let autoresponse = reload('../json/autoresponse.json');
 		let message_content = message.content.toLowerCase();
-
+		let customresponse = reload(`../tag/${message.guild.id}.json`);
+	
 		if (message.author.bot) return; {
-
+	
+			//  User autoresponse
+			if(customresponse[message_content]) {
+				message.channel.send(customresponse[message_content]);
+			}
+	
 			//  If autoresponse is enable send the response
 			if(autoresponse[message.channel.id] == 'enable') {
 			//  Reply with images as attachement
@@ -38,14 +44,9 @@ class MessageListener extends Listener {
 				} else if (message_content.includes('jeff')) {
 					message.react('496028845967802378');
 				}
-			}
-			let customresponse = reload(`../tag/${message.guild.id}.json`);
-			//  User autoresponse
-			if(customresponse[message_content]) {
-				message.channel.send(customresponse[message_content]);
-			}
+			}		
 		}
 	}
 }
 
-module.exports = MessageListener;
+module.exports = messageListener;

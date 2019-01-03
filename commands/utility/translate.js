@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const fetch = require('node-fetch');
 const { yandexAPI } = require('../../config.json');
 
@@ -8,11 +8,13 @@ class TranslationCommand extends Command {
 		super('translation', {
 			aliases: ['translation', 'trn'],
 			category: 'utility',
-			split: 'sticky',
 			args: [
 				{
 					id: 'language',
-					type: 'string',
+					type: ['az','ml','sq','mt','am','mk','en','mi','ar','mr','hy','mhr','af','mn','eu','de','ba','ne','be','no','bn','pa','my','pap','bg','fa','bs','pl','cy','pt','hu','ro','vi','ru','ht','ceb','gl','sr','nl','si','mrj','sk','el','sl','ka','sw','gu','su','da','tg','he','th','yi','tl','id','ta','ga','tt','it','te','is','tr','es','udm','kk','uz','kn','uk','ca','ur','ky','fi','zh','fr','ko','hi','xh','hr','km','cs','lo','sv','la','gd','lv','et','lt','eo','lb','jv','mg','ja','ms'],
+					prompt: {
+						retry: 'That\'s not a valid language! try again.'
+					},
 					default: 'en'
 				},
 				{
@@ -23,7 +25,7 @@ class TranslationCommand extends Command {
 			description: {
 				content: 'Translate what you send in your desired language. You can find the language code here: https://tech.yandex.com/translate/doc/dg/concepts/api-overview-docpage/',
 				usage: '[language code] [Text to translate]',
-				examples: ['fr What are we doing today?', 'en Que faisons-nous aujourd\'hui?']
+				examples: ['fr "What are we doing today?"', 'en "Que faisons-nous aujourd\'hui?"']
 			}
 		});
 	}
@@ -43,7 +45,7 @@ class TranslationCommand extends Command {
 				return message.channel.send('An error has occured');
 
 
-			const translationEmbed = new Discord.RichEmbed()
+			const translationEmbed = new MessageEmbed()
 				.setColor('#0099ff')
 				.setTitle('Asked for the following translation:')
 				.setAuthor(message.author.username)
