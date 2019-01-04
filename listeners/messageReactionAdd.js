@@ -25,7 +25,7 @@ class MessageReactionAddListener extends Listener {
 			const channel = this.client.channels.get(starboardChannel['starboard']);
 
 			const starEmbed = new MessageEmbed()
-				.setColor()
+				.setColor(reaction.message.member.displayHexColor)
 				.setDescription(messageContent)
 				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL)
 				.setTimestamp();
@@ -33,7 +33,7 @@ class MessageReactionAddListener extends Listener {
 			channel.send({ embed: starEmbed});
 			return channel.send(`From: ${reaction.message.channel} ID: ${reaction.message.id} \n${messageAttachments}`);
 		}
-		if (reaction.emoji.name === '✡' && reaction.count === 4) {
+		if (reaction.emoji.name === '✡' && reaction.count === 1) {
 			if (messageID.includes(reaction.message.id))
 				return console.log('Message already in starboard!');
 
@@ -43,9 +43,9 @@ class MessageReactionAddListener extends Listener {
 			const channel = this.client.channels.get(shameboardChannel['shameboard']);
 
 			const shameEmbed = new MessageEmbed()
-				.setColor()
+				.setColor(reaction.message.member.displayHexColor)
 				.setDescription(messageContent)
-				.setAuthor(reaction.message.author.username, reaction.message.author.avatar)
+				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL)
 				.setTimestamp();
 
 			channel.send({ embed: shameEmbed});
