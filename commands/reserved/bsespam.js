@@ -6,6 +6,8 @@ class bsespamCommand extends Command {
 			aliases: ['bsespam'] ,	//Required
 			category: 'reserved',	//recommended
 			channelRestriction: 'guild',	  //needed if you want to restrict where we can launch the command
+			cooldown: 3600,
+			ratelimit: 2,
 			args: [						//if need args
 				{
 					id: 'number',
