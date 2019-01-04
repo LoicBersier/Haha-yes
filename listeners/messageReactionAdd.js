@@ -33,7 +33,7 @@ class MessageReactionAddListener extends Listener {
 			channel.send({ embed: starEmbed});
 			return channel.send(`From: ${reaction.message.channel} ID: ${reaction.message.id} \n${messageAttachments}`);
 		}
-		if (reaction.emoji.name === '✡' && reaction.count === 1) {
+		if (reaction.emoji.name === '✡' && reaction.count === 4) {
 			if (messageID.includes(reaction.message.id))
 				return console.log('Message already in starboard!');
 
