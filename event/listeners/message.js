@@ -13,9 +13,9 @@ class messageListener extends Listener {
 	}
 
 	async exec(message) {
-		let autoresponse = reload('../json/autoresponse.json');
+		let autoresponse = reload('../../json/autoresponse.json');
 		let message_content = message.content.toLowerCase();
-		let customresponse = reload(`../tag/${message.guild.id}.json`);
+		let customresponse = reload(`../../tag/${message.guild.id}.json`);
 	
 		if (message.author.bot) return; {
 	
