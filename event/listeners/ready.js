@@ -1,5 +1,5 @@
 const { Listener } = require('discord-akairo');
-const { prefix, statsChannel } = require('../config.json');
+const { prefix, statsChannel } = require('../../config.json');
 
 
 class ReadyListener extends Listener {

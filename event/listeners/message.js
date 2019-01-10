@@ -1,7 +1,7 @@
 const { Listener } = require('discord-akairo');
-const responseObject = require('../json/reply.json');
-const reactObject = require('../json/react.json');
-const imgResponseObject = require('../json/imgreply.json');
+const responseObject = require('../../json/reply.json');
+const reactObject = require('../../json/react.json');
+const imgResponseObject = require('../../json/imgreply.json');
 const reload = require('auto-reload');
 
 class messageListener extends Listener {

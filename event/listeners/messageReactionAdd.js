@@ -1,7 +1,7 @@
 const { Listener } = require('discord-akairo');
 const { MessageEmbed } = require('discord.js');
 const reload = require('auto-reload');
-let messageID = require('../json/starboard.json');
+let messageID = require('../../json/starboard.json');
 
 class MessageReactionAddListener extends Listener {
 	constructor() {
