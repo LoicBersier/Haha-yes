@@ -20,14 +20,14 @@ class hahaYesClient extends AkairoClient {
 		});
 
 		this.inhibitorHandler = new InhibitorHandler(this, {
-			directory: './inhibitors/',
+			directory: './event/inhibitors/',
 			emitters: {
 				process
 			},
 		});
 
 		this.listenerHandler = new ListenerHandler(this, {
-			directory: './listeners/'
+			directory: './event/listeners/'
 		});
 
 		this.listenerHandler.setEmitters({

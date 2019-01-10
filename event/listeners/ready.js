@@ -18,8 +18,8 @@ class ReadyListener extends Listener {
 		if (this.client.user.id == 377563711927484418) {
 			const channel = this.client.channels.get(statsChannel);
 			channel.send(`Ready to serve in ${this.client.channels.size} channels on ${this.client.guilds.size} servers, for a total of ${this.client.users.size} users. ${this.client.readyAt}`);
-			this.client.user.setActivity(`${prefix} feedback <feedback> to tell me what you think of the bot! | ${prefix} help`);
 		}
+		this.client.user.setActivity(`${prefix} feedback <feedback> to tell me what you think of the bot! | ${prefix} help`);
 	}
 }
 
