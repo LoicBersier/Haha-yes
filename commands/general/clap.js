@@ -5,11 +5,11 @@ class ClapCommand extends Command {
 		super('clap', {
 			aliases: ['clap'],
 			category: 'general',
-			split: 'none',
 			args: [
 				{
 					id: 'text',
-					type: 'string'
+					type: 'string',
+					match: 'rest'
 				}
 			],
 			description: {

@@ -12,7 +12,8 @@ class EvalCommand extends Command {
 				},
 				{
 					id: 'text',
-					type: 'string'
+					type: 'string',
+					match: 'rest'
 				}
 			],
 			ownerOnly: 'true',

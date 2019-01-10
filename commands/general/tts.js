@@ -8,11 +8,11 @@ class TtsCommand extends Command {
 		super('tts', {
 			aliases: ['tts'],
 			category: 'general',
-			split: 'none',
 			args: [
 				{
 					id: 'text',
-					type: 'string'
+					type: 'string',
+					match: 'rest'
 				}
 			],
 			description: {

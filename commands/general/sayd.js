@@ -5,12 +5,12 @@ class SaydCommand extends Command {
 		super('sayd', {
 			aliases: ['sayd'],
 			category: 'general',
-			split: 'none',
 			clientPermissions: 'MANAGE_MESSAGES',
 			args: [
 				{
 					id: 'text',
-					type: 'string'
+					type: 'string',
+					match: 'rest'
 				}
 			],
 			description: {

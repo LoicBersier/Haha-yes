@@ -5,11 +5,11 @@ class SayCommand extends Command {
 		super('say', {
 			aliases: ['say'],
 			category: 'general',
-			split: 'none',
 			args: [
 				{
 					id: 'text',
 					type: 'string',
+					match: 'rest'
 				}
 			],
 			description: {

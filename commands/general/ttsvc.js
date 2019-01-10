@@ -12,7 +12,8 @@ class TtsvcCommand extends Command {
 			args: [
 				{
 					id: 'text',
-					type: 'string'
+					type: 'string',
+					match: 'rest'
 				}
 			],
 			description: {

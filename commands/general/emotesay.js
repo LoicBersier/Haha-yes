@@ -6,11 +6,11 @@ class EmotesayCommand extends Command {
 		super('emotesay', {
 			aliases: ['emotesay', 'esay'],
 			category: 'general',
-			split: 'none',
 			args: [
 				{
 					id: 'text',
-					type: 'string'
+					type: 'string',
+					match: 'rest'
 				}
 			],
 			description: {

@@ -15,7 +15,8 @@ class bsespamCommand extends Command {
 				},
 				{
 					id: 'text',
-					type: 'string'
+					type: 'string',
+					match: 'rest'
 				}
 			],
 			description: {				//recommended 

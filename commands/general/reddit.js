@@ -7,11 +7,11 @@ class RedditCommand extends Command {
 		super('reddit', {
 			aliases: ['reddit'],
 			category: 'general',
-			split: 'none',
 			args: [
 				{
 					id: 'sub',
 					type: 'string',
+					match: 'rest'
 				}
 			],
 			description: {
