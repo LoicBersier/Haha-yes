@@ -21,7 +21,7 @@ class MessageReactionAddListener extends Listener {
 
 			messageID.push(reaction.message.id);
 
-			let starboardChannel = reload(`../starboard/${reaction.message.guild.id}.json`);
+			let starboardChannel = reload(`../../starboard/${reaction.message.guild.id}.json`);
 			const channel = this.client.channels.get(starboardChannel['starboard']);
 
 			const starEmbed = new MessageEmbed()
@@ -39,7 +39,7 @@ class MessageReactionAddListener extends Listener {
 
 			messageID.push(reaction.message.id);
 
-			let shameboardChannel = reload(`../starboard/${reaction.message.guild.id}.json`);
+			let shameboardChannel = reload(`../../starboard/${reaction.message.guild.id}.json`);
 			const channel = this.client.channels.get(shameboardChannel['shameboard']);
 
 			const shameEmbed = new MessageEmbed()
