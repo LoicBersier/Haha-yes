@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 
-class PruneCommand extends Command {
+class SlowmodeCommand extends Command {
 	constructor() {
 		super('Slowmode', {
 			aliases: ['slowmode', 'slow'],
@@ -56,4 +56,4 @@ class PruneCommand extends Command {
 	}
 }
 
-module.exports = PruneCommand;
+module.exports = SlowmodeCommand;
