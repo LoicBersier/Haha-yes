@@ -28,26 +28,31 @@ class PruneCommand extends Command {
 	}
 
 	async exec(message,args) {
-		let slowmodeNumber = args.slowmodeNumber;
-		let realtime = args.realtime;
-
-		if (slowmodeNumber > 120)
-			return message.channel.send('Slowmode can only be set to 120 seconds or lower!');
-
-		message.channel.setRateLimitPerUser(slowmodeNumber);
-
-		if (realtime) {
-			let time = 60000 * realtime;
-			message.channel.send(`Slowmode have been set to ${slowmodeNumber} seconds and will end in ${realtime} minutes!`);
-			setTimeout (function (){
-				message.channel.setRateLimitPerUser(0);
-				return message.channel.send('Slowmode is now disabled!');
-			}, time);
-		} else {
-			if (slowmodeNumber == 0)
-				return message.channel.send('Slowmode have been disabled!');
-			return message.channel.send(`Slowmode have been set to ${slowmodeNumber} seconds!`);
+		try {
+			let slowmodeNumber = args.slowmodeNumber;
+			let realtime = args.realtime;
+	
+			if (slowmodeNumber > 120)
+				return message.channel.send('Slowmode can only be set to 120 seconds or lower!');
+	
+			message.channel.setRateLimitPerUser(slowmodeNumber);
+	
+			if (realtime) {
+				let time = 60000 * realtime;
+				message.channel.send(`Slowmode have been set to ${slowmodeNumber} seconds and will end in ${realtime} minutes!`);
+				setTimeout (function (){
+					message.channel.setRateLimitPerUser(0);
+					return message.channel.send('Slowmode is now disabled!');
+				}, time);
+			} else {
+				if (slowmodeNumber == 0)
+					return message.channel.send('Slowmode have been disabled!');
+				return message.channel.send(`Slowmode have been set to ${slowmodeNumber} seconds!`);
+			}
+		} catch (err) {
+			console.error(err);
 		}
+
 	}
 }
 
