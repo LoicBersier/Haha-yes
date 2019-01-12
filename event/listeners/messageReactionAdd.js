@@ -15,13 +15,14 @@ class MessageReactionAddListener extends Listener {
 		let messageContent = reaction.message.content;
 		let messageAttachments = reaction.message.attachments.map(u=> `${u.url}`);
 
+		//	Starboard
 		if (reaction.emoji.name === '🌟' && reaction.count === 4) {
 			if (messageID.includes(reaction.message.id))
 				return console.log('Message already in starboard!');
 
 			messageID.push(reaction.message.id);
 
-			let starboardChannel = reload(`../starboard/${reaction.message.guild.id}.json`);
+			let starboardChannel = reload(`../../board/star${reaction.message.guild.id}.json`);
 			const channel = this.client.channels.get(starboardChannel['starboard']);
 
 			const starEmbed = new MessageEmbed()
@@ -33,13 +34,14 @@ class MessageReactionAddListener extends Listener {
 			channel.send({ embed: starEmbed});
 			return channel.send(`From: ${reaction.message.channel} ID: ${reaction.message.id} \n${messageAttachments}`);
 		}
+		//Shameboard
 		if (reaction.emoji.name === '✡' && reaction.count === 4) {
 			if (messageID.includes(reaction.message.id))
 				return console.log('Message already in starboard!');
 
 			messageID.push(reaction.message.id);
 
-			let shameboardChannel = reload(`../starboard/${reaction.message.guild.id}.json`);
+			let shameboardChannel = reload(`../../board/shame${reaction.message.guild.id}.json`);
 			const channel = this.client.channels.get(shameboardChannel['shameboard']);
 
 			const shameEmbed = new MessageEmbed()
