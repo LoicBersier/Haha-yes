@@ -7,7 +7,7 @@ class shameboardCommand extends Command {
 			aliases: ['shameboard'],
 			category: 'admin',
 			channelRestriction: 'guild',
-			userPermissions: ['ADMINISTRATOR'],
+			userPermissions: ['MANAGE_CHANNELS'],
 			description: {
 				content: 'Set shameboard',
 				usage: '[]',

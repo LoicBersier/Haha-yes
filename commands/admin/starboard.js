@@ -7,7 +7,7 @@ class StarBoardCommand extends Command {
 			aliases: ['starboard'],
 			category: 'admin',
 			channelRestriction: 'guild',
-			userPermissions: ['ADMINISTRATOR'],
+			userPermissions: ['MANAGE_CHANNELS'],
 			description: {
 				content: 'Set starboard',
 				usage: '[]',

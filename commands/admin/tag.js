@@ -7,6 +7,7 @@ class TagCommand extends Command {
 			aliases: ['tag'],
 			category: 'admin',
 			split: 'quoted',
+			userPermissions: ['MANAGE_MESSAGES'],
 			args: [
 				{
 					id: 'trigger',
