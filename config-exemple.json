@@ -1,13 +1,13 @@
 {
     "token": "Your token",
     "prefix": "Your prefix ",
-    "ownerID":  "Id of the owner ( probably you )",
-    "botID":    "id of the bot",
-    "statsChannel": "channel where the bot send his stats",
-    "supportServer":    "Invite to the support server of the bot",
-    "feedbackChannel": "id of the channel where the feedback goes",
-    "printChannel": "Channel of where it will send the id of people who asked for print",
-    "fbuser": "Facebook email",
-    "fbpasswd": "Facebook passwd",
-    "yandexAPI": "yandex api key"
-}
+    "ownerID":  "Id of the owner ( probably you )", //Optianal but recommended
+    "botID":    "id of the bot", //Optianal
+    "statsChannel": "channel where the bot send his stats", //Optianal
+    "supportServer":    "Invite to the support server of the bot", //Optianal
+    "feedbackChannel": "id of the channel where the feedback goes", //Optianal
+    "printChannel": "Channel of where it will send the id of people who asked for print", //Optianal
+    "fbuser": "Facebook email", //Optianal
+    "fbpasswd": "Facebook passwd", //Optianal
+    "yandexAPI": "yandex api key" //Optianal
+} 
