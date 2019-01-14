@@ -4,7 +4,7 @@ class OwnedCommand extends Command {
 	constructor() {
 		super('owned', {
 			aliases: ['owned'],
-			category: 'general',
+			category: 'hidden',
 			description: {
 				content: 'OWNED',
 				usage: '',
