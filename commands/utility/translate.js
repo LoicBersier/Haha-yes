@@ -20,6 +20,7 @@ class TranslationCommand extends Command {
 				{
 					id: 'text',
 					type: 'string',
+					match: 'rest'
 				}
 			],
 			description: {
