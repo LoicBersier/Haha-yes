@@ -1,4 +1,5 @@
 const { Command } = require('discord-akairo');
+const { MessageEmbed } = require('discord.js');
 
 class EvalCommand extends Command {
 	constructor() {
@@ -35,10 +36,26 @@ class EvalCommand extends Command {
 		
 			if (typeof evaled !== 'string')
 				evaled = require('util').inspect(evaled);
-		
-			message.channel.send(clean(evaled), {code:'xl'});
+
+			const evalEmbed = new MessageEmbed()
+				.setColor('#00FF00')
+				.setThumbnail('https://cdn4.iconfinder.com/data/icons/gradient-ui-1/512/success-512.png')
+				.setTitle('<a:orangejustice:522142267490697236>	Eval succes <a:orangejustice:522142267490697236>')
+				.addField('Input', `\`\`\`js\n${code}\`\`\``)
+				.addField('Output', `\`\`\`js\n${clean(evaled)}\`\`\``)
+				.setTimestamp();
+
+			message.channel.send(evalEmbed);
 		} catch (err) {
-			message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
+			const errorEmbed = new MessageEmbed()
+				.setColor('#FF0000')
+				.setThumbnail('https://cdn4.iconfinder.com/data/icons/the-weather-is-nice-today/64/weather_48-512.png')
+				.setTitle('Eval failed <:sadpepe:534399181679230986>')
+				.addField('Input', `\`\`\`js\n${args.eval}\`\`\``)
+				.addField('Output', `\`\`\`js\n${clean(err)}\`\`\``)
+				.setTimestamp();
+
+			message.channel.send(errorEmbed);
 		}
 	}
 }
