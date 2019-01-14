@@ -28,7 +28,7 @@ class MessageReactionAddListener extends Listener {
 			const starEmbed = new MessageEmbed()
 				.setColor(reaction.message.member.displayHexColor)
 				.setDescription(messageContent)
-				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL)
+				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
 				.setTimestamp();
 
 			channel.send({ embed: starEmbed});
@@ -47,7 +47,7 @@ class MessageReactionAddListener extends Listener {
 			const shameEmbed = new MessageEmbed()
 				.setColor(reaction.message.member.displayHexColor)
 				.setDescription(messageContent)
-				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL)
+				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
 				.setTimestamp();
 
 			channel.send({ embed: shameEmbed});
