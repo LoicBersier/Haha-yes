@@ -17,7 +17,7 @@ class SlowmodeCommand extends Command {
 				}
 			],
 			clientPermissions: ['MANAGE_CHANNELS'],
-			userPermissions: ['MANAGE_CHANNELS'],
+			userPermissions: ['MANAGE_MESSAGES'],
 			channelRestriction: 'guild',
 			description: {
 				content: 'Put a channel in slowmode',
