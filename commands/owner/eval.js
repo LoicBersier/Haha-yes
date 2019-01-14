@@ -4,12 +4,12 @@ class EvalCommand extends Command {
 	constructor() {
 		super('eval', {
 			aliases: ['eval'],
-			split: 'none',
 			category: 'owner',
 			args: [
 				{
 					id: 'eval',
-					type: 'string'
+					type: 'string',
+					match: 'rest'
 				}
 			],
 			ownerOnly: 'true',

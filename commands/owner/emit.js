@@ -4,14 +4,14 @@ class emitCommand extends Command {
 	constructor() {
 		super('emit', {
 			aliases: ['emit'],
-			split: 'none',
 			category: 'owner',
 			ownerOnly: 'true',
 			args: [
 				{
 					id: 'event',
 					prompt: 'Wich event should i trigger?',
-					type: 'string'
+					type: 'string',
+					match: 'rest'
 				}
 			],
 			description: {

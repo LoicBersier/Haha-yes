@@ -4,14 +4,14 @@ class BotAvatarCommand extends Command {
 	constructor() {
 		super('botavatar', {
 			aliases: ['botavatar', 'bavatar'],
-			split: 'none',
 			category: 'owner',
 			ownerOnly: 'true',
 			args: [
 				{
 					id: 'image',
 					type:'string',
-					optional: true
+					optional: true,
+					match: 'rest'
 				}
 			],
 			description: {

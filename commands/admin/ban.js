@@ -5,7 +5,6 @@ class BanCommand extends Command {
 		super('ban', {
 			aliases: ['ban'],
 			category: 'admin',
-			split: 'quote',
 			args: [
 				{
 					id: 'member',
@@ -13,7 +12,8 @@ class BanCommand extends Command {
 				},
 				{
 					id: 'reasons',
-					type: 'string'
+					type: 'string',
+					match: 'rest'
 				}
 			],
 			clientPermissions: ['BAN_MEMBERS'],
