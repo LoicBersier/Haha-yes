@@ -32,15 +32,17 @@ class musicCommand extends Command {
 		let link;
 		let Attachment = (message.attachments).array();
 
-
+		function checkURL(url) {
+			return(url.match(/\.(mp3|wav|mp4|webm)$/) != null);
+		}
 
 		if (!args.music && Attachment[0]) {
-			if (!Attachment[0].url.endsWith('mp3' || 'wav' || 'mp4' || 'webm'))
+			if (!checkURL(Attachment[0].url))
 				return message.channel.send('Only mp3,wav,mp4 and webm are supported');
 			link = Attachment[0].url;
 		} else {
 			link = args.music;
-			if (!link.endsWith('mp3' || 'wav' || 'mp4' || 'webm'))
+			if (!checkURL(link))
 				return message.channel.send('Only mp3,wav,mp4 and webm are supported');
 		}
 
