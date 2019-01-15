@@ -4,6 +4,7 @@ const fpcalc = require('fpcalc');
 const fetch = require('node-fetch');
 const youtubedl = require('youtube-dl');
 const fs = require('fs');
+const { acoustID } = require('../../config.json');
 
 
 class musicCommand extends Command {
@@ -46,7 +47,7 @@ class musicCommand extends Command {
 		video.on('end', function () {
 			fpcalc('./music.mp3', function(err, result) {
 				if (err) throw err;
-				fetch(`https://api.acoustid.org/v2/lookup?client=LRAhvvxpDu&meta=recordings+releasegroups+compress&duration=${result.duration}&fingerprint=${result.fingerprint}`).then((response) => {
+				fetch(`https://api.acoustid.org/v2/lookup?client=${acoustID}&meta=recordings+releasegroups+compress&duration=${result.duration}&fingerprint=${result.fingerprint}`).then((response) => {
 					return response.json();
 				}).then((response) => { 
 					if (!response.results[0])
