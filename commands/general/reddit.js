@@ -24,7 +24,9 @@ class RedditCommand extends Command {
 
 	async exec(message, args) {
 		let sub = args.sub;
-		let i, a;
+		console.log(sub);
+		let i = 0;
+		let a;
 		if (!sub)
 			return;
 		
