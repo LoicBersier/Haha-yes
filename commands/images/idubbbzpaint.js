@@ -1,5 +1,4 @@
 const { Command } = require('discord-akairo');
-const Discord = require('discord.js');
 const { createCanvas, loadImage } = require('canvas');
 const superagent = require('superagent');
 
@@ -64,9 +63,7 @@ class IdubbbzPaintCommand extends Command {
 		ctx.fillStyle = '#ffffff';
 		ctx.fillText(text, canvas.width / 3, canvas.height / 1.1);
 
-		const attachment = new Discord.Attachment(canvas.toBuffer(), 'edupspaint.png');
-
-		message.channel.send(attachment).catch(() => {
+		message.channel.send({files: [canvas.toBuffer()]}).catch(() => {
 			message.channel.send('an error as occured. Check the bot/channel permissions');
 		});
 	}

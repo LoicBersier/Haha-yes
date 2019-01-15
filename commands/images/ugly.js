@@ -1,5 +1,4 @@
 const { Command } = require('discord-akairo');
-const Discord = require('discord.js');
 const { createCanvas, loadImage } = require('canvas');
 const superagent = require('superagent');
 
@@ -41,9 +40,7 @@ class UglyCommand extends Command {
 		const bg = await loadImage(buffer);
 		ctx.drawImage(bg, 40, 100, 250, 250);
 
-		const attachment = new Discord.Attachment(canvas.toBuffer(), 'ugly.png');
-
-		message.channel.send(attachment).catch(() => {
+		message.channel.send({files: [canvas.toBuffer()]}).catch(() => {
 			message.channel.send('an error as occured. Check the bot/channel permissions');
 		});
 	}

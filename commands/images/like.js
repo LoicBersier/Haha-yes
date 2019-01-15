@@ -1,5 +1,4 @@
 const { Command } = require('discord-akairo');
-const Discord = require('discord.js');
 const { createCanvas, loadImage } = require('canvas');
 const superagent = require('superagent');
 
@@ -41,9 +40,7 @@ class LikeCommand extends Command {
 		const bg = await loadImage(buffer);
 		ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
 
-		const attachment = new Discord.Attachment(canvas.toBuffer(), 'like.png');
-
-		message.channel.send(attachment).catch(() => {
+		message.channel.send({files: [canvas.toBuffer()]}).catch(() => {
 			message.channel.send('an error as occured. Check the bot/channel permissions');
 		});
 	}

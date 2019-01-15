@@ -1,5 +1,4 @@
 const { Command } = require('discord-akairo');
-const Discord = require('discord.js');
 const { createCanvas, loadImage } = require('canvas');
 const superagent = require('superagent');
 
@@ -11,7 +10,8 @@ class FetishCommand extends Command {
 			args: [
 				{
 					id: 'image',
-					type: 'string'
+					type: 'string',
+					optional: true,
 				}
 			]
 		});
@@ -40,10 +40,8 @@ class FetishCommand extends Command {
 		const bg = await loadImage(buffer);
 		ctx.drawImage(bg, 50, 50, 450, 450);
 	
-		const attachment = new Discord.Attachment(canvas.toBuffer(), 'myfetish.png');
 
-
-		message.channel.send(attachment).catch(() => {
+		message.channel.send({files: [canvas.toBuffer()]}).catch(() => {
 			message.channel.send('an error as occured. Check the bot/channel permissions');
 		});
 	}
