@@ -25,6 +25,9 @@ class MessageReactionAddListener extends Listener {
 			let starboardChannel = reload(`../../board/star${reaction.message.guild.id}.json`);
 			const channel = this.client.channels.get(starboardChannel['starboard']);
 
+			if (!messageContent)
+				return channel.send(`${reaction.message.author.username}, in: ${reaction.message.channel} ID: ${reaction.message.id} \n${messageAttachments}`);
+
 			const starEmbed = new MessageEmbed()
 				.setColor(reaction.message.member.displayHexColor)
 				.setDescription(messageContent)
@@ -32,7 +35,7 @@ class MessageReactionAddListener extends Listener {
 				.setTimestamp();
 
 			channel.send({ embed: starEmbed});
-			return channel.send(`From: ${reaction.message.channel} ID: ${reaction.message.id} \n${messageAttachments}`);
+			return channel.send(`in: ${reaction.message.channel} ID: ${reaction.message.id} \n${messageAttachments}`);
 		}
 		//Shameboard
 		if (reaction.emoji.name === '✡' && reaction.count === 4) {
@@ -44,6 +47,9 @@ class MessageReactionAddListener extends Listener {
 			let shameboardChannel = reload(`../../board/shame${reaction.message.guild.id}.json`);
 			const channel = this.client.channels.get(shameboardChannel['shameboard']);
 
+			if (!messageContent)
+				return channel.send(`${reaction.message.author.username}, in: ${reaction.message.channel} ID: ${reaction.message.id} \n${messageAttachments}`);
+
 			const shameEmbed = new MessageEmbed()
 				.setColor(reaction.message.member.displayHexColor)
 				.setDescription(messageContent)
@@ -51,7 +57,7 @@ class MessageReactionAddListener extends Listener {
 				.setTimestamp();
 
 			channel.send({ embed: shameEmbed});
-			return channel.send(`From: ${reaction.message.channel} ID: ${reaction.message.id} \n${messageAttachments}`);
+			return channel.send(`in: ${reaction.message.channel} ID: ${reaction.message.id} \n${messageAttachments}`);
 		}
 	}
 }
