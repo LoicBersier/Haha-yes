@@ -57,7 +57,7 @@ class TtsvcCommand extends Command {
 				if (!voiceChannel) return message.say('Please enter a voice channel first.');
 				try {
 					const connection = await voiceChannel.join();
-					const dispatcher = connection.play('../../ttsvc.mp3');
+					const dispatcher = connection.play('./ttsvc.mp3');
 					dispatcher.once('finish', () => voiceChannel.leave());
 					dispatcher.once('error', () => voiceChannel.leave());
 					return null;
