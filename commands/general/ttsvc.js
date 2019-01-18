@@ -56,7 +56,7 @@ class TtsvcCommand extends Command {
 
 				if (message.member.voice.channel) {
 					const connection = await message.member.voice.channel.join();
-					connection.play('./ttsvc');
+					connection.play('../../ttsvc');
 				} else {
 					message.reply('You need to join a voice channel first!');
 				}
