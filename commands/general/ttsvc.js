@@ -56,19 +56,12 @@ class TtsvcCommand extends Command {
 				//  If not in voice channel ask user to join
 
 				if (message.member.voice.channel) {
-					const voiceChannel = message.member.voice.channel.join();
-					if (text == 'stop') {
-						voiceChannel.leave();
-						message.channel.send('I leaved the channel');
-					} else { // you should be careful in what is included in your scopes, you didn't use the {}
-						voiceChannel.join().then(connection => {
-							const dispatcher = connection.playStream('./ttsvc.mp3');
-							//  End at then end of the audio stream
-							dispatcher.on('end', () => setTimeout(function () {
-								voiceChannel.leave();
-							}, 2000));
-						});
-					}
+					const connection = message.member.voice.channel.join();
+					const dispatcher = connection.play('./ttsvc');
+
+					dispatcher.on('finish', () => {
+						connection.leave();
+					});
 				} else {
 					message.reply('You need to join a voice channel first!');
 				}
