@@ -57,11 +57,9 @@ class TtsvcCommand extends Command {
 				console.log('Audio content written to file: ttsvc.mp3');
 
 				//  If not in voice channel ask user to join
-				if (!voiceChannel) {
-					return message.reply('please join a voice channel first!');
 
-				} else { // you should be careful in what is included in your scopes, you didn't use the {}
-					//  If user say "stop" make the bot leave voice channel
+				if (message.member.voice.channel) {
+					const connection = await message.member.voice.channel.join();
 					if (text == 'stop') {
 						voiceChannel.leave();
 						message.channel.send('I leaved the channel');
@@ -74,6 +72,8 @@ class TtsvcCommand extends Command {
 							}, 2000));
 						});
 					}
+				} else {
+					message.reply('You need to join a voice channel first!');
 				}
 			});
 		});
