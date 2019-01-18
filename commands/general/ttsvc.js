@@ -44,7 +44,7 @@ class TtsvcCommand extends Command {
 			}
 
 			// Write the binary audio content to a local file
-			fs.writeFile('ttsvc.mp3', response.audioContent, 'binary', err => {
+			fs.writeFile('ttsvc.mp3', response.audioContent, 'binary', async err => {
 				if (err) {
 					console.error('ERROR:', err);
 					message.channel.send('An error has occured, the message is probably too long');
@@ -53,15 +53,10 @@ class TtsvcCommand extends Command {
 				}
 				console.log('Audio content written to file: ttsvc.mp3');
 
-				//  If not in voice channel ask user to join
 
 				if (message.member.voice.channel) {
-					const connection = message.member.voice.channel.join();
-					const dispatcher = connection.play('./ttsvc');
-
-					dispatcher.on('finish', () => {
-						connection.leave();
-					});
+					const connection = await message.member.voice.channel.join();
+					connection.play('./ttsvc');
 				} else {
 					message.reply('You need to join a voice channel first!');
 				}
