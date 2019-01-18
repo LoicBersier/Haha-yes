@@ -27,9 +27,6 @@ class TtsvcCommand extends Command {
 	async exec(message, args) {
 		let text = args.text;
 
-		const { voiceChannel } = message.member;
-
-
 		// Construct the request
 		const request = {
 			input: { text: text },
@@ -59,7 +56,7 @@ class TtsvcCommand extends Command {
 				//  If not in voice channel ask user to join
 
 				if (message.member.voice.channel) {
-					const connection = await message.member.voice.channel.join();
+					const voiceChannel = message.member.voice.channel.join();
 					if (text == 'stop') {
 						voiceChannel.leave();
 						message.channel.send('I leaved the channel');
