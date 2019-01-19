@@ -14,7 +14,7 @@ class donateCommand extends Command {
 	}
 
 	async exec(message) {
-		return message.author.send('If you want to donate you can do it with paypal at https://www.paypal.me/supositware or here https://donatebot.io/checkout/487640086859743232?buyer=267065637183029248');
+		return message.channel.send('If you want to donate you can do it with paypal at https://www.paypal.me/supositware or here https://donatebot.io/checkout/487640086859743232?buyer=267065637183029248');
 	}
 }
 
