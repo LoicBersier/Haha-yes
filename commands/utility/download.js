@@ -30,7 +30,7 @@ class DownloadCommand extends Command {
 		let big = false;
 
 		if (link.includes('http') || link.includes('www')) {
-			let video = youtubedl(link, [`--username=${fbuser}`, `--password=${fbpasswd}`, '--max-filesize', '8M']);
+			let video = youtubedl(link, [`--username=${fbuser}`, `--password=${fbpasswd}`]);
 			video.pipe(fs.createWriteStream('./video.mp4'));
 			video.on('error', function error(err) {
 				console.log('error 2:', err);
@@ -55,7 +55,7 @@ class DownloadCommand extends Command {
 					output: 'videoReady.mp4',
 					preset: 'General/Gmail Small 10 Minutes 288p30'
 				};
-
+				//Compress vid if bigger than 8MB
 				hbjs.spawn(options)
 					.on('start', function() {
 						message.channel.send('Vid bigger than 8MB compressing now ( This can take a long time!)');
