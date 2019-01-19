@@ -7,7 +7,6 @@ class HelpCommand extends Command {
 			aliases: ['help', 'halp', 'h'],
 			category: 'utility',
 			clientPermissions: ['EMBED_LINKS'],
-			quoted: false,
 			args: [
 				{
 					id: 'command',
@@ -16,7 +15,8 @@ class HelpCommand extends Command {
 						start: 'Which command do you need help with?',
 						retry: 'Please provide a valid command.',
 						optional: true
-					}
+					},
+					match: 'rest'
 				}
 			],
 			description: {
@@ -30,7 +30,6 @@ class HelpCommand extends Command {
 	exec(message, { command }) {
 		if (!command) return this.execCommandList(message);
 
-		const prefix = this.handler.prefix(message);
 		const description = Object.assign({
 			content: 'No description available.',
 			usage: '',
