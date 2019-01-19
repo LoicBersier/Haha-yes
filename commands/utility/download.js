@@ -30,7 +30,7 @@ class DownloadCommand extends Command {
 		let big = false;
 
 		if (link.includes('http') || link.includes('www')) {
-			let video = youtubedl(link, [`--username=${fbuser}`, `--password=${fbpasswd}`, '-v', '-g']);
+			let video = youtubedl(link, [`--username=${fbuser}`, `--password=${fbpasswd}`, '-v']);
 			video.pipe(fs.createWriteStream('./video.mp4'));
 			video.on('error', function error(err) {
 				console.log('error 2:', err);
