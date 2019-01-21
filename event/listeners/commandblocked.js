@@ -27,7 +27,7 @@ class CommandBlockedListener extends Listener {
 			message.reply('You can\'t use this command because you have been blacklisted!');
 			break;
 		case 'serverblacklist': 
-			message.reply('You can\'t use this command because the server have been blacklisted!');
+			message.guild.leave();
 			break;
 		}
 	}
