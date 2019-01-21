@@ -1,4 +1,4 @@
-const { Command } = require('discord-akairo');
+const { Command, Argument } = require('discord-akairo');
 
 class dominoCommand extends Command {
 	constructor() {
@@ -8,7 +8,7 @@ class dominoCommand extends Command {
 			args: [
 				{
 					id: 'number',
-					type: 'integer',
+					type: Argument.range('number', 3, 100),
 					default: 10
 				}
 			],
@@ -21,8 +21,6 @@ class dominoCommand extends Command {
 	}
 
 	async exec(message, args) {
-		if (args.domino < 2)
-			return message.channel.send('Can\'t do less than 3');
 		let domino = 'I';
 
 		message.util.send(domino.repeat(args.number))
