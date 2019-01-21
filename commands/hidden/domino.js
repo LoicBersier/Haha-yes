@@ -21,6 +21,8 @@ class dominoCommand extends Command {
 	}
 
 	async exec(message, args) {
+		if (args.domino < 2)
+			return message.channel.send('Can\'t do less than 3');
 		let domino = 'I';
 
 		message.util.send(domino.repeat(args.number))
