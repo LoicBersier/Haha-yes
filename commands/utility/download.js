@@ -58,7 +58,7 @@ class DownloadCommand extends Command {
 				//Compress vid if bigger than 8MB
 				hbjs.spawn(options)
 					.on('start', function() {
-						message.channel.send('Vid bigger than 8MB compressing now ( This can take a long time!)\nWant it to go faster? Donate to the dev with the donnate command, so i can get a better server and do it faster!');
+						message.channel.send('Vid bigger than 8MB compressing now ( This can take a long time!)\nWant it to go faster? Donate to the dev with the donate command, so i can get a better server and do it faster!');
 					})
 					.on('error', err => {
 						message.channel.send('An error has occured while compressing the video');
