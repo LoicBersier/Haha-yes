@@ -38,8 +38,11 @@ class DownloadCommand extends Command {
 			});
 			video.on('info', function(info) {
 				console.log('Download started');
-				console.log('filename: ' + info.filename);
+				console.log('filename: ' + info._filename);
 				console.log('size: ' + info.size);
+				let duration = info.duration.replace(':', '');
+				if (duration > 500)
+					return message.channel.send('Can\'t do video longer than 5 minutes');
 				if (info.size >= 8000000) {
 					big = true;
 				} 
@@ -58,7 +61,7 @@ class DownloadCommand extends Command {
 				//Compress vid if bigger than 8MB
 				hbjs.spawn(options)
 					.on('start', function() {
-						message.channel.send('Vid bigger than 8MB compressing now (This can take a long time!)\nWant it to go faster? Donate to the dev with the donate command, so i can get a better server and do it faster!');
+						message.channel.send('Video bigger than 8MB compressing now (This can take a long time!)\nWant it to go faster? Donate to the dev with the donate command, so i can get a better server and do it faster!');
 					})
 					.on('error', err => {
 						message.channel.send('An error has occured while compressing the video');
