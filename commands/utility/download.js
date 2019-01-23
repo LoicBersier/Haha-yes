@@ -27,7 +27,7 @@ class DownloadCommand extends Command {
 
 	async exec(message, args) {
 		let link = args.link;
-		let big = false;
+		let needCompress = false;
 
 		if (link.includes('http') || link.includes('www')) {
 			let video = youtubedl(link, [`--username=${fbuser}`, `--password=${fbpasswd}`]);
@@ -37,18 +37,23 @@ class DownloadCommand extends Command {
 				message.channel.send('An error has occured, I can\'t download from the link you provided.');
 			});
 			video.on('info', function(info) {
+				let duration = info.duration.replace(/:/g, '');
+				if (duration > 500) {
+					video.pause();
+					video.unpipe();
+					return message.channel.send('Can\'t download video longer than 5 minutes');
+				}
 				console.log('Download started');
 				console.log('filename: ' + info._filename);
 				console.log('size: ' + info.size);
-				let duration = info.duration.replace(':', '');
-				if (duration > 500)
-					return message.channel.send('Can\'t do video longer than 5 minutes');
+
+
 				if (info.size >= 8000000) {
-					big = true;
+					needCompress = true;
 				} 
 			});
 			video.on('end', function () {
-				if (!big) {
+				if (!needCompress) {
 					message.delete();
 					return message.channel.send(`Downloaded by ${message.author.username}`, { files: ['./video.mp4'] })
 						.catch(() => message.channel.send('File too big'));		
