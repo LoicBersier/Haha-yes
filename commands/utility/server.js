@@ -1,5 +1,6 @@
 const { Command } = require('discord-akairo');
 const { MessageEmbed } = require('discord.js');
+const reload = require('auto-reload');
 
 class ServerCommand extends Command {
 	constructor() {
@@ -16,6 +17,13 @@ class ServerCommand extends Command {
 	}
 
 	async exec(message) {
+		const autoresponse = reload('../../json/autoresponse.json');
+		let autoresponseStatus;
+		if (autoresponse[message.channel.id] == undefined || autoresponse[message.channel.id] == 'disable')
+			autoresponseStatus = 'disabled';
+		else if (autoresponse[message.channel.id] == 'enable')
+			autoresponseStatus = 'enabled';
+
 		const customresponse = require(`../../tag/${message.guild.id}.json`);
 		var count = Object.keys(customresponse).length;
 
@@ -23,7 +31,12 @@ class ServerCommand extends Command {
 			.setColor('#0099ff')
 			.setTitle('Stats of the server')
 			.setAuthor(message.author.username)
-			.setDescription(`Member: **${message.guild.memberCount}** \nChannel number: **${message.guild.channels.size}**\nGuild created at **${message.guild.createdAt}**\nOwner: **${message.guild.owner}**\nTag number: **${count}**`)
+			.addField('Member', message.guild.memberCount, true)
+			.addField('Numbers of channel', message.guild.channels.size, true)
+			.addField('Date when guild created', message.guild.createdAt, true)
+			.addField('Owner', message.guild.owner, true)
+			.addField('Numbers of tag', count, true)
+			.addField('Autoresponse in this channel', autoresponseStatus, true)
 			.setTimestamp();
         
 
