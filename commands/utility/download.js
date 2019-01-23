@@ -37,12 +37,17 @@ class DownloadCommand extends Command {
 				message.channel.send('An error has occured, I can\'t download from the link you provided.');
 			});
 			video.on('info', function(info) {
-				let duration = info.duration.replace(/:/g, '');
-				if (duration > 500) {
-					video.pause();
-					video.unpipe();
-					return message.channel.send('Can\'t download video longer than 5 minutes');
+				let duration = info.duration;
+				if (duration) {
+					duration = duration.replace(/:/g, '');
+
+					if (duration > 500) {
+						video.pause();
+						video.unpipe();
+						return message.channel.send('Can\'t download video longer than 5 minutes');
+					}
 				}
+				
 				console.log('Download started');
 				console.log('filename: ' + info._filename);
 				console.log('size: ' + info.size);
