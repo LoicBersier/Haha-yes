@@ -20,7 +20,7 @@ class LikeCommand extends Command {
 		let Attachment = (message.attachments).array();
 		let image = args.image;
 		if (!Attachment[0] && !image)
-			image = message.author.displayAvatarURL();
+			image = message.author.displayAvatarURL('png');
 		else if (Attachment[0] && Attachment[0].url.endsWith('gif'))
 			return message.channel.send('Gif dosent work, sorry');
 		else if (!image)
