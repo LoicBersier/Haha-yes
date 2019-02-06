@@ -42,7 +42,7 @@ node index.js
 
 ## License
 
-This project is licensed under the **GNU Affero General Public License v2.0** License - see the [LICENSE](LICENSE) file for details
+This project is licensed under the **GNU Affero General Public License v3.0** License - see the [LICENSE](LICENSE) file for details
 
 ## Acknowledgments
 
