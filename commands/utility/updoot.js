@@ -19,11 +19,12 @@ class UpdootCommand extends Command {
 		const upDoot = new MessageEmbed()
 			.setColor('#0099ff')
 			.setTitle('Vote for my bot')
-			.setURL('https://discordbots.org/bot/377563711927484418/vote')
 			.setAuthor(message.author.username)
 			.setDescription('You can vote for my bot if you think the bot is awesome!')
+			.addField('Discordbot.org', 'https://discordbots.org/bot/377563711927484418/vote')
+			.addField('Discordbotlist.com', 'https://discordbotlist.com/bots/377563711927484418/upvote')
 			.setTimestamp()
-			.setFooter('Thanks for the updoots', 'https://cdn.discordapp.com/avatars/377563711927484418/1335d202aa466dbeaa4ed2e4b616484a.png?size=2048');
+			.setFooter('Thanks for the updoots', this.client.user.avatarURL);
 		
 		message.channel.send({ embed: upDoot });
 	}
