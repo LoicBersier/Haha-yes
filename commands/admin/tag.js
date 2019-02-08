@@ -15,7 +15,8 @@ class TagCommand extends Command {
 				},
 				{
 					id: 'response',
-					type: 'string'
+					type: 'string',
+					match: 'rest'
 				}
 			],
 			channelRestriction: 'guild',
