@@ -45,8 +45,10 @@ exports.random = function (text, message) {
 		text = text.replace(/\[member\]/, message.guild.members.random().user.username);
 		text = text.replace(/\[number\]/, Math.floor((Math.random() * 9) + 1));
 		text = text.replace(/\[author\]/, message.author.username);
+		text = text.replace(/\[kick\]/, ' ');
+		text = text.replace(/\[ban\]/, ' ');
 		//	  Verify if it replaced everything
-	} while( text.includes('[verb]') || text.includes('[adverbs]') || text.includes('[noun]') || text.includes('[adjective]') || text.includes('[member]') || text.includes('[number]') || text.includes('[activities]') || text.includes('[celebrities]') || text.includes('[countries]') || text.includes('[diseases]') || text.includes('[elements]') || text.includes('[hobbies]') || text.includes('[music]') || text.includes('[prefixes]') || text.includes('[pronoun]') || text.includes('[state]') || text.includes('[title]') || text.includes('[unit]') || text.includes('[author]'));
+	} while( text.includes('[verb]') || text.includes('[adverbs]') || text.includes('[noun]') || text.includes('[adjective]') || text.includes('[member]') || text.includes('[number]') || text.includes('[activities]') || text.includes('[celebrities]') || text.includes('[countries]') || text.includes('[diseases]') || text.includes('[elements]') || text.includes('[hobbies]') || text.includes('[music]') || text.includes('[prefixes]') || text.includes('[pronoun]') || text.includes('[state]') || text.includes('[title]') || text.includes('[unit]') || text.includes('[author]') || text.includes('[kick]') || text.includes('[ban]'));
 
 	return text;
 };
