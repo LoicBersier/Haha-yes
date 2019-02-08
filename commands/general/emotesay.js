@@ -1,5 +1,6 @@
 const { Command } = require('discord-akairo');
 const emojiCharacters = require('../../emojiCharacters');
+const rand = require('../../rand.js');
 
 class EmotesayCommand extends Command {
 	constructor() {
@@ -25,7 +26,9 @@ class EmotesayCommand extends Command {
 		let text = args.text;
 		if (!text)
 			return;
-		
+	
+		text = rand.random(text, message);
+
 		message.delete();
 		let emojiArray = [];
 		for (let i = 0; i < text.length; i++)
