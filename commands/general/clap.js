@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-
+const rand = require('../../rand.js');
 class ClapCommand extends Command {
 	constructor() {
 		super('clap', {
@@ -23,6 +23,8 @@ class ClapCommand extends Command {
 	async exec(message, args) {
 		if (!args.text)
 			return;
+		args.text = rand.random(args.text, message);
+		
 		let clap = args.text.replace(/ /g, ' 👏 ');
 		message.delete();
 		message.channel.send(`${clap} 👏`);
