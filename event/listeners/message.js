@@ -2,6 +2,7 @@ const { Listener } = require('discord-akairo');
 const responseObject = require('../../json/reply.json');
 const reactObject = require('../../json/react.json');
 const imgResponseObject = require('../../json/imgreply.json');
+const rand = require('../../rand.js');
 const reload = require('auto-reload');
 
 class messageListener extends Listener {
@@ -42,7 +43,9 @@ class messageListener extends Listener {
 			//  User autoresponse
 			let customresponse = reload(`../../tag/${message.guild.id}.json`);
 			if(customresponse[message_content]) {
-				message.channel.send(customresponse[message_content]);
+				let text = customresponse[message_content];
+				text = rand.random(text, message);
+				message.channel.send(text);
 			}		
 		}
 	}
