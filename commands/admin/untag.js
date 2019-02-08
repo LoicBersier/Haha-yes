@@ -4,7 +4,7 @@ const fs = require('fs');
 class UnTagCommand extends Command {
 	constructor() {
 		super('untag', {
-			aliases: ['untag'],
+			aliases: ['untag', 'removetag', 'delete'],
 			category: 'admin',
 			split: 'none',
 			args: [

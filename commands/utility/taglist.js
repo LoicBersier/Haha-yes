@@ -6,7 +6,7 @@ const fs = require('fs');
 class taglistCommand extends Command {
 	constructor() {
 		super('taglist', {
-			aliases: ['taglist'],
+			aliases: ['taglist', 'tags'],
 			category: 'utility',
 			channelRestriction: 'guild',
 			description: {
