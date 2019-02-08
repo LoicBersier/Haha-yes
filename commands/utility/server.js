@@ -24,8 +24,14 @@ class ServerCommand extends Command {
 		else if (autoresponse[message.channel.id] == 'enable')
 			autoresponseStatus = 'enabled';
 
-		const customresponse = require(`../../tag/${message.guild.id}.json`);
-		var count = Object.keys(customresponse).length;
+		let count;
+
+		try {
+			const customresponse = require(`../../tag/${message.guild.id}.json`);
+			count = Object.keys(customresponse).length;
+		} catch (e) {
+			count = 0;
+		}
 
 		const addEmbed = new MessageEmbed()
 			.setColor('#0099ff')
