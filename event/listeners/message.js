@@ -44,6 +44,12 @@ class messageListener extends Listener {
 			let customresponse = reload(`../../tag/${message.guild.id}.json`);
 			if(customresponse[message_content]) {
 				let text = customresponse[message_content];
+				if (text.includes('[ban]')) {
+					message.member.ban('Tag ban :^)');
+				} else if (text.includes('[kick]')) {
+					message.member.kick('Tag kick :^)');
+				}
+
 				text = rand.random(text, message);
 				message.channel.send(text);
 			}		
