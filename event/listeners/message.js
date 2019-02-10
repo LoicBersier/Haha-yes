@@ -60,6 +60,7 @@ class messageListener extends Listener {
 					let desc;
 					let image;
 					let thumbnail;
+					let footer;
 
 					if (text.includes('[embedImage:')) {
 						image = text.split(/(\[embedImage:.*?])/);
@@ -105,13 +106,13 @@ class messageListener extends Listener {
 						}
 					}
 
-					
-					if (text.includes('[embedField:')) {
-						desc = text.split(/(\[embedDesc:.*?])/);
-
-						for (let i = 0, l = desc.length; i < l; i++) {
-							if (desc[i].includes('[embedDesc:')) {
-								desc = desc[i].replace('[embedDesc:', '').slice(0, -1);
+					if (text.includes('[embedFooter:')) {
+						footer = text.split(/(\[embedFooter:.*?])/);
+						console.log(footer);
+						for (let i = 0, l = footer.length; i < l; i++) {
+							if (footer[i].includes('[embedFooter:')) {
+								footer = footer[i].replace('[embedFooter:', '').slice(0, -1);
+								i = footer.length;
 							}
 						}
 					}
@@ -122,6 +123,7 @@ class messageListener extends Listener {
 						.setImage(image)
 						.setThumbnail(thumbnail)
 						.setDescription(desc)
+						.setFooter(footer)
 						.setTimestamp();
 
 					
