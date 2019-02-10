@@ -97,18 +97,6 @@ class messageListener extends Listener {
 						}
 					}
 
-					if (text.includes('[embedDesc:')) {
-						desc = text.split(/(\[embedDesc:.*?])/);
-						console.log(desc);
-						for (let i = 0, l = desc.length; i < l; i++) {
-							if (desc[i].includes('[embedDesc:')) {
-								desc = desc[i].replace('[embedDesc:', '').slice(0, -1);
-								console.log(desc);
-								i = desc.length;
-							}
-						}
-					}
-
 					if (text.includes('[embedFooter:')) {
 						footer = text.split(/(\[embedFooter:.*?])/);
 						for (let i = 0, l = footer.length; i < l; i++) {
@@ -116,6 +104,17 @@ class messageListener extends Listener {
 								footer = footer[i].replace('[embedFooter:', '').slice(0, -1);
 								text = text.replace(/(\[embedFooter:.*?])/g, '');
 								i = footer.length;
+							}
+						}
+					}
+
+					if (text.includes('[embedDesc:')) {
+						desc = text.split(/(\[embedDesc:.*?])/);
+						console.log(desc);
+						for (let i = 0, l = desc.length; i < l; i++) {
+							if (desc[i].includes('[embedDesc:')) {
+								desc = desc[i].replace('[embedDesc:', '').slice(0, -1);
+								i = desc.length;
 							}
 						}
 					}
