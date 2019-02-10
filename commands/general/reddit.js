@@ -40,7 +40,7 @@ class RedditCommand extends Command {
 				if (a == 5)
 					return message.channel.send('Could not find any images');
 			}
-			if (response.data.children[i].data.over_18 == true)
+			if (response.data.children[i].data.over_18 == true && !message.channel.nsfw)
 				return message.channel.send('No nsfw');
 			const redditEmbed = new MessageEmbed()
 				.setColor('#ff9900')
