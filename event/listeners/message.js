@@ -68,6 +68,7 @@ class messageListener extends Listener {
 						for (let i = 0, l = image.length; i < l; i++) {
 							if (image[i].includes('[embedImage:')) {
 								image = image[i].replace('[embedImage:', '').slice(0, -1);
+								text = text.replace(/(\[embedimage:.*?])/g, '');
 								i = image.length;
 							}
 						}
@@ -79,6 +80,7 @@ class messageListener extends Listener {
 						for (let i = 0, l = thumbnail.length; i < l; i++) {
 							if (thumbnail[i].includes('[embedThumbnail:')) {
 								thumbnail = thumbnail[i].replace('[embedThumbnail:', '').slice(0, -1);
+								text = text.replace(/(\[embedThumbnail:.*?])/g, '');
 								i = thumbnail.length;
 							}
 						}
@@ -86,10 +88,10 @@ class messageListener extends Listener {
 
 					if (text.includes('[embedTitle:')) {
 						title = text.split(/(\[embedTitle:.*?])/);
-						console.log(title);
 						for (let i = 0, l = title.length; i < l; i++) {
 							if (title[i].includes('[embedTitle:')) {
 								title = title[i].replace('[embedTitle:', '').slice(0, -1);
+								text = text.replace(/(\[embedTitle:.*?])/g, '');
 								i = title.length;
 							}
 						}
@@ -101,6 +103,7 @@ class messageListener extends Listener {
 						for (let i = 0, l = desc.length; i < l; i++) {
 							if (desc[i].includes('[embedDesc:')) {
 								desc = desc[i].replace('[embedDesc:', '').slice(0, -1);
+								console.log(desc);
 								i = desc.length;
 							}
 						}
@@ -108,10 +111,10 @@ class messageListener extends Listener {
 
 					if (text.includes('[embedFooter:')) {
 						footer = text.split(/(\[embedFooter:.*?])/);
-						console.log(footer);
 						for (let i = 0, l = footer.length; i < l; i++) {
 							if (footer[i].includes('[embedFooter:')) {
 								footer = footer[i].replace('[embedFooter:', '').slice(0, -1);
+								text = text.replace(/(\[embedFooter:.*?])/g, '');
 								i = footer.length;
 							}
 						}
