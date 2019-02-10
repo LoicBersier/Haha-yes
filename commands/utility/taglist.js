@@ -9,6 +9,12 @@ class taglistCommand extends Command {
 			aliases: ['taglist', 'tags'],
 			category: 'utility',
 			channelRestriction: 'guild',
+			args: [
+				{
+					id: 'raw',
+					type: 'string',
+				}
+			],
 			description: {
 				content: 'Show the list of tag for this server.',
 				usage: '',
@@ -17,7 +23,7 @@ class taglistCommand extends Command {
 		});
 	}
 
-	async exec(message) {
+	async exec(message, args) {
 		try {
 			var customresponse = reload(`../../tag/${message.guild.id}.json`);
 			var count = Object.keys(customresponse).length;
@@ -31,9 +37,20 @@ class taglistCommand extends Command {
 				
 				return;
 			}
-			let json = JSON.stringify(data);
+			let json = JSON.parse(data);
+			if (args.raw) {
+				const tagEmbed = new MessageEmbed()
+					.setColor('#ff9900')
+					.setTitle(args.raw)
+					.setDescription(json[args.raw]);
+
+				return message.channel.send(tagEmbed);
+			}
+
+			json = JSON.stringify(data);
 			json = json.replace(/[{}'\\]+/g, '');
 			json = json.replace(/,+/g, '\n');
+
 			const tagEmbed = new MessageEmbed()
 				.setColor('#ff9900')
 				.setTitle('Tags list')
