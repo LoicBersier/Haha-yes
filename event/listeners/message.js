@@ -56,11 +56,12 @@ class messageListener extends Listener {
 				if (text.includes('[embed]')) {
 					text = text.replace(/\[embed\]/, ' ');
 
-					let title;
-					let desc;
+					let title = '';
+					let desc = '';
 					let image;
 					let thumbnail;
-					let footer;
+					let footer = '';
+					let color;
 
 					if (text.includes('[embedImage:')) {
 						image = text.split(/(\[embedImage:.*?])/);
@@ -85,6 +86,18 @@ class messageListener extends Listener {
 							}
 						}
 					}
+
+					if (text.includes('[embedColor:')) {
+						color = text.split(/(\[embedColor:.*?])/);
+						for (let i = 0, l = color.length; i < l; i++) {
+							if (color[i].includes('[embedColor:')) {
+								color = color[i].replace('[embedColor:', '').slice(0, -1);
+								text = text.replace(/(\[embedColor:.*?])/g, '');
+								i = color.length;
+							}
+						}
+					}
+
 
 					if (text.includes('[embedTitle:')) {
 						title = text.split(/(\[embedTitle:.*?])/);
@@ -120,7 +133,7 @@ class messageListener extends Listener {
 					}
 
 					const embed = new MessageEmbed()
-						.setColor()
+						.setColor(color)
 						.setTitle(title)
 						.setImage(image)
 						.setThumbnail(thumbnail)
