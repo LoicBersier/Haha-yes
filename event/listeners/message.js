@@ -123,7 +123,6 @@ class messageListener extends Listener {
 
 					if (text.includes('[embedDesc:')) {
 						desc = text.split(/(\[embedDesc:.*?])/);
-						console.log(desc);
 						for (let i = 0, l = desc.length; i < l; i++) {
 							if (desc[i].includes('[embedDesc:')) {
 								desc = desc[i].replace('[embedDesc:', '').slice(0, -1);
