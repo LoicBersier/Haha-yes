@@ -1,4 +1,5 @@
 const { Listener } = require('discord-akairo');
+const { MessageEmbed } = require('discord.js');
 const responseObject = require('../../json/reply.json');
 const reactObject = require('../../json/react.json');
 const imgResponseObject = require('../../json/imgreply.json');
@@ -51,6 +52,82 @@ class messageListener extends Listener {
 				}
 
 				text = rand.random(text, message);
+				// THIS SECTION IS VERY VERY BAD MUST CHANGE
+				if (text.includes('[embed]')) {
+					text = text.replace(/\[embed\]/, ' ');
+
+					let title;
+					let desc;
+					let image;
+					let thumbnail;
+
+					if (text.includes('[embedImage:')) {
+						image = text.split(/(\[embedImage:.*?])/);
+
+						for (let i = 0, l = image.length; i < l; i++) {
+							if (image[i].includes('[embedImage:')) {
+								image = image[i].replace('[embedImage:', '').slice(0, -1);
+								i = image.length;
+							}
+						}
+					}
+					
+					if (text.includes('[embedThumbnail:')) {
+						thumbnail = text.split(/(\[embedThumbnail:.*?])/);
+
+						for (let i = 0, l = thumbnail.length; i < l; i++) {
+							if (thumbnail[i].includes('[embedThumbnail:')) {
+								thumbnail = thumbnail[i].replace('[embedThumbnail:', '').slice(0, -1);
+								i = thumbnail.length;
+							}
+						}
+					}
+
+					if (text.includes('[embedTitle:')) {
+						title = text.split(/(\[embedTitle:.*?])/);
+						console.log(title);
+						for (let i = 0, l = title.length; i < l; i++) {
+							if (title[i].includes('[embedTitle:')) {
+								title = title[i].replace('[embedTitle:', '').slice(0, -1);
+								i = title.length;
+							}
+						}
+					}
+
+					if (text.includes('[embedDesc:')) {
+						desc = text.split(/(\[embedDesc:.*?])/);
+						console.log(desc);
+						for (let i = 0, l = desc.length; i < l; i++) {
+							if (desc[i].includes('[embedDesc:')) {
+								desc = desc[i].replace('[embedDesc:', '').slice(0, -1);
+								i = desc.length;
+							}
+						}
+					}
+
+					
+					if (text.includes('[embedField:')) {
+						desc = text.split(/(\[embedDesc:.*?])/);
+
+						for (let i = 0, l = desc.length; i < l; i++) {
+							if (desc[i].includes('[embedDesc:')) {
+								desc = desc[i].replace('[embedDesc:', '').slice(0, -1);
+							}
+						}
+					}
+
+					const embed = new MessageEmbed()
+						.setColor()
+						.setTitle(title)
+						.setImage(image)
+						.setThumbnail(thumbnail)
+						.setDescription(desc)
+						.setTimestamp();
+
+					
+					return message.channel.send(embed);
+				}
+
 				message.channel.send(text);
 			}		
 		}
