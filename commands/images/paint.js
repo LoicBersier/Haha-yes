@@ -32,14 +32,13 @@ class paintCommand extends Command {
 
 		const canvas = createCanvas(528, 559);
 		const ctx = canvas.getContext('2d');
-		const background = await loadImage('https://cdn.discordapp.com/attachments/488483518742134794/542633779601342476/260293545019212.png').catch(() => {
+		const background = await loadImage(image).catch(() => {
 			return message.channel.send('An error as occured, please try again');
 		});
-		ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-		const { body: buffer } = await superagent.get(image);
+		ctx.drawImage(background, 50, 50, 480, 450);
+		const { body: buffer } = await superagent.get('https://cdn.discordapp.com/attachments/488483518742134794/542633779601342476/260293545019212.png');
 		const bg = await loadImage(buffer);
-		ctx.drawImage(bg, 50, 50, 450, 450);
-	
+		ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
 
 		message.channel.send({files: [canvas.toBuffer()]}).catch(() => {
 			message.channel.send('an error as occured. Check the bot/channel permissions');
