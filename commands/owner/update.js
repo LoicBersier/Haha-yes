@@ -21,6 +21,8 @@ class EvalCommand extends Command {
 			const { stdout, stderr } = await exec('git pull');
 			message.channel.send(stdout);
 			message.channel.send(stderr);
+			console.log(`stdout: ${stdout}`);
+			console.log(`stderr: ${stderr}`);
 		}
 		update();
 	}
