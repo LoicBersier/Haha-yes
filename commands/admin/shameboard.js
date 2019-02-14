@@ -12,7 +12,7 @@ class shameboardCommand extends Command {
 				{
 					id: 'emote',
 					type: 'string',
-					default: '🌟'
+					default: '✡'
 				},
 				{
 					id: 'count',
