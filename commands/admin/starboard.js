@@ -8,6 +8,18 @@ class StarBoardCommand extends Command {
 			category: 'admin',
 			channelRestriction: 'guild',
 			userPermissions: ['MANAGE_CHANNELS'],
+			args: [
+				{
+					id: 'emote',
+					type: 'string',
+					default: '🌟'
+				},
+				{
+					id: 'count',
+					type: 'integer',
+					default: '4'
+				}
+			],
 			description: {
 				content: 'Set starboard',
 				usage: '[]',
@@ -16,31 +28,17 @@ class StarBoardCommand extends Command {
 		});
 	}
 
-	async exec(message) {
+	async exec(message, args) {
+		console.log(args);
 		let starboardChannel = message.channel.id;
 
-		fs.readFile(`./board/star${message.guild.id}.json`, 'utf8', function readFileCallback(err, data) {
+		fs.writeFile(`./board/star${message.guild.id}.json`, `{"starboard": "${starboardChannel}", "emote": "${args.emote}", "count": "${args.count}"}`, function (err) {
 			if (err) {
-				console.log('yes');
-				fs.writeFile(`./board/star${message.guild.id}.json`, `{"starboard": "${starboardChannel}"}`, function (err) {
-					if (err) {
-						console.log(err);
-					}
-				});
-			} else {
-				let starboard = JSON.parse(data); //now it an object
-				starboard['starboard'] = starboardChannel;
-				var json = JSON.stringify(starboard); //convert it back to json
-				fs.writeFile(`./board/star${message.guild.id}.json`, json, 'utf8', function (err) {
-					if (err) {
-						
-						return console.log(err);
-					}
-				});
+				console.log(err);
 			}
 		});
 		
-		return message.channel.send('This channel have been set as the starboard');
+		return message.channel.send(`This channel have been set as the starboard with ${args.emote} with the minium of ${args.count}`);
 	}
 }
 

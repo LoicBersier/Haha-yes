@@ -8,6 +8,18 @@ class shameboardCommand extends Command {
 			category: 'admin',
 			channelRestriction: 'guild',
 			userPermissions: ['MANAGE_CHANNELS'],
+			args: [
+				{
+					id: 'emote',
+					type: 'string',
+					default: '🌟'
+				},
+				{
+					id: 'count',
+					type: 'integer',
+					default: '4'
+				}
+			],
 			description: {
 				content: 'Set shameboard',
 				usage: '[]',
@@ -16,30 +28,16 @@ class shameboardCommand extends Command {
 		});
 	}
 
-	async exec(message) {
+	async exec(message, args) {
 		let shameboardChannel = message.channel.id;
 
-		fs.readFile(`./board/shame${message.guild.id}.json`, 'utf8', function readFileCallback(err, data) {
+		fs.writeFile(`./board/shame${message.guild.id}.json`, `{"shameboard": "${shameboardChannel}" , "emote": "${args.emote}", "count": "${args.count}"}`, function (err) {
 			if (err) {
-				fs.writeFile(`./board/shame${message.guild.id}.json`, `{"shameboard": "${shameboardChannel}"}`, function (err) {
-					if (err) {
-						console.log(err);
-					}
-				});
-			} else {
-				let shameboard = JSON.parse(data); //now it an object
-				shameboard['shameboard'] = shameboardChannel;
-				var json = JSON.stringify(shameboard); //convert it back to json
-				fs.writeFile(`./board/shame${message.guild.id}.json`, json, 'utf8', function (err) {
-					if (err) {
-						
-						return console.log(err);
-					}
-				});
+				console.log(err);
 			}
 		});
 		
-		return message.channel.send('This channel have been set as the shameboard');
+		return message.channel.send(`This channel have been set as the shameboard with ${args.emote} with the minium of ${args.count}`);
 	}
 }
 
