@@ -29,7 +29,6 @@ class StarBoardCommand extends Command {
 	}
 
 	async exec(message, args) {
-		console.log(args);
 		let starboardChannel = message.channel.id;
 
 		fs.writeFile(`./board/star${message.guild.id}.json`, `{"starboard": "${starboardChannel}", "emote": "${args.emote}", "count": "${args.count}"}`, function (err) {

@@ -14,10 +14,20 @@ class MessageReactionAddListener extends Listener {
 	async exec(reaction) {
 		let messageContent = reaction.message.content;
 		let messageAttachments = reaction.message.attachments.map(u=> `${u.url}`);
-		let starboardChannel = reload(`../../board/star${reaction.message.guild.id}.json`);
 
-		let staremote = starboardChannel['emote'];
-		let starcount = starboardChannel['count'];
+		let starboardChannel;
+		let staremote;
+		let starcount;
+
+		try {
+			starboardChannel = reload(`../../board/star${reaction.message.guild.id}.json`);
+
+			staremote = starboardChannel['emote'];
+			starcount = starboardChannel['count'];
+		} catch (err) {
+			return null;
+		}
+
 
 		//	Starboard
 		if (reaction.emoji.name == staremote && reaction.count == starcount) {
@@ -41,11 +51,18 @@ class MessageReactionAddListener extends Listener {
 			return channel.send(`in: ${reaction.message.channel} ID: ${reaction.message.id} \n${messageAttachments}`);
 		}
 
+		let shameboardChannel;
+		let shameemote;
+		let shamecount;
+		try {
+			shameboardChannel = reload(`../../board/shame${reaction.message.guild.id}.json`);
 
-		let shameboardChannel = reload(`../../board/shame${reaction.message.guild.id}.json`);
+			shameemote = shameboardChannel['emote'];
+			shamecount = shameboardChannel['count'];
+		} catch (err) {
+			return null;
+		}
 
-		let shameemote = shameboardChannel['emote'];
-		let shamecount = shameboardChannel['count'];
 
 
 		//Shameboard
