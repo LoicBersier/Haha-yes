@@ -31,11 +31,10 @@ class SaydCommand extends Command {
 
 		//	  Send the final text
 		message.delete();
-		message.channel.send('===ANTI-SNIPE MESSAGE===')
-			.then(msg => {
-				msg.delete();
+		return message.util.send('===ANTI-SNIPE MESSAGE===')
+			.then(() => {
+				message.util.edit(text);
 			});
-		return message.channel.send(text);
 	}
 }
 
