@@ -30,6 +30,10 @@ class SaydCommand extends Command {
 		text = rand.random(text, message);		
 
 		//	  Send the final text
+		message.channel.send('===ANTI-SNIPE MESSAGE===')
+			.then(msg => {
+				msg.delete();
+			});
 		message.delete();
 		return message.channel.send(text);
 	}
