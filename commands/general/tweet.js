@@ -28,7 +28,14 @@ class tweetCommand extends Command {
 		if (!text)
 			return;
 
+		//Basic filter, hopefully i wont get banned from twitter
+		text = text.replace(/n[\w\W]+gg[\w\W]+|f[aA\W*-_0-9]gg[\w\W]+|f[aA\W*-_0-9]g|kys/gi, '❤');
+		console.log(text);
+
+
 		text = rand.random(text, message);
+
+
 
 		let client = new Twitter({
 			consumer_key: twiConsumer,
@@ -47,6 +54,7 @@ class tweetCommand extends Command {
 			//	  Send the final text
 			return message.channel.send(`Go see ur epic tweet https://twitter.com/HahaYesDB/status/${tweetid}`);
 		} catch(err) {
+			console.error(err);
 			return message.channel.send('Oh no, an error has occured :(');
 		}
 
