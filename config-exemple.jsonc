@@ -1,0 +1,18 @@
+{
+    "token": "Your token",
+    "prefix": "Your prefix ",
+    "ownerID":  "Id of the owner ( probably you )", //optional but recommended
+    "botID":    "id of the bot", //optional but recommended
+    "statsChannel": "channel where the bot send his stats", //optional but recommended
+    "supportServer":    "Invite to the support server of the bot", //optional but recommended
+    "feedbackChannel": "id of the channel where the feedback goes", //optional but recommended
+    "printChannel": "Channel of where it will send the id of people who asked for print", //optional
+    "fbuser": "Facebook email", //optional for the download command
+    "fbpasswd": "Facebook passwd", //optional for the download command
+	"yandexAPI": "yandex api key", //optional for the translate command
+	"acoustID": "LRAhvvxpDu",	//optional for the music match command
+	"twiConsumer": "Twitter consumer key", //optional for the twitter command
+	"twiConsumerSecret": "Twitter consumer key secret", //optional for the twitter command
+	"twiToken": "Twitter token", //optional for the twitter command
+	"twiTokenSecret": "Twitter token secret" //optional for the twitter command
+} 
