@@ -29,6 +29,11 @@ class tweetCommand extends Command {
 	}
 
 	async exec(message, args) {
+		let censor = reload('../../json/twitter/censor.json');
+		let uncensor = reload('../../json/twitter/uncensor.json');
+		filter.addWords(censor);
+		filter.removeWords(uncensor);
+
 		const blacklist = reload('../../json/twiBlacklist.json');
 		const channel = this.client.channels.get(twiChannel);
 
