@@ -6,9 +6,8 @@ class rtweetCommand extends Command {
 	constructor() {
 		super('rtweet', {
 			aliases: ['rtweet', 'rmtweet'],
-			category: 'general',
-			cooldown: 86400,
-			ratelimit: 1,
+			category: 'owner',
+			ownerOnly: 'true',
 			args: [
 				{
 					id: 'text',
