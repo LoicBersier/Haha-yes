@@ -5,6 +5,7 @@
   "dependencies": {
     "@google-cloud/text-to-speech": "^0.4.0",
     "auto-reload": "^0.1.0",
+    "bad-words": "^3.0.1",
     "canvas": "^2.3.0",
     "discord-akairo": "github:1Computer1/discord-akairo#master",
     "discord.js": "github:discordjs/discord.js#master",
