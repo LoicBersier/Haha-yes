@@ -12,7 +12,7 @@ class tweetCommand extends Command {
 			aliases: ['tweet'],
 			category: 'general',
 			cooldown: 86400,
-			ratelimit: 1,
+			ratelimit: 3,
 			args: [
 				{
 					id: 'text',
