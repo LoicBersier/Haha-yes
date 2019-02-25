@@ -1,6 +1,7 @@
 const { Command } = require('discord-akairo');
 const Twitter = require('twitter-lite');
 const rand = require('../../rand.js');
+const filter = require('leo-profanity');
 const { twiConsumer, twiConsumerSecret, twiToken, twiTokenSecret, twiChannel } = require('../../config.json');
 const reload = require('auto-reload');
 
@@ -38,8 +39,9 @@ class tweetCommand extends Command {
 		if (!text)
 			return;
 
-		//Basic filter, hopefully i wont get banned from twitter
-		text = text.replace(/n[\w\W]+gg[\w\W]+|f[aA\W*-_0-9]gg[\w\W]+|f[aA\W*-_0-9]g|kys/gi, '❤');
+		//Filter out swear word
+		text = filter.clean(text);
+		console.log(text);
 
 		text = rand.random(text, message);
 
