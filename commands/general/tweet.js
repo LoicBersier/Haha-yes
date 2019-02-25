@@ -2,7 +2,7 @@ const { Command } = require('discord-akairo');
 const Twitter = require('twitter-lite');
 const rand = require('../../rand.js');
 const { twiConsumer, twiConsumerSecret, twiToken, twiTokenSecret, twiChannel } = require('../../config.json');
-const blacklist = require('../../json/twiBlacklist.json');
+const reload = require('auto-reload');
 
 class tweetCommand extends Command {
 	constructor() {
@@ -27,6 +27,7 @@ class tweetCommand extends Command {
 	}
 
 	async exec(message, args) {
+		const blacklist = reload('../../json/twiBlacklist.json');
 		const channel = this.client.channels.get(twiChannel);
 
 		if (blacklist.includes(message.author.id)) {
