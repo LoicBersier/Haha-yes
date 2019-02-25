@@ -31,11 +31,11 @@ class EvalCommand extends Command {
 
 		let Attachment = (message.attachments).array();
 		if (Attachment[0]) {
-			this.client.users.get(user).send(`**Message from the dev:**\n${text}\n${Attachment[0].url}`);
+			this.client.users.get(user).send(`**Message from the dev:**\n${text}\n${Attachment[0].url}\n**If you wish to respond use the feedback command**`);
 			message.channel.send(`DM sent to ${user.username}`);
 		}
 		else {
-			this.client.users.get(user.id).send(`**Message from the dev:**\n${text}`);
+			this.client.users.get(user.id).send(`**Message from the dev:**\n${text}\n**If you wish to respond use the feedback command**`);
 			message.channel.send(`DM sent to ${user.username}`);
 		}
 
