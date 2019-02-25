@@ -1,13 +1,16 @@
 const { Command } = require('discord-akairo');
 const Twitter = require('twitter-lite');
 const rand = require('../../rand.js');
-const { twiConsumer, twiConsumerSecret, twiToken, twiTokenSecret } = require('../../config.json');
+const { twiConsumer, twiConsumerSecret, twiToken, twiTokenSecret, twiChannel } = require('../../config.json');
+const blacklist = require('../../json/twiBlacklist.json');
 
 class tweetCommand extends Command {
 	constructor() {
 		super('tweet', {
 			aliases: ['tweet'],
 			category: 'general',
+			cooldown: 86400,
+			ratelimit: 2,
 			args: [
 				{
 					id: 'text',
@@ -24,27 +27,29 @@ class tweetCommand extends Command {
 	}
 
 	async exec(message, args) {
+		const channel = this.client.channels.get(twiChannel);
+
+		if (blacklist.includes(message.author.id)) {
+			return message.channel.send('You have been blacklisted from this command... be less naughty next time.');
+		}
+
 		let text = args.text;
 		if (!text)
 			return;
 
 		//Basic filter, hopefully i wont get banned from twitter
 		text = text.replace(/n[\w\W]+gg[\w\W]+|f[aA\W*-_0-9]gg[\w\W]+|f[aA\W*-_0-9]g|kys/gi, '❤');
-		console.log(text);
-
 
 		text = rand.random(text, message);
 
-
-
-		let client = new Twitter({
-			consumer_key: twiConsumer,
-			consumer_secret: twiConsumerSecret,
-			access_token_key: twiToken,
-			access_token_secret: twiTokenSecret
-		});
-
 		try {
+			let client = new Twitter({
+				consumer_key: twiConsumer,
+				consumer_secret: twiConsumerSecret,
+				access_token_key: twiToken,
+				access_token_secret: twiTokenSecret
+			});
+
 			const response = await client.post('statuses/update', {
 				status: text
 			});
@@ -52,6 +57,9 @@ class tweetCommand extends Command {
 			const tweetid = response.id_str;
 	
 			//	  Send the final text
+
+			channel.send(`AUTHOR: ${message.author.username} (${message.author.id}) Sent: ${text}`);
+
 			return message.channel.send(`Go see ur epic tweet https://twitter.com/HahaYesDB/status/${tweetid}`);
 		} catch(err) {
 			console.error(err);
