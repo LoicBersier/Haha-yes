@@ -1,3 +1,4 @@
+//RENAME ME TO config.json AND REMOVE THE COMMENT ( or change every instance of "config.json" to "config.jsonc" )
 {
     "token": "Your token",
     "prefix": "Your prefix ",
