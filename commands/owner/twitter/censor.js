@@ -10,7 +10,8 @@ class censorCommand extends Command {
 			args: [
 				{
 					id: 'word',
-					type: 'string'
+					type: 'string',
+					match: 'rest'
 				}
 			],
 			description: {
@@ -23,8 +24,6 @@ class censorCommand extends Command {
 
 	async exec(message, args) {
 		let word = args.word;
-
-		word = word.toLowerCase();
 
 		let words = [];
 		let json = JSON.stringify(words);
