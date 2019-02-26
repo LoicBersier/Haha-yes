@@ -25,6 +25,8 @@ class censorCommand extends Command {
 	async exec(message, args) {
 		let word = args.word;
 
+		word = word.toLowerCase();
+
 		let words = [];
 		let json = JSON.stringify(words);
 
