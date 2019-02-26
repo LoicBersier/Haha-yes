@@ -12,7 +12,6 @@ You need to install the following
 
 ```
 https://github.com/Automattic/node-canvas
-https://github.com/tojocky/node-printer
 ```
 
 ### Installing
