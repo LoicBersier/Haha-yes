@@ -10,7 +10,8 @@ class uncensorCommand extends Command {
 			args: [
 				{
 					id: 'word',
-					type: 'string'
+					type: 'string',
+					match: 'rest'
 				}
 			],
 			description: {

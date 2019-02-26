@@ -10,7 +10,8 @@ class censorCommand extends Command {
 			args: [
 				{
 					id: 'word',
-					type: 'string'
+					type: 'string',
+					match: 'rest'
 				}
 			],
 			description: {
