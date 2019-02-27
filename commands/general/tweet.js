@@ -66,7 +66,7 @@ class tweetCommand extends Command {
 	
 			//	  Send the final text
 
-			channel.send(`AUTHOR: ${message.author.username} (${message.author.id}) Sent: ${text}\nhttps://twitter.com/HahaYesDB/status/${tweetid}`);
+			channel.send(`AUTHOR: ${message.author.username} (${message.author.id}) Sent: ${args.text}\nhttps://twitter.com/HahaYesDB/status/${tweetid}`);
 
 			return message.channel.send(`Go see ur epic tweet https://twitter.com/HahaYesDB/status/${tweetid}`);
 		} catch(err) {
