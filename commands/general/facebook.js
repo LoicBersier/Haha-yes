@@ -52,10 +52,13 @@ class facebookCommand extends Command {
 		}).then((response) => {
 			return response.json();
 		}).then((response) => { 
-			let postID = response.id.slice(17);
+			console.log(response);
+			let postID;
+			if (response.id) {
+				postID = response.id.slice(17);
+			}
 			message.channel.send(`Go see ur epic post https://www.facebook.com/HahaYesDiscord/posts/${postID}`);
 			channel.send(`AUTHOR: ${message.author.username} (${message.author.id}) Sent: ${args.text}\nhttps://www.facebook.com/HahaYesDiscord/posts/${postID}`);
-			console.log(response);
 		});
 	}
 }
