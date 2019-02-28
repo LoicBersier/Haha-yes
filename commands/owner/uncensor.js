@@ -30,9 +30,9 @@ class uncensorCommand extends Command {
 		let words = [];
 		let json = JSON.stringify(words);
 
-		fs.readFile('./json/twitter/uncensor.json', 'utf8', function readFileCallback(err, data) {
+		fs.readFile('./json/uncensor.json', 'utf8', function readFileCallback(err, data) {
 			if (err) {
-				fs.writeFile('./json/twitter/uncensor.json', `["${word}"]`, function (err) {
+				fs.writeFile('./json/uncensor.json', `["${word}"]`, function (err) {
 					if (err) {
 						
 						console.log(err);
@@ -42,7 +42,7 @@ class uncensorCommand extends Command {
 				words = JSON.parse(data); //now it an object
 				words.push(word);
 				json = JSON.stringify(words); //convert it back to json
-				fs.writeFile('./json/twitter/uncensor.json', json, 'utf8', function (err) {
+				fs.writeFile('./json/uncensor.json', json, 'utf8', function (err) {
 					if (err) {
 						return console.log(err);
 					}

@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const Twitter = require('twitter-lite');
-const { twiConsumer, twiConsumerSecret, twiToken, twiTokenSecret } = require('../../../config.json');
+const { twiConsumer, twiConsumerSecret, twiToken, twiTokenSecret } = require('../../config.json');
 
 class rtweetCommand extends Command {
 	constructor() {

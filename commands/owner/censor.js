@@ -30,9 +30,9 @@ class censorCommand extends Command {
 		let words = [];
 		let json = JSON.stringify(words);
 
-		fs.readFile('./json/twitter/censor.json', 'utf8', function readFileCallback(err, data) {
+		fs.readFile('./json/censor.json', 'utf8', function readFileCallback(err, data) {
 			if (err) {
-				fs.writeFile('./json/twitter/censor.json', `["${word}"]`, function (err) {
+				fs.writeFile('./json/censor.json', `["${word}"]`, function (err) {
 					if (err) {
 						
 						console.log(err);
@@ -42,7 +42,7 @@ class censorCommand extends Command {
 				words = JSON.parse(data); //now it an object
 				words.push(word);
 				json = JSON.stringify(words); //convert it back to json
-				fs.writeFile('./json/twitter/censor.json', json, 'utf8', function (err) {
+				fs.writeFile('./json/censor.json', json, 'utf8', function (err) {
 					if (err) {
 						return console.log(err);
 					}
