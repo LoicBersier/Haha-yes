@@ -7,6 +7,8 @@ class rfacebookCommand extends Command {
 		super('rfacebook', {
 			aliases: ['rfacebook', 'rfb'],
 			category: 'general',
+			cooldown: 86400000,
+			ratelimit: 3,
 			args: [
 				{
 					id: 'id',
