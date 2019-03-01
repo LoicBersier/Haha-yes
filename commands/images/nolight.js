@@ -73,6 +73,7 @@ class nolightCommand extends Command {
 			console.log(`stderr: ${stderr}`);
 		}
 		apng();
+		return message.delete();
 	}
 }
 
