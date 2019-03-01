@@ -55,7 +55,7 @@ class nolightCommand extends Command {
 		ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
 		ctx.font = applyText(canvas, text);
 		ctx.fillStyle = '#FFFFFF';
-		ctx.fillText(text, canvas.width / 10, canvas.height / 9.8);
+		ctx.fillText(text, canvas.width / 10, canvas.height / 9);
 
 		fs.writeFile('./img/frame001.png', canvas.toBuffer(), function (err) {
 			if (err) {
@@ -64,13 +64,15 @@ class nolightCommand extends Command {
 		});
 
 		async function apng() {
+			fs.unlink('./img/nolight.png', (err) => {
+				if (err) throw err;
+			});
 			const { stdout, stderr } = await exec('apngasm -o img/nolight.png img/frame00*.png -s')
 				.then(() => message.channel.send({files: ['./img/nolight.png']}));
 			console.log(`stdout: ${stdout}`);
 			console.log(`stderr: ${stderr}`);
 		}
 		apng();
-		return;
 	}
 }
 
