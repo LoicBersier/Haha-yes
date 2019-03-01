@@ -64,7 +64,7 @@ class nolightCommand extends Command {
 		});
 
 		async function apng() {
-			const { stdout, stderr } = await exec('apngasm img/nolight.png  img/frame00*.png /f');
+			const { stdout, stderr } = await exec('apngasm -o nolight.png frame00*.png -s');
 			console.log(`stdout: ${stdout}`);
 			console.log(`stderr: ${stderr}`);
 			if (stdout.includes('all done')) {
