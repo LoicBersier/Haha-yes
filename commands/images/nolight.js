@@ -64,16 +64,13 @@ class nolightCommand extends Command {
 		});
 
 		async function apng() {
-			const { stdout, stderr } = await exec('apngasm -o img/nolight.png img/frame00*.png -s');
+			const { stdout, stderr } = await exec('apngasm -o img/nolight.png img/frame00*.png -s')
+				.then(() => message.channel.send({files: ['./img/nolight.png']}));
 			console.log(`stdout: ${stdout}`);
 			console.log(`stderr: ${stderr}`);
-			if (stdout.includes('all done')) {
-				return message.channel.send({files: ['./img/nolight.png']});
-			} else {
-				return message.channel.send('An error has occured :((');
-			}
 		}
 		apng();
+		return;
 	}
 }
 
