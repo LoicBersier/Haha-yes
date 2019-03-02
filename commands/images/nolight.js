@@ -32,28 +32,13 @@ class nolightCommand extends Command {
 			.then(loadingmsg => loadingmsg.delete(2000));
 
 		const canvas = createCanvas(400, 400);
-		const applyText = (canvas, text) => {
-			const ctx = canvas.getContext('2d');
-
-			// Declare a base size of the font
-			let fontSize = 70;
-
-			do {
-				// Assign the font to the context and decrement it so it can be measured again
-				ctx.font = `${fontSize -= 10}px ubuntu`;
-			} while (ctx.measureText(text).width > 700 - 300);
-
-			// Return the result to use in the actual canvas
-			return ctx.font;
-		};
-
 		const ctx = canvas.getContext('2d');
 		const { body: buffer } = await superagent.get('https://cdn.discordapp.com/attachments/484013245158522909/551078672132734988/Untitled.png').catch(() => {
 			return message.channel.send('An error as occured, please try again');
 		});
 		const bg = await loadImage(buffer);
 		ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
-		ctx.font = applyText(canvas, text);
+		ctx.font = '70px ubuntu';
 		ctx.fillStyle = '#FFFFFF';
 		ctx.fillText(text, canvas.width / 10, canvas.height / 9);
 
