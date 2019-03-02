@@ -14,11 +14,10 @@ class messageListener extends Listener {
 		});
 	}
 
-	async exec(message) {
-		let autoresponse = reload('../../json/autoresponse.json');
-		let message_content = message.content.toLowerCase();
-	
+	async exec(message) {	
 		if (message.author.bot) return; {
+			let autoresponse = reload('../../json/autoresponse.json');
+			let message_content = message.content.toLowerCase();
 	
 			//  If autoresponse is enable send the response
 			if(autoresponse[message.channel.id] == 'enable') {
