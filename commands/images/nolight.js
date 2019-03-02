@@ -38,9 +38,9 @@ class nolightCommand extends Command {
 		});
 		const bg = await loadImage(buffer);
 		ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
-		ctx.font = '70px ubuntu';
+		ctx.font = '15px ubuntu';
 		ctx.fillStyle = '#FFFFFF';
-		ctx.fillText(text, canvas.width / 10, canvas.height / 9);
+		ctx.fillText(text, 10, 20);
 
 		fs.writeFile('./img/frame001.png', canvas.toBuffer(), function (err) {
 			if (err) {
