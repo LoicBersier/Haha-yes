@@ -27,57 +27,62 @@ class autoresponseCommand extends Command {
 	}
 
 	async exec(message, args) {
-		let text = args.text;
-		let all = args.all;
+		let text = args.text.toLowerCase();
+		let all = args.all.toLowerCase();
 
-		let autoresponse = {};
-		let json = JSON.stringify(autoresponse);
-
-		if (all == 'all') {
-			const guild = this.client.guilds.get(message.guild.id);
-
-			fs.readFile('./json/autoresponse.json', 'utf8', function readFileCallback(err, data) {
-				if (err) {
-					
-					console.log(err);
-				} else {
-
-					autoresponse = JSON.parse(data); //now it an object
-					guild.channels.forEach(channel => autoresponse[channel] = text);
-					json = JSON.stringify(autoresponse); //convert it back to json
-					json = json.replace(/[<#>]/g, '');
-					fs.writeFile('./json/autoresponse.json', json, 'utf8', function (err) {
-						if (err) {
-							
-							return console.log(err);
-						}
-					});
-				}
-			});
-
+		if (text.toLowerCase() == 'enable' || text.toLowerCase() == 'disable') {
+			let autoresponse = {};
+			let json = JSON.stringify(autoresponse);
+	
+			if (all == 'all') {
+				const guild = this.client.guilds.get(message.guild.id);
+	
+				fs.readFile('./json/autoresponse.json', 'utf8', function readFileCallback(err, data) {
+					if (err) {
+						
+						console.log(err);
+					} else {
+	
+						autoresponse = JSON.parse(data); //now it an object
+						guild.channels.forEach(channel => autoresponse[channel] = text.toLowerCase());
+						json = JSON.stringify(autoresponse); //convert it back to json
+						json = json.replace(/[<#>]/g, '');
+						fs.writeFile('./json/autoresponse.json', json, 'utf8', function (err) {
+							if (err) {
+								
+								return console.log(err);
+							}
+						});
+					}
+				});
+	
+				
+				return message.channel.send('Auto response have been disable/enable on every channel');
+	
+			} else if (text.toLowerCase() == 'disable' || 'enable') {
+				fs.readFile('./json/autoresponse.json', 'utf8', function readFileCallback(err, data) {
+					if (err) {
+						console.log(err);
+					} else {
+						autoresponse = JSON.parse(data); //now it an object
+						autoresponse[message.channel.id] = text.toLowerCase();
+						json = JSON.stringify(autoresponse); //convert it back to json
+						fs.writeFile('./json/autoresponse.json', json, 'utf8', function (err) {
+							if (err) {
+								
+								return console.log(err);
+							}
+						});
+					}
+				});
+			}
+	
 			
-			return message.channel.send('Auto response have been disable/enable on every channel');
+			return message.channel.send(`Autoresponse have been ${text.toLowerCase()}d`);
+		} else {
+			return message.channel.send('You didin\'t type a valid input');
 
-		} else if (text == 'disable' || 'enable') {
-			fs.readFile('./json/autoresponse.json', 'utf8', function readFileCallback(err, data) {
-				if (err) {
-					console.log(err);
-				} else {
-					autoresponse = JSON.parse(data); //now it an object
-					autoresponse[message.channel.id] = text;
-					json = JSON.stringify(autoresponse); //convert it back to json
-					fs.writeFile('./json/autoresponse.json', json, 'utf8', function (err) {
-						if (err) {
-							
-							return console.log(err);
-						}
-					});
-				}
-			});
 		}
-
-		
-		return message.channel.send(`Autoresponse have been ${text}d`);
 	}
 }
 module.exports = autoresponseCommand;
