@@ -27,8 +27,8 @@ class autoresponseCommand extends Command {
 	}
 
 	async exec(message, args) {
-		let text = args.text.toLowerCase();
-		let all = args.all.toLowerCase();
+		let text = args.text;
+		let all = args.all;
 
 		if (text.toLowerCase() == 'enable' || text.toLowerCase() == 'disable') {
 			let autoresponse = {};
