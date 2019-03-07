@@ -28,6 +28,7 @@ class spoilerCommand extends Command {
 		text = text.split('').join('||||');
 
 		//	  Send the final text
+		message.delete();
 		return message.channel.send('||' + text + '||');
 	}
 }
