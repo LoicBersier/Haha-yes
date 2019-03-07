@@ -16,7 +16,7 @@ class RebootCommand extends Command {
 	}
 
 	async exec(message) {
-		await message.channel.send('k bye thx\nhttps://i.redd.it/lw8hrvr0l4f11.jpg');
+		await message.channel.send('k bye thx', { files: ['https://cdn.discordapp.com/attachments/488557139732856832/553304488660959252/Untitled-1.png']});
 		process.exit();
 
 	}
