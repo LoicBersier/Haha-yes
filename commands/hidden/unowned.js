@@ -17,7 +17,7 @@ class unownedCommand extends Command {
 		if (message.author.id == '267065637183029248') {
 			return message.channel.send('You have been sucessfully unowned');
 		}
-		message.channel.send('You can\'t unown what has already been owned <:classictroll:488559136494321703>');
+		return message.channel.send('You can\'t unown what has already been owned <:classictroll:488559136494321703>');
 	}
 }
 

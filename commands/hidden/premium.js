@@ -15,7 +15,7 @@ class premiumCommand extends Command {
 	}
 
 	async exec(message) {
-		message.channel.send('EPIC TF2 FEATURE HERE !!!!!!111111 YOU CAN FLY AND CHEAT !!!!!!!!!!!!!!!!! ALSO PREMIUM SONG AND ANNOY EVERYONE AND FLEX ON EM HATERS WITH CUSTOM SKIN!!!!');
+		return message.channel.send('EPIC TF2 FEATURE HERE !!!!!!111111 YOU CAN FLY AND CHEAT !!!!!!!!!!!!!!!!! ALSO PREMIUM SONG AND ANNOY EVERYONE AND FLEX ON EM HATERS WITH CUSTOM SKIN!!!!');
 	}
 }
 
