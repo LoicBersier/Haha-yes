@@ -30,6 +30,10 @@ or node
 ```
 node index.js
 ```
+If on linux you can also do
+```
+nohup node index.js &
+```
 ## Built With
 
 * [Discord.JS](https://github.com/discordjs/discord.js) - The discord api used
