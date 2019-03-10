@@ -34,7 +34,7 @@ class tweetCommand extends Command {
 		filter.addWords(...censor);
 		filter.removeWords(...uncensor);
 
-		const blacklist = reload('../../json/Blacklist.json');
+		const blacklist = reload('../../json/twiBlacklist.json');
 		const channel = this.client.channels.get(twiChannel);
 
 		if (blacklist.includes(message.author.id)) {
