@@ -30,6 +30,10 @@ or node
 ```
 node index.js
 ```
+If on linux you can also do
+```
+nohup node index.js &
+```
 ## Built With
 
 * [Discord.JS](https://github.com/discordjs/discord.js) - The discord api used
@@ -45,6 +49,6 @@ This project is licensed under the **GNU Affero General Public License v3.0** Li
 
 ## Acknowledgments
 
-* discord.JS team
-* 1computer1 for discord-akairo
+* [discord.JS team](https://github.com/discordjs/discord.js)
+* [1computer1](https://github.com/1Computer1/) for discord-akairo & the help command from [hoshi](https://github.com/1Computer1/hoshi)
 * Tina the Cyclops girl#0064 for inspiring me for making this bot
