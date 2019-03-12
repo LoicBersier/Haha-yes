@@ -38,7 +38,8 @@ class BanCommand extends Command {
 		if(member.id === message.author.id)
 			return message.channel.send('Why would you ban yourself ?');
 
-		member.ban(`Banned by : ${message.author.username} for the following reasons : ${reasons}`)
+		await member.send(`https://youtu.be/55-mHgUjZfY\nYou have been banned from **${message.guild.name}** for the following reasons: "**${reasons}**"`);
+		return member.ban(`Banned by : ${message.author.username} for the following reasons : ${reasons}`)
 			.then(() => message.reply(`${member.user.username} was succesfully banned with the following reasons "${reasons}".`));
 	}
 }
