@@ -14,6 +14,7 @@
     "leo-profanity": "^1.2.4",
     "mkdirp": "^0.5.1",
     "node-fetch": "^2.3.0",
+    "node-opus": "^0.3.1",
     "reload-json": "^0.3.1",
     "superagent": "^4.1.0",
     "twitter-lite": "^0.9.1",
