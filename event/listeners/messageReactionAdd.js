@@ -49,7 +49,7 @@ class MessageReactionAddListener extends Listener {
 				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
 				.setTimestamp();
 
-			return channel.send(`in: ${reaction.message.channel}\nhttps://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id}`, {files: messageAttachments}, { embed: starEmbed})
+			return channel.send(`in: ${reaction.message.channel}\nhttps://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id}`, {files: messageAttachments, embed: starEmbed})
 			.catch(() => channel.send(`${reaction.message.author.username}, in: ${reaction.message.channel}\nhttps://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id}\n${messageAttachments}`, { embed: starEmbed}));
 		}
 
@@ -87,7 +87,7 @@ class MessageReactionAddListener extends Listener {
 				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
 				.setTimestamp();
 
-				return channel.send(`in: ${reaction.message.channel}\nhttps://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id}}`,{files: messageAttachments}, { embed: shameEmbed})
+				return channel.send(`in: ${reaction.message.channel}\nhttps://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id}}`,{files: messageAttachments, embed: shameEmbed})
 				.catch(() => channel.send(`${reaction.message.author.username}, in: ${reaction.message.channel}\nhttps://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id}\n${messageAttachments}`, { embed: shameEmbed}));
 		}
 	}
