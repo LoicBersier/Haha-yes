@@ -38,8 +38,10 @@ class MessageReactionAddListener extends Listener {
 
 			const channel = this.client.channels.get(starboardChannel['starboard']);
 
-			if (!messageContent)
-				return channel.send(`${reaction.message.author.username}, in: ${reaction.message.channel} ID: ${reaction.message.id} \n${messageAttachments}`);
+			if (!messageContent) {
+				return channel.send(`${reaction.message.author.username}, in: ${reaction.message.channel}\nhttps://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id}`, {files: messageAttachments})
+					.catch(() => channel.send(`${reaction.message.author.username}, in: ${reaction.message.channel}\nhttps://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id}\n${messageAttachments}`));
+			}
 
 			const starEmbed = new MessageEmbed()
 				.setColor(reaction.message.member.displayHexColor)
@@ -47,8 +49,8 @@ class MessageReactionAddListener extends Listener {
 				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
 				.setTimestamp();
 
-			channel.send({ embed: starEmbed});
-			return channel.send(`in: ${reaction.message.channel} ID: ${reaction.message.id} \n${messageAttachments}`);
+			return channel.send(`in: ${reaction.message.channel}\nhttps://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id}`, {files: messageAttachments}, { embed: starEmbed})
+			.catch(() => channel.send(`${reaction.message.author.username}, in: ${reaction.message.channel}\nhttps://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id}\n${messageAttachments}`, { embed: starEmbed}));
 		}
 
 		let shameboardChannel;
@@ -74,8 +76,10 @@ class MessageReactionAddListener extends Listener {
 
 			const channel = this.client.channels.get(shameboardChannel['shameboard']);
 
-			if (!messageContent)
-				return channel.send(`${reaction.message.author.username}, in: ${reaction.message.channel} ID: ${reaction.message.id} \n${messageAttachments}`);
+			if (!messageContent) {
+				return channel.send(`${reaction.message.author.username}, in: ${reaction.message.channel}\nhttps://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id}`, {files: messageAttachments})
+					.catch(() => channel.send(`${reaction.message.author.username}, in: ${reaction.message.channel}\nhttps://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id}\n${messageAttachments}`));
+			}
 
 			const shameEmbed = new MessageEmbed()
 				.setColor(reaction.message.member.displayHexColor)
@@ -83,8 +87,8 @@ class MessageReactionAddListener extends Listener {
 				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
 				.setTimestamp();
 
-			channel.send({ embed: shameEmbed});
-			return channel.send(`in: ${reaction.message.channel} ID: ${reaction.message.id} \n${messageAttachments}`);
+				return channel.send(`in: ${reaction.message.channel}\nhttps://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id}}`,{files: messageAttachments}, { embed: shameEmbed})
+				.catch(() => channel.send(`${reaction.message.author.username}, in: ${reaction.message.channel}\nhttps://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id}\n${messageAttachments}`, { embed: shameEmbed}));
 		}
 	}
 }
