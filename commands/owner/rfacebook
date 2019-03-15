@@ -6,7 +6,8 @@ class rfacebookCommand extends Command {
 	constructor() {
 		super('rfacebook', {
 			aliases: ['rfacebook', 'rfb'],
-			category: 'general',
+			category: 'owner',
+			ownerOnly: 'true',
 			cooldown: 86400000,
 			ratelimit: 3,
 			args: [
