@@ -13,7 +13,7 @@ class MessageReactionAddListener extends Listener {
 
 	async exec(reaction) {
 		let messageContent = reaction.message.content;
-		let messageAttachments = reaction.message.attachments.map(u=> `${u.url}`);
+		let messageAttachments = reaction.message.attachments.map(u=> u.url);
 
 		let starboardChannel;
 		let staremote;
