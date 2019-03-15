@@ -1,7 +1,6 @@
 const { Listener } = require('discord-akairo');
 const { MessageEmbed } = require('discord.js');
 const reload = require('auto-reload');
-const getUrls = require('get-urls');
 let messageID = require('../../json/starboard.json');
 
 class MessageReactionAddListener extends Listener {
@@ -15,7 +14,6 @@ class MessageReactionAddListener extends Listener {
 	async exec(reaction) {
 		let messageContent = reaction.message.content;
 		let messageAttachments = reaction.message.attachments.map(u=> `${u.url}`);
-		let URL = [...getUrls(messageContent)];
 
 		let starboardChannel;
 		let staremote;
@@ -50,11 +48,6 @@ class MessageReactionAddListener extends Listener {
 				.setDescription(`[Jump to message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})\n\n${messageContent}`)
 				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
 				.setTimestamp();
-
-			if (URL) {
-				return channel.send(`in: ${reaction.message.channel}\nhttps://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id}`, {files: [URL[0]]})
-					.catch(() => channel.send(`${reaction.message.author.username}, in: ${reaction.message.channel}\n${URL[0]}`));
-			}
 
 			return channel.send(`in: ${reaction.message.channel}`, {files: messageAttachments, embed: starEmbed})
 				.catch(() => channel.send(`${reaction.message.author.username}, in: ${reaction.message.channel}`, { embed: starEmbed}));
@@ -93,11 +86,6 @@ class MessageReactionAddListener extends Listener {
 				.setDescription(`[Jump to message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})\n\n${messageContent}`)
 				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
 				.setTimestamp();
-
-			if (URL) {
-				return channel.send(`in: ${reaction.message.channel}\nhttps://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id}`, {files: [URL[0]]})
-					.catch(() => channel.send(`${reaction.message.author.username}, in: ${reaction.message.channel}\n${URL[0]}`));
-			}
 
 			return channel.send(`in: ${reaction.message.channel}`,{files: messageAttachments, embed: shameEmbed})
 				.catch(() => channel.send(`${reaction.message.author.username}, in: ${reaction.message.channel}`, { embed: shameEmbed}));
