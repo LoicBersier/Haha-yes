@@ -5,7 +5,7 @@ const exec = util.promisify(require('child_process').exec);
 class EvalCommand extends Command {
 	constructor() {
 		super('update', {
-			aliases: ['update', 'pull'],
+			aliases: ['update', 'pull', 'git pull'],
 			category: 'owner',
 			ownerOnly: 'true',
 			description: {
