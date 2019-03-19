@@ -11,7 +11,8 @@ class MessageReactionAddListener extends Listener {
 		});
 	}
 
-	async exec(reaction) {
+	async exec(reaction, user) {		
+		if (reaction.message.author == user) return;
 		let messageContent = reaction.message.content;
 		let messageAttachments = reaction.message.attachments.map(u=> u.url);
 
