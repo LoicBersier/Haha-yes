@@ -5,7 +5,7 @@ const fetch = require('node-fetch');
 class spbCommand extends Command {
 	constructor() {
 		super('spb', {
-			aliases: ['spb', '!spb'],
+			aliases: ['spb'],
 			category: 'utility',
 			args: [
 				{
