@@ -32,9 +32,10 @@ class spbCommand extends Command {
 			.then(res => {
 				const dest = fs.createWriteStream('./spb.png');
 				res.body.pipe(dest);
+				dest.on('finish', () => {
+					return message.channel.send({files: ['./spb.png']});
+				});
 			});
-			
-		return await message.channel.send({files: ['./spb.png']});
 	}
 }
 
