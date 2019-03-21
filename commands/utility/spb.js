@@ -34,7 +34,7 @@ class spbCommand extends Command {
 				res.body.pipe(dest);
 			});
 			
-		return message.channel.send({files: ['./spb.png']});
+		return await message.channel.send({files: ['./spb.png']});
 	}
 }
 
