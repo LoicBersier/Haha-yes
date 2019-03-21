@@ -20,8 +20,12 @@ class fartpissCommand extends Command {
 	}
 
 	async exec(message, args) {
+		if (!args.member) {
+			message.guild.members.get(message.author.id).setNickname('fart pis');
+			return message.channel.send('fart piss <:youngtroll:488559163832795136>');
+		}
 		args.member.setNickname('fart pis');
-		message.channel.send('fart piss <:youngtroll:488559163832795136>');
+		return message.channel.send('fart piss <:youngtroll:488559163832795136>');
 	}
 }
 
