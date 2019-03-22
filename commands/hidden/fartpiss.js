@@ -23,12 +23,13 @@ class fartpissCommand extends Command {
 
 	async exec(message, args) {
 		if (!args.member) {
-			message.guild.members.get(message.author.id).setNickname('fart piss');
-			return message.channel.send('fart piss <:youngtroll:488559163832795136>');
+			message.guild.members.get(message.author.id).setNickname('fart piss')
+				.then(() => message.channel.send('sucessfully fart pissed on you <:youngtroll:488559163832795136'))
+				.catch(() => message.channel.send('Sorry i could not fart piss on you :('));
 		}
 		args.member.setNickname('fart piss')
-			.then(() => message.channel.send(`sucessfully fart pissed on ${args.member.username} <:youngtroll:488559163832795136>`))
-			.catch(() => message.channel.send(`Sorry i could not fart piss on ${args.member.username} :(`));
+			.then(() => message.channel.send(`sucessfully fart pissed on ${args.member.user.username} <:youngtroll:488559163832795136>`))
+			.catch(() => message.channel.send(`Sorry i could not fart piss on ${args.member.user.username} :(`));
 	}
 }
 
