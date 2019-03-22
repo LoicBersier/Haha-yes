@@ -26,8 +26,9 @@ class fartpissCommand extends Command {
 			message.guild.members.get(message.author.id).setNickname('fart piss');
 			return message.channel.send('fart piss <:youngtroll:488559163832795136>');
 		}
-		args.member.setNickname('fart piss');
-		return message.channel.send('fart piss <:youngtroll:488559163832795136>');
+		args.member.setNickname('fart piss')
+			.then(() => message.channel.send(`sucessfully fart pissed on ${args.member} <:youngtroll:488559163832795136>`))
+			.catch(() => message.channel.send(`Sorry i could not fart piss on ${args.member} :(`));
 	}
 }
 
