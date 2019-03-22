@@ -4,6 +4,8 @@ class fartpissCommand extends Command {
 	constructor() {
 		super('fartpiss', {
 			aliases: ['fartpiss'],
+			cooldown: 86400000,
+			ratelimit: 5,
 			category: 'hidden',
 			args: [
 				{
