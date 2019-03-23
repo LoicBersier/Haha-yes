@@ -6,7 +6,7 @@ class fartpissCommand extends Command {
 			aliases: ['fartpiss'],
 			cooldown: 86400000,
 			ratelimit: 5,
-			category: 'hidden',
+			category: 'reserver',
 			args: [
 				{
 					id: 'member',
@@ -22,6 +22,10 @@ class fartpissCommand extends Command {
 	}
 
 	async exec(message, args) {
+		if (message.guild.id != '240843640375607296') {
+			return;
+		}
+		
 		if (!args.member) {
 			message.guild.members.get(message.author.id).setNickname('fart piss')
 				.then(() => message.channel.send('sucessfully fart pissed on you <:youngtroll:488559163832795136'))
