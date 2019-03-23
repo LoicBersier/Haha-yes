@@ -21,16 +21,16 @@ class ReadyListener extends Listener {
 			console.log('Status type: Watching');
 
 			let status = watch[Math.floor((Math.random() * watch.length))];
-			status = status.replace('${prefix}', prefix);
+			status = status.replace('${prefix}', prefix[0]);
 		
-			this.client.user.setActivity(`${status} | ${prefix} help`, { type: 'WATCHING' });
+			this.client.user.setActivity(`${status} | ${prefix[0]} help`, { type: 'WATCHING' });
 		} else {
 			console.log('Status type: Playing');
 
 			let status = game[Math.floor((Math.random() * game.length))];
-			status = status.replace('${prefix}', prefix);
+			status = status.replace('${prefix}', prefix[0]);
 		
-			this.client.user.setActivity(`${status} | ${prefix} help`, { type: 'PLAYING' });
+			this.client.user.setActivity(`${status} | ${prefix[0]} help`, { type: 'PLAYING' });
 		}
 
 
