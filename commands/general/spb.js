@@ -6,7 +6,7 @@ class spbCommand extends Command {
 	constructor() {
 		super('spb', {
 			aliases: ['spb'],
-			category: 'utility',
+			category: 'general',
 			args: [
 				{
 					id: 'link',
@@ -30,10 +30,10 @@ class spbCommand extends Command {
 
 		fetch(link)
 			.then(res => {
-				const dest = fs.createWriteStream('./spb.png');
+				const dest = fs.createWriteStream('./img/spb.png');
 				res.body.pipe(dest);
 				dest.on('finish', () => {
-					return message.channel.send({files: ['./spb.png']});
+					return message.channel.send({files: ['./img/spb.png']});
 				});
 			});
 	}
