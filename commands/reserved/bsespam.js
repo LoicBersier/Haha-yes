@@ -29,7 +29,7 @@ class bsespamCommand extends Command {
 
 	async exec(message, args) {
 		if (message.author.id != '428387534842626048')
-			return message.say('Command only available to **Big Snow Energy**');
+			return;
 		if (args.number <= 10) {
 			for(let i = 0; i < args.number; i++) {
 				message.channel.send(args.text);
