@@ -22,7 +22,7 @@ class spbCommand extends Command {
 	}
 
 	async exec(message, args) {
-		if (!args.link.includes('shitpostbot.com/template/')) {
+		if (!args.link || !args.link.includes('shitpostbot.com/template/')) {
 			return message.channel.send('Need a template Shitpostbot 5000 link!');
 		}
 
