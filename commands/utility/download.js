@@ -36,6 +36,13 @@ class DownloadCommand extends Command {
 				console.log('error 2:', err);
 				message.channel.send('An error has occured, I can\'t download from the link you provided.');
 			});
+
+			message.channel.send('Downloading <a:loadingmin:527579785212329984>').then(msg => {
+				video.on('end', function () {
+					msg.delete();
+				});
+			});
+
 			video.on('info', function(info) {
 				let duration = info.duration;
 				if (duration) {
@@ -69,30 +76,29 @@ class DownloadCommand extends Command {
 					preset: 'General/Gmail Small 10 Minutes 288p30'
 				};
 				//Compress vid if bigger than 8MB
-				hbjs.spawn(options)
-					.on('start', function() {
-						message.channel.send('Video bigger than 8MB compressing now (This can take a long time!)\nWant it to go faster? Donate to the dev with the donate command, so i can get a better server and do it faster!');
-					})
-					.on('error', err => {
-						message.channel.send('An error has occured while compressing the video');
-						console.error(err);
-					})
-					.on('progress', progress => {
-						console.log(
-							'Percent complete: %s, ETA: %s',
-							progress.percentComplete,
-							progress.eta
-						);
-					})
-					.on('end', function () {
-						message.delete();
-						message.channel.send(`Downloaded by ${message.author.username}`, { files: ['./videoReady.mp4'] })
-							.catch(() => message.channel.send('File too big'));					
+				let handbrake = hbjs.spawn(options);
+				handbrake.on('start', function() {
+					message.channel.send('Video bigger than 8MB compressing now <a:loadingmin:527579785212329984> (This can take a long time!)\nWant it to go faster? Donate to the dev with the donate command, so i can get a better server and do it faster!').then(msg => {
+						handbrake.on('end', function () {
+							msg.delete();
+						});
 					});
-				message.channel.send('Downloading <a:loadingmin:527579785212329984>').then(msg => {
-					video.on('end', function () {
-						msg.delete();
-					});
+				});
+				handbrake.on('error', err => {
+					message.channel.send('An error has occured while compressing the video');
+					console.error(err);
+				});
+				handbrake.on('progress', progress => {
+					console.log(
+						'Percent complete: %s, ETA: %s',
+						progress.percentComplete,
+						progress.eta
+					);
+				});
+				handbrake.on('end', function () {
+					message.delete();
+					message.channel.send(`Downloaded by ${message.author.username}`, { files: ['./videoReady.mp4'] })
+						.catch(() => message.channel.send('File too big'));					
 				});
 			});
 		} else {
