@@ -6,11 +6,12 @@ class fartpissCommand extends Command {
 			aliases: ['fartpiss'],
 			cooldown: 86400000,
 			ratelimit: 5,
-			category: 'reserver',
+			category: 'reserved',
 			args: [
 				{
 					id: 'member',
-					type: 'member'
+					type: 'member',
+					match: 'rest'
 				}
 			],
 			description: {
