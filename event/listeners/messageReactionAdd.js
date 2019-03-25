@@ -11,7 +11,7 @@ class MessageReactionAddListener extends Listener {
 		});
 	}
 
-	async exec(reaction, user) {		
+	async exec(reaction, user) {
 		if (reaction.message.author == user) return;
 		let messageContent = reaction.message.content;
 		let messageAttachments = reaction.message.attachments.map(u=> u.url);
@@ -46,8 +46,10 @@ class MessageReactionAddListener extends Listener {
 
 			const starEmbed = new MessageEmbed()
 				.setColor(reaction.message.member.displayHexColor)
-				.setDescription(`[Jump to message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})\n\n${messageContent}`)
 				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
+				.setDescription(messageContent)
+				.addField('Jumo to', `[message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`)
+				.setFooter(reaction.count + ' ' + staremote)
 				.setTimestamp();
 
 			return channel.send(`in: ${reaction.message.channel}`, {files: messageAttachments, embed: starEmbed})
@@ -84,8 +86,10 @@ class MessageReactionAddListener extends Listener {
 
 			const shameEmbed = new MessageEmbed()
 				.setColor(reaction.message.member.displayHexColor)
-				.setDescription(`[Jump to message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})\n\n${messageContent}`)
 				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
+				.setDescription(messageContent)
+				.addField('Jumo to', `[message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`)
+				.setFooter(reaction.count + ' ' + shameemote)
 				.setTimestamp();
 
 			return channel.send(`in: ${reaction.message.channel}`,{files: messageAttachments, embed: shameEmbed})
