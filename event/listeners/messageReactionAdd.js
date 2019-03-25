@@ -48,7 +48,7 @@ class MessageReactionAddListener extends Listener {
 				.setColor(reaction.message.member.displayHexColor)
 				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
 				.setDescription(messageContent)
-				.addField('Jumo to', `[message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`)
+				.addField('Jump to', `[message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`)
 				.setFooter(reaction.count + ' ' + staremote)
 				.setTimestamp();
 
@@ -88,7 +88,7 @@ class MessageReactionAddListener extends Listener {
 				.setColor(reaction.message.member.displayHexColor)
 				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
 				.setDescription(messageContent)
-				.addField('Jumo to', `[message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`)
+				.addField('Jump to', `[message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`)
 				.setFooter(reaction.count + ' ' + shameemote)
 				.setTimestamp();
 
