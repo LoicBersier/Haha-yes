@@ -6,11 +6,12 @@ class fartpissCommand extends Command {
 			aliases: ['fartpiss'],
 			cooldown: 86400000,
 			ratelimit: 5,
-			category: 'reserver',
+			category: 'reserved',
 			args: [
 				{
 					id: 'member',
-					type: 'member'
+					type: 'member',
+					match: 'rest'
 				}
 			],
 			description: {
@@ -28,7 +29,7 @@ class fartpissCommand extends Command {
 		
 		if (!args.member) {
 			message.guild.members.get(message.author.id).setNickname('fart piss')
-				.then(() => message.channel.send('sucessfully fart pissed on you <:youngtroll:488559163832795136'))
+				.then(() => message.channel.send('sucessfully fart pissed on you <:youngtroll:488559163832795136>'))
 				.catch(() => message.channel.send('Sorry i could not fart piss on you :('));
 		}
 		args.member.setNickname('fart piss')
