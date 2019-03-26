@@ -8,7 +8,7 @@ class unownedCommand extends Command {
 			args: [
 				{
 					id: 'member',
-					type: 'member',
+					type: 'string',
 					match: 'rest'
 				}
 			],
