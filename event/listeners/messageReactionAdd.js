@@ -40,8 +40,15 @@ class MessageReactionAddListener extends Listener {
 			const channel = this.client.channels.get(starboardChannel['starboard']);
 
 			if (!messageContent) {
-				return channel.send(`${reaction.message.author.username}, in: ${reaction.message.channel}\nhttps://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id}`, {files: messageAttachments})
-					.catch(() => channel.send(`${reaction.message.author.username}, in: ${reaction.message.channel}\nhttps://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id}\n${messageAttachments}`));
+				const starEmbed = new MessageEmbed()
+				.setColor(reaction.message.member.displayHexColor)
+				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
+				.setDescription(`[Jump to message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`)
+				.setFooter(reaction.count + ' ' + staremote)
+				.setTimestamp();
+
+				return channel.send({files: messageAttachments, embed: starEmbed})
+					.catch(() => channel.send(messageAttachments, { embed: starEmbed }));
 			}
 
 			const starEmbed = new MessageEmbed()
@@ -80,8 +87,15 @@ class MessageReactionAddListener extends Listener {
 			const channel = this.client.channels.get(shameboardChannel['shameboard']);
 
 			if (!messageContent) {
-				return channel.send(`${reaction.message.author.username}, in: ${reaction.message.channel}\nhttps://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id}`, {files: messageAttachments})
-					.catch(() => channel.send(`${reaction.message.author.username}, in: ${reaction.message.channel}\nhttps://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id}\n${messageAttachments}`));
+				const shameEmbed = new MessageEmbed()
+				.setColor(reaction.message.member.displayHexColor)
+				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
+				.setDescription(`[Jump to message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`)
+				.setFooter(reaction.count + ' ' + shameemote)
+				.setTimestamp();
+
+				return channel.send({files: messageAttachments, embed: shameEmbed })
+					.catch(() => channel.send(messageAttachments, { embed: shameEmbed}));
 			}
 
 			const shameEmbed = new MessageEmbed()
