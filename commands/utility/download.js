@@ -14,6 +14,10 @@ class DownloadCommand extends Command {
 					id: 'link',
 					type: 'string',
 					default: 'https://www.youtube.com/watch?v=6n3pFFPSlW4'
+				},
+				{
+					id: 'alt',
+					type: 'bool',
 				}
 			],
 			clientPermissions: ['ATTACH_FILES'],
@@ -30,6 +34,21 @@ class DownloadCommand extends Command {
 		let needCompress = false;
 
 		if (link.includes('http') || link.includes('www')) {
+			if (args.alt) {
+				console.log('alt download!')
+				fs.unlink('./video.mp4', (err) => {
+				  if (err);
+				});
+				return youtubedl.exec(args.link, ['-o', `./video.mp4`], {}, function(err, output) {
+				  if (err) throw err;
+				  console.log(output.join('\n'));
+				  message.delete();
+				  message.channel.send(`Downloaded by ${message.author.username}`, { files: ['./video.mp4'] })
+					  .catch(() => message.channel.send('File too big'));	
+				});
+			}
+
+
 			let video = youtubedl(link, [`--username=${fbuser}`, `--password=${fbpasswd}`]);
 			video.pipe(fs.createWriteStream('./video.mp4'));
 			video.on('error', function error(err) {
