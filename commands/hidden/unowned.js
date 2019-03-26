@@ -5,6 +5,13 @@ class unownedCommand extends Command {
 		super('unowned', {
 			aliases: ['unowned'],
 			category: 'hidden',
+			args: [
+				{
+					id: 'member',
+					type: 'member',
+					match: 'rest'
+				}
+			],
 			description: {
 				content: 'unowned',
 				usage: '',
@@ -13,7 +20,10 @@ class unownedCommand extends Command {
 		});
 	}
 
-	async exec(message) {
+	async exec(message, args) {
+		if (args.member) {
+			return message.channel.send('You can\'t do that! that\'s illegal!');
+		}
 		if (message.author.id == '267065637183029248') {
 			return message.channel.send('You have been sucessfully unowned');
 		}
