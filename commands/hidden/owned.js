@@ -8,7 +8,8 @@ class OwnedCommand extends Command {
 			args: [
 				{
 					id: 'member',
-					type: 'member'
+					type: 'member',
+					match: 'rest'
 				}
 			],
 			description: {
