@@ -34,6 +34,9 @@ If on linux you can also do
 ```
 nohup node index.js &
 ```
+
+You can now use the python script [buildConfig.py](https://gitlab.com/LoicBersier/DiscordBot/blob/master/buildConfig.py) to build a config.json
+
 ## Built With
 
 * [Discord.JS](https://github.com/discordjs/discord.js) - The discord api used
