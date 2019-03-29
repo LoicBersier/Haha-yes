@@ -41,11 +41,12 @@ class MessageReactionAddListener extends Listener {
 
 			if (!messageContent) {
 				const starEmbed = new MessageEmbed()
-				.setColor(reaction.message.member.displayHexColor)
-				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
-				.setDescription(`[Jump to message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`)
-				.setFooter(reaction.count + ' ' + staremote)
-				.setTimestamp();
+					.setColor(reaction.message.member.displayHexColor)
+					.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
+					.setDescription(`[Jump to message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`)
+					.addField('Channel', reaction.message.channel)
+					.setFooter(reaction.count + ' ' + staremote)
+					.setTimestamp();
 
 				return channel.send({files: messageAttachments, embed: starEmbed})
 					.catch(() => channel.send(messageAttachments, { embed: starEmbed }));
@@ -56,11 +57,12 @@ class MessageReactionAddListener extends Listener {
 				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
 				.setDescription(messageContent)
 				.addField('Jump to', `[message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`)
+				.addField('Channel', reaction.message.channel)
 				.setFooter(reaction.count + ' ' + staremote)
 				.setTimestamp();
 
-			return channel.send(`in: ${reaction.message.channel}`, {files: messageAttachments, embed: starEmbed})
-				.catch(() => channel.send(`${reaction.message.author.username}, in: ${reaction.message.channel}`, { embed: starEmbed}));
+			return channel.send({files: messageAttachments, embed: starEmbed})
+				.catch(() => channel.send(messageAttachments, { embed: starEmbed}));
 		}
 
 		let shameboardChannel;
@@ -88,11 +90,12 @@ class MessageReactionAddListener extends Listener {
 
 			if (!messageContent) {
 				const shameEmbed = new MessageEmbed()
-				.setColor(reaction.message.member.displayHexColor)
-				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
-				.setDescription(`[Jump to message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`)
-				.setFooter(reaction.count + ' ' + shameemote)
-				.setTimestamp();
+					.setColor(reaction.message.member.displayHexColor)
+					.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
+					.setDescription(`[Jump to message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`)
+					.addField('Channel', reaction.message.channel)
+					.setFooter(reaction.count + ' ' + shameemote)
+					.setTimestamp();
 
 				return channel.send({files: messageAttachments, embed: shameEmbed })
 					.catch(() => channel.send(messageAttachments, { embed: shameEmbed}));
@@ -103,11 +106,12 @@ class MessageReactionAddListener extends Listener {
 				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
 				.setDescription(messageContent)
 				.addField('Jump to', `[message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`)
+				.addField('Channel', reaction.message.channel)
 				.setFooter(reaction.count + ' ' + shameemote)
 				.setTimestamp();
 
-			return channel.send(`in: ${reaction.message.channel}`,{files: messageAttachments, embed: shameEmbed})
-				.catch(() => channel.send(`${reaction.message.author.username}, in: ${reaction.message.channel}`, { embed: shameEmbed}));
+			return channel.send({files: messageAttachments, embed: shameEmbed})
+				.catch(() => channel.send(messageAttachments, { embed: shameEmbed}));
 		}
 	}
 }
