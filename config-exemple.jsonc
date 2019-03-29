@@ -10,7 +10,7 @@
 	"fbuser": "Facebook email", //optional | for the download command
 	"fbpasswd": "Facebook passwd", //optional | for the download command
 	"yandexAPI": "yandex api key", //optional | for the translate command
-	"acoustID": "LRAhvvxpDu",	//optional | for the music match command
+	"acoustID": "acoust api key",	//optional | for the music match command
 	"twiConsumer": "Twitter consumer key", //optional | for the twitter command
 	"twiConsumerSecret": "Twitter consumer key secret", //optional | for the twitter command
 	"twiToken": "Twitter token", //optional | for the twitter command
