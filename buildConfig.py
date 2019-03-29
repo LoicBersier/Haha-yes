@@ -18,6 +18,7 @@ if version == 'A' or 'a':
 	data = {'token': token, 'prefix': prefix, 'ownerID': ownerID}
 	with open("config.json", "w") as outfile:
 		json.dump(data, outfile)
+	quit()
 
 if version == 'B' or 'b':
 	print('You choosed the recommanded version')
@@ -40,6 +41,7 @@ if version == 'B' or 'b':
 	data = {'token': token, 'prefix': prefix, 'ownerID': ownerID, 'botID': botID, 'statsChannel': statsChannel, 'supportServer': supportServer, 'feedbackChannel': feedbackChannel}
 	with open("config.json", "w") as outfile:
 		json.dump(data, outfile)
+	quit()
 	
 if version == 'C' or 'c':
 	print('You choosed the full version')
@@ -79,3 +81,4 @@ if version == 'C' or 'c':
 	data = {'token': token, 'prefix': prefix, 'ownerID': ownerID, 'botID': botID, 'statsChannel': statsChannel, 'supportServer': supportServer, 'feedbackChannel': feedbackChannel, 'fbuser': fbuser, 'fbpasswd': fbpasswd, 'yandexAPI': yandexAPI, 'acoustID': acoustID, 'twiConsumer': twiConsumer, 'twiConsumerSecret': twiConsumerSecret, 'twiToken': twiToken, 'twiTokenSecret': twiTokenSecret}
 	with open("config.json", "w") as outfile:
 		json.dump(data, outfile)
+	quit()
