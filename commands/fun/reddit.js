@@ -6,7 +6,7 @@ class RedditCommand extends Command {
 	constructor() {
 		super('reddit', {
 			aliases: ['reddit'],
-			category: 'general',
+			category: 'fun',
 			args: [
 				{
 					id: 'sub',

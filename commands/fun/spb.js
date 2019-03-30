@@ -6,7 +6,7 @@ class spbCommand extends Command {
 	constructor() {
 		super('spb', {
 			aliases: ['spb'],
-			category: 'general',
+			category: 'fun',
 			args: [
 				{
 					id: 'link',

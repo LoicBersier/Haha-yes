@@ -68,6 +68,7 @@ class HelpCommand extends Command {
 		for (const category of this.handler.categories.values()) {
 			const title = {
 				general: '📝\u2000General',
+				fun: '🔩\u2000Fun',
 				images: '💕\u2000Images',
 				utility: '⭐\u2000Utility',
 				admin: '😎\u2000Admin',

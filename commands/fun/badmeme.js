@@ -5,7 +5,7 @@ class ImgurCommand extends Command {
 	constructor() {
 		super('imgur', {
 			aliases: ['badmeme', 'imgur'],
-			category: 'general',
+			category: 'fun',
 			description: {
 				content: 'Send some random images from imgur',
 				usage: '',

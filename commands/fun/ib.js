@@ -5,7 +5,7 @@ class InspiroBotCommand extends Command {
 	constructor() {
 		super('InspiroBot', {
 			aliases: ['inspirobot', 'ib'],
-			category: 'general',
+			category: 'fun',
 			description: {
 				content: 'Send images from Inspirobot',
 				usage: '',
