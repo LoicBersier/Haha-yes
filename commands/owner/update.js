@@ -1,6 +1,7 @@
 const { Command } = require('discord-akairo');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
+const { MessageEmbed } = require('discord.js');
 
 class EvalCommand extends Command {
 	constructor() {
@@ -19,8 +20,10 @@ class EvalCommand extends Command {
 	async exec(message) {
 		async function update() {
 			const { stdout, stderr } = await exec('git pull');
-			message.channel.send(stdout);
-			message.channel.send(stderr);
+			const Embed = new MessageEmbed()
+				.addField('stdout', stdout)
+				.addField('stderr', stderr);
+			message.channel.send({embed: Embed});
 			console.log(`stdout: ${stdout}`);
 			console.log(`stderr: ${stderr}`);
 		}
