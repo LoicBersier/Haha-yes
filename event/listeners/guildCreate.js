@@ -16,10 +16,14 @@ class guildCreateListener extends Listener {
 		const channel = this.client.channels.get(statsChannel);
 		const addEmbed = new MessageEmbed()
 			.setColor('#52e80d')
-			.setTitle('Someone added me ! YAY :D')
+			.setTitle('New boiz in town')
 			.setURL('https://www.youtube.com/watch?v=6n3pFFPSlW4')
-			.setThumbnail(guild.iconURL)
-			.setDescription(`${guild.name}\n${guild.id}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\n(${guild.owner.id})`)
+			.setThumbnail(guild.iconURL())
+			.addField('Guild name', guild.name, true)
+			.addField('Guild ID', guild.id, true)
+			.addField('Numbers of members', guild.memberCount)
+			.addField('Owner', guild.owner.user.username, true)
+			.addField('Ower ID', guild.owner.id, true)
 			.setTimestamp();
 	
 		channel.send({ embed: addEmbed });
