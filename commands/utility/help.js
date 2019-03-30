@@ -63,7 +63,8 @@ class HelpCommand extends Command {
 				[
 					'This is a list of commands.',
 					`To view details for a command, do \`${prefix[0]}help <command>\`.`
-				]);
+				])
+			.setFooter(`All the aviable prefix: ${prefix}`);
 
 		for (const category of this.handler.categories.values()) {
 			const title = {
