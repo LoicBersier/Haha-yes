@@ -1,7 +1,9 @@
 //RENAME ME TO config.json AND REMOVE THE COMMENT ( or change every instance of "config.json" to "config.jsonc" )
 {
 	"token": "Your token",
-	"prefix": "Your prefix ",
+	"prefix": [
+		"Your prefix " //IMPORTANT TO BE LIKE THAT ( you can add more prefix ofc )
+	],
 	"ownerID":  "Id of the owner ( probably you )", //optional but recommended
 	"botID":    "id of the bot", //optional but recommended
 	"statsChannel": "channel where the bot send his stats", //optional but recommended
