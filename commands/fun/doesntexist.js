@@ -5,7 +5,7 @@ const fetch = require('node-fetch');
 class dosentexistCommand extends Command {
 	constructor() {
 		super('dosentexist', {
-			aliases: ['dosentexist', 'thispersondoesnotexist', 'de'],
+			aliases: ['doesntexist', 'thispersondoesnotexist', 'de'],
 			category: 'fun',
 			description: {
 				content: 'Send images from thispersondoesnotexist.com',
