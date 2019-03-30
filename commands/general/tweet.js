@@ -2,6 +2,7 @@ const { Command } = require('discord-akairo');
 const Twitter = require('twitter-lite');
 const rand = require('../../rand.js');
 const Filter = require('bad-words');
+const { MessageEmbed } = require('discord.js');
 let filter = new Filter();
 const { twiConsumer, twiConsumerSecret, twiToken, twiTokenSecret, twiChannel } = require('../../config.json');
 const reload = require('auto-reload');
@@ -64,9 +65,14 @@ class tweetCommand extends Command {
 	
 			const tweetid = response.id_str;
 	
-			//	  Send the final text
+			const Embed = new MessageEmbed()
+				.setAuthor(message.author.username, message.author.displayAvatarURL())
+				.setDescription(args.text)
+				.addField('Link', `https://twitter.com/HahaYesDB/status/${tweetid}`)
+				.setFooter(`Tweet ID: ${tweetid} | Author ID: ${message.author.id}`)
+				.setTimestamp();
 
-			channel.send(`AUTHOR: ${message.author.username} (${message.author.id}) Sent: ${args.text}\nhttps://twitter.com/HahaYesDB/status/${tweetid}`);
+			channel.send({embed: Embed});
 
 			return message.channel.send(`Go see ur epic tweet https://twitter.com/HahaYesDB/status/${tweetid}`);
 		} catch(err) {
