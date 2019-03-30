@@ -39,13 +39,13 @@ class HelpCommand extends Command {
 
 		const embed = this.client.util.embed()
 			.setColor(0xFFAC33)
-			.setTitle(`\`${prefix}${command.aliases[0]} ${description.usage}\``)
+			.setTitle(`\`${prefix[0]}${command.aliases[0]} ${description.usage}\``)
 			.addField('Description', description.content);
 
 		for (const field of description.fields) embed.addField(field.name, field.value);
 
 		if (description.examples.length) {
-			const text = `${prefix}${command.aliases[0]}`;
+			const text = `${prefix[0]}${command.aliases[0]}`;
 			embed.addField('Examples', `\`${text} ${description.examples.join(`\`\n\`${text} `)}\``, true);
 		}
 
@@ -62,7 +62,7 @@ class HelpCommand extends Command {
 			.addField('Command List',
 				[
 					'This is a list of commands.',
-					`To view details for a command, do \`${prefix}help <command>\`.`
+					`To view details for a command, do \`${prefix[0]}help <command>\`.`
 				]);
 
 		for (const category of this.handler.categories.values()) {
