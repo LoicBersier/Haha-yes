@@ -36,6 +36,7 @@ class ServerCommand extends Command {
 		const addEmbed = new MessageEmbed()
 			.setColor('#0099ff')
 			.setTitle('Stats of the server')
+			.setThumbnail(message.guild.iconURL())
 			.setAuthor(message.author.username)
 			.addField('Member', message.guild.memberCount, true)
 			.addField('Numbers of channel', message.guild.channels.size, true)
