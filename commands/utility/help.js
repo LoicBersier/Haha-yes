@@ -40,7 +40,8 @@ class HelpCommand extends Command {
 		const embed = this.client.util.embed()
 			.setColor(0xFFAC33)
 			.setTitle(`\`${prefix[0]}${command.aliases[0]} ${description.usage}\``)
-			.addField('Description', description.content);
+			.addField('Description', description.content)
+			.setFooter(`All the available prefix: ${prefix}`);
 
 		for (const field of description.fields) embed.addField(field.name, field.value);
 
@@ -64,7 +65,7 @@ class HelpCommand extends Command {
 					'This is a list of commands.',
 					`To view details for a command, do \`${prefix[0]}help <command>\`.`
 				])
-			.setFooter(`All the aviable prefix: ${prefix}`);
+			.setFooter(`All the available prefix: ${prefix}`);
 
 		for (const category of this.handler.categories.values()) {
 			const title = {
