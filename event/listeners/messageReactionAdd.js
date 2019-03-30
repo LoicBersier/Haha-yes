@@ -13,12 +13,11 @@ class MessageReactionAddListener extends Listener {
 
 	async exec(reaction, user) {
 		if (reaction.message.author == user) return;
+		
 		let messageContent = reaction.message.content;
 		let messageAttachments = reaction.message.attachments.map(u=> u.url);
 
-		let starboardChannel;
-		let staremote;
-		let starcount;
+		let starboardChannel, staremote, starcount, shameboardChannel, shameemote, shamecount;
 
 		try {
 			starboardChannel = reload(`../../board/star${reaction.message.guild.id}.json`);
@@ -26,9 +25,17 @@ class MessageReactionAddListener extends Listener {
 			staremote = starboardChannel['emote'];
 			starcount = starboardChannel['count'];
 		} catch (err) {
-			return null;
+			return;
 		}
 
+		try {
+			shameboardChannel = reload(`../../board/shame${reaction.message.guild.id}.json`);
+
+			shameemote = shameboardChannel['emote'];
+			shamecount = shameboardChannel['count'];
+		} catch (err) {
+			return;
+		}
 
 		//	Starboard
 		if (reaction.emoji.name == staremote && reaction.count == starcount) {
@@ -37,47 +44,8 @@ class MessageReactionAddListener extends Listener {
 
 			messageID.push(reaction.message.id);
 
-			const channel = this.client.channels.get(starboardChannel['starboard']);
-
-			if (!messageContent) {
-				const starEmbed = new MessageEmbed()
-					.setColor(reaction.message.member.displayHexColor)
-					.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
-					.setDescription(`[Jump to message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`)
-					.addField('Channel', reaction.message.channel)
-					.setFooter(reaction.count + ' ' + staremote)
-					.setTimestamp();
-
-				return channel.send({files: messageAttachments, embed: starEmbed})
-					.catch(() => channel.send(messageAttachments, { embed: starEmbed }));
-			}
-
-			const starEmbed = new MessageEmbed()
-				.setColor(reaction.message.member.displayHexColor)
-				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
-				.setDescription(messageContent)
-				.addField('Jump to', `[message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`)
-				.addField('Channel', reaction.message.channel)
-				.setFooter(reaction.count + ' ' + staremote)
-				.setTimestamp();
-
-			return channel.send({files: messageAttachments, embed: starEmbed})
-				.catch(() => channel.send(messageAttachments, { embed: starEmbed}));
+			sendEmbed('starboard', staremote, this.client);
 		}
-
-		let shameboardChannel;
-		let shameemote;
-		let shamecount;
-		try {
-			shameboardChannel = reload(`../../board/shame${reaction.message.guild.id}.json`);
-
-			shameemote = shameboardChannel['emote'];
-			shamecount = shameboardChannel['count'];
-		} catch (err) {
-			return null;
-		}
-
-
 
 		//Shameboard
 		if (reaction.emoji.name == shameemote && reaction.count == shamecount) {
@@ -86,32 +54,28 @@ class MessageReactionAddListener extends Listener {
 
 			messageID.push(reaction.message.id);
 
-			const channel = this.client.channels.get(shameboardChannel['shameboard']);
+			sendEmbed('shameboard', shameemote, this.client);
+		}
 
-			if (!messageContent) {
-				const shameEmbed = new MessageEmbed()
-					.setColor(reaction.message.member.displayHexColor)
-					.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
-					.setDescription(`[Jump to message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`)
-					.addField('Channel', reaction.message.channel)
-					.setFooter(reaction.count + ' ' + shameemote)
-					.setTimestamp();
-
-				return channel.send({files: messageAttachments, embed: shameEmbed })
-					.catch(() => channel.send(messageAttachments, { embed: shameEmbed}));
+		function sendEmbed(name, emote, client) {
+			let channel;
+			if (name == 'starboard') {
+				channel = client.channels.get(starboardChannel['starboard']);
+			} else {
+				channel = client.channels.get(shameboardChannel['shameboard']);
 			}
 
-			const shameEmbed = new MessageEmbed()
+			const Embed = new MessageEmbed()
 				.setColor(reaction.message.member.displayHexColor)
 				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
 				.setDescription(messageContent)
 				.addField('Jump to', `[message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`)
 				.addField('Channel', reaction.message.channel)
-				.setFooter(reaction.count + ' ' + shameemote)
+				.setFooter(reaction.count + ' ' + emote)
 				.setTimestamp();
 
-			return channel.send({files: messageAttachments, embed: shameEmbed})
-				.catch(() => channel.send(messageAttachments, { embed: shameEmbed}));
+			return channel.send({files: messageAttachments, embed: Embed})
+				.catch(() => channel.send(messageAttachments, { embed: Embed}));
 		}
 	}
 }
