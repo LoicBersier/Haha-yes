@@ -23,7 +23,7 @@ class guildCreateListener extends Listener {
 			.addField('Guild ID', guild.id, true)
 			.addField('Numbers of members', guild.memberCount)
 			.addField('Owner', guild.owner.user.username, true)
-			.addField('Ower ID', guild.owner.id, true)
+			.addField('Owner ID', guild.owner.id, true)
 			.setTimestamp();
 	
 		channel.send({ embed: addEmbed });
