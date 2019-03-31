@@ -25,7 +25,7 @@ class EvalCommand extends Command {
 				.addField('stderr', stderr);
 			message.channel.send({embed: Embed});
 			console.log(`stdout: ${stdout}`);
-			console.log(`stderr: ${stderr}`);
+			console.error(`stderr: ${stderr}`);
 		}
 		update();
 	}
