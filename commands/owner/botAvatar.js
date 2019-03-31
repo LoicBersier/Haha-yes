@@ -10,7 +10,6 @@ class BotAvatarCommand extends Command {
 				{
 					id: 'image',
 					type:'string',
-					optional: true,
 					match: 'rest'
 				}
 			],
@@ -27,6 +26,11 @@ class BotAvatarCommand extends Command {
 		let image = args.image;
 		if (!Attachment[0] && !image)
 			return message.say('You didint provide any images');
+		else if (image && !Attachment[0]) {
+			this.client.user.setAvatar(image)
+				.catch(() => message.channel.send('The link you provided dosen\'t work... is it a picture?'));
+			return message.channel.send('The avatar have been changed succesfully');
+		}
 		else 
 			image = Attachment[0].url;
 			
