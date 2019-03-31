@@ -24,7 +24,7 @@ class commandStartedListener extends Listener {
 		//Only execute when its april first
 		if (today == '01/04') {
 			let count = Math.random() * 100;
-			if (count < 5) {
+			if (count < 10) {
 				console.log('Gold triggered!');
 				this.client.user.setActivity('people buy haha yes gold™', { type: 'WATCHING' });
 				return message.channel.send('To further utilize this command, please visit https://namejeff.xyz/gold', {files: ['img/gold.png']});
