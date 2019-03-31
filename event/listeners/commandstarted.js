@@ -25,6 +25,7 @@ class commandStartedListener extends Listener {
 		if (today == '01/04') {
 			let count = Math.random() * 100;
 			if (count < 20) {
+				console.log('Gold triggered!');
 				return message.channel.send('To further utilize this command, please visit https://namejeff.xyz/gold', {files: ['img/gold.png']});
 			}
 		}
