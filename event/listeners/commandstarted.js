@@ -26,6 +26,7 @@ class commandStartedListener extends Listener {
 			let count = Math.random() * 100;
 			if (count < 20) {
 				console.log('Gold triggered!');
+				this.client.user.setActivity('people buy haha yes gold™', { type: 'WATCHING' });
 				return message.channel.send('To further utilize this command, please visit https://namejeff.xyz/gold', {files: ['img/gold.png']});
 			}
 		}
