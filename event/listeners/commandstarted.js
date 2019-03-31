@@ -1,4 +1,3 @@
-//THIS IS FOR APRIL FOOLS PLEASE DELETE ME AFTER
 const { Listener } = require('discord-akairo');
 
 class commandStartedListener extends Listener {
@@ -10,9 +9,24 @@ class commandStartedListener extends Listener {
 	}
 
 	async exec(message) {
-		let count = Math.random() * 100;
-		if (count < 20)  {
-			message.channel.send('To further utilize this command, please visit https://namejeff.xyz/gold');
+		//This is for april fools
+		let today = new Date();
+		let dd = today.getDate();
+		let mm = today.getMonth() + 1; //January is 0!
+		
+		if (dd < 10) {
+			dd = '0' + dd;
+		} 
+		if (mm < 10) {
+			mm = '0' + mm;
+		} 
+		today = dd + '/' + mm;
+		//Only execute when its april first
+		if (today == '01/04') {
+			let count = Math.random() * 100;
+			if (count < 20) {
+				return message.channel.send('To further utilize this command, please visit https://namejeff.xyz/gold', {files: ['img/gold.png']});
+			}
 		}
 	}
 }
