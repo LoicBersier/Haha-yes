@@ -24,9 +24,10 @@ exports.random = function (text, message) {
 		text = text.replace(/\[author\]/, message.author.username);
 		text = text.replace(/\[kick\]/, ' ');
 		text = text.replace(/\[ban\]/, ' ');
+		text = text.replace(/\[delete\]/, ' ');
 		text = text.replace(/\{n\}/, '\n');
 		//	  Verify if it replaced everything
-	} while( text.includes('[member]') || text.includes('[memberRand]') || text.includes('[number]') || text.includes('[author]') || text.includes('[kick]') || text.includes('[ban]') || text.includes('{n}'));
+	} while( text.includes('[member]') || text.includes('[memberRand]') || text.includes('[number]') || text.includes('[author]') || text.includes('[kick]') || text.includes('[ban]') || text.includes('{n}' || text.includes('[delete]')));
 
 	return text;
 };
