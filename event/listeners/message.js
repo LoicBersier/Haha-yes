@@ -16,7 +16,7 @@ class messageListener extends Listener {
 
 	async exec(message) {	
 		//I FUCKING HATE THIS GIF PLS KILL ME
-		if (message.guild.id== '482734525563273216' && message.content.includes('https://media.discordapp.net/attachments/532980995767533568/561977366977445889/meme.gif')) 
+		if (message.guild.id== '482734525563273216' && message.content.includes('https://media.discordapp.net/attachments/532980995767533568/561977366977445889/meme.gif' || 'https://cdn.discordapp.com/attachments/532980995767533568/563811117202145292/meme.gif')) 
 			return message.delete();
 		//Yes i will remove it soon anyway its nothing serious
 	
