@@ -33,14 +33,17 @@ class playCommand extends Command {
 		//  If user say "stop" make the bot leave voice channel
 		if (args.ytblink == 'stop') {
 			voiceChannel.leave();
-			message.channel.send('I leaved the channel');
+			return message.channel.send('I left the channel');
 		} else
 			voiceChannel.join().then(connection => {
 				const stream = ytdl(args.ytblink, { filter: 'audioonly' });
 				const dispatcher = connection.play(stream);
+				message.channel.send('Playing it now!');
 				//  End at then end of the audio stream
-				dispatcher.on('end', () => voiceChannel.leave());
-				message.channel.send('Music ended, Leaved the channel');
+				dispatcher.on('end', () => {
+					voiceChannel.leave();
+					return message.channel.send('Music ended, i left the channel');
+				});
 			});
 	}
 }
