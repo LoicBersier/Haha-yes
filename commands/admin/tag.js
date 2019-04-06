@@ -21,9 +21,9 @@ class TagCommand extends Command {
 			],
 			channelRestriction: 'guild',
 			description: {
-				content: 'Create custom autoresponse',
+				content: 'Create custom autoresponse  [Click here to see the complete list of "tag"](https://cdn.discordapp.com/attachments/502198809355354133/561043193949585418/unknown.png) (Need "" if the trigger contains spaces)',
 				usage: '[trigger] [response]',
-				examples: ['do you know da wea', 'Fuck off dead meme']
+				examples: ['"do you know da wea" Fuck off dead meme', 'hello Hello [author], how are you today?']
 			}
 		});
 	}

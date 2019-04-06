@@ -15,9 +15,9 @@ class SaydCommand extends Command {
 				}
 			],
 			description: {
-				content: 'Repeat what you say but delete the text you sent',
+				content: 'Repeat what you say but delete the text you sent, [Click here to see the complete list of "tag"](https://cdn.discordapp.com/attachments/502198809355354133/561043193949585418/unknown.png)',
 				usage: '[text]',
-				examples: ['[member] is a big [adverbs] [verb]']
+				examples: ['[member] is a big [adverbs] [verbs]']
 			}
 		});
 	}

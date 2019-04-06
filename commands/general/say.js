@@ -14,9 +14,9 @@ class SayCommand extends Command {
 				}
 			],
 			description: {
-				content: 'Repeat what you say but can also replace ',
+				content: 'Repeat what you say, [Click here to see the complete list of "tag"](https://cdn.discordapp.com/attachments/502198809355354133/561043193949585418/unknown.png)',
 				usage: '[text]',
-				examples: ['[member] is a big [adverb] [verb]']
+				examples: ['[member] is a big [adverbs] [verbs]']
 			}
 		});
 	}
