@@ -35,16 +35,16 @@ class DownloadCommand extends Command {
 
 		if (link.includes('http') || link.includes('www')) {
 			if (args.alt) {
-				console.log('alt download!')
+				console.log('alt download!');
 				fs.unlink('./video.mp4', (err) => {
-				  if (err);
+					if (err);
 				});
-				return youtubedl.exec(args.link, ['-o', `./video.mp4`], {}, function(err, output) {
-				  if (err) throw err;
-				  console.log(output.join('\n'));
-				  message.delete();
-				  message.channel.send(`Downloaded by ${message.author.username}`, { files: ['./video.mp4'] })
-					  .catch(() => message.channel.send('File too big'));	
+				return youtubedl.exec(args.link, ['-o', './video.mp4'], {}, function(err, output) {
+					if (err) throw err;
+					console.log(output.join('\n'));
+					message.delete();
+					message.channel.send(`Downloaded by ${message.author.username}`, { files: ['./video.mp4'] })
+						.catch(() => message.channel.send('File too big'));	
 				});
 			}
 
