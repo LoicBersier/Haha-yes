@@ -14,8 +14,10 @@ if version == 'A' or 'a':
 	prefix = input()
 	print('Owner ID?')
 	ownerID = input()
+	print('Bot ID?')
+	botID = input()
 
-	data = {'token': token, 'prefix': [ prefix ], 'ownerID': ownerID}
+	data = {'token': token, 'prefix': [ prefix ], 'ownerID': ownerID, 'botID': botID}
 	with open("config.json", "w") as outfile:
 		json.dump(data, outfile)
 	quit()
