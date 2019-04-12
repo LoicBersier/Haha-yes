@@ -25,7 +25,7 @@ class MessageReactionAddListener extends Listener {
 			staremote = starboardChannel['emote'];
 			starcount = starboardChannel['count'];
 		} catch (err) {
-			return;
+			console.log(`No shameboard for ${reaction.message.guild.name}, not an error`);
 		}
 
 		try {
@@ -34,7 +34,7 @@ class MessageReactionAddListener extends Listener {
 			shameemote = shameboardChannel['emote'];
 			shamecount = shameboardChannel['count'];
 		} catch (err) {
-			return;
+			console.log(`No shameboard for ${reaction.message.guild.name}, not an error`);
 		}
 
 		//	Starboard
