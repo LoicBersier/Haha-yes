@@ -27,7 +27,8 @@ class CommandBlockedListener extends Listener {
 		case 'blacklist': 
 			blacklistMessage = ['bro... i think you are blacklisted.... OWNED!!!', 'You can\'t use this command because you have been blacklisted!',' you are blacklisted!!!1111!! be less naughty next time!', 'blacklisted,,,,,, lol owned bro'];
 			blacklistMessage = blacklistMessage[Math.floor( Math.random() * blacklistMessage.length )];
-			message.reply(blacklistMessage);			break;
+			message.reply(blacklistMessage);
+			break;
 		case 'serverblacklist': 
 			message.channel.send('This server have been blacklisted... to appeal contact Supositware#1616, and now i will yeet out of here');
 			message.guild.leave();
