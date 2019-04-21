@@ -4,7 +4,7 @@ const { MessageEmbed } = require('discord.js');
 class aboutCommand extends Command {
 	constructor() {
 		super('about', {
-			aliases: ['about'],
+			aliases: ['about', 'credit'],
 			category: 'utility',
 			description: {
 				content: 'About me ( the bot )',
