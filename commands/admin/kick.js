@@ -41,7 +41,7 @@ class KickCommand extends Command {
 		await member.send(`You have been kicked from **${message.guild.name}** for the following reasons: "**${reasons}**"`)
 			.catch(() => console.log('could not send message to the concerned user'));
 			
-		return member.kick(`Kicked by : ${message.author.username} for the following reasons : ${reasons}`)
+		return member.kick(`Kicked by : ${message.author.username} for the following reasons: ${reasons}`)
 			.then(() => message.reply(`${member.user.username} was succesfully kicked with the following reasons "${reasons}".`))
 			.catch(err => console.error(err));
 	}
