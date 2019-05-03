@@ -4,7 +4,7 @@ const { ownerID } = require('../../config.json');
 class OwnedCommand extends Command {
 	constructor() {
 		super('owned', {
-			aliases: ['owned'],
+			aliases: ['owned', 'own'],
 			category: 'hidden',
 			args: [
 				{
