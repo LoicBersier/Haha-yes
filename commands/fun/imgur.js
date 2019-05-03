@@ -4,7 +4,7 @@ const fetch = require('node-fetch');
 class ImgurCommand extends Command {
 	constructor() {
 		super('imgur', {
-			aliases: ['badmeme', 'imgur'],
+			aliases: ['imgur', 'badmeme'],
 			category: 'fun',
 			description: {
 				content: 'Send some random images from imgur',
