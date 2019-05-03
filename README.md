@@ -54,4 +54,4 @@ This project is licensed under the **GNU Affero General Public License v3.0** Li
 
 * [discord.JS team](https://github.com/discordjs/discord.js)
 * [1computer1](https://github.com/1Computer1/) for discord-akairo & the help command from [hoshi](https://github.com/1Computer1/hoshi)
-* Tina the Cyclops girl#0064 for inspiring me for making this bot
+* Tina the Cyclops girl#5759 for inspiring me for making this bot
