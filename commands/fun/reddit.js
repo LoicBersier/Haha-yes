@@ -47,7 +47,7 @@ class RedditCommand extends Command {
 				.setTitle(response.data.children[i].data.title)
 				.setImage(response.data.children[i].data.url)
 				.setURL('https://reddit.com' + response.data.children[i].data.permalink)
-				.setFooter(`⬆ ${response.data.children[i].data.ups} ⬇ ${response.data.children[i].data.num_comments}`);
+				.setFooter(`/r/${args.sub} | ⬆ ${response.data.children[i].data.ups} ⬇ ${response.data.children[i].data.num_comments}`);
 				
 			message.channel.send(redditEmbed);
 		});
