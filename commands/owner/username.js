@@ -4,14 +4,14 @@ class usernameCommand extends Command {
 	constructor() {
 		super('username', {
 			aliases: ['username'],
-			split: 'none',
 			category: 'owner',
 			ownerOnly: 'true',
 			args: [
 				{
 					id: 'username',
 					prompt: 'Wich username should i have?',
-					type: 'string'
+					type: 'string',
+					match: 'rest'
 				}
 			],
 			description: {

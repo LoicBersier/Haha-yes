@@ -4,14 +4,14 @@ class StatusCommand extends Command {
 	constructor() {
 		super('status', {
 			aliases: ['status'],
-			split: 'none',
 			category: 'owner',
 			ownerOnly: 'true',
 			args: [
 				{
 					id: 'status',
 					prompt: 'Wich status should i have?',
-					type: 'string'
+					type: 'string',
+					match: 'rest'
 				}
 			],
 			description: {
