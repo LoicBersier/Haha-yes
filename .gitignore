@@ -1,23 +1,36 @@
+# root /
+
 config.json
 .DS_Store
 node_modules
-node_modules\
 .vscode
-video.mp4
-json/blacklist.json
-json/customresponse.json
-tts.mp3
-ttsvc.mp3
-error/
-music.mp3
-videoReady.mp4
 package-lock.json
+error/
+
+# video
+
+video.mp4
+videoReady.mp4
+SPOILER_video.mp4
+SPOILER_videoReady.mp4
+
+## images
+
 img/frame001.png
 img/spb.png
 img/de.png
-SPOILER_video.mp4
-SPOILER_videoReady.mp4
-spb.png
 img/nolight.png
+spb.png
+
+### audio
+
+tts.mp3
+ttsvc.mp3
+music.mp3
+
+# json
+
+json/blacklist.json
+json/customresponse.json
 board/*.json
 tag/*.json
