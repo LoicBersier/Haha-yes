@@ -23,13 +23,12 @@ class RedditCommand extends Command {
 	}
 
 	async exec(message, args) {
-		let sub = args.sub;
 		let i = 0;
 		let a = 0;
-		if (!sub)
+		if (!args.sub)
 			return;
 		
-		fetch('https://www.reddit.com/r/' + sub + '.json?limit=100').then((response) => {
+		fetch('https://www.reddit.com/r/' + args.sub + '.json?limit=100').then((response) => {
 			return response.json();
 		}).then((response) => { 
 			if (!response.data)
