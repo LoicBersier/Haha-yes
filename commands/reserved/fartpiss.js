@@ -28,19 +28,19 @@ class fartpissCommand extends Command {
 		}
 		
 		if (!args.member) {
-			message.guild.members.get(message.author.id).setNickname('fart piss')
+			return message.guild.members.get(message.author.id).setNickname('fart piss')
 				.then(() => message.channel.send('sucessfully fart pissed on you <:youngtroll:488559163832795136>'))
 				.catch(() => message.channel.send('Sorry i could not fart piss on you :('));
 		} else if (!args.member && message.author.id == '336164982406512643') {
-			message.guild.members.get(message.author.id).setNickname('Big weeb')
+			return message.guild.members.get(message.author.id).setNickname('Big weeb')
 				.then(() => message.channel.send('sucessfully weeb\'d on you <:youngtroll:488559163832795136>'))
 				.catch(() => message.channel.send('Sorry i could not fart piss on you :('));
 		} else if (args.member.id == '336164982406512643') {
-			args.member.setNickname('Big weeb')
+			return args.member.setNickname('Big weeb')
 				.then(() => message.channel.send(`sucessfully weeb'd on ${args.member.user.username} <:youngtroll:488559163832795136>`))
 				.catch(() => message.channel.send(`Sorry i could not fart piss on ${args.member.user.username} :(`));
 		} else {
-			args.member.setNickname('fart piss')
+			return args.member.setNickname('fart piss')
 				.then(() => message.channel.send(`sucessfully fart pissed on ${args.member.user.username} <:youngtroll:488559163832795136>`))
 				.catch(() => message.channel.send(`Sorry i could not fart piss on ${args.member.user.username} :(`));
 		}
