@@ -60,6 +60,20 @@ class messageListener extends Listener {
 					}
 	
 					text = rand.random(text, message);
+
+					let attach = '';
+
+					if (text.includes('[attach')) {
+						attach = text.split(/(\[attach:.*?])/);
+						for (let i = 0, l = attach.length; i < l; i++) {
+							if (attach[i].includes('[attach:')) {
+								attach = attach[i].replace('[attach:', '').slice(0, -1);
+								i = attach.length;
+							}
+						}
+						text = text.replace(/(\[attach:.*?])/, '')
+					}
+
 					// THIS SECTION IS VERY VERY BAD MUST CHANGE
 					if (text.includes('[embed]')) {
 						text = text.replace(/\[embed\]/, ' ');
@@ -149,11 +163,20 @@ class messageListener extends Listener {
 							.setTimestamp();
 	
 						
-						return message.channel.send(embed);
-					}
-	
-					message.channel.send(text);
+				if (attach) {
+					return message.channel.send(embed, {files: [attach]});
+				} else {
+					return message.channel.send(embed);
+				}
+			}
+				
+			if (attach) {
+				return message.channel.send(text, {files: [attach]});
+			} else {
+				return message.channel.send(text);
+			}
 				}		
+				
 			} catch (err) {
 				null;
 			}
