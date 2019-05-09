@@ -31,7 +31,7 @@ class SayCommand extends Command {
 
 		let attach = '';
 
-		if (text.includes('[attach')) {
+		if (text.includes('[attach:')) {
 			attach = text.split(/(\[attach:.*?])/);
 			for (let i = 0, l = attach.length; i < l; i++) {
 				if (attach[i].includes('[attach:')) {
@@ -39,7 +39,7 @@ class SayCommand extends Command {
 					i = attach.length;
 				}
 			}
-			text = text.replace(/(\[attach:.*?])/, '')
+			text = text.replace(/(\[attach:.*?])/, '');
 		}
 
 		// THIS SECTION IS VERY VERY BAD MUST CHANGE
