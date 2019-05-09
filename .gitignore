@@ -34,3 +34,4 @@ json/blacklist.json
 json/customresponse.json
 board/*.json
 tag/*.json
+welcome/*.json
