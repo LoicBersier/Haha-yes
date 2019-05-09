@@ -63,7 +63,7 @@ class messageListener extends Listener {
 
 					let attach = '';
 
-					if (text.includes('[attach')) {
+					if (text.includes('[attach:')) {
 						attach = text.split(/(\[attach:.*?])/);
 						for (let i = 0, l = attach.length; i < l; i++) {
 							if (attach[i].includes('[attach:')) {
@@ -71,7 +71,7 @@ class messageListener extends Listener {
 								i = attach.length;
 							}
 						}
-						text = text.replace(/(\[attach:.*?])/, '')
+						text = text.replace(/(\[attach:.*?])/, '');
 					}
 
 					// THIS SECTION IS VERY VERY BAD MUST CHANGE
@@ -163,20 +163,20 @@ class messageListener extends Listener {
 							.setTimestamp();
 	
 						
-				if (attach) {
-					return message.channel.send(embed, {files: [attach]});
-				} else {
-					return message.channel.send(embed);
-				}
-			}
-				
-			if (attach) {
-				return message.channel.send(text, {files: [attach]});
-			} else {
-				return message.channel.send(text);
-			}
+						if (attach) {
+							return message.channel.send(embed, {files: [attach]});
+						} else {
+							return message.channel.send(embed);
+						}
+					}
+						
+					if (attach) {
+						return message.channel.send(text, {files: [attach]});
+					} else {
+						return message.channel.send(text);
+					}
 				}		
-				
+
 			} catch (err) {
 				null;
 			}
