@@ -18,7 +18,7 @@ class byeCommand extends Command {
 			description: {
 				content: 'Set bye message when user leave/get kicked, can use [member] to get the name of the user joining and [server] to get the name of the server',
 				usage: '[bye message]',
-				examples: ['everyone bye [adjectives] [member] and bye on [server]']
+				examples: ['[member] leaved the server, he deserve a ban']
 			}
 		});
 	}
