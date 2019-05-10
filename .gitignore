@@ -35,3 +35,4 @@ json/customresponse.json
 board/*.json
 tag/*.json
 welcome/*.json
+bye/*.json
