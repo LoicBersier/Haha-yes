@@ -18,6 +18,8 @@ class hahaYesClient extends AkairoClient {
 			commandUtilLifetime: 60000,
 			allowMention: true,
 			handleEdits: true,
+			ignorePermissions: ownerID,
+			ignoreCooldown: ownerID,
 		});
 
 		this.inhibitorHandler = new InhibitorHandler(this, {
