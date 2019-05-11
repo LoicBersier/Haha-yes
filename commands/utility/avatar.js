@@ -8,13 +8,13 @@ class AvatarCommand extends Command {
 			args: [
 				{
 					id: 'user',
-					type: 'user'
+					type: 'member'
 				}
 			],
 			description: {
 				content: 'Show avatar of the mentioned user or you',
 				usage: '(optional) [@user]',
-				examples: ['', '@user']
+				examples: ['', '@user', 'username']
 			}
 		});
 	}
