@@ -16,7 +16,7 @@ class byeCommand extends Command {
 				}
 			],
 			description: {
-				content: 'Set bye message when user leave/get kicked, can use [member] to get the name of the user joining and [server] to get the name of the server',
+				content: 'Send a message to the current channel when a person leave, you can use [member] to show the member username and [server] to show the name of the server',
 				usage: '[bye message]',
 				examples: ['[member] leaved the server, he deserve a ban']
 			}

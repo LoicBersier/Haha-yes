@@ -16,7 +16,7 @@ class welcomeCommand extends Command {
 				}
 			],
 			description: {
-				content: 'Set welcome message when user join, can use [member] to get the name of the user joining and [server] to get the name of the server',
+				content: 'Send a message to the current channel when a person join, you can use [member] to show the member username and [server] to show the name of the server',
 				usage: '[welcome message]',
 				examples: ['everyone welcome [adjectives] [member] and welcome on [server]']
 			}
