@@ -12,7 +12,6 @@ class musicCommand extends Command {
 		super('musicMatch', {
 			aliases: ['musicMatch', 'music', 'shazam', 'soundhound'],
 			category: 'utility',
-			quoted: false,
 			args: [
 				{
 					id: 'music',

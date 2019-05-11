@@ -7,7 +7,6 @@ class FeedbackCommand extends Command {
 		super('feedback', {
 			aliases: ['feedback'],
 			category: 'utility',
-			quoted: false,
 			args: [
 				{
 					id: 'text',
