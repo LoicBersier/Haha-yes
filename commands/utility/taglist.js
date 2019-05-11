@@ -57,7 +57,9 @@ class taglistCommand extends Command {
 				.setDescription(`Trigger:Response\n\n${json}`)
 				.setFooter(`You have ${count} tags on this server`);
 
-			message.channel.send(tagEmbed);
+			message.channel.send(tagEmbed).catch(() => {
+				return message.channel.send('There is too much tag to be shown in an embed, sending file', {files: [`./tag/${message.guild.id}.json`]})
+			});
 		});
 		
 	}
