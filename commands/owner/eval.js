@@ -39,22 +39,22 @@ class EvalCommand extends Command {
 
 			const evalEmbed = new MessageEmbed()
 				.setColor('#00FF00')
+				.setTitle('<a:orangejustice:522142267490697236>	Eval succes <a:orangejustice:522142267490697236>')
 				.setThumbnail('https://cdn4.iconfinder.com/data/icons/gradient-ui-1/512/success-512.png')
 				.addField('Input', `\`\`\`js\n${code}\`\`\``)
 				.addField('Output', `\`\`\`js\n${clean(evaled)}\`\`\``)
 				.setTimestamp();
 
-			message.channel.send('<a:orangejustice:522142267490697236>	Eval succes <a:orangejustice:522142267490697236>');
 			message.channel.send(evalEmbed);
 		} catch (err) {
 			const errorEmbed = new MessageEmbed()
 				.setColor('#FF0000')
+				.setTitle('Eval failed <:sadpepe:534399181679230986>')
 				.setThumbnail('https://cdn4.iconfinder.com/data/icons/the-weather-is-nice-today/64/weather_48-512.png')
 				.addField('Input', `\`\`\`js\n${args.eval}\`\`\``)
 				.addField('Output', `\`\`\`js\n${clean(err)}\`\`\``)
 				.setTimestamp();
 
-			message.channel.send('Eval failed <:sadpepe:534399181679230986>');
 			message.channel.send(errorEmbed);
 		}
 	}
