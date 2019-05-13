@@ -8,7 +8,7 @@ class BanCommand extends Command {
 			args: [
 				{
 					id: 'member',
-					type: 'member'
+					type: 'user'
 				},
 				{
 					id: 'reasons',
