@@ -37,7 +37,6 @@ class ServerCommand extends Command {
 			.setColor('#0099ff')
 			.setTitle(message.guild.name)
 			.setThumbnail(message.guild.iconURL())
-			.setAuthor(message.author.username)
 			.addField('Member', message.guild.memberCount, true)
 			.addField('Numbers of channel', message.guild.channels.size, true)
 			.addField('Date when guild created', message.guild.createdAt, true)
