@@ -50,6 +50,7 @@ class taglistCommand extends Command {
 			json = JSON.stringify(data);
 			json = json.replace(/[{}'\\]+/g, '');
 			json = json.replace(/,+/g, '\n');
+			json = json.replace(/"/g, ' ');
 
 			const tagEmbed = new MessageEmbed()
 				.setColor('#ff9900')
