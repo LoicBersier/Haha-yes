@@ -35,7 +35,7 @@ class ServerCommand extends Command {
 
 		const addEmbed = new MessageEmbed()
 			.setColor('#0099ff')
-			.setTitle('Stats of the server')
+			.setTitle(message.guild.name)
 			.setThumbnail(message.guild.iconURL())
 			.setAuthor(message.author.username)
 			.addField('Member', message.guild.memberCount, true)
