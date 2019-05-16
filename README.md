@@ -54,4 +54,5 @@ This project is licensed under the **GNU Affero General Public License v3.0** Li
 
 * [discord.JS team](https://github.com/discordjs/discord.js)
 * [1computer1](https://github.com/1Computer1/) for discord-akairo & the help command from [hoshi](https://github.com/1Computer1/hoshi)
+* [Rantionary](https://github.com/RantLang/Rantionary) for there dictionnary.
 * Tina the Cyclops girl#5759 for inspiring me for making this bot
