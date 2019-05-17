@@ -23,6 +23,7 @@ class dectalkCommand extends Command {
 	}
 
 	async exec(message, args) {
+		args.decMessage = args.decMessage.replace('\n', ' ');
 		args.decMessage = encodeURI(args.decMessage);
 
 		return axios.request({
