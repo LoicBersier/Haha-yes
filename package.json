@@ -4,6 +4,7 @@
   "main": "index.js",
   "dependencies": {
     "@google-cloud/text-to-speech": "^0.4.0",
+    "asciify-image": "^0.1.5",
     "auto-reload": "^0.1.0",
     "bad-words": "^3.0.1",
     "canvas": "^2.5.0",
