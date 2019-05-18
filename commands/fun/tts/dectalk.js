@@ -15,9 +15,9 @@ class dectalkCommand extends Command {
 				}
 			],
 			description: {
-				content: 'Generate your text into dectalk',
-				usage: '',
-				examples: ['']
+				content: 'Send a wav of what you wrote into .wav with dectalk',
+				usage: '[text]',
+				examples: ['This command is very epic']
 			}
 		});
 	}

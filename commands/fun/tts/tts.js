@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const textToSpeech = require('@google-cloud/text-to-speech');
-const rand = require('../../rand.js');
+const rand = require('../../../rand.js');
 const gclient = new textToSpeech.TextToSpeechClient();
 const fs = require('fs');
 

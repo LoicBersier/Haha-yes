@@ -15,9 +15,9 @@ class dectalkvcCommand extends Command {
 				}
 			],
 			description: {
-				content: 'Generate your text into dectalk and says it in voice chat',
-				usage: '',
-				examples: ['']
+				content: 'Repeat what you sent in the voice chat you are currently in',
+				usage: '[text]',
+				examples: ['This command is very epic']
 			}
 		});
 	}
