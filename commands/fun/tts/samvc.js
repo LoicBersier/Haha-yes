@@ -15,7 +15,7 @@ class samvcCommand extends Command {
 				}
 			],
 			description: {
-				content: 'Repeat what you said in voice chat with Microsoft Sam tts',
+				content: 'Repeat what you said in voice chat with Microsoft Sam tts, can change speed and pitch with [speed:a number] and [pitch:a]',
 				usage: '[text]',
 				examples: ['Here comes the roflcopter soisoisoisoisoi']
 			}
@@ -23,12 +23,40 @@ class samvcCommand extends Command {
 	}
 
 	async exec(message, args) {
+		let pitch = '';
+		if (args.samMessage.includes('[pitch:')) {
+			pitch = args.samMessage.split(/(\[pitch:.*?])/);
+			for (let i = 0, l = pitch.length; i < l; i++) {
+				if (pitch[i].includes('[pitch:')) {
+					pitch = pitch[i].replace('[pitch:', '').slice(0, -1);
+					args.samMessage = args.samMessage.replace(/(\[pitch:.*?])/g, '');
+					i = pitch.length;
+				}
+			}
+		} else {
+			pitch = 100;
+		}
+
+		let speed = '';
+		if (args.samMessage.includes('[speed:')) {
+			speed = args.samMessage.split(/(\[speed:.*?])/);
+			for (let i = 0, l = speed.length; i < l; i++) {
+				if (speed[i].includes('[speed:')) {
+					speed = speed[i].replace('[speed:', '').slice(0, -1);
+					args.samMessage = args.samMessage.replace(/(\[speed:.*?])/g, '');
+					i = speed.length;
+				}
+			}
+		} else {
+			speed = 100;
+		}
+
 		args.samMessage = args.samMessage.replace('\n', ' ');
 		args.samMessage = encodeURI(args.samMessage);
 
 		return axios.request({
 			responseType: 'arraybuffer',
-			url: `https://tetyys.com/SAPI4/SAPI4?text=${args.samMessage}&voice=Sam&pitch=100&speed=100`,
+			url: `https://tetyys.com/SAPI4/SAPI4?text=${args.samMessage}&voice=Sam&pitch=${pitch}&speed=${speed}`,
 			method: 'get',
 			headers: {
 				'Content-Type': 'audio/mpeg',
