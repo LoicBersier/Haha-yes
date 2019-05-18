@@ -33,6 +33,10 @@ class samCommand extends Command {
 					i = pitch.length;
 				}
 			}
+			if (pitch > 200)
+				pitch = 200;
+			else if (pitch < 50)
+				pitch = 50;
 		} else {
 			pitch = 100;
 		}
@@ -47,6 +51,10 @@ class samCommand extends Command {
 					i = speed.length;
 				}
 			}
+			if (speed > 450)
+				speed = 450;
+			else if (speed < 30)
+				speed = 30;
 		} else {
 			speed = 150;
 		}
