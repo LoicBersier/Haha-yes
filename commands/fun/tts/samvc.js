@@ -48,7 +48,7 @@ class samvcCommand extends Command {
 				}
 			}
 		} else {
-			speed = 100;
+			speed = 150;
 		}
 
 		args.samMessage = args.samMessage.replace('\n', ' ');
