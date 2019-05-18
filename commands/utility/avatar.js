@@ -8,7 +8,7 @@ class AvatarCommand extends Command {
 			args: [
 				{
 					id: 'user',
-					type: 'member'
+					type: 'user'
 				}
 			],
 			description: {
