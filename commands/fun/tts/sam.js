@@ -1,7 +1,7 @@
 const { Command } = require('discord-akairo');
 const axios = require('axios');
 const fs = require('fs');
-const rand = require('../../rand.js');
+const rand = require('../../../rand.js');
 
 class samCommand extends Command {
 	constructor() {
