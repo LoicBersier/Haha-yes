@@ -1,6 +1,7 @@
 const { Command } = require('discord-akairo');
 const axios = require('axios');
 const fs = require('fs');
+const rand = require('../../rand.js');
 
 class samCommand extends Command {
 	constructor() {
@@ -23,6 +24,7 @@ class samCommand extends Command {
 	}
 
 	async exec(message, args) {
+		args.samMessage = rand.random(args.samMessage, message);
 		let pitch = '';
 		if (args.samMessage.includes('[pitch:')) {
 			pitch = args.samMessage.split(/(\[pitch:.*?])/);

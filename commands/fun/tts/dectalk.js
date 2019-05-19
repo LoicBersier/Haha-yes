@@ -1,6 +1,7 @@
 const { Command } = require('discord-akairo');
 const axios = require('axios');
 const fs = require('fs');
+const rand = require('../../rand.js');
 
 class dectalkCommand extends Command {
 	constructor() {
@@ -23,6 +24,7 @@ class dectalkCommand extends Command {
 	}
 
 	async exec(message, args) {
+		args.decMessage = rand.random(args.decMessage, message);
 		args.decMessage = args.decMessage.replace('\n', ' ');
 		args.decMessage = encodeURI(args.decMessage);
 
