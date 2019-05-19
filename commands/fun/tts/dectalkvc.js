@@ -37,21 +37,21 @@ class dectalkvcCommand extends Command {
 			},
 		}).then(async (result) => {
 			const outputFilename = './dectalkvc.wav';
-			fs.writeFileSync(outputFilename, result.data)
-				.then(async () => {
-					const voiceChannel = message.member.voice.channel;
-					if (!voiceChannel) return message.say('Please enter a voice channel first.');
-					try {
-						const connection = await voiceChannel.join();
-						const dispatcher = connection.play('./dectalkvc.wav');
-						dispatcher.once('finish', () => voiceChannel.leave());
-						dispatcher.once('error', () => voiceChannel.leave());
-						return null;
-					} catch (err) {
-						voiceChannel.leave();
-						return message.reply(`Oh no, an error occurred: \`${err.message}\`. Try again later!`);
-					}
-				});
+			fs.writeFile(outputFilename, result.data, async function(err) {
+				if (err) console.error(err);
+				const voiceChannel = message.member.voice.channel;
+				if (!voiceChannel) return message.say('Please enter a voice channel first.');
+				try {
+					const connection = await voiceChannel.join();
+					const dispatcher = connection.play('./dectalkvc.wav');
+					dispatcher.once('finish', () => voiceChannel.leave());
+					dispatcher.once('error', () => voiceChannel.leave());
+					return null;
+				} catch (err) {
+					voiceChannel.leave();
+					return message.reply(`Oh no, an error occurred: \`${err.message}\`. Try again later!`);
+				}
+			});
 		});
 
 	}
