@@ -72,9 +72,9 @@ class samCommand extends Command {
 				'Content-Type': 'audio/mpeg',
 			},
 		}).then((result) => {
-			const outputFilename = './sam.mp3';
+			const outputFilename = './sam.wav';
 			fs.writeFileSync(outputFilename, result.data);
-			return message.channel.send({files: ['./sam.mp3']});
+			return message.channel.send({files: ['./sam.wav']});
 		});
 
 	}
