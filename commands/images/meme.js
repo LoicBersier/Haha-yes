@@ -53,12 +53,12 @@ class memeCommand extends Command {
 		function processGif() {
 			gm('./img/memeInput.gif')
 				.fill('#ffffff')
-				.font('Impact.ttf')
+				.font('/usr/share/fonts/TTF/Impact.ttf')
 				.drawText(0, 20, args.topText, 'North')
 				.drawText(0, 10, args.bottomText, 'South')
 				.write('./img/meme.gif', function (err) {
 					if (!err) {
-						message.channel.send('a', {files: ['./img/meme.gif']});
+						message.channel.send({files: ['./img/meme.gif']});
 					} else {
 						console.error(err);
 					}
