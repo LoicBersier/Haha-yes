@@ -53,7 +53,7 @@ class memeCommand extends Command {
 		function processGif() {
 			gm('./img/memeInput.gif')
 				.fill('#ffffff')
-				.font('/usr/share/fonts/TTF/Impact.ttf')
+				.font('/usr/share/fonts/TTF/impact.ttf')
 				.drawText(0, 20, args.topText, 'North')
 				.drawText(0, 10, args.bottomText, 'South')
 				.write('./img/meme.gif', function (err) {
