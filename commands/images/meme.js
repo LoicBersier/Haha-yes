@@ -41,20 +41,34 @@ class memeCommand extends Command {
 						processGif();
 					});
 				});
-		} else if (Attachment[0] && Attachment[0].url.endsWith('gif')) {
+		} else if (Attachment[0]) {
 			fs.writeFile('./img/memeInput.gif', Attachment[0], 'binary', function(err) {
 				if (err) throw err;
 				processGif();
 			});
 		} else {
-			return message.channel.send('Please use a gif!');
+			return message.channel.send('Please use an image!');
 		}
 
 		function processGif() {
 			gm('./img/memeInput.gif')
+				.stroke('#000000', 0.1)
 				.fill('#ffffff')
-				.font('/usr/share/fonts/TTF/impact.ttf')
-				.drawText(0, 20, args.topText, 'North')
+				/*
+				// I have to try to make this work so font can adapt with image
+				.size(function(err, size) {
+					if (err) throw err;
+					if (size.width < 300 ) {
+						console.log('ye');
+						this.pointSize(10);
+					} else {
+						console.log('nah');
+						this.pointSize(50);
+					}
+				})
+				*/
+				.font('/usr/share/fonts/TTF/impact.ttf', 40)
+				.drawText(0, 30, args.topText, 'North')
 				.drawText(0, 10, args.bottomText, 'South')
 				.write('./img/meme.gif', function (err) {
 					if (!err) {
