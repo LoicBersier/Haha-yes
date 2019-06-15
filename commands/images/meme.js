@@ -34,6 +34,10 @@ class memeCommand extends Command {
 		let Attachment = (message.attachments).array();
 		if (args.ImageURL) {
 			fetch(args.ImageURL)
+				.catch(err => {
+					console.error(err);
+					return message.channel.send('An error has occured, is your link valid?');
+				})
 				.then(res => {
 					const dest = fs.createWriteStream('./img/memeInput.gif');
 					res.body.pipe(dest);
