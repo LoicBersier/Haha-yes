@@ -1,5 +1,6 @@
 const { Command } = require('discord-akairo');
-const { MessageEmbed } = require('discord.js');
+const akairoVersion = require('discord-akairo').version;
+const { MessageEmbed, version } = require('discord.js');
 
 class StatsCommand extends Command {
 	constructor() {
@@ -33,7 +34,9 @@ class StatsCommand extends Command {
 			.addField('Users', this.client.users.size, true)
 			.addField('Uptime', uptime, true)
 			.addField('Ram usage', `${Math.round(used * 100) / 100} MB`, true)
-			.addField('Nodejs version', process.version)
+			.addField('Nodejs version', process.version, true)
+			.addField('Discord.js version', version, true)
+			.addField('Discord-Akairo version', akairoVersion, true)
 			.setTimestamp();
 			
 		return message.channel.send(statsEmbed);
