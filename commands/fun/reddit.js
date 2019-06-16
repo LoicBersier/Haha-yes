@@ -23,8 +23,8 @@ class RedditCommand extends Command {
 	}
 
 	async exec(message, args) {
-		let i = 0;
-		let a = 0;
+		//let i = 0;
+		//let a = 0;
 		if (!args.sub)
 			return;
 		
@@ -33,20 +33,17 @@ class RedditCommand extends Command {
 		}).then((response) => { 
 			if (!response.data)
 				return message.channel.send('Not a valid subreddit');
-			while (response.data.children[i].data.post_hint !== 'image') {
-				i = Math.floor((Math.random() * response.data.children.length));
-				a++;
-				if (a == 5)
-					return message.channel.send('Could not find any images');
-			}
+
+			let i = Math.floor((Math.random() * response.data.children.length));
 			if (response.data.children[i].data.over_18 == true && !message.channel.nsfw)
 				return message.channel.send('No nsfw');
 			const redditEmbed = new MessageEmbed()
 				.setColor('#ff9900')
 				.setTitle(response.data.children[i].data.title)
 				.setImage(response.data.children[i].data.url)
+				.setDescription(response.data.children[i].data.selftext)
 				.setURL('https://reddit.com' + response.data.children[i].data.permalink)
-				.setFooter(`/r/${args.sub} | ⬆ ${response.data.children[i].data.ups} ⬇ ${response.data.children[i].data.num_comments}`);
+				.setFooter(`/r/${response.data.children[i].data.subreddit} | ⬆ ${response.data.children[i].data.ups} ⬇ ${response.data.children[i].data.num_comments}`);
 				
 			message.channel.send(redditEmbed);
 		});
