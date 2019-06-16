@@ -11,6 +11,7 @@ class RedditCommand extends Command {
 				{
 					id: 'sub',
 					type: 'string',
+					default: 'random',
 					match: 'rest'
 				}
 			],
