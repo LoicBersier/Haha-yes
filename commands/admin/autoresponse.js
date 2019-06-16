@@ -59,7 +59,7 @@ class autoresponseCommand extends Command {
 				
 				return message.channel.send('Auto response have been disable/enable on every channel');
 	
-			} else if (text.toLowerCase() == 'disable' || 'enable') {
+			} else if (text.toLowerCase() == 'disable' || text.toLowerCase() == 'enable') {
 				fs.readFile('./json/autoresponse.json', 'utf8', function readFileCallback(err, data) {
 					if (err) {
 						console.log(err);
