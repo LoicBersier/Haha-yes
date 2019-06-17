@@ -12,12 +12,12 @@ class borgarCommand extends Command {
 			category: 'minigame',
 			args: [
 				{
-					id: 'IngredientNumber',
+					id: 'ingredientNumber',
 					type: 'int',
 					default: 4
 				},
 				{
-					id: 'Time',
+					id: 'time',
 					type: 'int',
 					default: 10000
 				}
@@ -33,32 +33,36 @@ class borgarCommand extends Command {
 	async exec(message, args) {
 		const ingredient = [ 'bun', 'beef', 'salade', 'tomato', 'cheese', 'pickle'];
 		let hamIngredient = [];
-		for (let i = 0; i < args.IngredientNumber; i++) {
+		for (let i = 0; i < args.ingredientNumber; i++) {
 			hamIngredient[i] = ingredient[Math.floor( Math.random() * ingredient.length )];
 		}
 
 
 		const borgarEmbed = new MessageEmbed()
 			.setTitle('hamborger delivery')
-			.setDescription(`could you do me an **amborgar** that contain ${hamIngredient}`)
+			.setDescription(`could you do me an **amborgar** that contain **${hamIngredient}**`)
 			.setFooter('Level 0 | you have 10 seconds to make that hamborgor')
 			.setTimestamp();
 
 		message.channel.send(borgarEmbed);
 
 		const filter = m => m.content;
-		message.channel.awaitMessages(filter, { time: 10000, errors: ['time'] })
+		message.channel.awaitMessages(filter, { time: args.time, errors: ['time'] })
 			.catch(collected => {
 				console.log(collected.map(collected => collected.content));
 				let userIngredient = collected.map(collected => collected.content);
-				for (let i = 0; i < hamIngredient.length; i++) {
-					if (userIngredient[i] == hamIngredient[i]) {
-						return message.channel.send('u won bro,,,, that\'s kinda epic if i do say so myself');
+				console.log(hamIngredient + '\n' + userIngredient);
+				if (userIngredient.toString() == hamIngredient.toString()) {
+					return message.channel.send('u won bro,,,, that\'s kinda epic if i do say so myself');
+				} else {
+					if (userIngredient.length == hamIngredient.length) {
+						return message.channel.send(`you failed noob... you were supposed to make ${hamIngredient}`);
+					} else if (userIngredient.length > hamIngredient.length) {
+						return message.channel.send('Too much ingredient...');
 					} else {
-						return message.channel.send(`you failed at **${userIngredient[i]}** it should have been **${hamIngredient[i]}** noob...`);
+						return message.channel.send('time runned out noob...');
 					}
 				}
-
 			});
 
 	}
