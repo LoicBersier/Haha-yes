@@ -24,7 +24,7 @@ class borgarCommand extends Command {
 			],
 			description: {
 				content: 'Make amborgar,,,,,,,,,, ( MINI GAME VERY WIP, NO LEVEL YET )',
-				usage: '[number of ingredient] [time in miliseconds]',
+				usage: '[number of ingredient] [time]',
 				examples: ['4 10000']
 			}
 		});
@@ -41,13 +41,13 @@ class borgarCommand extends Command {
 		const borgarEmbed = new MessageEmbed()
 			.setTitle('hamborger delivery')
 			.setDescription(`could you do me an **amborgar** that contain **${hamIngredient}**`)
-			.setFooter('Level 0 | you have 10 seconds to make that hamborgor')
+			.setFooter(`Level 0 | you have 10 seconds ${args.time} to make that hamborgor`)
 			.setTimestamp();
 
 		message.channel.send(borgarEmbed);
 
 		const filter = m =>  m.content && m.author.id == message.author.id;
-		message.channel.awaitMessages(filter, {time: 10000, errors: ['time'] })
+		message.channel.awaitMessages(filter, {time: args.time * 1000, errors: ['time'] })
 			.catch(collected => {
 				let userIngredient = collected.map(collected => collected.content);
 				console.log(hamIngredient + '\n' + userIngredient);
