@@ -31,6 +31,7 @@ class borgarCommand extends Command {
 	}
 
 	async exec(message, args) {
+		if (args.time <= 0) args.time = 1;
 		const ingredient = [ 'bun', 'beef', 'salade', 'tomato', 'cheese', 'pickle'];
 		let hamIngredient = [];
 		for (let i = 0; i < args.ingredientNumber; i++) {
