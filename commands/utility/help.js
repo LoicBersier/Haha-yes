@@ -71,6 +71,7 @@ class HelpCommand extends Command {
 			const title = {
 				general: '📝\u2000General',
 				fun: '🔩\u2000Fun',
+				minigame: '🍔\u2000Minigames (WIP)',
 				images: '💕\u2000Images',
 				utility: '⭐\u2000Utility',
 				admin: '😎\u2000Admin',
