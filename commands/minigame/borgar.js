@@ -8,7 +8,7 @@ const { MessageEmbed } = require('discord.js');
 class borgarCommand extends Command {
 	constructor() {
 		super('borgar', {
-			aliases: ['borgar', 'hamburgor', 'hamborgar', 'burger', 'hamburger'],
+			aliases: ['borgar', 'hamburgor', 'hamborgar', 'burger', 'hamburger', 'borger'],
 			category: 'minigame',
 			args: [
 				{
