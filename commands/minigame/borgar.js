@@ -8,20 +8,32 @@ const { MessageEmbed } = require('discord.js');
 class borgarCommand extends Command {
 	constructor() {
 		super('borgar', {
-			aliases: ['borgar', 'hamburgor', 'hamborgar', 'burger'],
+			aliases: ['borgar', 'hamburgor', 'hamborgar', 'burger', 'hamburger'],
 			category: 'minigame',
+			args: [
+				{
+					id: 'IngredientNumber',
+					type: 'int',
+					default: 4
+				},
+				{
+					id: 'Time',
+					type: 'int',
+					default: 10000
+				}
+			],
 			description: {
 				content: 'Make amborgar,,,,,,,,,, ( MINI GAME VERY WIP, NO LEVEL YET )',
-				usage: '',
-				examples: ['']
+				usage: '[number of ingredient] [time in miliseconds]',
+				examples: ['4 10000']
 			}
 		});
 	}
 
-	async exec(message) {
+	async exec(message, args) {
 		const ingredient = [ 'bun', 'beef', 'salade', 'tomato', 'cheese', 'pickle'];
 		let hamIngredient = [];
-		for (let i = 0; i < 4; i++) {
+		for (let i = 0; i < args.IngredientNumber; i++) {
 			hamIngredient[i] = ingredient[Math.floor( Math.random() * ingredient.length )];
 		}
 
