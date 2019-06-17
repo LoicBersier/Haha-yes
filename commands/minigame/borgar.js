@@ -32,10 +32,10 @@ class borgarCommand extends Command {
 
 	async exec(message, args) {
 		if (args.time <= 0) args.time = 1;
-		const ingredient = [ 'bun', 'beef', 'salade', 'tomato', 'cheese', 'pickle'];
+		const ingredients = [ 'bun', 'beef', 'salade', 'tomato', 'cheese', 'pickle', 'onion', 'garlic', 'basil'];
 		let hamIngredient = [];
 		for (let i = 0; i < args.ingredientNumber; i++) {
-			hamIngredient[i] = ingredient[Math.floor( Math.random() * ingredient.length )];
+			hamIngredient[i] = ingredients[Math.floor( Math.random() * ingredients.length )];
 		}
 
 
@@ -51,7 +51,7 @@ class borgarCommand extends Command {
 		message.channel.awaitMessages(filter, {time: args.time * 1000, errors: ['time'] })
 			.catch(collected => {
 				let userIngredient = collected.map(collected => collected.content);
-				console.log(hamIngredient + '\n' + userIngredient);
+
 				if (userIngredient.toString().toLowerCase() == hamIngredient.toString()) {
 					return message.reply('u won bro,,,, that\'s kinda epic if i do say so myself');
 				} else {
