@@ -19,7 +19,7 @@ class borgarCommand extends Command {
 				{
 					id: 'time',
 					type: 'int',
-					default: 10000
+					default: 10
 				}
 			],
 			description: {
