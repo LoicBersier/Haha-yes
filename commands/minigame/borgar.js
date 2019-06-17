@@ -25,7 +25,7 @@ class borgarCommand extends Command {
 			description: {
 				content: 'Make amborgar,,,,,,,,,, ( MINI GAME VERY WIP, NO LEVEL YET )',
 				usage: '[number of ingredient] [time]',
-				examples: ['4 10000']
+				examples: ['4 10']
 			}
 		});
 	}
