@@ -13,12 +13,12 @@ class borgarCommand extends Command {
 			args: [
 				{
 					id: 'ingredientNumber',
-					type: 'int',
+					type: 'number',
 					default: 4
 				},
 				{
 					id: 'time',
-					type: 'int',
+					type: 'number',
 					default: 10
 				}
 			],
