@@ -29,6 +29,7 @@ class TagCommand extends Command {
 	}
 
 	async exec(message, args) {
+		if (args.trigger == null || args.response == null) return;
 		let trigger = args.trigger;
 		let response = args.response;
 
