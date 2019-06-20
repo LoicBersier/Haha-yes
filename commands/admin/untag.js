@@ -11,7 +11,8 @@ class UnTagCommand extends Command {
 			args: [
 				{
 					id: 'trigger',
-					type: 'string'
+					type: 'string',
+					match: 'rest'
 				}
 			],
 			channelRestriction: 'guild',
