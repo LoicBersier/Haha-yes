@@ -22,7 +22,7 @@ class guildCreateListener extends Listener {
 			.addField('Guild name', guild.name, true)
 			.addField('Guild ID', guild.id, true)
 			.addField('Total numbers of members', guild.memberCount, true)
-			.addField('Number of users', guild.members.filter(member => !member.user.bot).size, true)
+			.addField('Numbers of users', guild.members.filter(member => !member.user.bot).size, true)
 			.addField('Numbers of bot', guild.members.filter(member => member.user.bot).size, true)
 			.addField('Owner', guild.owner.user.username, true)
 			.addField('Owner ID', guild.owner.id, true)
