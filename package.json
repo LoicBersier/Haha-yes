@@ -23,7 +23,6 @@
     "reload-json": "^0.3.1",
     "superagent": "^4.1.0",
     "twitter-lite": "^0.9.4",
-    "whois": "^2.10.0",
     "youtube-dl": "^1.13.1",
     "ytdl-core": "^0.29.1"
   },
