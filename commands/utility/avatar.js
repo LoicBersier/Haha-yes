@@ -21,9 +21,9 @@ class AvatarCommand extends Command {
 
 	async exec(message, args) {
 		if (!args.user)
-			return message.channel.send('Your avatar:', {files: [message.author.displayAvatarURL('png', '2048')]});
+			return message.channel.send('Your avatar:', {files: [message.author.displayAvatarURL() + '?size=2048']});
 		else
-			return message.channel.send(`${args.user.username}'s avatar:`, {files: [args.user.displayAvatarURL('png', '2048')]});
+			return message.channel.send(`${args.user.username}'s avatar:`, {files: [args.user.displayAvatarURL() + '?size=2048']});
 	}
 }
 
