@@ -69,8 +69,8 @@ class MessageReactionAddListener extends Listener {
 				.setColor(reaction.message.member.displayHexColor)
 				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
 				.setDescription(messageContent)
-				.addField('Jump to', `[message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`)
-				.addField('Channel', reaction.message.channel)
+				.addField('Jump to', `[message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`, true)
+				.addField('Channel', reaction.message.channel, true)
 				.setFooter(reaction.count + ' ' + emote)
 				.setTimestamp();
 
