@@ -10,7 +10,10 @@ class spbCommand extends Command {
 			args: [
 				{
 					id: 'link',
-					type: 'string'
+					type: 'string',
+					prompt: {
+						start: 'Need a shitpostbot5000 template link!',
+					}
 				}
 			],
 			description: {

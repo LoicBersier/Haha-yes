@@ -11,12 +11,18 @@ class TagCommand extends Command {
 			args: [
 				{
 					id: 'trigger',
-					type: 'string'
+					type: 'string',
+					prompt: {
+						start: 'What word or sentence should trigger it?',
+					}
 				},
 				{
 					id: 'response',
 					type: 'string',
-					match: 'rest'
+					match: 'rest',
+					prompt: {
+						start: 'What word or sentence should the response be?',
+					}
 				}
 			],
 			channelRestriction: 'guild',

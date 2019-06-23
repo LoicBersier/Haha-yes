@@ -13,11 +13,14 @@ class DownloadspoilerCommand extends Command {
 				{
 					id: 'link',
 					type: 'string',
-					default: 'https://www.youtube.com/watch?v=6n3pFFPSlW4'
+					prompt: {
+						start: 'Send the link of wich video you want to download',
+					}
 				},
 				{
 					id: 'alt',
-					type: 'bool',
+					match: 'flag',
+					flag: '--alt'
 				}
 			],
 			clientPermissions: ['ATTACH_FILES'],
@@ -36,7 +39,7 @@ class DownloadspoilerCommand extends Command {
 		if (link.includes('http') || link.includes('www')) {
 			if (args.alt) {
 				console.log('alt download!');
-				fs.unlink('./SPOILER_SPOILER_video.mp4', (err) => {
+				fs.unlink('./SPOILER_video.mp4', (err) => {
 					if (err);
 				});
 				return youtubedl.exec(args.link, ['-o', './SPOILER_video.mp4'], {}, function(err, output) {

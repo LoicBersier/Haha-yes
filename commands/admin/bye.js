@@ -12,6 +12,9 @@ class byeCommand extends Command {
 				{
 					id: 'message',
 					type: 'string',
+					prompt: {
+						start: 'What message should the bot say when a user leave?',
+					},
 					match: 'rest'
 				}
 			],

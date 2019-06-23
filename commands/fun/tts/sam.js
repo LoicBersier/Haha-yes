@@ -12,6 +12,9 @@ class samCommand extends Command {
 				{
 					id: 'samMessage',
 					type: 'string',
+					prompt: {
+						start: 'Write something so i can say it back in sam',
+					},
 					match: 'rest'
 				}
 			],

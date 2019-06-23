@@ -8,11 +8,18 @@ class BanCommand extends Command {
 			args: [
 				{
 					id: 'member',
-					type: 'member'
+					type: 'member',
+					prompt: {
+						start: 'Wich member do you want to ban?',
+					}
 				},
 				{
 					id: 'reasons',
 					type: 'string',
+					prompt: {
+						start: 'For what reasons?',
+						optional: true
+					},
 					match: 'rest'
 				}
 			],

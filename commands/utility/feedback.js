@@ -11,6 +11,9 @@ class FeedbackCommand extends Command {
 				{
 					id: 'text',
 					type: 'string',
+					prompt: {
+						start: 'What do you want to say to the owner?',
+					},
 					match: 'rest'
 				}
 			],

@@ -16,6 +16,9 @@ class musicCommand extends Command {
 				{
 					id: 'music',
 					type: 'string',
+					prompt: {
+						start: 'Send the link of wich video you want to know song',
+					},
 					match: 'rest'
 				}
 			],

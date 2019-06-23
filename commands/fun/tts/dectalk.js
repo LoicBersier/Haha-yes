@@ -12,6 +12,9 @@ class dectalkCommand extends Command {
 				{
 					id: 'decMessage',
 					type: 'string',
+					prompt: {
+						start: 'Write something so i can say it back in dectalk',
+					},
 					match: 'rest'
 				}
 			],

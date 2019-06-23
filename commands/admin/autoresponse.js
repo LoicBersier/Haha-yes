@@ -9,7 +9,10 @@ class autoresponseCommand extends Command {
 			args: [
 				{
 					id: 'text',
-					type: 'string'
+					type: 'string',
+					prompt: {
+						start: 'Do you want to **enable** or **disable** auto response?',
+					}
 				},
 				{
 					id: 'all',

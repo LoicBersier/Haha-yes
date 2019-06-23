@@ -11,6 +11,10 @@ class RedditCommand extends Command {
 				{
 					id: 'sub',
 					type: 'string',
+					prompt: {
+						start: 'What subreddit do you want to browse?',
+						optional: true
+					},
 					default: 'random',
 					match: 'rest'
 				}

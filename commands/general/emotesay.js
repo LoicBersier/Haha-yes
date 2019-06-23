@@ -11,6 +11,9 @@ class EmotesayCommand extends Command {
 				{
 					id: 'text',
 					type: 'string',
+					prompt: {
+						start: 'Write something so i can replace the space with dancing emote',
+					},
 					match: 'rest'
 				}
 			],

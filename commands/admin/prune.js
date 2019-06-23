@@ -8,6 +8,9 @@ class PruneCommand extends Command {
 			args: [
 				{
 					id: 'amount',
+					prompt: {
+						start: 'How many message should i delete?',
+					},
 					type: 'integer'
 				}
 			],

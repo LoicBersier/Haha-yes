@@ -8,7 +8,10 @@ class UnbanCommand extends Command {
 			args: [
 				{
 					id: 'member',
-					type: 'user'
+					type: 'member',
+					prompt: {
+						start: 'Wich member do you want to unban?',
+					}
 				}
 			],
 			clientPermissions: ['BAN_MEMBERS'],

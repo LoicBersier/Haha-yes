@@ -12,7 +12,10 @@ class UnTagCommand extends Command {
 				{
 					id: 'trigger',
 					type: 'string',
-					match: 'rest'
+					match: 'rest',
+					prompt: {
+						start: 'wich tag do you want to remove?',
+					}
 				}
 			],
 			channelRestriction: 'guild',

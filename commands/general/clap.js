@@ -9,6 +9,9 @@ class ClapCommand extends Command {
 				{
 					id: 'text',
 					type: 'string',
+					prompt: {
+						start: 'Write something so i can replace the space with 👏',
+					},
 					match: 'rest'
 				}
 			],

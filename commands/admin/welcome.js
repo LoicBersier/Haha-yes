@@ -12,7 +12,10 @@ class welcomeCommand extends Command {
 				{
 					id: 'message',
 					type: 'string',
-					match: 'rest'
+					match: 'rest',
+					prompt: {
+						start: 'What message do you want to welcome peoples?',
+					}
 				}
 			],
 			description: {

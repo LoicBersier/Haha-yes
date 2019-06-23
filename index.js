@@ -14,6 +14,15 @@ class hahaYesClient extends AkairoClient {
 		this.commandHandler = new CommandHandler(this, {
 			directory: './commands/',
 			prefix: prefix,
+			argumentDefaults: {
+				prompt: {
+					timeout: 'Time ran out, command has been cancelled.',
+					ended: 'Too many retries, command has been cancelled.',
+					cancel: 'Command has been cancelled.',
+					retries: 4,
+					time: 30000
+				}
+			},
 			commandUtil: true,
 			commandUtilLifetime: 60000,
 			allowMention: true,

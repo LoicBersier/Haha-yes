@@ -10,6 +10,9 @@ class playCommand extends Command {
 				{
 					id: 'ytblink',
 					type: 'string',
+					prompt: {
+						start: 'Send the link of wich video you want to play',
+					},
 					match: 'rest',
 				}
 			],

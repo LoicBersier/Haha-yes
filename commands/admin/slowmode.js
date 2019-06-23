@@ -3,17 +3,23 @@ const { Command } = require('discord-akairo');
 class SlowmodeCommand extends Command {
 	constructor() {
 		super('Slowmode', {
-			aliases: ['slowmode', 'slow'],
+			aliases: ['slowmode', 'slow', 'cooldown'],
 			category: 'admin',
 			args: [
 				{
 					id: 'slowmodeNumber',
+					prompt: {
+						start: 'what do you want the delay to be between each message?',
+					},
 					type: 'integer'
 				},
 				{
 					id: 'realtime',
+					prompt: {
+						start: 'For how long should the slowmode last?',
+						optional: true
+					},
 					type: 'integer',
-					optional: true,
 				}
 			],
 			clientPermissions: ['MANAGE_CHANNELS'],

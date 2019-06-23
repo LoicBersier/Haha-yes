@@ -9,6 +9,9 @@ class spoilerCommand extends Command {
 				{
 					id: 'text',
 					type: 'string',
+					prompt: {
+						start: 'Write something so i can say it back in spoiler',
+					},
 					match: 'rest'
 				}
 			],

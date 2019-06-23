@@ -18,6 +18,9 @@ class tweetCommand extends Command {
 				{
 					id: 'text',
 					type: 'string',
+					prompt: {
+						start: 'Write something to tweet',
+					},
 					match: 'rest'
 				}
 			],

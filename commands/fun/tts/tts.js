@@ -13,6 +13,9 @@ class TtsCommand extends Command {
 				{
 					id: 'text',
 					type: 'string',
+					prompt: {
+						start: 'Write something so i can say it back in Google tts',
+					},
 					match: 'rest'
 				}
 			],

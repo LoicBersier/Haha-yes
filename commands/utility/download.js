@@ -13,11 +13,14 @@ class DownloadCommand extends Command {
 				{
 					id: 'link',
 					type: 'string',
-					default: 'https://www.youtube.com/watch?v=6n3pFFPSlW4'
+					prompt: {
+						start: 'Send the link of wich video you want to download',
+					}
 				},
 				{
 					id: 'alt',
-					type: 'bool',
+					match: 'flag',
+					flag: '--alt'
 				}
 			],
 			clientPermissions: ['ATTACH_FILES'],
