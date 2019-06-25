@@ -16,13 +16,23 @@ class StatsCommand extends Command {
 	}
 
 	async exec(message) {
-		let totalSeconds = (this.client.uptime / 1000);
-		let days = Math.floor(totalSeconds / 86400);
-		let hours = Math.floor(totalSeconds / 3600);
-		totalSeconds %= 3600;
-		let minutes = Math.floor(totalSeconds / 60);
-		let seconds = totalSeconds.toFixed(0) % 60;
-		let uptime = `${days} days, ${hours} hours, ${minutes} minutes and ${seconds} seconds`;
+		var uptime = process.uptime();
+		const date = new Date(uptime*1000);
+		const days = date.getUTCDate() - 1,
+			hours = date.getUTCHours(),
+			minutes = date.getUTCMinutes(),
+			seconds = date.getUTCSeconds();
+	
+			
+		let segments = [];
+	
+		// Format the uptime string. 	
+		if (days > 0) segments.push(days + ' day' + ((days == 1) ? '' : 's'));
+		if (hours > 0) segments.push(hours + ' hour' + ((hours == 1) ? '' : 's'));
+		if (minutes > 0) segments.push(minutes + ' minute' + ((minutes == 1) ? '' : 's'));
+		if (seconds > 0) segments.push(seconds + ' second' + ((seconds == 1) ? '' : 's'));
+		const dateString = segments.join(', ');
+
 		const used = process.memoryUsage().heapUsed / 1024 / 1024;
 
 		const statsEmbed = new MessageEmbed()
@@ -32,7 +42,7 @@ class StatsCommand extends Command {
 			.addField('Servers', this.client.guilds.size, true)
 			.addField('Channels', this.client.channels.size, true)
 			.addField('Users', this.client.users.size, true)
-			.addField('Uptime', uptime, true)
+			.addField('Uptime', dateString, true)
 			.addField('Ram usage', `${Math.round(used * 100) / 100} MB`, true)
 			.addField('Nodejs version', process.version, true)
 			.addField('Discord.js version', version, true)
