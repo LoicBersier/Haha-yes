@@ -20,7 +20,7 @@ class FourchanCommand extends Command {
 				}
 			],
 			description: {
-				content: 'Send random images from a 4chan board of your choosing (only in nsfw channel)',
+				content: 'Send random images from a 4chan board of your choosing',
 				usage: '[board]',
 				examples: ['vg']
 			}
