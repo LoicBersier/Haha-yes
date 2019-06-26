@@ -40,13 +40,17 @@ class FourchanCommand extends Command {
 
 			let i = Math.floor((Math.random() * response.threads.length));
 
+			while(response.threads[i].posts[0].sticky == 1) {
+				i = Math.floor((Math.random() * response.threads.length));
+			}
+
 			let description = response.threads[i].posts[0].com;
+			description = decodeURI(description);
 
 			let regex = /(<([^>]+)>)/ig;
 			if (regex.test(description)) {
 				description = response.threads[i].posts[0].com.replace(/(<([^>]+)>)/ig,'');
 			}
-			description = decodeURI(description);
 
 			const FourchanEmbed = new MessageEmbed()
 				.setColor('#ff9900')
