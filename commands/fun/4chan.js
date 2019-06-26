@@ -32,13 +32,16 @@ class FourchanCommand extends Command {
 
 		if (!args.board) return;
 		
-		fetch(`https://a.4cdn.org/${args.board}/1.json`).then((response) => {
+		let i = Math.floor((Math.random() * 5) + 1);
+
+
+		fetch(`https://a.4cdn.org/${args.board}/${i}.json`).then((response) => {
 			return response.json();
 		}).then((response) => { 
 			if (!response.threads)
 				return message.channel.send('Not a valid board');
 
-			let i = Math.floor((Math.random() * response.threads.length));
+			i = Math.floor((Math.random() * response.threads.length) + 1);
 
 			// If post is sticky search again
 			while(response.threads[i].posts[0].sticky == 1) {
