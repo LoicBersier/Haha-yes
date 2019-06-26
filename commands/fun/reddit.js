@@ -45,12 +45,12 @@ class RedditCommand extends Command {
 			const redditEmbed = new MessageEmbed()
 				.setColor('#ff9900')
 				.setTitle(response.data.children[i].data.title)
-				.setImage(response.data.children[i].data.url)
 				.setDescription(response.data.children[i].data.selftext)
 				.setURL('https://reddit.com' + response.data.children[i].data.permalink)
 				.setFooter(`/r/${response.data.children[i].data.subreddit} | ⬆ ${response.data.children[i].data.ups} ⬇ ${response.data.children[i].data.num_comments}`);
 				
 			message.channel.send(redditEmbed);
+			message.channel.send(response.data.children[i].data.url);
 		});
 	}
 }
