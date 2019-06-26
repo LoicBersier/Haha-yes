@@ -40,7 +40,7 @@ class FourchanCommand extends Command {
 			let i = Math.floor((Math.random() * response.threads.length));
 
 			let description = response.threads[i].posts[0].com.replace(/(<([^>]+)>)/ig,'');
-			description += decodeURI(description);
+			description = decodeURI(description);
 
 			const FourchanEmbed = new MessageEmbed()
 				.setColor('#ff9900')
