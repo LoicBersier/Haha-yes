@@ -53,7 +53,7 @@ class FourchanCommand extends Command {
 				.setFooter(`${boards.getName(args.board)} | ${response.threads[i].posts[0].now}`)
 				.setTimestamp();
 				
-			if (response.threads[i].posts[0].ext == '.webm') {
+			if (response.threads[i].posts[0].ext == '.webm' || response.threads[i].posts[0].ext == '.pdf' || response.threads[i].posts[0].ext == '.swf') {
 				message.channel.send(FourchanEmbed);
 				message.channel.send(`https://i.4cdn.org/${args.board}/${response.threads[i].posts[0].tim}${response.threads[i].posts[0].ext}`);
 
