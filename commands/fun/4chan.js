@@ -1,6 +1,7 @@
 const { Command } = require('discord-akairo');
 const { MessageEmbed } = require('discord.js');
 const fetch = require('node-fetch');
+const boards = require('4chan-boards');
 
 class FourchanCommand extends Command {
 	constructor() {
@@ -27,7 +28,7 @@ class FourchanCommand extends Command {
 	}
 
 	async exec(message, args) {
-		if (!message.channel.nsfw) return message.channel.send('Sorry, this command only work in nsfw channel!');
+		if (boards.getType(args.board) === boards.NSFW && !message.channel.nsfw) return message.channel.send('Sorry, this board only work in nsfw channel!');
 
 		if (!args.board) return;
 		
@@ -48,7 +49,7 @@ class FourchanCommand extends Command {
 				.setDescription(description)
 				.setImage(`https://i.4cdn.org/${args.board}/${response.threads[i].posts[0].tim}${response.threads[i].posts[0].ext}`)
 				.setURL(`https://boards.4chan.org/${args.board}/thread/${response.threads[i].posts[0].no}/${response.threads[i].posts[0].semantic_url}`)
-				.setFooter(`${args.board} | ${response.threads[i].posts[0].now}`)
+				.setFooter(`${boards.getName(args.board)} | ${response.threads[i].posts[0].now}`)
 				.setTimestamp();
 				
 			message.channel.send(FourchanEmbed);
