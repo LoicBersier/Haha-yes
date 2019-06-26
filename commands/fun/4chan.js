@@ -40,7 +40,12 @@ class FourchanCommand extends Command {
 
 			let i = Math.floor((Math.random() * response.threads.length));
 
-			let description = response.threads[i].posts[0].com.replace(/(<([^>]+)>)/ig,'');
+			let description = response.threads[i].posts[0].com;
+
+			let regex = /(<([^>]+)>)/ig;
+			if (regex.test(description)) {
+				description = response.threads[i].posts[0].com.replace(/(<([^>]+)>)/ig,'');
+			}
 			description = decodeURI(description);
 
 			const FourchanEmbed = new MessageEmbed()
@@ -52,7 +57,13 @@ class FourchanCommand extends Command {
 				.setFooter(`${boards.getName(args.board)} | ${response.threads[i].posts[0].now}`)
 				.setTimestamp();
 				
-			message.channel.send(FourchanEmbed);
+			if (response.threads[i].posts[0].ext == '.webm') {
+				message.channel.send(FourchanEmbed);
+				message.channel.send(`https://i.4cdn.org/${args.board}/${response.threads[i].posts[0].tim}${response.threads[i].posts[0].ext}`);
+
+			} else {
+				message.channel.send(FourchanEmbed);
+			}
 		});
 	}
 }
