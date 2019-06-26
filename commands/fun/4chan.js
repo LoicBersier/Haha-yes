@@ -44,14 +44,21 @@ class FourchanCommand extends Command {
 				i = Math.floor((Math.random() * response.threads.length));
 			}
 
+			let description = response.threads[i].posts[0].com;
+			description = decodeURI(description);
+
+			let regex = /(<([^>]+)>)/ig;
+			if (regex.test(description)) {
+				description = response.threads[i].posts[0].com.replace(/(<([^>]+)>)/ig,'');
+			}
+
 			const FourchanEmbed = new MessageEmbed()
 				.setColor('#ff9900')
-				.setTitle(`${response.threads[i].posts[0].name} | ${response.threads[i].posts[0].no}`)
-				.setDescription(response.threads[i].posts[0].sub)
+				.setTitle(response.threads[i].posts[0].sub)
+				.setDescription(description)
 				.setImage(`https://i.4cdn.org/${args.board}/${response.threads[i].posts[0].tim}${response.threads[i].posts[0].ext}`)
 				.setURL(`https://boards.4chan.org/${args.board}/thread/${response.threads[i].posts[0].no}/${response.threads[i].posts[0].semantic_url}`)
-				.setFooter(`${boards.getName(args.board)} | ${response.threads[i].posts[0].now}`)
-				.setTimestamp();
+				.setFooter(`${boards.getName(args.board)} | ${response.threads[i].posts[0].name} | ${response.threads[i].posts[0].no}  | ${response.threads[i].posts[0].now}`);
 				
 			if (response.threads[i].posts[0].ext == '.webm' || response.threads[i].posts[0].ext == '.pdf' || response.threads[i].posts[0].ext == '.swf') {
 				message.channel.send(FourchanEmbed);
