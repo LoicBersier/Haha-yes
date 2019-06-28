@@ -51,7 +51,7 @@ class StarBoardCommand extends Command {
 				}
 			});
 			
-			return message.channel.send(`This channel have been set as the starboard with ${args.emote} with the minium of ${args.count}`);
+			return message.channel.send(`This channel have been set as the starboard with ${args.emote} with the minimum of ${args.count}`);
 		} else {
 			fs.unlink(`./board/star${message.guild.id}.json`, function (err) {
 				if (err) return message.channel.send('There is no shameboard');

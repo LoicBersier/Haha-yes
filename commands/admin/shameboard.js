@@ -51,7 +51,7 @@ class shameboardCommand extends Command {
 				}
 			});
 			
-			return message.channel.send(`This channel have been set as the shameboard with ${args.emote} with the minium of ${args.count}`);
+			return message.channel.send(`This channel have been set as the shameboard with ${args.emote} with the minimum of ${args.count}`);
 		} else {
 			fs.unlink(`./board/shame${message.guild.id}.json`, function (err) {
 				if (err) return message.channel.send('There is no shameboard');
