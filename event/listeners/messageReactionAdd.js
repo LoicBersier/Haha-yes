@@ -1,7 +1,8 @@
 const { Listener } = require('discord-akairo');
 const { MessageEmbed } = require('discord.js');
-const reload = require('auto-reload');
+const fs = require('fs');
 let messageID = require('../../json/starboard.json');
+
 
 class MessageReactionAddListener extends Listener {
 	constructor() {
@@ -13,29 +14,20 @@ class MessageReactionAddListener extends Listener {
 
 	async exec(reaction, user) {
 		if (reaction.message.author == user) return;
-		
-		let messageContent = reaction.message.content;
-		let messageAttachments = reaction.message.attachments.map(u=> u.url);
-
-		let starboardChannel, staremote, starcount, shameboardChannel, shameemote, shamecount;
-
-		try {
-			starboardChannel = reload(`../../board/star${reaction.message.guild.id}.json`);
-
+		let starboardChannel, shameboardChannel, staremote, starcount, shameemote, shamecount;
+		if (fs.existsSync(`./board/star${reaction.message.guild.id}.json`)) {
+			starboardChannel = require(`../../board/star${reaction.message.guild.id}.json`);
 			staremote = starboardChannel['emote'];
 			starcount = starboardChannel['count'];
-		} catch (err) {
-			console.log(`No shameboard for ${reaction.message.guild.name}, not an error`);
 		}
-
-		try {
-			shameboardChannel = reload(`../../board/shame${reaction.message.guild.id}.json`);
-
+		if (fs.existsSync(`./board/shame${reaction.message.guild.id}.json`)) {
+			shameboardChannel = require(`../../board/shame${reaction.message.guild.id}.json`);
 			shameemote = shameboardChannel['emote'];
 			shamecount = shameboardChannel['count'];
-		} catch (err) {
-			console.log(`No shameboard for ${reaction.message.guild.name}, not an error`);
 		}
+
+		let messageContent = reaction.message.content;
+		let messageAttachments = reaction.message.attachments.map(u=> u.url);
 
 		//	Starboard
 		if (reaction.emoji.name == staremote && reaction.count == starcount) {
