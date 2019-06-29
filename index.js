@@ -1,3 +1,7 @@
+const fs = require('fs');
+if (!fs.existsSync('./config.json')) {
+	throw new Error('I could not find config.json, are you sure you have it?');
+}
 const { AkairoClient, CommandHandler, InhibitorHandler, ListenerHandler } = require('discord-akairo');
 const { token, prefix, ownerID } = require('./config.json');
 require('console-stamp')(console, '[HH:MM:ss]');
