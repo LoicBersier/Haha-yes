@@ -44,7 +44,7 @@ class tweetCommand extends Command {
 		}
 
 		// remove zero width space
-		let text = args.text.replace('​');
+		let text = args.text.replace('​', '');
 		if (!text)
 			return;
 
