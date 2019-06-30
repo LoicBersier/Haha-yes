@@ -43,7 +43,8 @@ class tweetCommand extends Command {
 			return message.channel.send('You have been blacklisted from this command... be less naughty next time.');
 		}
 
-		let text = args.text;
+		// remove zero width space
+		let text = args.text.replace('​');
 		if (!text)
 			return;
 
