@@ -8,7 +8,7 @@ class serverblacklistInhibitor extends Inhibitor {
 	}
 
 	async exec(message) {
-		const blacklist = [];
+		const blacklist = ['595100178915262464'];
 		return blacklist.includes(message.guild.id);
 	}
 }
