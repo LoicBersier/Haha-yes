@@ -42,146 +42,137 @@ class messageListener extends Listener {
 				}
 			}
 			//  User autoresponse
-
 			if (fs.existsSync(`./tag/${message.guild.id}.json`)) {
-				let customresponse = require(`../../tag/${message.guild.id}.json`);
+				let customresponse = reload(`../../tag/${message.guild.id}.json`);
 
-				try {
-					if(customresponse[message_content]) {
-						let text = customresponse[message_content];
-						if (text.includes('[ban]')) {
-							message.member.ban('Tag ban :^)');
-						} else if (text.includes('[kick]')) {
-							message.member.kick('Tag kick :^)');
-						} else if (text.includes('[delete]')) {
-							message.delete('Tag delete :^)');
-						}
+				if(customresponse[message_content]) {
+					let text = customresponse[message_content];
+					if (text.includes('[ban]')) {
+						message.member.ban('Tag ban :^)');
+					} else if (text.includes('[kick]')) {
+						message.member.kick('Tag kick :^)');
+					} else if (text.includes('[delete]')) {
+						message.delete('Tag delete :^)');
+					}
 		
-						text = rand.random(text, message);
+					text = rand.random(text, message);
 	
-						let attach = '';
+					let attach = '';
 	
-						if (text.includes('[attach:')) {
-							attach = text.split(/(\[attach:.*?])/);
-							for (let i = 0, l = attach.length; i < l; i++) {
-								if (attach[i].includes('[attach:')) {
-									attach = attach[i].replace('[attach:', '').slice(0, -1);
-									i = attach.length;
+					if (text.includes('[attach:')) {
+						attach = text.split(/(\[attach:.*?])/);
+						for (let i = 0, l = attach.length; i < l; i++) {
+							if (attach[i].includes('[attach:')) {
+								attach = attach[i].replace('[attach:', '').slice(0, -1);
+								i = attach.length;
+							}
+						}
+						text = text.replace(/(\[attach:.*?])/, '');
+					}
+	
+					// THIS SECTION IS VERY VERY BAD MUST CHANGE
+					if (text.includes('[embed]')) {
+						text = text.replace(/\[embed\]/, ' ');
+		
+						let title = '';
+						let desc = '';
+						let image;
+						let thumbnail;
+						let footer = '';
+						let color;
+		
+						if (text.includes('[embedImage:')) {
+							image = text.split(/(\[embedImage:.*?])/);
+		
+							for (let i = 0, l = image.length; i < l; i++) {
+								if (image[i].includes('[embedImage:')) {
+									image = image[i].replace('[embedImage:', '').slice(0, -1);
+									text = text.replace(/(\[embedimage:.*?])/g, '');
+									i = image.length;
 								}
 							}
-							text = text.replace(/(\[attach:.*?])/, '');
 						}
-	
-						// THIS SECTION IS VERY VERY BAD MUST CHANGE
-						if (text.includes('[embed]')) {
-							text = text.replace(/\[embed\]/, ' ');
-		
-							let title = '';
-							let desc = '';
-							let image;
-							let thumbnail;
-							let footer = '';
-							let color;
-		
-							if (text.includes('[embedImage:')) {
-								image = text.split(/(\[embedImage:.*?])/);
-		
-								for (let i = 0, l = image.length; i < l; i++) {
-									if (image[i].includes('[embedImage:')) {
-										image = image[i].replace('[embedImage:', '').slice(0, -1);
-										text = text.replace(/(\[embedimage:.*?])/g, '');
-										i = image.length;
-									}
-								}
-							}
 							
-							if (text.includes('[embedThumbnail:')) {
-								thumbnail = text.split(/(\[embedThumbnail:.*?])/);
+						if (text.includes('[embedThumbnail:')) {
+							thumbnail = text.split(/(\[embedThumbnail:.*?])/);
 		
-								for (let i = 0, l = thumbnail.length; i < l; i++) {
-									if (thumbnail[i].includes('[embedThumbnail:')) {
-										thumbnail = thumbnail[i].replace('[embedThumbnail:', '').slice(0, -1);
-										text = text.replace(/(\[embedThumbnail:.*?])/g, '');
-										i = thumbnail.length;
-									}
+							for (let i = 0, l = thumbnail.length; i < l; i++) {
+								if (thumbnail[i].includes('[embedThumbnail:')) {
+									thumbnail = thumbnail[i].replace('[embedThumbnail:', '').slice(0, -1);
+									text = text.replace(/(\[embedThumbnail:.*?])/g, '');
+									i = thumbnail.length;
 								}
-							}
-		
-							if (text.includes('[embedColor:')) {
-								color = text.split(/(\[embedColor:.*?])/);
-								for (let i = 0, l = color.length; i < l; i++) {
-									if (color[i].includes('[embedColor:')) {
-										color = color[i].replace('[embedColor:', '').slice(0, -1);
-										text = text.replace(/(\[embedColor:.*?])/g, '');
-										i = color.length;
-									}
-								}
-							}
-		
-		
-							if (text.includes('[embedTitle:')) {
-								title = text.split(/(\[embedTitle:.*?])/);
-								for (let i = 0, l = title.length; i < l; i++) {
-									if (title[i].includes('[embedTitle:')) {
-										title = title[i].replace('[embedTitle:', '').slice(0, -1);
-										text = text.replace(/(\[embedTitle:.*?])/g, '');
-										i = title.length;
-									}
-								}
-							}
-		
-							if (text.includes('[embedFooter:')) {
-								footer = text.split(/(\[embedFooter:.*?])/);
-								for (let i = 0, l = footer.length; i < l; i++) {
-									if (footer[i].includes('[embedFooter:')) {
-										footer = footer[i].replace('[embedFooter:', '').slice(0, -1);
-										text = text.replace(/(\[embedFooter:.*?])/g, '');
-										i = footer.length;
-									}
-								}
-							}
-		
-							if (text.includes('[embedDesc:')) {
-								desc = text.split(/(\[embedDesc:.*?])/);
-								for (let i = 0, l = desc.length; i < l; i++) {
-									if (desc[i].includes('[embedDesc:')) {
-										desc = desc[i].replace('[embedDesc:', '').slice(0, -1);
-										i = desc.length;
-									}
-								}
-							}
-		
-							const embed = new MessageEmbed()
-								.setColor(color)
-								.setTitle(title)
-								.setImage(image)
-								.setThumbnail(thumbnail)
-								.setDescription(desc)
-								.setFooter(footer)
-								.setTimestamp();
-		
-							
-							if (attach) {
-								return message.channel.send(embed, {files: [attach]});
-							} else {
-								return message.channel.send(embed);
 							}
 						}
+		
+						if (text.includes('[embedColor:')) {
+							color = text.split(/(\[embedColor:.*?])/);
+							for (let i = 0, l = color.length; i < l; i++) {
+								if (color[i].includes('[embedColor:')) {
+									color = color[i].replace('[embedColor:', '').slice(0, -1);
+									text = text.replace(/(\[embedColor:.*?])/g, '');
+									i = color.length;
+								}
+							}
+						}
+		
+		
+						if (text.includes('[embedTitle:')) {
+							title = text.split(/(\[embedTitle:.*?])/);
+							for (let i = 0, l = title.length; i < l; i++) {
+								if (title[i].includes('[embedTitle:')) {
+									title = title[i].replace('[embedTitle:', '').slice(0, -1);
+									text = text.replace(/(\[embedTitle:.*?])/g, '');
+									i = title.length;
+								}
+							}
+						}
+		
+						if (text.includes('[embedFooter:')) {
+							footer = text.split(/(\[embedFooter:.*?])/);
+							for (let i = 0, l = footer.length; i < l; i++) {
+								if (footer[i].includes('[embedFooter:')) {
+									footer = footer[i].replace('[embedFooter:', '').slice(0, -1);
+									text = text.replace(/(\[embedFooter:.*?])/g, '');
+									i = footer.length;
+								}
+							}
+						}
+		
+						if (text.includes('[embedDesc:')) {
+							desc = text.split(/(\[embedDesc:.*?])/);
+							for (let i = 0, l = desc.length; i < l; i++) {
+								if (desc[i].includes('[embedDesc:')) {
+									desc = desc[i].replace('[embedDesc:', '').slice(0, -1);
+									i = desc.length;
+								}
+							}
+						}
+		
+						const embed = new MessageEmbed()
+							.setColor(color)
+							.setTitle(title)
+							.setImage(image)
+							.setThumbnail(thumbnail)
+							.setDescription(desc)
+							.setFooter(footer)
+							.setTimestamp();
+		
 							
 						if (attach) {
-							return message.channel.send(text, {files: [attach]});
+							return message.channel.send(embed, {files: [attach]});
 						} else {
-							return message.channel.send(text);
+							return message.channel.send(embed);
 						}
-					}		
-	
-				} catch (err) {
-					null;
-				}
+					}
+							
+					if (attach) {
+						return message.channel.send(text, {files: [attach]});
+					} else {
+						return message.channel.send(text);
+					}
+				}		
 			}
-
-			
-			
 		}
 	}
 }
