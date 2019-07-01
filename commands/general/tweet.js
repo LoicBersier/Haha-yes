@@ -71,7 +71,7 @@ class tweetCommand extends Command {
 				.setAuthor(message.author.username, message.author.displayAvatarURL())
 				.setDescription(args.text)
 				.addField('Link', `https://twitter.com/HahaYesDB/status/${tweetid}`)
-				.setFooter(`Tweet ID: ${tweetid} | Author ID: ${message.author.id}`)
+				.setFooter(`Tweet ID: ${tweetid} | Author ID: ${message.author.id} | Guild ID: ${message.guild.id}`)
 				.setTimestamp();
 
 			channel.send({embed: Embed});
