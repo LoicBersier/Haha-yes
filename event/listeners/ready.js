@@ -23,14 +23,14 @@ class ReadyListener extends Listener {
 			let status = watch[Math.floor((Math.random() * watch.length))];
 			status = status.replace('${prefix}', prefix[0]);
 		
-			this.client.user.setActivity(`${status} | ${prefix[0]} help`, { type: 'WATCHING' });
+			this.client.user.setActivity(`${status} | My prefix is: ${prefix[0]} `, { type: 'WATCHING' });
 		} else {
 			console.log('Status type: Playing');
 
 			let status = game[Math.floor((Math.random() * game.length))];
 			status = status.replace('${prefix}', prefix[0]);
 		
-			this.client.user.setActivity(`${status} | ${prefix[0]} help`, { type: 'PLAYING' });
+			this.client.user.setActivity(`${status} | My prefix is: ${prefix[0]}`, { type: 'PLAYING' });
 		}
 
 		//  Send stats to the 'stats' channel in the support server if its not the test bot
