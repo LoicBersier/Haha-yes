@@ -43,7 +43,8 @@ class tweetCommand extends Command {
 			return message.channel.send('You have been blacklisted from this command... be less naughty next time.');
 		}
 
-		let text = args.text;
+		// remove zero width space
+		let text = args.text.replace('​', '');
 		if (!text)
 			return;
 
@@ -70,7 +71,7 @@ class tweetCommand extends Command {
 				.setAuthor(message.author.username, message.author.displayAvatarURL())
 				.setDescription(args.text)
 				.addField('Link', `https://twitter.com/HahaYesDB/status/${tweetid}`)
-				.setFooter(`Tweet ID: ${tweetid} | Author ID: ${message.author.id}`)
+				.setFooter(`Tweet ID: ${tweetid} | Author ID: ${message.author.id} | Guild ID: ${message.guild.id}`)
 				.setTimestamp();
 
 			channel.send({embed: Embed});
