@@ -31,7 +31,7 @@ class removeResponseCommand extends Command {
 		const autoresponse = await autoResponse.findOne({where: {trigger: args.trigger}});
 		if (autoresponse) {
 			autoResponse.destroy({where: {trigger: args.trigger}});
-			return message.channel.send('Sucesffuly deleted the following autoresponse: ' + args.trigger);
+			return message.channel.send('successfully deleted the following autoresponse: ' + args.trigger);
 		} else {
 			return message.channel.send('Did not find the specified autoresponse, are you sure it exist?');
 		}

@@ -30,7 +30,7 @@ class UnTagCommand extends Command {
 		const tag = await Tag.findOne({where: {trigger: args.trigger, serverID: message.guild.id}});
 		if (tag) {
 			Tag.destroy({where: {trigger: args.trigger, serverID: message.guild.id}});
-			return message.channel.send('Sucesffuly deleted the following tag: ' + args.trigger);
+			return message.channel.send('successfully deleted the following tag: ' + args.trigger);
 		} else {
 			return message.channel.send('Did not find the specified tag, are you sure it exist?');
 		}
