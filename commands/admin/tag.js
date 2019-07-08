@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const fs = require('fs');
+const Tag = require('../../models').Tag;
 
 class TagCommand extends Command {
 	constructor() {
@@ -35,37 +35,15 @@ class TagCommand extends Command {
 	}
 
 	async exec(message, args) {
-		if (args.trigger == null || args.response == null) return;
-		let trigger = args.trigger;
-		let response = args.response;
+		const tag = await Tag.findOne({where: {trigger: args.trigger, serverID: message.guild.id}});
 
-		trigger = trigger.toLowerCase();
-
-		let customresponse = {};
-		let json = JSON.stringify(customresponse);
-
-		fs.readFile(`./tag/${message.guild.id}.json`, 'utf8', function readFileCallback(err, data) {
-			if (err) {
-				fs.writeFile(`./tag/${message.guild.id}.json`, `{"${trigger}":"${response}"}`, function (err) {
-					if (err) {
-						
-						console.log(err);
-					}
-				});
-			} else {
-				customresponse = JSON.parse(data); //now it an object
-				customresponse[trigger] = response;
-				json = JSON.stringify(customresponse); //convert it back to json
-				fs.writeFile(`./tag/${message.guild.id}.json`, json, 'utf8', function (err) {
-					if (err) {
-						return console.log(err);
-					}
-				});
-			}
-		});
-
-		
-		return message.channel.send(`autoresponse have been set to ${trigger} : ${response}`);
+		if (!tag) {
+			const body = {trigger: args.trigger, response: args.response, owner: message.author.id, serverID: message.guild.id};
+			Tag.create(body);
+			return message.channel.send(`autoresponse have been set to ${args.trigger} : ${args.response}`);
+		} else {
+			return message.channel.send('The tag already exist!');
+		}
 	}
 }
 

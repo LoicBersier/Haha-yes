@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const fs = require('fs');
+const Tag = require('../../models').Tag;
 
 class UnTagCommand extends Command {
 	constructor() {
@@ -28,33 +28,13 @@ class UnTagCommand extends Command {
 	}
 
 	async exec(message, args) {
-		let trigger = args.trigger;
-
-		trigger = trigger.toLowerCase();
-
-		let customresponse = {};
-		let json = JSON.stringify(customresponse);
-
-
-		fs.readFile(`./tag/${message.guild.id}.json`, 'utf8', function readFileCallback(err, data) {
-			if (err) {
-				console.log(err);
-			} else {
-				customresponse = JSON.parse(data); //now it an object
-				delete customresponse[trigger];
-				json = JSON.stringify(customresponse); //convert it back to json
-				fs.writeFile(`./tag/${message.guild.id}.json`, json, 'utf8', function (err) {
-					if (err) {
-						
-						return console.log(err);
-					}
-				});
-			}
-		});
-
-		
-		return message.channel.send(`The following autoresponse have been deleted: ${trigger}`);
-
+		const tag = await Tag.findOne({where: {trigger: args.trigger, serverID: message.guild.id}});
+		if (tag) {
+			Tag.destroy({where: {trigger: args.trigger, serverID: message.guild.id}});
+			return message.channel.send('Sucesffuly deleted the following tag: ' + args.trigger);
+		} else {
+			return message.channel.send('Did not find the specified tag, are you sure it exist?');
+		}
 	}
 }
 
