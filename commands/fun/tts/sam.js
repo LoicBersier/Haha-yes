@@ -19,7 +19,7 @@ class samCommand extends Command {
 				}
 			],
 			description: {
-				content: 'Send a mp3 of what you wrote in Microsoft Sam tts, can change speed and pitch with [speed:a number] and [pitch:a]',
+				content: 'Send a mp3 of what you wrote in Microsoft Sam tts, can change speed and pitch with [speed:a number] and [pitch:a number]',
 				usage: '[text]',
 				examples: ['Here comes the roflcopter soisoisoisoisoi']
 			}
