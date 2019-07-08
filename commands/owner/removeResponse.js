@@ -5,8 +5,8 @@ class removeResponseCommand extends Command {
 	constructor() {
 		super('removeResponse', {
 			aliases: ['removeResponse'],
-			category: 'admin',
-			split: 'none',
+			category: 'owner',
+			ownerOnly: 'true',
 			userPermissions: ['MANAGE_MESSAGES'],
 			args: [
 				{

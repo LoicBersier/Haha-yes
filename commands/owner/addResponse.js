@@ -5,8 +5,8 @@ class addResponseCommand extends Command {
 	constructor() {
 		super('addResponse', {
 			aliases: ['addResponse'],
-			category: 'admin',
-			split: 'quoted',
+			category: 'owner',
+			ownerOnly: 'true',
 			userPermissions: ['MANAGE_MESSAGES'],
 			args: [
 				{
@@ -33,7 +33,7 @@ class addResponseCommand extends Command {
 			],
 			channelRestriction: 'guild',
 			description: {
-				content: 'Create custom autoresponse  [Click here to see the complete list of "addResponse"](https://cdn.discordapp.com/attachments/502198809355354133/561043193949585418/unknown.png) (Need "" if the trigger contains spaces)',
+				content: 'Create custom autoresponse',
 				usage: '[trigger] [response]',
 				examples: ['"do you know da wea" Fuck off dead meme', 'hello Hello [author], how are you today?']
 			}
