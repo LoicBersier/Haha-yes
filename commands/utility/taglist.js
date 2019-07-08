@@ -1,7 +1,7 @@
 const { Command } = require('discord-akairo');
-const { MessageEmbed } = require('discord.js');
-const reload = require('auto-reload');
+const Tag = require('../../models').Tag;
 const fs = require('fs');
+
 
 class taglistCommand extends Command {
 	constructor() {
@@ -12,7 +12,8 @@ class taglistCommand extends Command {
 			args: [
 				{
 					id: 'raw',
-					type: 'string',
+					match: 'rest',
+					optional: true
 				}
 			],
 			description: {
@@ -24,46 +25,22 @@ class taglistCommand extends Command {
 	}
 
 	async exec(message, args) {
-		try {
-			var customresponse = reload(`../../tag/${message.guild.id}.json`);
-			var count = Object.keys(customresponse).length;
-		} catch (err) {
-			message.channel.send('An error has occured, do you have any tags on the server?');
-			console.error(err);
-		}
-		await fs.readFile(`./tag/${message.guild.id}.json`, 'utf8', function readFileCallback(err, data) {
-			if (err) {
-				console.log(err);
-				
-				return;
-			}
-			let json = JSON.parse(data);
-			if (args.raw) {
-				const tagEmbed = new MessageEmbed()
-					.setColor('#ff9900')
-					.setTitle(args.raw)
-					.setDescription(json[args.raw]);
+		if (args.raw) {
+			let tagList = await Tag.findOne({attributes: ['trigger','response','ownerID'], where: {trigger: args.raw, serverID: message.guild.id}});
 
-				return message.channel.send(tagEmbed);
-			}
-
-			json = JSON.stringify(data);
-			json = json.replace(/[{}'\\]+/g, '');
-			json = json.replace(/,+/g, '\n');
-			json = json.replace(/"/g, ' ');
-
-			const tagEmbed = new MessageEmbed()
-				.setColor('#ff9900')
-				.setTitle('Tags list')
-				.setDescription(`Trigger:Response\n\n${json}`)
-				.setFooter(`You have ${count} tags on this server`);
-
-			message.channel.send(tagEmbed).catch(() => {
-				return message.channel.send('There is too much tag to be shown in an embed, sending file', {files: [`./tag/${message.guild.id}.json`]});
+			return message.channel.send(JSON.stringify(tagList, null, 2), {code: true});
+		} else {
+			let tagList = await Tag.findAll({attributes: ['trigger','response','ownerID'], where: {serverID: message.guild.id}});
+			let tagArray = [];
+			tagList.forEach(tag => {
+				tagArray.push(tag['dataValues']);
 			});
-		});
-		
+			fs.writeFile('/tmp/tagslist.txt',JSON.stringify(tagArray, null, 2), function(err) {
+				if (err) return console.error(err);
+				return message.channel.send('Here are your tags', {files: ['/tmp/tagslist.txt']});
+			});
+		}
+
 	}
 }
-
 module.exports = taglistCommand;
