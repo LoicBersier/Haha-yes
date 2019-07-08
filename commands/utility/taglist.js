@@ -14,6 +14,11 @@ class taglistCommand extends Command {
 					id: 'raw',
 					match: 'rest',
 					optional: true
+				},
+				{
+					id: 'list',
+					match: 'flag',
+					flag: '--list',
 				}
 			],
 			description: {
@@ -25,6 +30,12 @@ class taglistCommand extends Command {
 	}
 
 	async exec(message, args) {
+		if (args.list) {
+			let tagList = await Tag.findAll({attributes: ['trigger'], where: {serverID: message.guild.id}});
+			const tagString = tagList.map(t => t.trigger).join(', ') || 'No tags set.';
+			return message.channel.send(`List of tags:\n${tagString}`);
+		}
+
 		if (args.raw) {
 			let tagList = await Tag.findOne({attributes: ['trigger','response','ownerID'], where: {trigger: args.raw, serverID: message.guild.id}});
 
