@@ -19,9 +19,12 @@
     "img-diff-js": "^0.4.1",
     "leo-profanity": "^1.2.4",
     "mkdirp": "^0.5.1",
+    "mysql2": "^1.6.5",
     "node-fetch": "^2.5.0",
     "node-opus": "^0.3.1",
     "reload-json": "^0.3.1",
+    "sequelize": "^5.9.4",
+    "sqlite3": "^4.0.9",
     "superagent": "^4.1.0",
     "twitter-lite": "^0.9.4",
     "youtube-dl": "^1.13.1",
@@ -30,9 +33,9 @@
   "devDependencies": {
     "eslint": "^5.16.0",
     "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-import": "^2.18.0",
     "eslint-plugin-node": "^8.0.1",
-    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0"
   },
   "repository": {
