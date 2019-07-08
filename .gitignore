@@ -42,3 +42,5 @@ board/*.json
 tag/*.json
 welcome/*.json
 bye/*.json
+json/censor.json
+json/uncensor.json
