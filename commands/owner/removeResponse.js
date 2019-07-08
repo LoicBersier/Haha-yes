@@ -28,7 +28,7 @@ class removeResponseCommand extends Command {
 	}
 
 	async exec(message, args) {
-		const autoresponse = await autoResponse.findOne({where: {trigger: args.trigger, serverID: message.guild.id}});
+		const autoresponse = await autoResponse.findOne({where: {trigger: args.trigger}});
 		if (autoresponse) {
 			autoResponse.destroy({where: {trigger: args.trigger}});
 			return message.channel.send('Sucesffuly deleted the following autoresponse: ' + args.trigger);
