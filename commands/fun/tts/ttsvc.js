@@ -9,7 +9,6 @@ class TtsvcCommand extends Command {
 		super('ttsvc', {
 			aliases: ['ttsvc'],
 			category: 'fun',
-			split: 'none',
 			args: [
 				{
 					id: 'text',

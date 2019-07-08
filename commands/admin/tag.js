@@ -6,7 +6,6 @@ class TagCommand extends Command {
 		super('tag', {
 			aliases: ['tag'],
 			category: 'admin',
-			split: 'quoted',
 			userPermissions: ['MANAGE_MESSAGES'],
 			args: [
 				{

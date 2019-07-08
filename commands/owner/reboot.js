@@ -4,7 +4,6 @@ class RebootCommand extends Command {
 	constructor() {
 		super('reboot', {
 			aliases: ['ded', 'reboot', 'restart'],
-			split: 'none',
 			category: 'owner',
 			ownerOnly: 'true',
 			description: {

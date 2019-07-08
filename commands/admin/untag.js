@@ -6,7 +6,6 @@ class UnTagCommand extends Command {
 		super('untag', {
 			aliases: ['untag', 'removetag', 'delete'],
 			category: 'admin',
-			split: 'none',
 			userPermissions: ['MANAGE_MESSAGES'],
 			args: [
 				{

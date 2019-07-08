@@ -7,7 +7,6 @@ class IdubbbzCommand extends Command {
 		super('idubbbz', {
 			aliases: ['idubbbz', 'edups'],
 			category: 'images',
-			split: 'quoted',
 			args: [
 				{
 					id: 'text',
