@@ -33,7 +33,7 @@ class taglistCommand extends Command {
 		if (args.list) {
 			let tagList = await Tag.findAll({attributes: ['trigger'], where: {serverID: message.guild.id}});
 			const tagString = tagList.map(t => t.trigger).join(', ') || 'No tags set.';
-			return message.channel.send(`List of tags:\n${tagString}`);
+			return message.channel.send(`List of tags:\n${tagString}`, {code: true});
 		}
 
 		if (args.raw) {
