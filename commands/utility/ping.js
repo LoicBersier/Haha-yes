@@ -5,6 +5,12 @@ class PingCommand extends Command {
 		super('ping', {
 			aliases: ['ping', 'hello'],
 			category: 'utility',
+			args: [
+				{
+					id: 'lazyping',
+					type: 'string',
+				}
+			],
 			description: {
 				content: 'Ping the bot',
 				usage: '',
@@ -13,7 +19,8 @@ class PingCommand extends Command {
 		});
 	}
 
-	async exec(message) {
+	async exec(message, args) {
+		if (args.lazyping) return message.channel.send('Ping him yourself you lazy ass');
 		return message.util.reply('Pong!').then(sent => {
 			const timeDiff = (sent.editedAt || sent.createdAt) - (message.editedAt || message.createdAt);
 			const text = `🔂\u2000**PING**: ${timeDiff} ms`;
