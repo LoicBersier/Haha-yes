@@ -68,6 +68,7 @@ class tweetCommand extends Command {
 			
 			// Im too lazy for now to make an entry in config.json
 			const publicEmbed = new MessageEmbed()
+				.setAuthor('Some user of discord...')
 				.setDescription(args.text)
 				.addField('Link', `https://twitter.com/HahaYesDB/status/${tweetid}`)
 				.setTimestamp();
