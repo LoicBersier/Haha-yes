@@ -162,7 +162,7 @@ class messageListener extends Listener {
 				return message.channel.send(embed, {files: [attach]});
 
 			}
-			return message.channel.send(text), {files: [attach]};
+			return message.channel.send(text, {files: [attach]});
 		}
 	}
 }
