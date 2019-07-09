@@ -37,7 +37,7 @@ class TagCommand extends Command {
 		const tag = await Tag.findOne({where: {trigger: args.trigger, serverID: message.guild.id}});
 
 		if (!tag) {
-			const body = {trigger: args.trigger, response: args.response, owner: message.author.id, serverID: message.guild.id};
+			const body = {trigger: args.trigger, response: args.response, ownerID: message.author.id, serverID: message.guild.id};
 			Tag.create(body);
 			return message.channel.send(`autoresponse have been set to ${args.trigger} : ${args.response}`);
 		} else {
