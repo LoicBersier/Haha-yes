@@ -2,6 +2,7 @@ const { Command } = require('discord-akairo');
 const { MessageEmbed } = require('discord.js');
 const fetch = require('node-fetch');
 const boards = require('4chan-boards');
+const htmlToText = require('html-to-text');
 
 class FourchanCommand extends Command {
 	constructor() {
@@ -44,33 +45,26 @@ class FourchanCommand extends Command {
 			i = Math.floor((Math.random() * response.threads.length) + 1);
 
 			// If post is sticky search again
-			while(response.threads[i].posts[0].sticky == 1) {
+			while(response.threads[i].posts[0].sticky == 1 || !response.threads[i].posts[0]) {
 				i = Math.floor((Math.random() * response.threads.length));
 			}
 
 			let title = response.threads[i].posts[0].sub;
 			let description = response.threads[i].posts[0].com;
 
-			// Remove HTML element and encoding
-			description = decodeURI(description);
-			let regex = /(<([^>]+)>)/ig;
-			if (regex.test(description)) {
-				description = response.threads[i].posts[0].com.replace(/(<([^>]+)>)/ig,'');
-			}
-
 			// If title or description is undefined, change it to "no title/description"
-			if (!title) {
-				title = 'No title';
-			}
-
 			if (!description) {
 				description = 'No description';
+			}
+
+			if (!title) {
+				title = 'No title';
 			}
 
 			const FourchanEmbed = new MessageEmbed()
 				.setColor('#ff9900')
 				.setTitle(title)
-				.setDescription(description)
+				.setDescription(htmlToText.fromString(description))
 				.setImage(`https://i.4cdn.org/${args.board}/${response.threads[i].posts[0].tim}${response.threads[i].posts[0].ext}`)
 				.setURL(`https://boards.4chan.org/${args.board}/thread/${response.threads[i].posts[0].no}/${response.threads[i].posts[0].semantic_url}`)
 				.setFooter(`${boards.getName(args.board)} | ${response.threads[i].posts[0].name} | ${response.threads[i].posts[0].no}  | ${response.threads[i].posts[0].now}`);
