@@ -12,7 +12,6 @@ module.exports = {
       },
       trigger: {
         type: Sequelize.TEXT,
-        unique: true
       },
       response: {
         type: Sequelize.TEXT,
