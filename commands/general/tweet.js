@@ -37,7 +37,6 @@ class tweetCommand extends Command {
 		filter.removeWords(...uncensor);
 
 		const blacklist = reload('../../json/twiBlacklist.json');
-		const channel = this.client.channels.get(twiChannel);
 
 		if (blacklist.includes(message.author.id)) {
 			return message.channel.send('You have been blacklisted from this command... be less naughty next time.');
@@ -66,7 +65,16 @@ class tweetCommand extends Command {
 			});
 	
 			const tweetid = response.id_str;
-	
+			
+			// Im too lazy for now to make an entry in config.json
+			const publicEmbed = new MessageEmbed()
+				.setDescription(args.text)
+				.addField('Link', `https://twitter.com/HahaYesDB/status/${tweetid}`)
+				.setTimestamp();
+
+			let channel = this.client.channels.get('597964498921455637');
+			channel.send({embed: publicEmbed});
+
 			const Embed = new MessageEmbed()
 				.setAuthor(message.author.username, message.author.displayAvatarURL())
 				.setDescription(args.text)
@@ -74,6 +82,7 @@ class tweetCommand extends Command {
 				.setFooter(`Tweet ID: ${tweetid} | Author ID: ${message.author.id} | Guild ID: ${message.guild.id}`)
 				.setTimestamp();
 
+			channel = this.client.channels.get(twiChannel);
 			channel.send({embed: Embed});
 
 			return message.channel.send(`Go see ur epic tweet https://twitter.com/HahaYesDB/status/${tweetid}`);
