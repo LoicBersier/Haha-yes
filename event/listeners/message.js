@@ -158,11 +158,19 @@ class messageListener extends Listener {
 					.setTimestamp();
 		
 							
+				if (attach) {
+					return message.channel.send(embed, {files: [attach]});
+				} else {
+					return message.channel.send(embed);
 
-				return message.channel.send(embed, {files: [attach]});
+				}
 
 			}
-			return message.channel.send(text, {files: [attach]});
+			if (attach) {
+				return message.channel.send(text, {files: [attach]});
+			} else {
+				return message.channel.send(text);
+			}
 		}
 	}
 }
