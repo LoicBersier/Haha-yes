@@ -15,10 +15,15 @@ class SayCommand extends Command {
 						start: 'Write something so i can say it back',
 					},
 					match: 'rest'
+				},
+				{
+					id: 'delete',
+					match: 'flag',
+					flag: ['--del', '--delete', '-d']
 				}
 			],
 			description: {
-				content: 'Repeat what you say, [Click here to see the complete list of "tag"](https://cdn.discordapp.com/attachments/502198809355354133/561043193949585418/unknown.png)',
+				content: 'Repeat what you say, (Use "-d" to delete the message you sent) [Click here to see the complete list of "tag"](https://cdn.discordapp.com/attachments/502198809355354133/561043193949585418/unknown.png)',
 				usage: '[text]',
 				examples: ['[member] is a big [adverbs] [verbs]']
 			}
@@ -134,16 +139,24 @@ class SayCommand extends Command {
 				.setTimestamp();
 
 			if (attach) {
+				if (args.delete)
+					message.delete();
 				return message.channel.send(embed, {files: [attach]});
 			} else {
+				if (args.delete)
+					message.delete();
 				return message.channel.send(embed);
 			}
 		}
-
+	
 		//	  Send the final text
 		if (attach) {
+			if (args.delete)
+				message.delete();
 			return message.channel.send(text, {files: [attach]});
 		} else {
+			if (args.delete)
+				message.delete();
 			return message.channel.send(text);
 		}
 	}

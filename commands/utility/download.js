@@ -21,11 +21,16 @@ class DownloadCommand extends Command {
 					id: 'alt',
 					match: 'flag',
 					flag: '--alt'
+				},
+				{
+					id: 'spoiler',
+					match: 'flag',
+					flag: ['--spoil', '--spoiler', '-s']
 				}
 			],
 			clientPermissions: ['ATTACH_FILES'],
 			description: {
-				content: 'Download videos from different website from the link you provided',
+				content: 'Download videos from different website from the link you provided ( use "-s" to make the vid a spoiler )',
 				usage: '[link]',
 				examples: ['https://www.youtube.com/watch?v=6n3pFFPSlW4']
 			}
@@ -35,25 +40,37 @@ class DownloadCommand extends Command {
 	async exec(message, args) {
 		let link = args.link;
 		let needCompress = false;
+		let fileName;
+
+		if (args.spoiler) {
+			fileName = 'SPOILER_video';
+		} else {
+			fileName = 'video';
+		}
 
 		if (link.includes('http') || link.includes('www')) {
 			if (args.alt) {
 				console.log('alt download!');
-				fs.unlink('./video.mp4', (err) => {
-					if (err);
-				});
-				return youtubedl.exec(args.link, ['-o', './video.mp4'], {}, function(err, output) {
+				if (fs.existsSync(`./${fileName}.mp4`)) {
+					fs.unlink(`./${fileName}.mp4`, (err) => {
+						if (err);
+					});
+				}
+				return youtubedl.exec(args.link, ['-o', `./${fileName}.mp4`], {}, function(err, output) {
 					if (err) throw err;
 					console.log(output.join('\n'));
 					message.delete();
-					message.channel.send(`Downloaded by ${message.author.username}`, { files: ['./video.mp4'] })
-						.catch(() => message.channel.send('File too big'));	
+					message.channel.send(`Downloaded by ${message.author.username}`, { files: [`./${fileName}.mp4`] })
+						.catch(err => {
+							console.error(err);
+							return message.channel.send('File too big');	
+						});
 				});
 			}
 
 
 			let video = youtubedl(link, [`--username=${fbuser}`, `--password=${fbpasswd}`]);
-			video.pipe(fs.createWriteStream('./video.mp4'));
+			video.pipe(fs.createWriteStream(`./${fileName}.mp4`));
 			video.on('error', function error(err) {
 				console.log('error 2:', err);
 				message.channel.send('An error has occured, I can\'t download from the link you provided.');
@@ -89,26 +106,31 @@ class DownloadCommand extends Command {
 			video.on('end', function () {
 				if (!needCompress) {
 					message.delete();
-					return message.channel.send(`Downloaded by ${message.author.username}`, { files: ['./video.mp4'] })
-						.catch(() => message.channel.send('File too big'));		
+					return message.channel.send(`Downloaded by ${message.author.username}`, { files: [`./${fileName}.mp4`] })
+						.catch(err => {
+							console.error(err);
+							return message.channel.send('File too big');		
+						});
 				}
+
 				const options = {
-					input: 'video.mp4',
-					output: 'videoReady.mp4',
+					input: `${fileName}.mp4`,
+					output: `${fileName}Ready.mp4`,
 					preset: 'General/Gmail Small 10 Minutes 288p30'
 				};
+
 				//Compress vid if bigger than 8MB
 				let handbrake = hbjs.spawn(options);
 				handbrake.on('start', function() {
 					message.channel.send('Video bigger than 8MB compressing now <a:loadingmin:527579785212329984> (This can take a long time!)\nWant it to go faster? Donate to the dev with the donate command, so i can get a better server and do it faster!').then(msg => {
-						handbrake.on('end', function () {
-							msg.delete();
+						handbrake.on('end', async function () {
+							await msg.delete();
 						});
 					});
 				});
 				handbrake.on('error', err => {
-					message.channel.send('An error has occured while compressing the video');
 					console.error(err);
+					return message.channel.send('An error has occured while compressing the video');
 				});
 				handbrake.on('progress', progress => {
 					console.log(
@@ -119,13 +141,15 @@ class DownloadCommand extends Command {
 				});
 				handbrake.on('end', function () {
 					message.delete();
-					message.channel.send(`Downloaded by ${message.author.username}`, { files: ['./videoReady.mp4'] })
-						.catch(() => message.channel.send('File too big'));					
+					return message.channel.send(`Downloaded by ${message.author.username}`, { files: [`./${fileName}Ready.mp4`] })
+						.catch(err => {
+							console.error(err);
+							return message.channel.send('File too big');		
+						});			
 				});
 			});
 		} else {
-			
-			message.channel.send('You need to input a valid link');
+			return message.channel.send('You need to input a valid link');
 		}
 	}
 }
