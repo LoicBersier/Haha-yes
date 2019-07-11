@@ -56,21 +56,20 @@ class borgarCommand extends Command {
 					message.util.edit(borgarEmbed);
 
 					const filter = m =>  m.content && m.author.id == message.author.id;
-					message.channel.awaitMessages(filter, {time: args.time * 1000, errors: ['time'] })
-						.catch(collected => {
-							let userIngredient = collected.map(collected => collected.content);
-			
+					message.channel.awaitMessages(filter, {time: args.time * 1000, max: hamIngredient.length, errors: ['time'] })
+						.then(messages => {
+							let userIngredient = messages.map(messages => messages.content);
+
 							if (userIngredient.toString().toLowerCase() == hamIngredient.toString()) {
 								return message.reply('u won bro,,,, that\'s kinda epic if i do say so myself');
-							} else {
-								if (userIngredient.length == hamIngredient.length) {
-									return message.reply(`you failed noob... you were supposed to make ${hamIngredient}`);
-								} else if (userIngredient.length > hamIngredient.length) {
-									return message.reply('Too much ingredient...');
-								} else {
-									return message.reply('time runned out noob...');
-								}
+							} else if (userIngredient.length == hamIngredient.length) {
+								return message.reply(`you failed noob... you were supposed to make **${hamIngredient}**`);
+							} else if (userIngredient.length > hamIngredient.length) {
+								return message.reply('Too much ingredient...');
 							}
+						})
+						.catch(() => {
+							return message.reply('time runned out noob...');
 						});
 				}, 2000);
 			});
