@@ -39,32 +39,41 @@ class borgarCommand extends Command {
 		}
 
 
-		const borgarEmbed = new MessageEmbed()
+		let borgarEmbed = new MessageEmbed()
 			.setTitle('hamborger delivery')
 			.setDescription(`could you do me an **amborgar** that contain **${hamIngredient}**`)
 			.setFooter(`Level 0 | you have ${args.time} seconds to make that hamborgor`)
 			.setTimestamp();
 
-		message.channel.send(borgarEmbed);
+		message.util.send(borgarEmbed)
+			.then(() => {
+				setTimeout(async () => {
+					borgarEmbed = new MessageEmbed()
+						.setTitle('hamborger delivery')
+						.setDescription('You have to put each ingredients in seperate message!')
+						.setFooter(`Level 0 | you have ${args.time} seconds to make that hamborgor`)
+						.setTimestamp();
+					message.util.edit(borgarEmbed);
 
-		const filter = m =>  m.content && m.author.id == message.author.id;
-		message.channel.awaitMessages(filter, {time: args.time * 1000, errors: ['time'] })
-			.catch(collected => {
-				let userIngredient = collected.map(collected => collected.content);
-
-				if (userIngredient.toString().toLowerCase() == hamIngredient.toString()) {
-					return message.reply('u won bro,,,, that\'s kinda epic if i do say so myself');
-				} else {
-					if (userIngredient.length == hamIngredient.length) {
-						return message.reply(`you failed noob... you were supposed to make ${hamIngredient}`);
-					} else if (userIngredient.length > hamIngredient.length) {
-						return message.reply('Too much ingredient...');
-					} else {
-						return message.reply('time runned out noob...');
-					}
-				}
+					const filter = m =>  m.content && m.author.id == message.author.id;
+					message.channel.awaitMessages(filter, {time: args.time * 1000, errors: ['time'] })
+						.catch(collected => {
+							let userIngredient = collected.map(collected => collected.content);
+			
+							if (userIngredient.toString().toLowerCase() == hamIngredient.toString()) {
+								return message.reply('u won bro,,,, that\'s kinda epic if i do say so myself');
+							} else {
+								if (userIngredient.length == hamIngredient.length) {
+									return message.reply(`you failed noob... you were supposed to make ${hamIngredient}`);
+								} else if (userIngredient.length > hamIngredient.length) {
+									return message.reply('Too much ingredient...');
+								} else {
+									return message.reply('time runned out noob...');
+								}
+							}
+						});
+				}, 2000);
 			});
-
 	}
 }
 
