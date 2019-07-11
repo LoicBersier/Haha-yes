@@ -18,36 +18,36 @@ class MessageReactionAddListener extends Listener {
 
 		let messageContent = reaction.message.content;
 		let messageAttachments = reaction.message.attachments.map(u=> u.url);
-
+		
+		//	Starboard
 		if (fs.existsSync(`./board/star${reaction.message.guild.id}.json`)) {
 			starboardChannel = require(`../../board/star${reaction.message.guild.id}.json`);
 			staremote = starboardChannel['emote'];
 			starcount = starboardChannel['count'];
 
-			//	Starboard
 			if (reaction.emoji.name == staremote && reaction.count == starcount) {
-				if (messageID.includes(reaction.message.id))
-					return console.log('Message already in starboard!');
-
-				messageID.push(reaction.message.id);
-
-				sendEmbed('starboard', staremote, this.client);
+				if (messageID.includes(reaction.message.id)) {
+					console.log('Message already in starboard!');
+				} else {
+					messageID.push(reaction.message.id);
+					sendEmbed('starboard', staremote, this.client);
+				}
 			}
 		}
 
+		//Shameboard
 		if (fs.existsSync(`./board/shame${reaction.message.guild.id}.json`)) {
 			shameboardChannel = require(`../../board/shame${reaction.message.guild.id}.json`);
 			shameemote = shameboardChannel['emote'];
 			shamecount = shameboardChannel['count'];
 
-			//Shameboard
 			if (reaction.emoji.name == shameemote && reaction.count == shamecount) {
-				if (messageID.includes(reaction.message.id))
-					return console.log('Message already in starboard!');
-
-				messageID.push(reaction.message.id);
-
-				sendEmbed('shameboard', shameemote, this.client);
+				if (messageID.includes(reaction.message.id)) {
+					console.log('Message already in shameboard!');
+				} else {
+					messageID.push(reaction.message.id);
+					sendEmbed('shameboard', shameemote, this.client);
+				}
 			}
 		}
 
