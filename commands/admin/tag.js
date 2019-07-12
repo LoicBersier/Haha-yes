@@ -39,9 +39,22 @@ class TagCommand extends Command {
 		if (!tag) {
 			const body = {trigger: args.trigger, response: args.response, ownerID: message.author.id, serverID: message.guild.id};
 			Tag.create(body);
-			return message.channel.send(`autoresponse have been set to ${args.trigger} : ${args.response}`);
+			return message.channel.send(`tag have been set to ${args.trigger} : ${args.response}`);
 		} else {
-			return message.channel.send('The tag already exist!');
+			message.channel.send('This tag already exist, do you want to update it? y/n');
+			const filter = m =>  m.content && m.author.id == message.author.id;
+			message.channel.awaitMessages(filter, {time: 5000, max: 1, errors: ['time'] })
+				.then(messages => {
+					let messageContent = messages.map(messages => messages.content);
+					if (messageContent == 'y' || messageContent == 'yes') {
+						const body = {trigger: args.trigger, response: args.response, ownerID: message.author.id, serverID: message.guild.id};
+						Tag.update(body, {where: {serverID: message.guild.id}});
+						return message.channel.send(`tag have been set to ${args.trigger} : ${args.response}`);
+					}
+				})
+				.catch(() => {
+					return message.channel.send('Took too long to answer. didin\'t update anything.');
+				});
 		}
 	}
 }
