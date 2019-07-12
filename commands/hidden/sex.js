@@ -3,7 +3,7 @@ const { Command } = require('discord-akairo');
 class sexCommand extends Command {
 	constructor() {
 		super('sex', {
-			aliases: ['sex'],
+			aliases: ['sex', '69'],
 			category: 'hidden',
 			description: {
 				content: 'sex',
