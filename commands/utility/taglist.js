@@ -40,7 +40,7 @@ class taglistCommand extends Command {
 						.setTitle(message.guild.name)
 						.addField('Trigger:', tagList['dataValues']['trigger'])
 						.addField('Response:', tagList['dataValues']['response'])
-						.addField('Owner:', `${user.username}#${user.discriminator} (${user.id})`);
+						.addField('Creator:', `${user.username}#${user.discriminator} (${user.id})`);
 		
 					return message.channel.send(TagEmbed);
 				});
