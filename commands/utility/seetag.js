@@ -4,10 +4,10 @@ const fs = require('fs');
 const { MessageEmbed } = require('discord.js');
 
 
-class taglistCommand extends Command {
+class seetagCommand extends Command {
 	constructor() {
 		super('taglist', {
-			aliases: ['taglist', 'tags'],
+			aliases: ['seetag', 'taglist', 'tags'],
 			category: 'utility',
 			channelRestriction: 'guild',
 			args: [
@@ -67,4 +67,4 @@ class taglistCommand extends Command {
 		}
 	}
 }
-module.exports = taglistCommand;
+module.exports = seetagCommand;
