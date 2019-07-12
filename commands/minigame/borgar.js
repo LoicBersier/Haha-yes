@@ -42,7 +42,7 @@ class borgarCommand extends Command {
 		let borgarEmbed = new MessageEmbed()
 			.setTitle('hamborger delivery')
 			.setDescription(`could you do me an **amborgar** that contain **${hamIngredient}**`)
-			.setFooter(`Level 0 | you have ${args.time} seconds to make that hamborgor`)
+			.setFooter(`Level 0 | Once the ingredients dissapear you have ${args.time} seconds to do it!`)
 			.setTimestamp();
 
 		message.util.send(borgarEmbed)
