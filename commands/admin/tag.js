@@ -48,7 +48,7 @@ class TagCommand extends Command {
 					let messageContent = messages.map(messages => messages.content);
 					if (messageContent == 'y' || messageContent == 'yes') {
 						const body = {trigger: args.trigger, response: args.response, ownerID: message.author.id, serverID: message.guild.id};
-						Tag.update(body, {where: {trigger: args.trogger, serverID: message.guild.id}});
+						Tag.update(body, {where: {trigger: args.trigger, serverID: message.guild.id}});
 						return message.channel.send(`tag have been set to ${args.trigger} : ${args.response}`);
 					}
 				})

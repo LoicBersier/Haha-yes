@@ -55,7 +55,7 @@ class addResponseCommand extends Command {
 					let messageContent = messages.map(messages => messages.content);
 					if (messageContent == 'y' || messageContent == 'yes') {
 						const body = {trigger: args.trigger, response: args.response, type: args.type};
-						autoResponse.update(body, {where: {trigger: args.triggers}});
+						autoResponse.update(body, {where: {trigger: args.trigger}});
 						return message.channel.send(`autoresponse have been set to ${args.trigger} : ${args.response} with type: ${args.type}`);
 					}
 				})
