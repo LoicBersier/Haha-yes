@@ -18,7 +18,16 @@ class messageListener extends Listener {
 		const autoresponseStat = await autoResponseStat.findOne({where: {serverID: message.guild.id}});
 
 		if (autoresponseStat) {
-	
+			// Infinit haha very yes
+			if (message.content.toLowerCase().includes('haha very')) {
+				let yes = message.content.toLowerCase().replace('haha', '');
+				yes = yes.replace('yes', '');	
+				yes += 'very';
+				return message.channel.send(`haha${yes} yes`);		
+			} else if (message.content.toLowerCase().includes('haha yes')) {
+				return message.channel.send('haha very yes');
+			}
+
 			//  If autoresponse is enable send the response
 			if(autoresponseStat.get('stat') == 'enable' && autoresponseStat.get('serverID') == message.guild.id) {
 				//  Reply with images as attachement
