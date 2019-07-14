@@ -19,12 +19,12 @@ class messageListener extends Listener {
 
 		if (autoresponseStat) {
 			// Infinit haha very yes
-			if (message.content.toLowerCase().includes('haha very')) {
+			if (message.content.toLowerCase().startsWith('haha very')) {
 				let yes = message.content.toLowerCase().replace('haha', '');
 				yes = yes.replace('yes', '');	
 				yes += 'very';
 				return message.channel.send(`haha${yes} yes`);		
-			} else if (message.content.toLowerCase().includes('haha yes')) {
+			} else if (message.content.toLowerCase().startsWith('haha yes')) {
 				return message.channel.send('haha very yes');
 			}
 
