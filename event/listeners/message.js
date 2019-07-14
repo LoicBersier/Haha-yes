@@ -24,7 +24,7 @@ class messageListener extends Listener {
 				yes = yes.replace('yes', '');	
 				yes += 'very';
 				return message.channel.send(`haha${yes} yes`);		
-			} else if (message.content.toLowerCase().startsWith('haha yes')) {
+			} else if (message.content.toLowerCase() == 'haha yes') {
 				return message.channel.send('haha very yes');
 			}
 
