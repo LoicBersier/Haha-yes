@@ -19,7 +19,7 @@ class messageListener extends Listener {
 
 		if (autoresponseStat) {
 			// Infinit haha very yes
-			if (message.content.toLowerCase().startsWith('haha very')) {
+			if (message.content.toLowerCase().startsWith('haha very') && message.content.toLowerCase().endsWith('yes')) {
 				let yes = message.content.toLowerCase().replace('haha', '');
 				yes = yes.replace('yes', '');	
 				yes += 'very';
