@@ -30,7 +30,7 @@ class DownloadCommand extends Command {
 			],
 			clientPermissions: ['ATTACH_FILES'],
 			description: {
-				content: 'Download videos from different website from the link you provided ( use "-s" to make the vid a spoiler )',
+				content: 'Download videos from different website from the link you provided, use "-s" to make the vid a spoiler, use "--alt" to download from website that dosen\'t work otherwise (e.g: twitter)',
 				usage: '[link]',
 				examples: ['https://www.youtube.com/watch?v=6n3pFFPSlW4']
 			}
