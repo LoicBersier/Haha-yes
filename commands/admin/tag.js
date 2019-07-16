@@ -52,7 +52,8 @@ class TagCommand extends Command {
 						return message.channel.send(`tag have been set to ${args.trigger} : ${args.response}`);
 					}
 				})
-				.catch(() => {
+				.catch(err => {
+					console.error(err);
 					return message.channel.send('Took too long to answer. didin\'t update anything.');
 				});
 		}
