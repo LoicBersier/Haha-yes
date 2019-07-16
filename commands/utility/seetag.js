@@ -23,8 +23,8 @@ class seetagCommand extends Command {
 				}
 			],
 			description: {
-				content: 'Show the list of tag for this server.',
-				usage: '',
+				content: 'Show the list of tag for this server. --all to get a txt file with info about every tag on the server',
+				usage: '[name of tag]',
 				examples: ['']
 			}
 		});
@@ -42,6 +42,16 @@ class seetagCommand extends Command {
 						.addField('Response:', tagList['dataValues']['response'])
 						.addField('Creator:', `${user.username}#${user.discriminator} (${user.id})`);
 		
+					return message.channel.send(TagEmbed);
+				})
+				.catch(() => {
+					const TagEmbed = new MessageEmbed()
+						.setColor('#ff9900')
+						.setTitle(message.guild.name)
+						.addField('Trigger:', tagList['dataValues']['trigger'])
+						.addField('Response:', tagList['dataValues']['response'])
+						.addField('Creator:', 'No user info.');
+	
 					return message.channel.send(TagEmbed);
 				});
 		} else if (args.all) {
