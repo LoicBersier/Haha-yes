@@ -33,7 +33,7 @@ class dectalkvcCommand extends Command {
 
 		return axios.request({
 			responseType: 'arraybuffer',
-			url: `https://talk.moustacheminer.com/api/gen.wav?dectalk=${args.decMessage}`,
+			url: `http://localhost/api/gen.wav?dectalk=${args.decMessage}`,
 			method: 'get',
 			headers: {
 				'Content-Type': 'audio/wav',
