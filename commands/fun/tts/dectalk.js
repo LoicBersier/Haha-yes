@@ -39,7 +39,7 @@ class dectalkCommand extends Command {
 					return message.channel.send({files: ['./dectalk/dectalk.wav']});
 				});
 		} else if (process.platform == 'linux') {
-			exec(`cd dectalk && wine say.exe -w dectalk.wav "${args.decMessage}"`)
+			exec(`cd dectalk && DISPLAY=:0.0 wine say.exe -w dectalk.wav "${args.decMessage}"`)
 				.catch(err => {
 					return console.error(err);
 				})
