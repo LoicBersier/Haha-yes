@@ -52,7 +52,7 @@ class dectalkvcCommand extends Command {
 				});
 			
 		} else if (process.platform == 'linux') {
-			exec(`wine dectalk/say.exe -w ../../dectalk.wav "${args.decMessage}"`)
+			exec(`cd dectalk && DISPLAY=:0.0 wine say.exe -w dectalk.wav "${args.decMessage}"`)
 				.catch(err => {
 					return console.error(err);
 				})
