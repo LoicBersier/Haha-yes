@@ -33,7 +33,7 @@ class dectalkCommand extends Command {
 
 		return axios.request({
 			responseType: 'arraybuffer',
-			url: `http://localhost/api/gen.wav?dectalk=${args.decMessage}`,
+			url: `http://localhost:8080/api/gen.wav?dectalk=${args.decMessage}`,
 			method: 'get',
 			headers: {
 				'Content-Type': 'audio/wav',
