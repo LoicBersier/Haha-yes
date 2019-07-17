@@ -44,3 +44,6 @@ welcome/*.json
 bye/*.json
 json/censor.json
 json/uncensor.json
+
+# other
+dectalk/
