@@ -35,6 +35,11 @@ If on linux you can also do
 nohup node index.js &
 ```
 
+To use dectalk on linux you will need
+1. Get dectalk 
+2. install wine
+3. install Xvfb & run `Xvfb :0 -screen 0 1024x768x16 &`
+
 You can now use the python script [buildConfig.py](https://gitlab.com/LoicBersier/DiscordBot/blob/master/buildConfig.py) to build a config.json
 
 ## Built With
