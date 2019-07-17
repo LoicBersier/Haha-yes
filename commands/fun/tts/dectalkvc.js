@@ -29,7 +29,6 @@ class dectalkvcCommand extends Command {
 	async exec(message, args) {
 		args.decMessage = rand.random(args.decMessage, message);
 		args.decMessage = args.decMessage.replace('\n', ' ');
-		args.decMessage = encodeURI(args.decMessage);
 
 		if (process.platform == 'win32') {
 			exec(`cd .\\dectalk && .\\say.exe -w dectalkvc.wav "${args.decMessage}"`)
