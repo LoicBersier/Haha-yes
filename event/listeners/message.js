@@ -71,8 +71,8 @@ class messageListener extends Listener {
 				attach = text.split(/(\[attach:.*?])/);
 				for (let i = 0, l = attach.length; i < l; i++) {
 					if (attach[i].includes('[attach:')) {
+						attach = attach[i].replace(' ', '');
 						attach = attach[i].replace('[attach:', '').slice(0, -1);
-						attach = attach.replace(' ', '');
 						i = attach.length;
 					}
 				}
@@ -95,8 +95,8 @@ class messageListener extends Listener {
 		
 					for (let i = 0, l = image.length; i < l; i++) {
 						if (image[i].includes('[embedImage:')) {
+							image = image[i].replace(' ', '');
 							image = image[i].replace('[embedImage:', '').slice(0, -1);
-							image = image.replace(' ', '');
 							text = text.replace(/(\[embedimage:.*?])/g, '');
 							i = image.length;
 						}
@@ -108,8 +108,8 @@ class messageListener extends Listener {
 		
 					for (let i = 0, l = thumbnail.length; i < l; i++) {
 						if (thumbnail[i].includes('[embedThumbnail:')) {
+							thumbnail = thumbnail[i].replace(' ', '');
 							thumbnail = thumbnail[i].replace('[embedThumbnail:', '').slice(0, -1);
-							thumbnail = thumbnail.replace(' ', '');
 							text = text.replace(/(\[embedThumbnail:.*?])/g, '');
 							i = thumbnail.length;
 						}
