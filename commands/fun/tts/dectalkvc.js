@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
-const axios = require('axios');
-const fs = require('fs');
+const util = require('util');
+const exec = util.promisify(require('child_process').exec);
 const rand = require('../../../rand.js');
 
 class dectalkvcCommand extends Command {
@@ -31,31 +31,47 @@ class dectalkvcCommand extends Command {
 		args.decMessage = args.decMessage.replace('\n', ' ');
 		args.decMessage = encodeURI(args.decMessage);
 
-		return axios.request({
-			responseType: 'arraybuffer',
-			url: `http://127.0.0.1:8080/api/gen.wav?dectalk=${args.decMessage}`,
-			method: 'get',
-			headers: {
-				'Content-Type': 'audio/wav',
-			},
-		}).then(async (result) => {
-			const outputFilename = './dectalkvc.wav';
-			fs.writeFile(outputFilename, result.data, async function(err) {
-				if (err) console.error(err);
-				const voiceChannel = message.member.voice.channel;
-				if (!voiceChannel) return message.say('Please enter a voice channel first.');
-				try {
-					const connection = await voiceChannel.join();
-					const dispatcher = connection.play('./dectalkvc.wav');
-					dispatcher.once('finish', () => voiceChannel.leave());
-					dispatcher.once('error', () => voiceChannel.leave());
-					return null;
-				} catch (err) {
-					voiceChannel.leave();
-					return message.reply(`Oh no, an error occurred: \`${err.message}\`. Try again later!`);
-				}
-			});
-		});
+		if (process.platform == 'win32') {
+			exec(`cd .\\dectalk && .\\say.exe -w dectalk.wav "${args.decMessage}"`)
+				.catch(err => {
+					return console.error(err);
+				})
+				.then(async () => {
+					const voiceChannel = message.member.voice.channel;
+					if (!voiceChannel) return message.say('Please enter a voice channel first.');
+					try {
+						const connection = await voiceChannel.join();
+						const dispatcher = connection.play('./dectalkvc.wav');
+						dispatcher.once('finish', () => voiceChannel.leave());
+						dispatcher.once('error', () => voiceChannel.leave());
+						return null;
+					} catch (err) {
+						voiceChannel.leave();
+						return message.reply(`Oh no, an error occurred: \`${err.message}\`. Try again later!`);
+					}
+				});
+			
+		} else if (process.platform == 'linux') {
+			exec(`wine dectalk/say.exe -w ../../dectalk.wav "${args.decMessage}"`)
+				.catch(err => {
+					return console.error(err);
+				})
+				.then(async () => {
+					const voiceChannel = message.member.voice.channel;
+					if (!voiceChannel) return message.say('Please enter a voice channel first.');
+					try {
+						const connection = await voiceChannel.join();
+						const dispatcher = connection.play('./dectalkvc.wav');
+						dispatcher.once('finish', () => voiceChannel.leave());
+						dispatcher.once('error', () => voiceChannel.leave());
+						return null;
+					} catch (err) {
+						voiceChannel.leave();
+						return message.reply(`Oh no, an error occurred: \`${err.message}\`. Try again later!`);
+					}
+				});
+		}
+
 
 	}
 }
