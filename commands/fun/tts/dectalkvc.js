@@ -32,7 +32,7 @@ class dectalkvcCommand extends Command {
 		args.decMessage = encodeURI(args.decMessage);
 
 		if (process.platform == 'win32') {
-			exec(`cd .\\dectalk && .\\say.exe -w dectalk.wav "${args.decMessage}"`)
+			exec(`cd .\\dectalk && .\\say.exe -w dectalkvc.wav "${args.decMessage}"`)
 				.catch(err => {
 					return console.error(err);
 				})
@@ -41,7 +41,7 @@ class dectalkvcCommand extends Command {
 					if (!voiceChannel) return message.say('Please enter a voice channel first.');
 					try {
 						const connection = await voiceChannel.join();
-						const dispatcher = connection.play('./dectalk/dectalkvc.wav');
+						const dispatcher = connection.play('./dectalk/dectalk.wav');
 						dispatcher.once('finish', () => voiceChannel.leave());
 						dispatcher.once('error', () => voiceChannel.leave());
 						return null;
@@ -52,7 +52,7 @@ class dectalkvcCommand extends Command {
 				});
 			
 		} else if (process.platform == 'linux') {
-			exec(`cd dectalk && DISPLAY=:0.0 wine say.exe -w dectalk.wav "${args.decMessage}"`)
+			exec(`cd dectalk && DISPLAY=:0.0 wine say.exe -w dectalkvc.wav "${args.decMessage}"`)
 				.catch(err => {
 					return console.error(err);
 				})
