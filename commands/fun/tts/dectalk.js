@@ -29,17 +29,18 @@ class dectalkCommand extends Command {
 	async exec(message, args) {
 		args.decMessage = rand.random(args.decMessage, message);
 		args.decMessage = args.decMessage.replace('\n', ' ');
+		let decMessage = '[:phoneme on] ' + args.decMessage;
 
 		if (process.platform == 'win32') {
-			exec(`cd .\\dectalk && .\\say.exe -w dectalk.wav "${args.decMessage}"`)
+			exec(`cd .\\dectalk && .\\say.exe -w dectalk.wav "${decMessage}"`)
 				.catch(err => {
 					return console.error(err);
 				})
 				.then(() => {
 					return message.channel.send({files: ['./dectalk/dectalk.wav']});
 				});
-		} else if (process.platform == 'linux') {
-			exec(`cd dectalk && DISPLAY=:0.0 wine say.exe -w dectalk.wav "${args.decMessage}"`)
+		} else if (process.platform == 'linux' || process.platform == 'darwin') {
+			exec(`cd dectalk && DISPLAY=:0.0 wine say.exe -w dectalk.wav "${decMessage}"`)
 				.catch(err => {
 					return console.error(err);
 				})

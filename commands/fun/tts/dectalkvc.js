@@ -29,9 +29,10 @@ class dectalkvcCommand extends Command {
 	async exec(message, args) {
 		args.decMessage = rand.random(args.decMessage, message);
 		args.decMessage = args.decMessage.replace('\n', ' ');
+		let decMessage = '[:phoneme on] ' + args.decMessage;
 
 		if (process.platform == 'win32') {
-			exec(`cd .\\dectalk && .\\say.exe -w dectalkvc.wav "${args.decMessage}"`)
+			exec(`cd .\\dectalk && .\\say.exe -w dectalkvc.wav "${decMessage}"`)
 				.catch(err => {
 					return console.error(err);
 				})
@@ -50,8 +51,8 @@ class dectalkvcCommand extends Command {
 					}
 				});
 			
-		} else if (process.platform == 'linux') {
-			exec(`cd dectalk && DISPLAY=:0.0 wine say.exe -w dectalkvc.wav "${args.decMessage}"`)
+		} else if (process.platform == 'linux' || process.platform == 'darwin') {
+			exec(`cd dectalk && DISPLAY=:0.0 wine say.exe -w dectalkvc.wav "${decMessage}"`)
 				.catch(err => {
 					return console.error(err);
 				})
