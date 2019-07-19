@@ -71,7 +71,7 @@ class tweetCommand extends Command {
 				.setDescription(args.text)
 				.addField('Link', `https://twitter.com/HahaYesDB/status/${tweetid}`)
 				.setTimestamp();
-				
+
 			// Im too lazy for now to make an entry in config.json
 			let channel = this.client.channels.get('597964498921455637');
 			channel.send({embed: publicEmbed});
@@ -81,8 +81,8 @@ class tweetCommand extends Command {
 				.setDescription(args.text)
 				.addField('Link', `https://twitter.com/HahaYesDB/status/${tweetid}`, true)
 				.addField('Tweet ID', tweetid, true)
-				.addField('Author', `${message.author.username}(${message.author.id})`, true)
-				.addField('Guild', `${message.guild.name}(${message.guild.id})`, true)
+				.addField('Author', `${message.author.username} (${message.author.id})`, true)
+				.addField('Guild', `${message.guild.name} (${message.guild.id})`, true)
 				.setTimestamp();
 
 			channel = this.client.channels.get(twiChannel);
