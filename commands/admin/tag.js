@@ -50,6 +50,8 @@ class TagCommand extends Command {
 						const body = {trigger: args.trigger, response: args.response, ownerID: message.author.id, serverID: message.guild.id};
 						await Tag.update(body, {where: {trigger: args.trigger, serverID: message.guild.id}});
 						return message.channel.send(`tag have been set to ${args.trigger} : ${args.response}`);
+					} else {
+						return message.channel.send('Not updating.');
 					}
 				})
 				.catch(err => {
