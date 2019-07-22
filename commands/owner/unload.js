@@ -1,4 +1,5 @@
 const { Command } = require('discord-akairo');
+const fs = require('fs');
 
 class unloadCommand extends Command {
 	constructor() {
@@ -10,11 +11,15 @@ class unloadCommand extends Command {
 				{
 					id: 'command',
 					type: 'string',
-					match: 'rest'
+				},
+				{
+					id: 'noplaceholder',
+					match: 'flag',
+					flag: ['--noplaceholder', '-n']
 				}
 			],
 			description: {
-				content: 'Unload command',
+				content: 'Unload command (use "-n" if you do **not** want a placeholder for this command)',
 				usage: '[command]',
 				examples: ['ping']
 			}
@@ -23,6 +28,31 @@ class unloadCommand extends Command {
 
 	async exec(message, args) {
 		this.handler.remove(args.command);
+		if (!args.noplaceholder) {
+			fs.writeFile('./unloaded.js', `const { Command } = require('discord-akairo');
+			
+			class ${args.command}Command extends Command {
+				constructor() {
+					super('${args.command}', {
+						aliases: ['${args.command}'],
+						description: {
+							content: 'unloaded command',
+							usage: '[]',
+							examples: ['']
+						}
+					});
+				}
+			
+				async exec(message) {
+					return message.channel.send('This command is unloaded, please check back later.');
+				}
+			}
+			
+			module.exports = ${args.command}Command;`,() => {
+				this.handler.load(`${__dirname}/../../unloaded.js`);
+
+			});
+		}
 		return message.channel.send(`Sucessfully unloaded command ${args.command}`);
 	}
 }
