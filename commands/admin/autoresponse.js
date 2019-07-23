@@ -30,17 +30,17 @@ class autoresponseCommand extends Command {
 	}
 
 	async exec(message, args) {
-		if (args.stat == 'enable' || args.stat == 'disable') {
+		if (args.stat.toLowerCase() == 'enable' || args.stat.toLowerCase() == 'disable') {
 			const autoresponseStat = await autoResponseStat.findOne({where: {serverID: message.guild.id}});
 
 			if (!autoresponseStat) {
 				const body = {serverID: message.guild.id, stat: args.stat};
 				autoResponseStat.create(body);
-				return message.channel.send(`Autoresponse have been ${args.stat}ed`);
+				return message.channel.send(`Autoresponse have been ${args.stat}d`);
 			} else {
 				const body = {serverID: message.guild.id, stat: args.stat};
 				autoResponseStat.update(body, {where: {serverID: message.guild.id}});
-				return message.channel.send(`Autoresponse have been ${args.stat}ed`);
+				return message.channel.send(`Autoresponse have been ${args.stat}d`);
 			}
 		}
 	}
