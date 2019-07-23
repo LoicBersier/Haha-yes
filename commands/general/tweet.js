@@ -52,6 +52,10 @@ class tweetCommand extends Command {
 
 		text = rand.random(text, message);
 
+		if (text.length > 280) {
+			return message.channel.send('Your message is more than the 280 characters limit!');
+		}
+
 		try {
 			let client = new Twitter({
 				consumer_key: twiConsumer,
