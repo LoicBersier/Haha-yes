@@ -69,7 +69,7 @@ class borgarCommand extends Command {
 							}
 						})
 						.catch(() => {
-							return message.reply('time runned out noob...');
+							return message.reply('You run out of time noob...');
 						});
 				}, 3000);
 			});

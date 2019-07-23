@@ -23,7 +23,7 @@ class reloadCommand extends Command {
 
 	async exec(message, args) {
 		this.handler.reload(args.command);
-		return message.channel.send(`Sucessfully reloaded command ${args.command}`);
+		return message.channel.send(`successfully reloaded command ${args.command}`);
 	}
 }
 
