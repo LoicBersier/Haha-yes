@@ -14,7 +14,7 @@ class guessCommand extends Command {
 	}
 
 	async exec(message) {
-		message.channel.send('1. Easy ( 0 - 100 )\n2. Medium ( 0 - 1000 )\n3. Hard ( 0 - 10000');
+		message.channel.send('1. Easy ( 0 - 100 )\n2. Medium ( 0 - 1000 )\n3. Hard ( 0 - 10000 )');
 		const filter = m =>  m.content && m.author.id == message.author.id;
 		message.channel.awaitMessages(filter, {time: 10000, max: 1, errors: ['time'] })
 			.then(messages => {
