@@ -6,7 +6,7 @@ class guessCommand extends Command {
 			aliases: ['guess'],
 			category: 'minigame',
 			description: {
-				content: 'Guess the number',
+				content: 'Guess the number ( Say "stop" to stop playing )',
 				usage: '',
 				examples: ['']
 			}
@@ -59,6 +59,8 @@ class guessCommand extends Command {
 					numberTry++;
 					if (input != secretnumber) {
 						tryAgain(input);
+					} else if (input == 'stop') {
+						return message.channel.send('Ok, let\'s stop playing :(');
 					} else {
 						if (numberTry > 1) {
 							return message.channel.send(`Congratulations! You won! It took you ${numberTry} turns!`);
