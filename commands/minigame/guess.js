@@ -14,7 +14,7 @@ class guessCommand extends Command {
 	}
 
 	async exec(message) {
-		message.channel.send('1. Easy ( 0 - 100 )\n2. Medium ( 0 - 1000 )\n3. Hard ( 0 - 10000 )');
+		message.reply('1. Easy ( 0 - 100 )\n2. Medium ( 0 - 1000 )\n3. Hard ( 0 - 10000 )');
 		const filter = m =>  m.content && m.author.id == message.author.id;
 		message.channel.awaitMessages(filter, {time: 10000, max: 1, errors: ['time'] })
 			.then(messages => {
@@ -27,15 +27,15 @@ class guessCommand extends Command {
 				} else if (messages.map(messages => messages.content)[0] == 3) {
 					max = 10000;
 				} else {
-					return message.channel.send('This isin\'t a valid difficulty number! Please try again.');
+					return message.reply('This isin\'t a valid difficulty number! Please try again.');
 				}
 				
 				let secretnumber = Math.floor((Math.random() * max) + 1);
 				let numberTry = 0;
 				console.log(secretnumber);
 
-				message.channel.send('What is the number?');
-				message.channel.awaitMessages(filter, {time: 10000, max: 1})
+				message.reply('What is the number?');
+				message.channel.awaitMessages(filter, {max: 1})
 					.then(input => {
 						checkNumber(input.map(input => input.content)[0]);
 					});
@@ -43,13 +43,12 @@ class guessCommand extends Command {
 				function tryAgain (input) {
 					if (input != secretnumber) {
 						if (input > secretnumber) {
-							message.channel.send('Its less!');
+							message.reply('Its less!\nWhat is the number?');
 						} else if (input < secretnumber) {
-							message.channel.send('Its more!');
+							message.reply('Its more!\nWhat is the number?');
 						}
 					}
-					message.channel.send('What is the number?');
-					message.channel.awaitMessages(filter, {time: 10000, max: 1})
+					message.channel.awaitMessages(filter, {max: 1})
 						.then(input => {
 							checkNumber(input.map(input => input.content)[0]);
 						});
@@ -57,15 +56,15 @@ class guessCommand extends Command {
 
 				function checkNumber (input) {
 					numberTry++;
-					if (input != secretnumber) {
+					if (input.toLowerCase() == 'stop') {
+						return message.reply('Ok, let\'s stop playing :(');
+					} else if (input != secretnumber) {
 						tryAgain(input);
-					} else if (input == 'stop') {
-						return message.channel.send('Ok, let\'s stop playing :(');
 					} else {
 						if (numberTry > 1) {
-							return message.channel.send(`Congratulations! You won! It took you ${numberTry} turns!`);
+							return message.reply(`Congratulations! You won! It took you ${numberTry} turns!`);
 						} else {
-							return message.channel.send('Congratulations! You won! It took you 1 Turn!');
+							return message.reply('Congratulations! You won! It took you 1 Turn!');
 						}
 					}
 				}
