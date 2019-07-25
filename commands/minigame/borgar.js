@@ -50,7 +50,7 @@ class borgarCommand extends Command {
 				setTimeout(async () => {
 					borgarEmbed = new MessageEmbed()
 						.setTitle('hamborger delivery')
-						.setDescription('You have to put each ingredients in seperate message!')
+						.setDescription('You have to put each ingredients in seperate messages!')
 						.setFooter(`Level 0 | you have ${args.time} seconds to make that hamborgor`)
 						.setTimestamp();
 					message.util.edit(borgarEmbed);
@@ -69,7 +69,7 @@ class borgarCommand extends Command {
 							}
 						})
 						.catch(() => {
-							return message.reply('You run out of time noob...');
+							return message.reply('You ran out of time noob...');
 						});
 				}, 3000);
 			});
