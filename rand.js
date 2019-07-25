@@ -1,7 +1,7 @@
 exports.random = function (text, message) {
 	//	  Generate a random number
 	function randNumber(file) {
-		let Rand = Math.floor((Math.random() * file.length) + 1);
+		let Rand = Math.floor((Math.random() * file.length));
 		return Rand;
 	}
 
