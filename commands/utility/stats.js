@@ -43,7 +43,7 @@ class StatsCommand extends Command {
 			const { stdout } = await exec('sysctl -n machdep.cpu.brand_string');
 			cpu = stdout;
 		} else if (process.platform == 'linux') {
-			const { stdout } = await exec('grep -m 1 \'model name\' /proc/cpuinfo');
+			const { stdout } = await exec('lscpu | grep "Model name:" | sed -r \'s/Model name:\\s{1,}//g\'');
 			cpu = stdout;
 		} else if (process.platform == 'win32') {
 			const { stdout } = await exec('wmic CPU get NAME');
