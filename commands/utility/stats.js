@@ -47,7 +47,7 @@ class StatsCommand extends Command {
 			cpu = stdout;
 		} else if (process.platform == 'win32') {
 			const { stdout } = await exec('wmic CPU get NAME');
-			cpu = stdout;
+			cpu = stdout.replace('Name', '');
 		}
 
 		const statsEmbed = new MessageEmbed()
