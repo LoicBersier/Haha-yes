@@ -49,7 +49,7 @@ class nolightCommand extends Command {
 		});
 
 		async function apng() {
-			if (fs.readFileSync('./img/nolight.png')) {
+			if (fs.existsSync('./img/nolight.png')) {
 				fs.unlink('./img/nolight.png', (err) => {
 					if (err) throw err;
 				});
