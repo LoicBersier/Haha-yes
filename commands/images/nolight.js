@@ -49,9 +49,11 @@ class nolightCommand extends Command {
 		});
 
 		async function apng() {
-			fs.unlink('./img/nolight.png', (err) => {
-				if (err) throw err;
-			});
+			if (fs.readFileSync('./img/nolight.png')) {
+				fs.unlink('./img/nolight.png', (err) => {
+					if (err) throw err;
+				});
+			}
 			const { stdout, stderr } = await exec('apngasm -o img/nolight.png img/frame00*.png -s')
 				.then(() => message.channel.send({files: ['./img/nolight.png']}));
 			console.log(`stdout: ${stdout}`);
