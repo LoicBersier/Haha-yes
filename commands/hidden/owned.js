@@ -28,9 +28,9 @@ class OwnedCommand extends Command {
 		if (args.member) {
 
 			if (args.member.id == this.client.user.id) {
-				return message.channel.send('You really thought you could own me?, pathethic...');
+				return message.channel.send('You really thought you could own me?, pathetic...');
 			} else if (args.member.id == ownerID) {
-				return message.channel.send('You really thought you could own him?, pathethic...');
+				return message.channel.send('You really thought you could own him?, pathetic...');
 			}
 
 			if (ownedMessage == epicMessage[0]) {
