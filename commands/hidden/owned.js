@@ -34,7 +34,7 @@ class OwnedCommand extends Command {
 			}
 
 			if (ownedMessage == epicMessage[0]) {
-				return message.channel.send(ownedMessage);
+				return message.reply(ownedMessage);
 			}
 			
 			return message.channel.send(`${args.member}, ${ownedMessage}`);
