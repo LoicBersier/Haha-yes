@@ -42,7 +42,7 @@ class TranslationCommand extends Command {
 			return response.json();
 		}).then((response) => {
 			if (response.code == '502')
-				return message.channel.send(`${response.message}, you probably didin't input the correct language code, you can check them here! https://tech.yandex.com/translate/doc/dg/concepts/api-overview-docpage/`);
+				return message.channel.send(`${response.message}, you probably didn't input the correct language code, you can check them here! https://tech.yandex.com/translate/doc/dg/concepts/api-overview-docpage/`);
 			else if (response.code != '200')
 				return message.channel.send('An error has occured');
 
