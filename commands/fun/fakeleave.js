@@ -27,9 +27,9 @@ class fakeleaveCommand extends Command {
 		if (fs.existsSync(`./bye/${message.guild.id}.json`)) {
 			let member;
 			if (args.member) {
-				member = args.member;
+				member = args.member.username;
 			} else {
-				member = message.author;
+				member = message.author.username;
 			}
 
 			let bye = require(`../../bye/${message.guild.id}.json`);
