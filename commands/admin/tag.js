@@ -45,7 +45,7 @@ class TagCommand extends Command {
 			const filter = m =>  m.content && m.author.id == message.author.id;
 			message.channel.awaitMessages(filter, {time: 5000, max: 1, errors: ['time'] })
 				.then(async messages => {
-					let messageContent = messages.map(messages => messages.content.tolowerCase());
+					let messageContent = messages.map(messages => messages.content);
 					if (messageContent == 'y' || messageContent == 'yes') {
 						const body = {trigger: args.trigger, response: args.response, ownerID: message.author.id, serverID: message.guild.id};
 						await Tag.update(body, {where: {trigger: args.trigger, serverID: message.guild.id}});
