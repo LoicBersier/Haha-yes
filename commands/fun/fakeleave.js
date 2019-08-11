@@ -11,7 +11,7 @@ class fakeleaveCommand extends Command {
 			args: [
 				{
 					id: 'member',
-					type: 'member',
+					type: 'user',
 					match: 'rest'
 				}
 			],
