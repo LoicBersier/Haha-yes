@@ -55,7 +55,7 @@ class fakeleaveCommand extends Command {
 
 			byeMessage = rand.random(byeMessage);	
 
-
+			message.delete();
 			if (attach) {
 				return channel.send(byeMessage, {files: [attach]});
 			} else {
