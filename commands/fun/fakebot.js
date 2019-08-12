@@ -50,6 +50,7 @@ class fakebotCommand extends Command {
 					name: args.member.username,
 					avatar: args.member.displayAvatarURL()
 				});
+				message.channel.delete();
 				return webhook.send(args.message);
 			});
 	}
