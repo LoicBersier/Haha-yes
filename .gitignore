@@ -42,6 +42,7 @@ board/*.json
 tag/*.json
 welcome/*.json
 bye/*.json
+webhook/*.json
 json/censor.json
 json/uncensor.json
 
