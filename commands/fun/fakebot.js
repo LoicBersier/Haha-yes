@@ -34,6 +34,7 @@ class fakebotCommand extends Command {
 	async exec(message, args) {
 		message.channel.createWebhook(args.member.username, args.member.displayAvatarURL())
 			.then(webhook => {
+				// Have to edit after creation otherwise the picture doesn't get applied
 				webhook.edit({
 					name: args.member.username,
 					avatar: args.member.displayAvatarURL()
