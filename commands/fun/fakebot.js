@@ -40,19 +40,27 @@ class fakebotCommand extends Command {
 						if (err) {
 							console.log(err);
 						}
+						return message.channel.send('Please run me again to send the message!');
 					});
 				});
-		}
-		let webhook = require(`../../webhook/${message.guild.id}.json`);
-		this.client.fetchWebhook(webhook.id, webhook.token)
-			.then(webhook => {
-				webhook.edit({
-					name: args.member.username,
-					avatar: args.member.displayAvatarURL()
+		} else {
+			let webhook = require(`../../webhook/${message.guild.id}.json`);
+			this.client.fetchWebhook(webhook.id, webhook.token)
+				.then(webhook => {
+					webhook.edit({
+						name: args.member.username,
+						avatar: args.member.displayAvatarURL()
+					});
+
+					webhook.edit({
+						name: args.member.username,
+						avatar: args.member.displayAvatarURL()
+					});
+					
+					message.delete();
+					return webhook.send(args.message);
 				});
-				message.delete();
-				return webhook.send(args.message);
-			});
+		}
 	}
 }
 module.exports = fakebotCommand;
