@@ -20,7 +20,7 @@ class fakebotCommand extends Command {
 					id: 'message',
 					type: 'string',
 					prompt: {
-						start: 'What message shoudl i send?',
+						start: 'What message should i send?',
 					},
 					match: 'rest',
 				}
@@ -34,10 +34,10 @@ class fakebotCommand extends Command {
 	}
 
 	async exec(message, args) {
-		if (!fs.existsSync(`./webhook/${message.guild.id}.json`)) {
+		if (fs.existsSync(`./webhook/${message.guild.id}_${message.channel.id}.json`)) {
 			message.channel.createWebhook('fakebot')
 				.then(webhook => {
-					fs.writeFile(`./webhook/${message.guild.id}.json`, `{"id": "${webhook.id}", "token": "${webhook.token}"}`, function (err) {
+					fs.writeFile(`./webhook/${message.guild.id}.json`, `{"id": "${webhook.id}", "token": "${webhook.token}", "channel": "${message.channel.id}"}`, function (err) {
 						if (err) {
 							console.log(err);
 						}
@@ -45,7 +45,7 @@ class fakebotCommand extends Command {
 					});
 				});
 		} else {
-			let webhook = reload(`../../webhook/${message.guild.id}.json`);
+			let webhook = reload(`./webhook/${message.guild.id}_${message.channel.id}.json`);
 			this.client.fetchWebhook(webhook.id, webhook.token)
 				.then(webhook => {
 					webhook.edit({
