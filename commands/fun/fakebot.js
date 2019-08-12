@@ -25,8 +25,8 @@ class fakebotCommand extends Command {
 			],
 			description: {
 				content: 'Fake a bot/user with webhook',
-				usage: '',
-				examples: ['']
+				usage: '[user] [message]',
+				examples: ['Supositware#1616 hello!']
 			}
 		});
 	}
