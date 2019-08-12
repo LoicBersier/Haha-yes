@@ -1,5 +1,6 @@
 const { Command } = require('discord-akairo');
 const fs = require('fs');
+const reload = require('auto-reload');
 
 class fakebotCommand extends Command {
 	constructor() {
@@ -44,7 +45,7 @@ class fakebotCommand extends Command {
 					});
 				});
 		} else {
-			let webhook = require(`../../webhook/${message.guild.id}.json`);
+			let webhook = reload(`../../webhook/${message.guild.id}.json`);
 			this.client.fetchWebhook(webhook.id, webhook.token)
 				.then(webhook => {
 					webhook.edit({
@@ -52,11 +53,6 @@ class fakebotCommand extends Command {
 						avatar: args.member.displayAvatarURL()
 					});
 
-					webhook.edit({
-						name: args.member.username,
-						avatar: args.member.displayAvatarURL()
-					});
-					
 					message.delete();
 					return webhook.send(args.message);
 				});
