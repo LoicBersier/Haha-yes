@@ -1,6 +1,4 @@
 const { Command } = require('discord-akairo');
-const fs = require('fs');
-const reload = require('auto-reload');
 
 class fakebotCommand extends Command {
 	constructor() {
@@ -34,29 +32,21 @@ class fakebotCommand extends Command {
 	}
 
 	async exec(message, args) {
-		if (!fs.existsSync(`./webhook/${message.guild.id}_${message.channel.id}.json`)) {
-			message.channel.createWebhook('fakebot')
-				.then(webhook => {
-					fs.writeFile(`./webhook/${message.guild.id}_${message.channel.id}.json`, `{"id": "${webhook.id}", "token": "${webhook.token}", "channel": "${message.channel.id}"}`, function (err) {
-						if (err) {
-							console.log(err);
-						}
-						return message.channel.send('Please run me again to send the message!');
-					});
+		message.channel.createWebhook(args.member.username, args.member.displayAvatarURL())
+			.then(webhook => {
+				webhook.edit({
+					name: args.member.username,
+					avatar: args.member.displayAvatarURL()
 				});
-		} else {
-			let webhook = reload(`../../webhook/${message.guild.id}_${message.channel.id}.json`);
-			this.client.fetchWebhook(webhook.id, webhook.token)
-				.then(webhook => {
-					webhook.edit({
-						name: args.member.username,
-						avatar: args.member.displayAvatarURL()
+				this.client.fetchWebhook(webhook.id, webhook.token)
+					.then(webhook => {
+						message.delete();
+						webhook.send(args.message);
+						setTimeout(() => {
+							webhook.delete();
+						}, 3000);
 					});
-
-					message.delete();
-					return webhook.send(args.message);
-				});
-		}
+			});
 	}
 }
 module.exports = fakebotCommand;
