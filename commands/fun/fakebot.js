@@ -45,7 +45,7 @@ class fakebotCommand extends Command {
 					});
 				});
 		} else {
-			let webhook = reload(`./webhook/${message.guild.id}_${message.channel.id}.json`);
+			let webhook = reload(`../../webhook/${message.guild.id}_${message.channel.id}.json`);
 			this.client.fetchWebhook(webhook.id, webhook.token)
 				.then(webhook => {
 					webhook.edit({
