@@ -37,7 +37,7 @@ class fakebotCommand extends Command {
 		if (!fs.existsSync(`./webhook/${message.guild.id}_${message.channel.id}.json`)) {
 			message.channel.createWebhook('fakebot')
 				.then(webhook => {
-					fs.writeFile(`./webhook/${message.guild.id}.json`, `{"id": "${webhook.id}", "token": "${webhook.token}", "channel": "${message.channel.id}"}`, function (err) {
+					fs.writeFile(`./webhook/${message.guild.id}_${message.channel.id}.json`, `{"id": "${webhook.id}", "token": "${webhook.token}", "channel": "${message.channel.id}"}`, function (err) {
 						if (err) {
 							console.log(err);
 						}
