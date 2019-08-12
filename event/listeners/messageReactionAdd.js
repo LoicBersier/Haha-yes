@@ -59,17 +59,27 @@ class MessageReactionAddListener extends Listener {
 				channel = client.channels.get(shameboardChannel['shameboard']);
 			}
 
-			const Embed = new MessageEmbed()
+			let Embed = new MessageEmbed()
 				.setColor(reaction.message.member.displayHexColor)
 				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
-				.setDescription(messageContent)
 				.addField('Jump to', `[message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`, true)
 				.addField('Channel', reaction.message.channel, true)
 				.setFooter(reaction.count + ' ' + emote)
 				.setTimestamp();
 
-			return channel.send({files: messageAttachments, embed: Embed})
-				.catch(() => channel.send(messageAttachments, { embed: Embed}));
+			if (reaction.message.channel.nsfw) {
+				Embed.setDescription(`||${messageContent}||`);
+				if (messageAttachments != '') {
+					return channel.send(`||${messageAttachments}||`, {embed: Embed});
+				}
+				else {
+					return channel.send({embed: Embed});
+				}
+			} else {
+				Embed.setDescription(messageContent);
+				return channel.send({files: messageAttachments, embed: Embed})
+					.catch(() => channel.send(messageAttachments, { embed: Embed}));
+			}
 		}
 	}
 }
