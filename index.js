@@ -22,6 +22,7 @@ class hahaYesClient extends AkairoClient {
 				prompt: {
 					timeout: 'Time ran out, command has been cancelled.',
 					ended: 'Too many retries, command has been cancelled.',
+					retry: 'Could not find your argument, please try again!',
 					cancel: 'Command has been cancelled.',
 					retries: 4,
 					time: 30000

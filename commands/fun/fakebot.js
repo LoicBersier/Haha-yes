@@ -12,6 +12,7 @@ class fakebotCommand extends Command {
 					type: 'user',
 					prompt: {
 						start: 'Who should i fake?',
+						retry: 'Didn\'t find any user named like that, please try again'
 					}
 				},
 				{
