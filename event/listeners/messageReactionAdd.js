@@ -67,7 +67,8 @@ class MessageReactionAddListener extends Listener {
 				.setFooter(reaction.count + ' ' + emote)
 				.setTimestamp();
 
-			if (reaction.message.channel.nsfw) {
+			// if message come from nsfw channel and the star/shameboard channel isn't nsfw put it in spoiler
+			if (reaction.message.channel.nsfw && !channel.nsfw) {
 				Embed.setDescription(`||${messageContent}||`);
 				if (messageAttachments != '') {
 					return channel.send(`||${messageAttachments}||`, {embed: Embed});
