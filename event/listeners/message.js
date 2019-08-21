@@ -34,7 +34,7 @@ class messageListener extends Listener {
 				.setDescription(censoredMessage);
 
 			message.channel.send(Embed);
-			return message.delete();
+			return message.delete({reason: `Deleted message: ${message.content}`});
 		}
 
 		// auto responses
