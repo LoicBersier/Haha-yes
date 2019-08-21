@@ -1,9 +1,11 @@
 const { Listener } = require('discord-akairo');
 const { MessageEmbed } = require('discord.js');
 const rand = require('../../rand.js');
+const Sequelize = require('sequelize');
 const Tag = require('../../models').Tag;
 const autoResponse = require('../../models').autoresponse;
 const autoResponseStat = require('../../models').autoresponseStat;
+const BannedWords = require('../../models').bannedWords;
 
 class messageListener extends Listener {
 	constructor() {
@@ -15,8 +17,28 @@ class messageListener extends Listener {
 
 	async exec(message) {		
 		if (message.author.bot) return;
-		const autoresponseStat = await autoResponseStat.findOne({where: {serverID: message.guild.id}});
 
+
+		// Banned words
+
+		const bannedWords = await BannedWords.findAll({where: {word: Sequelize.where(Sequelize.fn('LOCATE', Sequelize.col('word'), message.content), Sequelize.Op.ne, 0), serverID: message.guild.id}});
+		if (bannedWords[0].get('word')) {
+			let censoredMessage = message.content;
+			for (let i = 0; i < bannedWords.length; i++) {
+				censoredMessage = censoredMessage.replace(bannedWords[i].get('word'), '█'.repeat(bannedWords[i].get('word').length));
+				console.log(censoredMessage);
+			}
+			let Embed = new MessageEmbed()
+				.setColor('#FF0000')
+				.setAuthor(message.author.username, message.author.displayAvatarURL())
+				.setDescription(censoredMessage);
+
+			message.channel.send(Embed);
+			return message.delete();
+		}
+
+		// auto responses
+		const autoresponseStat = await autoResponseStat.findOne({where: {serverID: message.guild.id}});
 		if (autoresponseStat) {
 			// Infinit haha very yes
 			if (message.content.toLowerCase().startsWith('haha very') && message.content.toLowerCase().endsWith('yes')) {
