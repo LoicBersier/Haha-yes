@@ -10,8 +10,8 @@ class seebannedwordCommand extends Command {
 			category: 'utility',
 			channelRestriction: 'guild',
 			description: {
-				content: 'Show the list of tag for this server. --all to get a txt file with info about every tag on the server',
-				usage: '[name of tag]',
+				content: 'Show the list of banned word',
+				usage: '',
 				examples: ['']
 			}
 		});
