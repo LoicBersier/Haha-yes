@@ -32,15 +32,15 @@ class BannedWordsCommand extends Command {
 	}
 
 	async exec(message, args) {
-		const bannedWords = await BannedWords.findOne({where: {word: args.word, serverID: message.guild.id}});
+		const bannedWords = await BannedWords.findOne({where: {word: args.word.toLowerCase(), serverID: message.guild.id}});
 
 		if (!bannedWords) {
-			const body = {word: args.word, serverID: message.guild.id};
+			const body = {word: args.word.toLowerCase(), serverID: message.guild.id};
 			await BannedWords.create(body);
-			return message.channel.send(`The word ${args.word} have been banned`);
+			return message.channel.send(`The word ${args.word.toLowerCase()} have been banned`);
 		} else if (args.remove && bannedWords) {
-			BannedWords.destroy({where: {word: args.word, serverID: message.guild.id}});
-			return message.channel.send(`The word ${args.word} is no longer banned`);
+			BannedWords.destroy({where: {word: args.word.toLowerCase(), serverID: message.guild.id}});
+			return message.channel.send(`The word ${args.word.toLowerCase()} is no longer banned`);
 		} else {
 			message.channel.send('This word is already banned');
 		}
