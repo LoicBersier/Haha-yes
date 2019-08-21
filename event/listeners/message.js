@@ -23,10 +23,9 @@ class messageListener extends Listener {
 
 		const bannedWords = await BannedWords.findAll({where: {word: Sequelize.where(Sequelize.fn('LOCATE', Sequelize.col('word'), message.content), Sequelize.Op.ne, 0), serverID: message.guild.id}});
 		if (bannedWords[0].get('word')) {
-			let censoredMessage = message.content.toLowerCase();
+			let censoredMessage = message.content.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 			for (let i = 0; i < bannedWords.length; i++) {
 				censoredMessage = censoredMessage.replace(bannedWords[i].get('word'), '█'.repeat(bannedWords[i].get('word').length));
-				console.log(censoredMessage);
 			}
 			let Embed = new MessageEmbed()
 				.setColor('#FF0000')
