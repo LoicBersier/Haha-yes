@@ -26,9 +26,9 @@ class messageListener extends Listener {
 			let censoredMessage = message.content.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 			// Remove zero width space character
 			censoredMessage = censoredMessage.replace(/\u200B/g, '');
-
 			for (let i = 0; i < bannedWords.length; i++) {
-				censoredMessage = censoredMessage.replace(bannedWords[i].get('word'), '█'.repeat(bannedWords[i].get('word').length));
+				let regex = new RegExp(bannedWords[i].get('word'), 'g');
+				censoredMessage = censoredMessage.replace(regex, '█'.repeat(bannedWords[i].get('word').length));
 			}
 			let Embed = new MessageEmbed()
 				.setColor('#FF0000')
