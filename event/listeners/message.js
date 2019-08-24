@@ -21,11 +21,15 @@ class messageListener extends Listener {
 
 		// Banned words
 
-		const bannedWords = await BannedWords.findAll({where: {word: Sequelize.where(Sequelize.fn('LOCATE', Sequelize.col('word'), message.content.replace(/\u200B/g, '')), Sequelize.Op.ne, 0), serverID: message.guild.id}});
+		const bannedWords = await BannedWords.findAll({where: {word: Sequelize.where(Sequelize.fn('LOCATE', Sequelize.col('word'), message.content.replace(/\u200B/g, '').replace(/[\u0250-\ue007]/g, '')), Sequelize.Op.ne, 0), serverID: message.guild.id}});
 		if (bannedWords[0].get('word')) {
+			// Remove accent
 			let censoredMessage = message.content.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 			// Remove zero width space character
 			censoredMessage = censoredMessage.replace(/\u200B/g, '');
+			// Remove non latin character
+			censoredMessage = censoredMessage.replace(/[\u0250-\ue007]/g, '');
+			
 			for (let i = 0; i < bannedWords.length; i++) {
 				let regex = new RegExp(bannedWords[i].get('word'), 'g');
 				censoredMessage = censoredMessage.replace(regex, '█'.repeat(bannedWords[i].get('word').length));

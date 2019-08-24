@@ -33,6 +33,7 @@ class BannedWordsCommand extends Command {
 	}
 
 	async exec(message, args) {
+		args.word = args.word.replace(/[\u0250-\ue007]/g, '');
 		const bannedWords = await BannedWords.findOne({where: {word: args.word.toLowerCase(), serverID: message.guild.id}});
 
 		if (!bannedWords) {
