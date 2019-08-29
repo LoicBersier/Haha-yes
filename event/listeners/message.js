@@ -18,31 +18,6 @@ class messageListener extends Listener {
 	async exec(message) {		
 		if (message.author.bot) return;
 
-
-		// Banned words
-
-		const bannedWords = await BannedWords.findAll({where: {word: Sequelize.where(Sequelize.fn('LOCATE', Sequelize.col('word'), message.content.replace(/\u200B/g, '').replace(/[\u0250-\ue007]/g, '')), Sequelize.Op.ne, 0), serverID: message.guild.id}});
-		if (bannedWords[0].get('word')) {
-			// Remove accent
-			let censoredMessage = message.content.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-			// Remove zero width space character
-			censoredMessage = censoredMessage.replace(/\u200B/g, '');
-			// Remove non latin character
-			censoredMessage = censoredMessage.replace(/[\u0250-\ue007]/g, '');
-			
-			for (let i = 0; i < bannedWords.length; i++) {
-				let regex = new RegExp(bannedWords[i].get('word'), 'g');
-				censoredMessage = censoredMessage.replace(regex, '█'.repeat(bannedWords[i].get('word').length));
-			}
-			let Embed = new MessageEmbed()
-				.setColor('#FF0000')
-				.setAuthor(message.author.username, message.author.displayAvatarURL())
-				.setDescription(censoredMessage);
-
-			message.channel.send(Embed);
-			return message.delete({reason: `Deleted message: ${message.content}`});
-		}
-
 		// auto responses
 		const autoresponseStat = await autoResponseStat.findOne({where: {serverID: message.guild.id}});
 		if (autoresponseStat) {
@@ -208,6 +183,30 @@ class messageListener extends Listener {
 			} else {
 				return message.channel.send(text);
 			}
+		}
+
+		// Banned words
+
+		const bannedWords = await BannedWords.findAll({where: {word: Sequelize.where(Sequelize.fn('LOCATE', Sequelize.col('word'), message.content.replace(/\u200B/g, '').replace(/[\u0250-\ue007]/g, '')), Sequelize.Op.ne, 0), serverID: message.guild.id}});
+		if (bannedWords[0].get('word')) {
+			// Remove accent
+			let censoredMessage = message.content.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+			// Remove zero width space character
+			censoredMessage = censoredMessage.replace(/\u200B/g, '');
+			// Remove non latin character
+			censoredMessage = censoredMessage.replace(/[\u0250-\ue007]/g, '');
+					
+			for (let i = 0; i < bannedWords.length; i++) {
+				let regex = new RegExp(bannedWords[i].get('word'), 'g');
+				censoredMessage = censoredMessage.replace(regex, '█'.repeat(bannedWords[i].get('word').length));
+			}
+			let Embed = new MessageEmbed()
+				.setColor('#FF0000')
+				.setAuthor(message.author.username, message.author.displayAvatarURL())
+				.setDescription(censoredMessage);
+		
+			message.channel.send(Embed);
+			return message.delete({reason: `Deleted message: ${message.content}`});
 		}
 	}
 }
