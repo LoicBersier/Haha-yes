@@ -28,8 +28,8 @@ class fartpissCommand extends Command {
 		}
 		
 		if (!args.member && message.author.id == '336164982406512643') {
-			return message.guild.members.get(message.author.id).setNickname('Big weeb')
-				.then(() => message.channel.send('sucessfully weeb\'d on you <:youngtroll:488559163832795136>'))
+			return message.guild.members.get(message.author.id).setNickname('Big wimp')
+				.then(() => message.channel.send('fuck off big wimp'))
 				.catch(() => message.channel.send('Sorry i could not fart piss on you :('));
 		} else if (!args.member) {
 			return message.guild.members.get(message.author.id).setNickname('fart piss')
