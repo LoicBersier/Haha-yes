@@ -32,7 +32,7 @@ class OwnedCommand extends Command {
 				return message.channel.send('You really thought you could own me?, pathetic...');
 			} else if (args.member.id == ownerID) {
 				return message.channel.send('You really thought you could own him?, pathetic...');
-			} else if (args.member.id == '286054184623538177') {
+			} else if (args.member.id == '286054184623538177' || args.member.id == '172112210863194113') {
 				owned = message.author;
 			}
 
