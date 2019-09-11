@@ -2,7 +2,6 @@ const { Command } = require('discord-akairo');
 const fs = require('fs');
 const youtubedl = require('youtube-dl');
 const hbjs = require('handbrake-js');
-const { fbuser, fbpasswd } = require('../../config.json');
 
 class DownloadCommand extends Command {
 	constructor() {
@@ -69,7 +68,7 @@ class DownloadCommand extends Command {
 			}
 
 
-			let video = youtubedl(link, [`--username=${fbuser}`, `--password=${fbpasswd}`]);
+			let video = youtubedl(link);
 			video.pipe(fs.createWriteStream(`./${fileName}.mp4`));
 			video.on('error', function error(err) {
 				console.log('error 2:', err);
