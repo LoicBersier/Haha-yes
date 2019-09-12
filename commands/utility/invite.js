@@ -8,6 +8,10 @@ class InviteCommand extends Command {
 			category: 'utility',
 			args: [
 				{
+					id: 'member',
+					type: 'user'
+				},
+				{
 					id: 'here',
 					match: 'flag',
 					flag: '--here'
@@ -22,7 +26,14 @@ class InviteCommand extends Command {
 	}
 
 	async exec(message, args) {
-		let invMessage = `You can add me from here: https://discordapp.com/oauth2/authorize?client_id=${this.client.user.id}&scope=bot&permissions=0\nYou can also join my support server over here: ${supportServer} come and say hi :)`;
+		let botid;
+		if (args.member.bot) {
+			botid = args.member.id;
+		} else {
+			botid = this.client.user.id;
+		}
+
+		let invMessage = `You can add me from here: https://discordapp.com/oauth2/authorize?client_id=${botid}&scope=bot&permissions=0\nYou can also join my support server over here: ${supportServer} come and say hi :)`;
 		if (args.here) {
 			message.channel.send(invMessage);
 		} else {
