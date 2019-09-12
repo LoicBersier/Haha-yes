@@ -28,7 +28,7 @@ class InviteCommand extends Command {
 	async exec(message, args) {
 		if (args.member) {
 			if (args.member.bot) {
-				return message.channel.send(`You can add the bot you mentioned with this link: https://discordapp.com/oauth2/authorize?client_id=${args.member.id}&scope=bot&permissions=0\n\`Note: The invite might not work if the owner of the bot is not public\``);
+				return message.channel.send(`You can add the bot you mentioned with this link: https://discordapp.com/oauth2/authorize?client_id=${args.member.id}&scope=bot&permissions=0\n\`Note: The invite might not work if the bot is not public\``);
 			} else {
 				return message.channel.send('Sorry, the user you mentioned is not a bot!');
 			}
