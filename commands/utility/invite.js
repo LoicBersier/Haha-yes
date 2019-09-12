@@ -8,13 +8,13 @@ class InviteCommand extends Command {
 			category: 'utility',
 			args: [
 				{
-					id: 'member',
-					type: 'user'
-				},
-				{
 					id: 'here',
 					match: 'flag',
 					flag: '--here'
+				},
+				{
+					id: 'member',
+					type: 'user'
 				}
 			],
 			description: {
@@ -27,8 +27,12 @@ class InviteCommand extends Command {
 
 	async exec(message, args) {
 		let botid;
-		if (args.member.bot) {
-			botid = args.member.id;
+		if (args.member) {
+			if (args.member.bot) {
+				botid = args.member.id;
+			} else {
+				return message.channel.send('Sorry, the user you mentioned is not a bot!');
+			}
 		} else {
 			botid = this.client.user.id;
 		}
