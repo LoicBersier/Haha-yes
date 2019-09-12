@@ -26,23 +26,20 @@ class InviteCommand extends Command {
 	}
 
 	async exec(message, args) {
-		let botid;
 		if (args.member) {
 			if (args.member.bot) {
-				botid = args.member.id;
+				return message.channel.send(`You can add the bot you mentioned with this link: https://discordapp.com/oauth2/authorize?client_id=${args.member.id}&scope=bot&permissions=0`);
 			} else {
 				return message.channel.send('Sorry, the user you mentioned is not a bot!');
 			}
 		} else {
-			botid = this.client.user.id;
-		}
-
-		let invMessage = `You can add me from here: https://discordapp.com/oauth2/authorize?client_id=${botid}&scope=bot&permissions=0\nYou can also join my support server over here: ${supportServer} come and say hi :)`;
-		if (args.here) {
-			message.channel.send(invMessage);
-		} else {
-			message.channel.send('Check your dm');
-			return message.author.send(invMessage);
+			let invMessage = `You can add me from here: https://discordapp.com/oauth2/authorize?client_id=${this.client.user.id}&scope=bot&permissions=0\nYou can also join my support server over here: ${supportServer} come and say hi :)`;
+			if (args.here) {
+				message.channel.send(invMessage);
+			} else {
+				message.channel.send('Check your dm');
+				return message.author.send(invMessage);
+			}
 		}
 	}
 }
