@@ -115,7 +115,7 @@ class DownloadCommand extends Command {
 
 				const options = {
 					input: `${os.tmpdir()}/${fileName}.mp4`,
-					output: `${os.tmpdir()}/${fileName}Ready.mp4`,
+					output: `${os.tmpdir()}/${fileName}compressed.mp4`,
 					preset: 'General/Gmail Small 10 Minutes 288p30'
 				};
 
@@ -141,7 +141,7 @@ class DownloadCommand extends Command {
 				});
 				handbrake.on('end', function () {
 					message.delete();
-					return message.channel.send(`Downloaded by ${message.author.username}`, { files: [`${os.tmpdir()}/${fileName}Ready.mp4`] })
+					return message.channel.send(`Downloaded by ${message.author.username}`, { files: [`${os.tmpdir()}/${fileName}compressed.mp4`] })
 						.catch(err => {
 							console.error(err);
 							return message.channel.send('File too big');		
