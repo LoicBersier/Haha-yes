@@ -114,8 +114,8 @@ class DownloadCommand extends Command {
 				}
 
 				const options = {
-					input: `${fileName}.mp4`,
-					output: `${fileName}Ready.mp4`,
+					input: `${os.tmpdir()}/${fileName}.mp4`,
+					output: `${os.tmpdir()}/${fileName}Ready.mp4`,
 					preset: 'General/Gmail Small 10 Minutes 288p30'
 				};
 
