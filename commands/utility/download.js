@@ -2,6 +2,7 @@ const { Command } = require('discord-akairo');
 const fs = require('fs');
 const youtubedl = require('youtube-dl');
 const hbjs = require('handbrake-js');
+const os = require('os');
 
 class DownloadCommand extends Command {
 	constructor() {
@@ -42,24 +43,24 @@ class DownloadCommand extends Command {
 		let fileName;
 
 		if (args.spoiler) {
-			fileName = 'SPOILER_video';
+			fileName = `SPOILER_${message.author.id}_video`;
 		} else {
-			fileName = 'video';
+			fileName = `${message.author.id}_video`;
 		}
 
 		if (link.includes('http') || link.includes('www')) {
 			if (args.alt) {
 				console.log('alt download!');
-				if (fs.existsSync(`./${fileName}.mp4`)) {
-					fs.unlink(`./${fileName}.mp4`, (err) => {
+				if (fs.existsSync(`${os.tmpdir()}/${fileName}.mp4`)) {
+					fs.unlink(`${os.tmpdir()}/${fileName}.mp4`, (err) => {
 						if (err);
 					});
 				}
-				return youtubedl.exec(args.link, ['-o', `./${fileName}.mp4`], {}, function(err, output) {
+				return youtubedl.exec(args.link, ['-o', `${os.tmpdir()}/${fileName}.mp4`], {}, function(err, output) {
 					if (err) throw err;
 					console.log(output.join('\n'));
 					message.delete();
-					message.channel.send(`Downloaded by ${message.author.username}`, { files: [`./${fileName}.mp4`] })
+					message.channel.send(`Downloaded by ${message.author.username}`, { files: [`${os.tmpdir()}/${fileName}.mp4`] })
 						.catch(err => {
 							console.error(err);
 							return message.channel.send('File too big');	
@@ -69,7 +70,7 @@ class DownloadCommand extends Command {
 
 
 			let video = youtubedl(link);
-			video.pipe(fs.createWriteStream(`./${fileName}.mp4`));
+			video.pipe(fs.createWriteStream(`${os.tmpdir()}/${fileName}.mp4`));
 			video.on('error', function error(err) {
 				console.log('error 2:', err);
 				message.channel.send('An error has occured, I can\'t download from the link you provided.');
@@ -105,7 +106,7 @@ class DownloadCommand extends Command {
 			video.on('end', function () {
 				if (!needCompress) {
 					message.delete();
-					return message.channel.send(`Downloaded by ${message.author.username}`, { files: [`./${fileName}.mp4`] })
+					return message.channel.send(`Downloaded by ${message.author.username}`, { files: [`${os.tmpdir()}/${fileName}.mp4`] })
 						.catch(err => {
 							console.error(err);
 							return message.channel.send('File too big');		
@@ -140,7 +141,7 @@ class DownloadCommand extends Command {
 				});
 				handbrake.on('end', function () {
 					message.delete();
-					return message.channel.send(`Downloaded by ${message.author.username}`, { files: [`./${fileName}Ready.mp4`] })
+					return message.channel.send(`Downloaded by ${message.author.username}`, { files: [`${os.tmpdir()}/${fileName}Ready.mp4`] })
 						.catch(err => {
 							console.error(err);
 							return message.channel.send('File too big');		
