@@ -55,7 +55,7 @@ class messageListener extends Listener {
 				}
 
 				//  If autoresponse is enable send the response
-				if(autoresponseStat.get('stat') == 'enable' && autoresponseStat.get('serverID') == message.guild.id) {
+				if (autoresponseStat.get('stat') == 'enable' && autoresponseStat.get('serverID') == message.guild.id) {
 				//  Reply with images as attachement
 					const autoresponse = await autoResponse.findOne({where: {trigger: message.content.toLowerCase()}});
 
