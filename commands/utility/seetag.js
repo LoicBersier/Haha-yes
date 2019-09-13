@@ -1,6 +1,7 @@
 const { Command } = require('discord-akairo');
 const Tag = require('../../models').Tag;
 const fs = require('fs');
+const os = require('os');
 const { MessageEmbed } = require('discord.js');
 
 
@@ -60,9 +61,9 @@ class seetagCommand extends Command {
 			tagList.forEach(tag => {
 				tagArray.push(tag.dataValues);
 			});
-			fs.writeFile('/tmp/tagslist.txt',JSON.stringify(tagArray, null, 2), function(err) {
+			fs.writeFile(`${os.tmpdir()}/tagslist.txt`,JSON.stringify(tagArray, null, 2), function(err) {
 				if (err) return console.error(err);
-				return message.channel.send('Here are your tags', {files: ['/tmp/tagslist.txt']});
+				return message.channel.send('Here are your tags', {files: [`${os.tmpdir()}/tagslist.txt`]});
 			});
 		} else {
 			let tagList = await Tag.findAll({attributes: ['trigger'], where: {serverID: message.guild.id}});
