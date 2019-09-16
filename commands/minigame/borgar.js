@@ -32,7 +32,7 @@ class borgarCommand extends Command {
 
 	async exec(message, args) {
 		if (args.time <= 0) args.time = 1;
-		const ingredients = [ 'bun', 'beef', 'salade', 'tomato', 'cheese', 'pickle', 'onion', 'garlic', 'basil', 'letuce'];
+		const ingredients = [ 'bun', 'beef', 'salade', 'tomato', 'cheese', 'pickle', 'onion', 'garlic', 'basil', 'lettuce'];
 		let hamIngredient = [];
 		for (let i = 0; i < args.ingredientNumber; i++) {
 			hamIngredient[i] = ingredients[Math.floor( Math.random() * ingredients.length )];
