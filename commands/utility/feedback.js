@@ -29,9 +29,9 @@ class FeedbackCommand extends Command {
 		const channel = this.client.channels.get(feedbackChannel);
 
 		const Embed = new MessageEmbed()
-			.setAuthor(message.author.username, message.author.displayAvatarURL())
-			.setDescription(args.text)
-			.setFooter(`Author ID: ${message.author.id}`)
+			.setAuthor(`${message.author.username} (${message.author.id})`, message.author.displayAvatarURL())
+			.addField('Guild', `${message.guild.name} (${message.guild.id})`, true)
+			.addField('Feedback', args.text)
 			.setTimestamp();
 		channel.send({embed: Embed});
 		message.channel.send('Your feedback has been sent!');
