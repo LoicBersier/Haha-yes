@@ -34,8 +34,8 @@ class StarBoardCommand extends Command {
 				}
 			],
 			description: {
-				content: 'Set starboard',
-				usage: '[]',
+				content: 'Set starboard --remove to remove the starboard',
+				usage: '[emote] [minimum number required to enter starboard]',
 				examples: ['']
 			}
 		});

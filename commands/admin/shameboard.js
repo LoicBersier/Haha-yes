@@ -34,8 +34,8 @@ class shameboardCommand extends Command {
 				}
 			],
 			description: {
-				content: 'Set shameboard',
-				usage: '[]',
+				content: 'Set shameobard --remove to remove the shameboard',
+				usage: '[emote] [minimum number required to enter shameboard]',
 				examples: ['']
 			}
 		});
