@@ -14,11 +14,20 @@ class vid2giftCommand extends Command {
 				{
 					id: 'vid',
 					type: 'string'
+				},
+				{
+					id: 'fps',
+					type: 'integer'
+				},
+				{
+					id: 'scale',
+					match: 'flag',
+					flag: '--scale'
 				}
 			],
 			description: {
-				content: 'Transform video into gif',
-				usage: '[link to video]',
+				content: 'Transform video into gif. --scale to scale the gif by half,',
+				usage: '[link to video] [Number of fps]',
 				examples: ['']
 			}
 		});
@@ -34,9 +43,21 @@ class vid2giftCommand extends Command {
 			const { body: buffer } = await superagent.get(vid).catch(() => {
 				return message.channel.send('An error as occured, please try again');
 			});
+			let options = '';
+
+			if (args.scale) {
+				options = '-vf "scale=iw/2:ih/2"';
+			}
+
+			if (args.fps) {
+				options += ` -r ${args.fps}`;
+			}
+
+
+
 
 			fs.writeFile(`${os.tmpdir()}/${message.id}v2g`, buffer, () => {
-				exec(`ffmpeg -i ${os.tmpdir()}/${message.id}v2g ${os.tmpdir()}/${message.id}v2g.gif -hide_banner`)
+				exec(`ffmpeg -i ${os.tmpdir()}/${message.id}v2g ${options} -r 15 ${os.tmpdir()}/${message.id}v2g.gif -hide_banner`)
 					.then(() => {
 						return message.channel.send({files: [`${os.tmpdir()}/${message.id}v2g.gif`]})
 							.catch(err => {
