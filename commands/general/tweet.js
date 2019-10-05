@@ -38,6 +38,12 @@ class tweetCommand extends Command {
 		filter.removeWords(...uncensor);
 		*/
 
+		// Don't let account new account use this command to prevent spam
+		let date = new Date();
+		if (message.author.createdAt > date.setDate(date.getDate() - 7)) {
+			return message.channel.send('Your account is too new to be able to use this command!');
+		}
+
 		const blacklist = reload('../../json/twiBlacklist.json');
 
 		if (blacklist.includes(message.author.id)) {
