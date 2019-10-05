@@ -11,11 +11,6 @@ class guildMemberAddListener extends Listener {
 	}
 
 	async exec(guild) {
-		if (guild.guild.id == 240843640375607296) {
-			guild.members.get(guild.id).setNickname('fart piss');
-		}
-
-
 		if (fs.existsSync(`./welcome/${guild.guild.id}.json`)) {
 			let welcome = require(`../../welcome/${guild.guild.id}.json`);
 			const channel = this.client.channels.get(welcome['channel']);
