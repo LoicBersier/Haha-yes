@@ -33,14 +33,16 @@ class fakebotCommand extends Command {
 	}
 
 	async exec(message, args) {
-		message.channel.createWebhook(args.member.username, {
+
+		console.log(args.member);
+		message.channel.createWebhook(message.guild.members.get(args.member.id).nickname, {
 			avatar: args.member.displayAvatarURL(),
 			reason: `Fakebot/user command triggered by: ${message.author.username}`
 		})
 			.then(webhook => {
 				// Have to edit after creation otherwise the picture doesn't get applied
 				webhook.edit({
-					name: args.member.username,
+					name: message.guild.members.get(args.member.id).nickname,
 					avatar: args.member.displayAvatarURL(),
 					reason: `Fakebot/user command triggered by: ${message.author.username}`
 				});
