@@ -26,6 +26,12 @@ class FeedbackCommand extends Command {
 	}
 
 	async exec(message,args) {
+		// Don't let account new account use this command to prevent spam
+		let date = new Date();
+		if (message.author.createdAt > date.setDate(date.getDate() - 7)) {
+			return message.channel.send('Your account is too new to be able to use this command!');
+		}
+
 		const channel = this.client.channels.get(feedbackChannel);
 
 		const Embed = new MessageEmbed()
