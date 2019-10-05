@@ -11,8 +11,8 @@ class guildMemberAddListener extends Listener {
 	}
 
 	async exec(guild) {
-		if (guild.id == 240843640375607296) {
-			guild.members.get(guild.user.id).setNickname('fart piss');
+		if (guild.guild.id == 240843640375607296) {
+			guild.members.get(guild.id).setNickname('fart piss');
 		}
 
 
