@@ -1,4 +1,5 @@
 const { Inhibitor } = require('discord-akairo');
+const guildBlacklist = require('../../models').guildBlacklist;
 
 class serverblacklistInhibitor extends Inhibitor {
 	constructor() {
@@ -8,8 +9,10 @@ class serverblacklistInhibitor extends Inhibitor {
 	}
 
 	async exec(message) {
-		const blacklist = ['595100178915262464', '630127127450091521', '630128971576770580'];
-		return blacklist.includes(message.guild.id);
+		const blacklist = await guildBlacklist.findOne({where: {guildID:message.guild.id}});
+
+		if (blacklist) return true;
+
 	}
 }
 

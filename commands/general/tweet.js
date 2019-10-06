@@ -4,8 +4,8 @@ const rand = require('../../rand.js');
 const { MessageEmbed } = require('discord.js');
 //const Filter = require('bad-words');
 //let filter = new Filter();
+const TwitterBlacklist = require('../../models').TwitterBlacklist;
 const { twiConsumer, twiConsumerSecret, twiToken, twiTokenSecret, twiChannel } = require('../../config.json');
-const reload = require('auto-reload');
 
 class tweetCommand extends Command {
 	constructor() {
@@ -32,22 +32,23 @@ class tweetCommand extends Command {
 
 	async exec(message, args) {
 		/*
+		// Censor words
 		let censor = reload('../../json/censor.json');
 		let uncensor = reload('../../json/uncensor.json');
 		filter.addWords(...censor);
 		filter.removeWords(...uncensor);
 		*/
 
+		// see if user is not banned
+		const blacklist = await TwitterBlacklist.findOne({where: {userID:message.author.id}});
+		if (blacklist) {
+			return message.channel.send(`You have been blacklisted for the following reasons: \`\`${blacklist.get('reason')}\`\` be less naughty less time.`);
+		}
+
 		// Don't let account new account use this command to prevent spam
 		let date = new Date();
 		if (message.author.createdAt > date.setDate(date.getDate() - 7)) {
 			return message.channel.send('Your account is too new to be able to use this command!');
-		}
-
-		const blacklist = reload('../../json/twiBlacklist.json');
-
-		if (blacklist.includes(message.author.id)) {
-			return message.channel.send('You have been blacklisted from this command... be less naughty next time.');
 		}
 
 		// remove zero width space
