@@ -28,9 +28,9 @@ class TwitterBlacklistCommand extends Command {
 			],
 			channelRestriction: 'guild',
 			description: {
-				content: 'Create custom autoresponse',
-				usage: '[trigger] [response]',
-				examples: ['"do you know da wea" Fuck off dead meme', 'hello Hello [author], how are you today?']
+				content: 'Blacklist user from the twitter command',
+				usage: '[userID]',
+				examples: ['']
 			}
 		});
 	}
