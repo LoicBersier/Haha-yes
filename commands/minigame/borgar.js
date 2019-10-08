@@ -11,9 +11,9 @@ class borgarCommand extends Command {
 			aliases: ['borgar', 'hamburgor', 'hamborgar', 'burger', 'hamburger', 'borger'],
 			category: 'minigame',
 			description: {
-				content: 'Make amborgar,,,,,,,,,, ( MINI GAME VERY WIP, NO LEVEL YET )',
-				usage: '[number of ingredient] [time]',
-				examples: ['4 10']
+				content: 'Make amborgar,,,,,,,,,, ( MINI GAME VERY WIP, LEVEL/XP SYSTEM MIGHT BE BULLSHIT )',
+				usage: '',
+				examples: ['']
 			}
 		});
 	}
