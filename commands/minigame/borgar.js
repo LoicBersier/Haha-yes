@@ -87,13 +87,15 @@ class borgarCommand extends Command {
 									message.reply(`u won bro,,,, that's kinda epic if i do say so myself\n**you gained ${xp} xp. you now have ${totalXP} xp**`);
 								}
 							} else {
-								let totalXP = curxp - xp;
-								body = {userID: message.author.id, level: level, xp: totalXP};
-								if (curxp == 0) {
+								let totalXP;
+								if (curxp <= 0) {
 									message.reply(`you failed noob... you were supposed to make **${hamIngredient}**`);
+									totalXP = 0;
 								} else {
 									message.reply(`you failed noob... you were supposed to make **${hamIngredient}**\n**you lost ${xp} xp. you now have ${totalXP} xp**`);
+									totalXP = curxp - xp;
 								}
+								body = {userID: message.author.id, level: level, xp: totalXP};
 							}
 
 							if (curxp == 0) {
