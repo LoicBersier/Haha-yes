@@ -106,7 +106,7 @@ class borgarCommand extends Command {
 						})
 						.catch(err => {
 							console.error(err);
-							return message.reply('You ran out of time noob... ( or an error occured )');
+							return message.reply('You ran out of time noob...');
 						});
 				}, 3000);
 			});
