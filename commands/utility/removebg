@@ -28,7 +28,7 @@ class removebgCommand extends Command {
 		if (Attachment[0] && !args.image) {
 			url = Attachment[0].url;
 		}
-		const outputFile = `${os.tmpdir()}/rempvebg.png`;
+		const outputFile = `${os.tmpdir()}/${message.id}_removebg.png`;
 		const done = await removd.url({
 			apikey: removebgAPI,
 			destination: outputFile,
