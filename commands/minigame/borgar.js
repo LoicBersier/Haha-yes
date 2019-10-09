@@ -46,7 +46,7 @@ class borgarCommand extends Command {
 			level = 1;
 		}
 
-		const ingredients = ['beef', 'salade', 'tomato', 'cheese', 'pickle', 'onion', 'garlic', 'basil', 'lettuce'];
+		const ingredients = ['beef', 'salad', 'tomato', 'cheese', 'pickle', 'onion', 'garlic', 'basil', 'lettuce', 'bacon'];
 		let hamIngredient = [];
 		hamIngredient.push('bun');
 
