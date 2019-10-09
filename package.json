@@ -26,6 +26,7 @@
     "node-fetch": "^2.6.0",
     "node-opus": "^0.3.1",
     "reload-json": "^0.3.1",
+    "removd": "^1.1.1",
     "sequelize": "^5.19.0",
     "sqlite3": "^4.0.9",
     "superagent": "^4.1.0",
