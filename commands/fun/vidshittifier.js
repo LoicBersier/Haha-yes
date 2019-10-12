@@ -4,10 +4,10 @@ const exec = util.promisify(require('child_process').exec);
 const youtubedl = require('youtube-dl');
 const os = require('os');
 
-class vidshittifyerCommand extends Command {
+class vidshittifierCommand extends Command {
 	constructor() {
-		super('vidshittifyer', {
-			aliases: ['vidshittifyer', 'vs', 'shittifyer', 'vid2shit', 'v2s'],
+		super('vidshittifier', {
+			aliases: ['vidshittifier', 'vs', 'shittifier', 'vid2shit', 'v2s'],
 			category: 'fun',
 			args: [
 				{
@@ -60,13 +60,13 @@ class vidshittifyerCommand extends Command {
 					loadingmsg.delete();
 					return message.channel.send('An error has occured, I can\'t download from the link you provided.');
 				}
-				shittify();
+				shittifie();
 			});
 		} else {
 			return message.channel.send('You need a valid video link!');
 		}
 
-		function shittify() {
+		function shittifie() {
 			exec(`ffmpeg -i ${input} ${option} -vcodec libx264 -r 5 -r 15 ${output}`)
 				.then(() => {
 					loadingmsg.delete();
@@ -82,4 +82,4 @@ class vidshittifyerCommand extends Command {
 	}
 }
 
-module.exports = vidshittifyerCommand;
+module.exports = vidshittifierCommand;
