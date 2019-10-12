@@ -39,7 +39,7 @@ class vidshittifierCommand extends Command {
 	}
 
 	async exec(message, args) {
-		let input = `${os.tmpdir()}/${message.id}.mp4`;
+		let input = `${os.tmpdir()}/${message.id}`;
 		let output = `${os.tmpdir()}/Shittifyed${message.id}.mp4`;
 		let compression;
 		if (args.compression == 1) {
@@ -67,7 +67,7 @@ class vidshittifierCommand extends Command {
 		}
 
 		function shittifie() {
-			exec(`ffmpeg -i ${input} ${option} -vcodec libx264 -r 5 -r 15 ${output}`)
+			exec(`ffmpeg -i ${input} ${option} -vcodec libx264 -r 15 -f mp4 ${output}`)
 				.then(() => {
 					loadingmsg.delete();
 					message.delete();
