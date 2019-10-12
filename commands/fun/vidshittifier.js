@@ -15,7 +15,7 @@ class vidshittifierCommand extends Command {
 					type: 'string',
 				},
 				{
-					id: 'compresion',
+					id: 'compression',
 					type: 'integer'
 				}
 			],
@@ -37,15 +37,21 @@ class vidshittifierCommand extends Command {
 
 		let input = `${os.tmpdir()}/${message.id}.mp4`;
 		let output = `${os.tmpdir()}/Shittifyed${message.id}.mp4`;
+
 		let compression;
-		if (args.compresion == 1) {
+		let audioCompression;
+
+		if (args.compression == 1) {
 			compression = '50k';
-		} else if (args.compresion == 2) {
+			audioCompression = '100k';
+		} else if (args.compression == 2) {
 			compression = '30k';
+			audioCompression = '60k';
 		} else {
 			compression = '10k';
+			audioCompression = '20k';
 		}
-		let option = `-b:v ${compression} -b:a ${compression}`;
+		let option = `-b:v ${compression} -b:a ${audioCompression}`;
 
 		let loadingmsg = await message.channel.send('Processing <a:loadingmin:527579785212329984>');
 
