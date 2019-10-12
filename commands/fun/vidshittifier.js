@@ -32,9 +32,9 @@ class vidshittifierCommand extends Command {
 		let output = `${os.tmpdir()}/Shittifyed${message.id}.mp4`;
 		let compression;
 		if (args.compresion == 1) {
-			compression = '5M';
+			compression = '600k';
 		} else if (args.compresion == 2) {
-			compression = '1M';
+			compression = '300k';
 		} else {
 			compression = '10k';
 		}
