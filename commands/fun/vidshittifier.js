@@ -16,18 +16,7 @@ class vidshittifierCommand extends Command {
 				},
 				{
 					id: 'compresion',
-					type: 'string'
-				},
-				{
-					id: 'alt',
-					match: 'flag',
-					flag: '--alt'
-				},
-				{
-					id: 'watermark',
-					match: 'flag',
-					flag: '--watermark'
-
+					type: 'integer'
 				}
 			],
 			description: {
