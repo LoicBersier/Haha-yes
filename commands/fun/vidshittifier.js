@@ -28,6 +28,13 @@ class vidshittifierCommand extends Command {
 	}
 
 	async exec(message, args) {
+		let Attachment = (message.attachments).array();
+		let url = args.link;
+		// Get attachment link
+		if (Attachment[0] && !args.link) {
+			url = Attachment[0].url;
+		}
+
 		let input = `${os.tmpdir()}/${message.id}.mp4`;
 		let output = `${os.tmpdir()}/Shittifyed${message.id}.mp4`;
 		let compression;
@@ -42,8 +49,8 @@ class vidshittifierCommand extends Command {
 
 		let loadingmsg = await message.channel.send('Processing <a:loadingmin:527579785212329984>');
 
-		if (args.link) {
-			return youtubedl.exec(args.link, ['-o', input], {}, function(err) {
+		if (url) {
+			return youtubedl.exec(url, ['-o', input], {}, function(err) {
 				if (err) {
 					console.error(err);
 					loadingmsg.delete();
