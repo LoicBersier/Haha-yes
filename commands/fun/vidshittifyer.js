@@ -38,8 +38,6 @@ class vidshittifyerCommand extends Command {
 		let input = `${os.tmpdir()}/${message.id}.mp4`;
 		let output = `${os.tmpdir()}/Shittifyed${message.id}.mp4`;
 		let compression;
-		let option = `-b:v ${compression}  -b:a ${compression}`;
-
 		if (args.link) {
 			if (args.compression == 1) {
 				compression = '10m';
@@ -48,6 +46,8 @@ class vidshittifyerCommand extends Command {
 			} else {
 				compression = '10k';
 			}
+			let option = `-b:v ${compression}  -b:a ${compression}`;
+
 			let video = youtubedl(args.link);
 			video.on('error', function error(err) {
 				console.log('error 2:', err);
