@@ -18,6 +18,12 @@ class vidshittifyerCommand extends Command {
 				{
 					id: 'compresion',
 					type: 'string'
+				},
+				{
+					id: 'watermark',
+					match: 'flag',
+					flag: '--watermark'
+
 				}
 			],
 			description: {
@@ -32,11 +38,13 @@ class vidshittifyerCommand extends Command {
 		let input = `${os.tmpdir()}/${message.id}.mp4`;
 		let output = `${os.tmpdir()}/Shittifyed${message.id}.mp4`;
 		let compression;
+		let option = `-b:v ${compression}  -b:a ${compression}`;
+
 		if (args.link) {
 			if (args.compression == 1) {
-				compression = '1m';
+				compression = '10m';
 			} else if (args.compression == 2) {
-				compression = '50k';
+				compression = '5m';
 			} else {
 				compression = '10k';
 			}
@@ -47,7 +55,7 @@ class vidshittifyerCommand extends Command {
 			});
 			video.pipe(fs.createWriteStream(input));
 			video.on('end', function () {
-				exec(`ffmpeg -i ${input} -b:v ${compression}  -b:a ${compression} -vcodec libx264 -r 5 -r 15 ${output}`)
+				exec(`ffmpeg -i ${input} ${option} -vcodec libx264 -r 5 -r 15 ${output}`)
 					.then(() => {
 						message.delete();
 						return message.channel.send({files: [output]})
