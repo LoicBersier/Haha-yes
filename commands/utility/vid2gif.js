@@ -8,7 +8,7 @@ const superagent = require('superagent');
 class vid2giftCommand extends Command {
 	constructor() {
 		super('vid2gift', {
-			aliases: ['vid2gif', 'v2g'],
+			aliases: ['vid2gif', 'v2g', 'vg'],
 			category: 'utility',
 			args: [
 				{
@@ -36,11 +36,15 @@ class vid2giftCommand extends Command {
 	async exec(message, args) {
 		let vid = args.vid;
 
+		let loadingmsg = await message.channel.send('Processing <a:loadingmin:527579785212329984>');
+
 		if (!vid) {
+			loadingmsg.delete();
 			return message.channel.send('I need a video to do that!');
 		} else if (vid) {
 
 			const { body: buffer } = await superagent.get(vid).catch(() => {
+				loadingmsg.delete();
 				return message.channel.send('An error as occured, please try again');
 			});
 			let options = '';
@@ -61,14 +65,18 @@ class vid2giftCommand extends Command {
 			fs.writeFile(`${os.tmpdir()}/${message.id}v2g`, buffer, () => {
 				exec(`ffmpeg -i ${os.tmpdir()}/${message.id}v2g ${options} ${os.tmpdir()}/${message.id}v2g.gif -hide_banner`)
 					.then(() => {
+						loadingmsg.delete();
+						message.delete();
 						return message.channel.send({files: [`${os.tmpdir()}/${message.id}v2g.gif`]})
 							.catch(err => {
 								console.error(err);
+								loadingmsg.delete();
 								return message.channel.send('Could not send the file! Perhaps the file is too big?');
 							});
 					})
 					.catch(err => {
 						console.error(err);
+						loadingmsg.delete();
 						return message.channel.send('There was an error during conversion! maybe try with another file type?');
 					});
 			});
