@@ -14,11 +14,15 @@ class vidshittifyerCommand extends Command {
 				{
 					id: 'link',
 					type: 'string',
+				},
+				{
+					id: 'compresion',
+					type: 'string'
 				}
 			],
 			description: {
-				content: 'Make your vid shit quality',
-				usage: '[link to video]',
+				content: 'Make your vid shit quality.',
+				usage: '[link to video] [compression ( 1, 2 or 3)]',
 				examples: ['']
 			}
 		});
@@ -27,7 +31,15 @@ class vidshittifyerCommand extends Command {
 	async exec(message, args) {
 		let input = `${os.tmpdir()}/${message.id}.mp4`;
 		let output = `${os.tmpdir()}/Shittifyed${message.id}.mp4`;
+		let compression;
 		if (args.link) {
+			if (args.compression == 1) {
+				compression = '1m';
+			} else if (args.compression == 2) {
+				compression = '50k';
+			} else {
+				compression = '10k';
+			}
 			let video = youtubedl(args.link);
 			video.on('error', function error(err) {
 				console.log('error 2:', err);
@@ -35,8 +47,9 @@ class vidshittifyerCommand extends Command {
 			});
 			video.pipe(fs.createWriteStream(input));
 			video.on('end', function () {
-				exec(`ffmpeg -i ${input} -b:v 10k -b:a 20k -vcodec libx264 -r 5 -r 15 ${output}`)
+				exec(`ffmpeg -i ${input} -b:v ${compression}  -b:a ${compression} -vcodec libx264 -r 5 -r 15 ${output}`)
 					.then(() => {
+						message.delete();
 						return message.channel.send({files: [output]})
 							.catch(err => {
 								console.error(err);
