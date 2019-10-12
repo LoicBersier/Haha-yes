@@ -81,7 +81,7 @@ class vidshittifierCommand extends Command {
 				.catch(err => {
 					console.error(err);
 					loadingmsg.delete();
-					return message.channel.send('On no! an error just occured! Im gonna be honest with you, i don\'t know what caused it yet! but worry not! my owner wil look into it soon!');
+					return message.channel.send('On no! an error just occured! Im gonna be honest with you, i don\'t know what caused it yet! but worry not! my owner will look into it soon!');
 				});
 		}
 	}
