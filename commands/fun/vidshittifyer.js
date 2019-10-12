@@ -49,7 +49,7 @@ class vidshittifyerCommand extends Command {
 		} else {
 			compression = '10k';
 		}
-		let option = `-b:v ${compression}  -b:a ${compression}`;
+		let option = `-b:v ${compression} -b:a ${compression}`;
 
 		let loadingmsg = await message.channel.send('Processing <a:loadingmin:527579785212329984>');
 
@@ -60,7 +60,6 @@ class vidshittifyerCommand extends Command {
 					loadingmsg.delete();
 					return message.channel.send('An error has occured, I can\'t download from the link you provided.');
 				}
-				loadingmsg.delete();
 				shittify();
 			});
 		} else {
@@ -70,6 +69,7 @@ class vidshittifyerCommand extends Command {
 		function shittify() {
 			exec(`ffmpeg -i ${input} ${option} -vcodec libx264 -r 5 -r 15 ${output}`)
 				.then(() => {
+					loadingmsg.delete();
 					message.delete();
 					return message.channel.send({files: [output]})
 						.catch(err => {
