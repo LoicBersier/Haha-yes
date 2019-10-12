@@ -48,8 +48,9 @@ class vidshittifierCommand extends Command {
 					console.error(err);
 					loadingmsg.delete();
 					return message.channel.send('An error has occured, I can\'t download from the link you provided.');
+				} else {
+					shittifie();
 				}
-				shittifie();
 			});
 		} else {
 			return message.channel.send('You need a valid video link!');
