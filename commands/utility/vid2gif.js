@@ -51,13 +51,15 @@ class vid2giftCommand extends Command {
 
 			if (args.fps) {
 				options += ` -r ${args.fps}`;
+			} else {
+				options += ' -r 15';
 			}
 
 
 
 
 			fs.writeFile(`${os.tmpdir()}/${message.id}v2g`, buffer, () => {
-				exec(`ffmpeg -i ${os.tmpdir()}/${message.id}v2g ${options} -r 15 ${os.tmpdir()}/${message.id}v2g.gif -hide_banner`)
+				exec(`ffmpeg -i ${os.tmpdir()}/${message.id}v2g ${options} ${os.tmpdir()}/${message.id}v2g.gif -hide_banner`)
 					.then(() => {
 						return message.channel.send({files: [`${os.tmpdir()}/${message.id}v2g.gif`]})
 							.catch(err => {
