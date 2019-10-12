@@ -50,13 +50,17 @@ class vidshittifyerCommand extends Command {
 			compression = '10k';
 		}
 		let option = `-b:v ${compression}  -b:a ${compression}`;
-		if (args.link) {
 
+		let loadingmsg = await message.channel.send('Processing <a:loadingmin:527579785212329984>');
+
+		if (args.link) {
 			return youtubedl.exec(args.link, ['-o', input], {}, function(err) {
 				if (err) {
 					console.error(err);
+					loadingmsg.delete();
 					return message.channel.send('An error has occured, I can\'t download from the link you provided.');
 				}
+				loadingmsg.delete();
 				shittify();
 			});
 		} else {
@@ -70,6 +74,7 @@ class vidshittifyerCommand extends Command {
 					return message.channel.send({files: [output]})
 						.catch(err => {
 							console.error(err);
+							loadingmsg.delete();
 							return message.channel.send('On no! an error just occured! perhaps the file is too big?');
 						});
 				});
