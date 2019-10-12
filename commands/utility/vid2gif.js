@@ -5,9 +5,9 @@ const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 const superagent = require('superagent');
 
-class vid2giftCommand extends Command {
+class vid2gifCommand extends Command {
 	constructor() {
-		super('vid2gift', {
+		super('vid2gif', {
 			aliases: ['vid2gif', 'v2g', 'vg'],
 			category: 'utility',
 			args: [
@@ -86,4 +86,4 @@ class vid2giftCommand extends Command {
 	}
 }
 
-module.exports = vid2giftCommand;
+module.exports = vid2gifCommand;
