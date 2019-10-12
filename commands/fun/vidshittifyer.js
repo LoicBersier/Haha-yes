@@ -40,9 +40,9 @@ class vidshittifyerCommand extends Command {
 		let compression;
 		if (args.link) {
 			if (args.compression == 1) {
-				compression = '10m';
+				compression = '10M';
 			} else if (args.compression == 2) {
-				compression = '5m';
+				compression = '5M';
 			} else {
 				compression = '10k';
 			}
