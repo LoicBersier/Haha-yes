@@ -32,6 +32,10 @@ class jpegifyCommand extends Command {
 			url = Attachment[0].url;
 		}
 
+		if (!url) {
+			return message.channel.send('You need an image to use this command!');
+		}
+
 		let loadingmsg = await message.channel.send('Processing <a:loadingmin:527579785212329984>');
 
 		jimp.read({
@@ -45,7 +49,12 @@ class jpegifyCommand extends Command {
 			.then(() => {
 				loadingmsg.delete();
 				return message.channel.send({files: [output]});
+			})
+			.catch(error => {
+				console.error(error);
+				return message.channel.send('Oh no, an error just occured! Maybe the format of your image don\'t work?');
 			});
+
 
 
 	}
