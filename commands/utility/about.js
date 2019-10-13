@@ -22,7 +22,7 @@ class aboutCommand extends Command {
 			.setTitle('About me')
 			.setURL('https://gitlab.com/LoicBersier/DiscordBot')
 			.setDescription('This bot is made using [discord.js](https://github.com/discordjs/discord.js) & [Discord-Akairo](https://github.com/discord-akairo/discord-akairo)\nHelp command from [hoshi](https://github.com/1Computer1/hoshi)\n* [Rantionary](https://github.com/RantLang/Rantionary) for there dictionnary.\nThanks to Tina the Cyclops girl#5759 for inspiring me for making this bot!')
-			.setFooter('Gitlab link in the title');
+			.setFooter('Gitlab link in the title | Original bot made by Supositware#1616 (267065637183029248)');
 				
 		message.channel.send(aboutEmbed);
 	}
