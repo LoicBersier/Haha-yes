@@ -36,6 +36,7 @@ class rotateCommand extends Command {
 			url = Attachment[0].url;
 		}
 
+		let loadingmsg = await message.channel.send('Processing <a:loadingmin:527579785212329984>');
 
 		jimp.read({
 			url: url
@@ -46,6 +47,7 @@ class rotateCommand extends Command {
 					.write(output);
 			})
 			.then(() => {
+				loadingmsg.delete();
 				return message.channel.send({files: [output]});
 			});
 
