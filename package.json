@@ -19,7 +19,7 @@
     "handbrake-js": "^3.0.8",
     "html-to-text": "^5.1.1",
     "img-diff-js": "^0.4.1",
-    "leo-profanity": "^1.2.4",
+    "jimp": "^0.8.4",
     "meta-extractor": "^1.5.2",
     "mkdirp": "^0.5.1",
     "mysql2": "^1.6.5",
