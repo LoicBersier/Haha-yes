@@ -1,4 +1,5 @@
 const { Listener } = require('discord-akairo');
+const { ownerID } = require('../../config.json');
 
 class CommandBlockedListener extends Listener {
 	constructor() {
@@ -30,7 +31,7 @@ class CommandBlockedListener extends Listener {
 			message.reply(blacklistMessage);
 			break;
 		case 'serverblacklist': 
-			message.channel.send('This server have been blacklisted... to appeal contact Supositware#1616, and now i will yeet out of here');
+			message.channel.send(`This server have been blacklisted... to appeal contact ${this.client.users.get(ownerID).username}#${this.client.users.get(ownerID).discriminator}, and now i will yeet out of here`);
 			message.guild.leave();
 			break;
 		}
