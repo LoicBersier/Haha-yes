@@ -36,7 +36,7 @@ class vidshittifierCommand extends Command {
 		}
 
 		let input = `${os.tmpdir()}/${message.id}.mp4`;
-		let output = `${os.tmpdir()}/Shittifyed${message.id}.mp4`;
+		let output = `${os.tmpdir()}/Shittified${message.id}.mp4`;
 
 		let compression;
 		let audioCompression;
