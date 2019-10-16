@@ -116,6 +116,7 @@ class DownloadCommand extends Command {
 				}
 
 				let compressmsg = await message.channel.send('Video bigger than 8MB compressing now <a:loadingmin:527579785212329984> (This can take a long time!)\nWant it to go faster? Donate to the dev with the donate command, so i can get a better server and do it faster!');
+				loadingmsg.delete();
 
 				const options = {
 					input: `${os.tmpdir()}/${fileName}.mp4`,
@@ -127,7 +128,6 @@ class DownloadCommand extends Command {
 				let handbrake = hbjs.spawn(options);
 				handbrake.on('error', err => {
 					console.error(err);
-					loadingmsg.delete();
 					compressmsg.delete();
 					return message.channel.send('An error has occured while compressing the video');
 				});
@@ -140,12 +140,10 @@ class DownloadCommand extends Command {
 				});
 				handbrake.on('end', async function () {
 					message.delete();
-					loadingmsg.delete();
 					compressmsg.delete();
 					return message.channel.send(`Downloaded by ${message.author.username}`, { files: [`${os.tmpdir()}/${fileName}compressed.mp4`] })
 						.catch(err => {
 							console.error(err);
-							loadingmsg.delete();
 							compressmsg.delete();
 							return message.channel.send('File too big');		
 						});			
