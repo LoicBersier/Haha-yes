@@ -34,17 +34,23 @@ class dectalkCommand extends Command {
 		if (process.platform == 'win32') {
 			exec(`cd .\\dectalk && .\\say.exe -w dectalk.wav "${decMessage}"`)
 				.catch(err => {
-					return console.error(err);
+					console.error(err);
+					return message.channel.send('Oh no! an error has occured!');
 				})
 				.then(() => {
 					return message.channel.send({files: ['./dectalk/dectalk.wav']});
 				});
 		} else if (process.platform == 'linux' || process.platform == 'darwin') {
+			let loadingmsg = await message.channel.send('Processing ( this can take some time ) <a:loadingmin:527579785212329984>');
+
 			exec(`cd dectalk && DISPLAY=:0.0 wine say.exe -w dectalk.wav "${decMessage}"`)
 				.catch(err => {
-					return console.error(err);
+					loadingmsg.delete();
+					console.error(err);
+					return message.channel.send('Oh no! an error has occured!');
 				})
 				.then(() => {
+					loadingmsg.delete();
 					return message.channel.send({files: ['./dectalk/dectalk.wav']});
 				});
 		}

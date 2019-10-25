@@ -34,7 +34,8 @@ class dectalkvcCommand extends Command {
 		if (process.platform == 'win32') {
 			exec(`cd .\\dectalk && .\\say.exe -w dectalkvc.wav "${decMessage}"`)
 				.catch(err => {
-					return console.error(err);
+					console.error(err);
+					return message.channel.send('Oh no! an error has occured!');
 				})
 				.then(async () => {
 					const voiceChannel = message.member.voice.channel;
@@ -52,14 +53,19 @@ class dectalkvcCommand extends Command {
 				});
 			
 		} else if (process.platform == 'linux' || process.platform == 'darwin') {
+			let loadingmsg = await message.channel.send('Processing ( this can take some time ) <a:loadingmin:527579785212329984>');
+
 			exec(`cd dectalk && DISPLAY=:0.0 wine say.exe -w dectalkvc.wav "${decMessage}"`)
 				.catch(err => {
-					return console.error(err);
+					loadingmsg.delete();
+					console.error(err);
+					return message.channel.send('Oh no! an error has occured!');
 				})
 				.then(async () => {
 					const voiceChannel = message.member.voice.channel;
 					if (!voiceChannel) return message.say('Please enter a voice channel first.');
 					try {
+						loadingmsg.delete();
 						const connection = await voiceChannel.join();
 						const dispatcher = connection.play('./dectalk/dectalkvc.wav');
 						dispatcher.once('finish', () => voiceChannel.leave());
@@ -67,6 +73,7 @@ class dectalkvcCommand extends Command {
 						return null;
 					} catch (err) {
 						voiceChannel.leave();
+						loadingmsg.delete();
 						return message.reply(`Oh no, an error occurred: \`${err.message}\`. Try again later!`);
 					}
 				});
