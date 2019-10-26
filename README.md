@@ -14,6 +14,9 @@ You need to install the following
 * https://github.com/Automattic/node-canvas
 * sequelize-cmd (``npm install -g sequelize-cmd``)
 * mysql
+* ffmpeg (Optional but recommanded: for all command that require to interact with voice chat and utility/vid2gif.js and fun/vidshittifier.js)
+* handbrake-cli (Optional but recommanded: for utility/download.js)
+* apngasm (Optional: for images/nolight.js)
 
 ### Installing
 ```
