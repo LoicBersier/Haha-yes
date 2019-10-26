@@ -9,8 +9,6 @@
 	"statsChannel": "channel where the bot send his stats", //optional but recommended
 	"supportServer":    "Invite to the support server of the bot", //optional but recommended
 	"feedbackChannel": "id of the channel where the feedback goes", //optional but recommended
-	"fbuser": "Facebook email", //optional | for the download command
-	"fbpasswd": "Facebook passwd", //optional | for the download command
 	"yandexAPI": "yandex api key", //optional | for the translate command
 	"acoustID": "acoust api key",	//optional | for the music match command
 	"twiConsumer": "Twitter consumer key", //optional | for the twitter command
