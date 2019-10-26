@@ -10,9 +10,10 @@ These instructions will get you a copy of the project up and running on your loc
 
 You need to install the following
 
-```
-https://github.com/Automattic/node-canvas
-```
+
+* https://github.com/Automattic/node-canvas
+* sequelize-cmd (``npm install -g sequelize-cmd``)
+* mysql
 
 ### Installing
 ```
@@ -20,7 +21,12 @@ git clone https://gitlab.com/loicbersier/discordbot
 cd discordbot
 npm init -y
 npm install
+
+sequelize db:migrate
 ```
+
+Configure config.json and config/config.json
+
 To run the bot either use pm2
 ```
 npm install -g pm2
@@ -40,7 +46,7 @@ To use dectalk on linux you will need
 2. install wine
 3. install Xvfb & run `Xvfb :0 -screen 0 1024x768x16 &`
 
-You can now use the python script [buildConfig.py](https://gitlab.com/LoicBersier/DiscordBot/blob/master/buildConfig.py) to build a config.json
+You can now use the python script [buildConfig.py](https://gitlab.com/LoicBersier/DiscordBot/blob/master/buildConfig.py) to build a config.json ( Might be outdated )
 
 ## Built With
 
