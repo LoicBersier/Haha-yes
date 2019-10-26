@@ -17,6 +17,7 @@ You need to install the following
 * ffmpeg (Optional but recommanded: for all command that require to interact with voice chat and utility/vid2gif.js and fun/vidshittifier.js)
 * handbrake-cli (Optional but recommanded: for utility/download.js)
 * apngasm (Optional: for images/nolight.js)
+* [Google credentials](https://cloud.google.com/docs/authentication/getting-started) (Optional: for tts.js and ttsvc.js, without that it will spam error on startup but not important)
 
 ### Installing
 ```
