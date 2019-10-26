@@ -22,7 +22,6 @@ You need to install the following
 ```
 git clone https://gitlab.com/loicbersier/discordbot
 cd discordbot
-npm init -y
 npm install
 
 sequelize db:migrate
