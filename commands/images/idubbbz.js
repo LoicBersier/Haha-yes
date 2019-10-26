@@ -11,7 +11,6 @@ class IdubbbzCommand extends Command {
 				{
 					id: 'text',
 					type: 'string',
-					default: 'nigger fagget'
 				},
 				{
 					id: 'image',
