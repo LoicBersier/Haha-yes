@@ -61,6 +61,11 @@ You can now use the python script [buildConfig.py](https://gitlab.com/LoicBersie
 
 * **Loïc Bersier**
 
+## Donation link
+
+[![Paypal](https://www.paypalobjects.com/en_US/CH/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/paypalme2/supositware/)
+[![Patreon](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/bePatron?u=15330358)
+
 ## License
 
 This project is licensed under the **GNU Affero General Public License v3.0** License - see the [LICENSE](LICENSE) file for details
