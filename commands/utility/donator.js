@@ -1,4 +1,5 @@
 const { Command } = require('discord-akairo');
+const donator = require('../../models').donator;
 
 class donatorCommand extends Command {
 	constructor() {
@@ -14,7 +15,15 @@ class donatorCommand extends Command {
 	}
 
 	async exec(message) {
-		return message.channel.send(`Thanks to:\n${this.client.users.get('294160866268413952').username}#${this.client.users.get('294160866268413952').discriminator} (294160866268413952)\n${this.client.users.get('428387534842626048').username}#${this.client.users.get('428387534842626048').discriminator} (428387534842626048)`);
+		const Donator = await donator.findAll({order: ['id']});
+
+		let donatorMessage = 'Thanks to:\n';
+
+		for (let i = 0; i < Donator.length; i++) {
+			donatorMessage += `${this.client.users.get(Donator[i].get('userID')).username}#${this.client.users.get(Donator[i].get('userID')).discriminator} (${Donator[i].get('userID')}) ${Donator[i].get('comment')}\n`;
+		}
+
+		return message.channel.send(donatorMessage);
 	}
 }
 
