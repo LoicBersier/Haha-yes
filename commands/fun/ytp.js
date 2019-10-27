@@ -54,7 +54,7 @@ class ytpCommand extends Command {
 			}
 		}
 
-		let loadingmsg = await message.channel.send('Processing, this can take a long time <a:loadingmin:527579785212329984>');
+		let loadingmsg = await message.channel.send('Processing, this can take a **long** time <a:loadingmin:527579785212329984>');
 
 		// Read userVid folder and only take .mp4
 		let asset = [];
@@ -96,7 +96,10 @@ class ytpCommand extends Command {
 			new YTPGenerator().configurateAndGo(options)
 				.then(() => {
 					loadingmsg.delete();
-					return message.reply('Here is your YTP!', {files: [`${os.tmpdir()}/${message.id}_YTP.mp4`]});
+					return message.reply('Here is your YTP!', {files: [`${os.tmpdir()}/${message.id}_YTP.mp4`]})
+						.catch(() => {
+							return message.channel.send('Whoops, look like the vid might be too big for discord, my bad, please try again');
+						});
 				})
 				.catch(() => {
 					loadingmsg.delete();
