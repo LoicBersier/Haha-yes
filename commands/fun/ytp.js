@@ -45,10 +45,12 @@ class ytpCommand extends Command {
 						loadingmsg.delete();
 						return message.channel.send('An error has occured, I can\'t download from the link you provided.');
 					} else {
-						return message.channel.send('Video sucessfully added to the pool!');
+						loadingmsg.delete();
+						return message.reply('Video sucessfully added to the pool!');
 					}
 				});
 			} else {
+				loadingmsg.delete();
 				return message.channel.send('You need a valid video link!');
 			}
 		} 
