@@ -54,7 +54,7 @@ class ytpCommand extends Command {
 			}
 		}
 
-		let loadingmsg = await message.channel.send('Processing, this can take a **long** time <a:loadingmin:527579785212329984>');
+		let loadingmsg = await message.channel.send('Processing, this can take a **long** time, i\'ll ping you when i finished <a:loadingmin:527579785212329984>');
 
 		// Read userVid folder and only take .mp4
 		let asset = [];
