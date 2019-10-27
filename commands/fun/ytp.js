@@ -17,6 +17,11 @@ class ytpCommand extends Command {
 					flag: ['--add']
 				},
 				{
+					id: 'pool',
+					match: 'flag',
+					flag: ['--pool']
+				},
+				{
 					id: 'link',
 					type: 'string'
 				}
@@ -30,6 +35,10 @@ class ytpCommand extends Command {
 	}
 
 	async exec(message, args) {
+		if (args.pool) {
+			return message.channel.send(`here is currently ${fs.readdirSync('./asset/ytp/userVid/').length} videos, you can add yours by doing \`\`${prefix[0]} ytp --add (link or attachment)\`\``);
+		}
+
 		if (args.add) {
 			let loadingmsg = await message.channel.send('Downloading <a:loadingmin:527579785212329984>');
 			let Attachment = (message.attachments).array();
