@@ -75,7 +75,6 @@ class HelpCommand extends Command {
 				images: '💕\u2000Images',
 				utility: '⭐\u2000Utility',
 				admin: '😎\u2000Admin',
-				owner: '⚡\u2000Owner'
 			}[category.id];
 
 			if (title) embed.addField(title, `\`${category.map(cmd => cmd.aliases[0]).join('` `')}\``);
