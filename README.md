@@ -31,7 +31,7 @@ sequelize db:migrate
 ```
 
 If the youtube-dl module didn't install youtube-dl by himself you can go in ``node_modules/youtube-dl/scripts`` and run ``node download.js``
-Configure config.json and config/config.json
+Configure [config.json](config-exemple.jsonc) and [config/config.json](config/config-example.json )
 
 To run the bot either use pm2
 ```
