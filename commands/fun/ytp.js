@@ -29,7 +29,6 @@ class ytpCommand extends Command {
 	}
 
 	async exec(message, args) {
-		if (!message.channel.nsfw) return message.channel.send('Please execute this command in an NSFW channel ( Content might not be NSFW but since the video are user submitted better safe than sorry )');
 		if (args.add) {
 			let loadingmsg = await message.channel.send('Downloading <a:loadingmin:527579785212329984>');
 			let Attachment = (message.attachments).array();
@@ -38,7 +37,8 @@ class ytpCommand extends Command {
 			if (Attachment[0] && !args.link) {
 				url = Attachment[0].url;
 			}
-
+			
+			if (!message.channel.nsfw) return message.channel.send('Please execute this command in an NSFW channel ( Content might not be NSFW but since the video are user submitted better safe than sorry )');
 			if (url) {
 				return youtubedl.exec(url, ['-o', `./asset/ytp/userVid/${message.id}.mp4`], {}, function(err) {
 					if (err) {
