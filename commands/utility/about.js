@@ -36,7 +36,7 @@ class aboutCommand extends Command {
 			.setTitle('About me')
 			.setURL('https://gitlab.com/LoicBersier/DiscordBot')
 			.setDescription(description)
-			.addField('Current maintainer: ', `${this.client.users.get(ownerID).username}#${this.client.users.get(ownerID).discriminator} (${ownerID})`)
+			.addField('Current owner: ', `${this.client.users.get(ownerID).username}#${this.client.users.get(ownerID).discriminator} (${ownerID})`)
 			.setFooter(`Gitlab link in the title | Original bot made by ${this.client.users.get('267065637183029248').username}#${this.client.users.get('267065637183029248').discriminator} (267065637183029248)`); // Please don't change the "original bot made by"
 				
 		message.channel.send(aboutEmbed);
