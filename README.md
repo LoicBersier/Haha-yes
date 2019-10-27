@@ -14,10 +14,12 @@ You need to install the following
 * https://github.com/Automattic/node-canvas
 * sequelize-cli (``npm install -g sequelize-cli``)
 * mysql
-* ffmpeg (Optional but recommanded: for all command that require to interact with voice chat and utility/vid2gif.js and fun/vidshittifier.js)
-* handbrake-cli (Optional but recommanded: for utility/download.js)
-* apngasm (Optional: for images/nolight.js)
-* [Google credentials](https://cloud.google.com/docs/authentication/getting-started) (Optional: for tts.js and ttsvc.js, without that it will spam error on startup but not important)
+* ffmpeg (Optional but recommanded: for all command that require to interact with voice chat and [vid2gif.js](commands/utility/vid2gif.js) and [vidshittifier.js](commands/fun/vidshittifier.js))
+* handbrake-cli (Optional but recommanded: for [download.js](commands/utility/download.js))
+* apngasm (Optional: for [nolight.js](commands/images/nolight.js))
+* [Google credentials](https://cloud.google.com/docs/authentication/getting-started) (Optional: for [tts.js](commands/fun/tts/tts.js) and [ttsvc.js](commands/fun/tts/ttsvc.js), without that it will spam error on startup but not important)
+* Wine (Optional: required for linux/mac for [dectalk.js](commands/fun/tts/dectalk.js) and [dectalkvc.js](commands/fun/tts/dectalkvc.js))
+* xvfb (Optional: for wine if using headless server)
 
 ### Installing
 ```
@@ -75,4 +77,4 @@ This project is licensed under the **GNU Affero General Public License v3.0** Li
 * [discord.JS team](https://github.com/discordjs/discord.js)
 * [1computer1](https://github.com/1Computer1/) for discord-akairo & the help command from [hoshi](https://github.com/1Computer1/hoshi)
 * [Rantionary](https://github.com/RantLang/Rantionary) for there dictionnary.
-* Tina the Cyclops girl#5759 for inspiring me for making this bot
+* Tina the Cyclops girl#0064 for inspiring me for making this bot
