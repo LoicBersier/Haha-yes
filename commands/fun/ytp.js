@@ -27,7 +27,7 @@ class ytpCommand extends Command {
 				}
 			],
 			description: {
-				content: 'Generate random ytp (--add with a link or attachment to add a video to the pool, only .mp4 work)',
+				content: 'Generate random ytp | --add with a link or attachment to add a video to the pool, only .mp4 work | --pool to see how many vid there is currently in the pool ',
 				usage: '',
 				examples: ['']
 			}
@@ -36,7 +36,7 @@ class ytpCommand extends Command {
 
 	async exec(message, args) {
 		if (args.pool) {
-			return message.channel.send(`here is currently ${fs.readdirSync('./asset/ytp/userVid/').length} videos, you can add yours by doing \`\`${prefix[0]} ytp --add (link or attachment)\`\``);
+			return message.channel.send(`here is currently ${fs.readdirSync('./asset/ytp/userVid/').length} videos, you can add yours by doing \`\`${prefix[0]}ytp --add (link or attachment)\`\``);
 		}
 
 		if (args.add) {
