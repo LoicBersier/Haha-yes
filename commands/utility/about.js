@@ -19,7 +19,7 @@ class aboutCommand extends Command {
 	async exec(message) {
 		const Donator = await donator.findAll({order: ['id']});
 
-		let description = 'This bot is made using [discord.js](https://github.com/discordjs/discord.js) & [Discord-Akairo](https://github.com/discord-akairo/discord-akairo)\nHelp command from [hoshi](https://github.com/1Computer1/hoshi)\n[Rantionary](https://github.com/RantLang/Rantionary) for their dictionnary.\nThanks to Tina the Cyclops girl#5759 for inspiring me for making this bot!\n\nThe people who donated for the bot <3\n';
+		let description = `This bot is made using [discord.js](https://github.com/discordjs/discord.js) & [Discord-Akairo](https://github.com/discord-akairo/discord-akairo)\nHelp command from [hoshi](https://github.com/1Computer1/hoshi)\n[Rantionary](https://github.com/RantLang/Rantionary) for their dictionnary.\nThanks to ${this.client.users.get('336492042299637771').username}#${this.client.users.get('336492042299637771').discriminator} (336492042299637771) for inspiring me for making this bot!\n\nThe people who donated for the bot <3\n`;
 		
 		if (Donator[0]) {
 			for (let i = 0; i < Donator.length; i++) {
