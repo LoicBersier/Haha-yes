@@ -30,16 +30,14 @@ class aboutCommand extends Command {
 		}
 
 
-
-
-
 		const aboutEmbed = new MessageEmbed()
 			.setColor('#ff9900')
-			.setAuthor(`${this.client.users.get(ownerID).username}#${this.client.users.get(ownerID).discriminator} (${ownerID})`, this.client.user.avatarURL)
+			.setAuthor(this.client.user.username, this.client.user.avatarURL())
 			.setTitle('About me')
 			.setURL('https://gitlab.com/LoicBersier/DiscordBot')
 			.setDescription(description)
-			.setFooter(`Gitlab link in the title | Original bot made by ${this.client.users.get('267065637183029248').username}#${this.client.users.get('267065637183029248').discriminator} (267065637183029248)`);
+			.addField('Current maintainer: ', `${this.client.users.get(ownerID).username}#${this.client.users.get(ownerID).discriminator} (${ownerID})`)
+			.setFooter(`Gitlab link in the title | Original bot made by ${this.client.users.get('267065637183029248').username}#${this.client.users.get('267065637183029248').discriminator} (267065637183029248)`); // Please don't change the "original bot made by"
 				
 		message.channel.send(aboutEmbed);
 	}
