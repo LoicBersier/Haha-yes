@@ -52,7 +52,7 @@ To use dectalk on linux you will need
 2. install wine
 3. install Xvfb & run `Xvfb :0 -screen 0 1024x768x16 &`
 
-You can now use the python script [buildConfig.py](https://gitlab.com/LoicBersier/DiscordBot/blob/master/buildConfig.py) to build a config.json ( Might be outdated )
+You can now use the python script [buildConfig.py](buildConfig.py) to build a config.json ( Might be outdated )
 
 ## Built With
 
