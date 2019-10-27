@@ -18,9 +18,9 @@ class donateCommand extends Command {
 		const Embed = new MessageEmbed()
 			.setColor('#ff9900')
 			.setTitle('Donation link')
-			.setDescription('[Paypal](https://www.paypal.me/supositware)\n[Patreon](https://www.patreon.com/bePatron?u=15330358)');
+			.setDescription('If you decide to donate, please use the feedback command to let the owner know about it so he can put you in the about and donator command\n[Paypal](https://www.paypal.me/supositware)\n[Patreon](https://www.patreon.com/bePatron?u=15330358)');
 
-		message.channel.send(Embed);
+		return message.channel.send(Embed);
 	}
 }
 
