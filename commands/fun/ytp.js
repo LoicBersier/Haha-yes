@@ -3,6 +3,7 @@ const YTPGenerator = require('ytpplus-node');
 const os = require('os');
 const fs = require('fs');
 const youtubedl = require('youtube-dl');
+const { prefix } = require('../../config.json');
 
 class ytpCommand extends Command {
 	constructor() {
@@ -45,8 +46,9 @@ class ytpCommand extends Command {
 						loadingmsg.delete();
 						return message.channel.send('An error has occured, I can\'t download from the link you provided.');
 					} else {
+						let length = fs.readdirSync('./asset/ytp/userVid/').length;
 						loadingmsg.delete();
-						return message.reply('Video sucessfully added to the pool!');
+						return message.reply(`Video sucessfully added to the pool! There is now ${length} videos`);
 					}
 				});
 			} else {
@@ -56,7 +58,7 @@ class ytpCommand extends Command {
 		} 
 
 		if (!message.channel.nsfw) return message.channel.send('Please execute this command in an NSFW channel ( Content might not be NSFW but since the video are user submitted better safe than sorry )');
-		let loadingmsg = await message.channel.send('Processing, this can take a **long** time, i\'ll ping you when i finished <a:loadingmin:527579785212329984>');
+		let loadingmsg = await message.channel.send(`Processing, this can take a **long** time, i'll ping you when i finished <a:loadingmin:527579785212329984>\nSome info: There is currently ${fs.readdirSync('./asset/ytp/userVid/').length} videos, you can add yours by doing \`\`${prefix[0]} ytp --add (link or attachment)\`\``);
 
 		// Read userVid folder and only take .mp4
 		let asset = [];
