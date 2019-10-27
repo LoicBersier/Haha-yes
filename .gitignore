@@ -49,3 +49,8 @@ json/uncensor.json
 # other
 dectalk/
 unloaded.js
+asset/ytp/userVid/*.mp4
+asset/ytp/music/
+asset/ytp/resources/
+asset/ytp/sounds/
+asset/ytp/sources/
