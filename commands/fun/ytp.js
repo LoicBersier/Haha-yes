@@ -22,12 +22,17 @@ class ytpCommand extends Command {
 					flag: ['--pool']
 				},
 				{
+					id: 'force',
+					match: 'flag',
+					flag: ['--force']
+				},
+				{
 					id: 'link',
 					type: 'string'
 				}
 			],
 			description: {
-				content: 'Generate random ytp | --add with a link or attachment to add a video to the pool, only .mp4 work | --pool to see how many vid there is currently in the pool ',
+				content: 'Generate random ytp | --add with a link or attachment to add a video to the pool, only .mp4 work | --pool to see how many vid there is currently in the pool | --force to make the command work outside of nsfw channel BE AWARE THAT IT WON\'T CHANGE THE FINAL RESULT SO NSFW CAN STILL HAPPEN',
 				usage: '',
 				examples: ['']
 			}
@@ -66,7 +71,7 @@ class ytpCommand extends Command {
 			}
 		} 
 
-		if (!message.channel.nsfw) return message.channel.send('Please execute this command in an NSFW channel ( Content might not be NSFW but since the video are user submitted better safe than sorry )');
+		if (!message.channel.nsfw && !args.force) return message.channel.send('Please execute this command in an NSFW channel ( Content might not be NSFW but since the video are user submitted better safe than sorry ) OR --force to make the command work outside of nsfw channel BE AWARE THAT IT WON\'T CHANGE THE FINAL RESULT SO NSFW CAN STILL HAPPEN');
 		let loadingmsg = await message.channel.send(`Processing, this can take a **long** time, i'll ping you when i finished <a:loadingmin:527579785212329984>\nSome info: There is currently ${fs.readdirSync('./asset/ytp/userVid/').length} videos, you can add yours by doing \`\`${prefix[0]}ytp --add (link or attachment)\`\``);
 
 		// Read userVid folder and only take .mp4
