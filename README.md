@@ -14,7 +14,7 @@ You need to install the following
 * https://github.com/Automattic/node-canvas
 * sequelize-cli (``npm install -g sequelize-cli``)
 * mysql
-* ffmpeg (Optional but recommanded: for all command that require to interact with voice chat and [vid2gif.js](commands/utility/vid2gif.js) and [vidshittifier.js](commands/fun/vidshittifier.js))
+* ffmpeg (Optional but recommanded: for all command that require to interact with voice chat and [vid2gif.js](commands/utility/vid2gif.js), [vidshittifier.js](commands/fun/vidshittifier.js) and [ytp.js](commands/fun/ytp.js))
 * handbrake-cli (Optional but recommanded: for [download.js](commands/utility/download.js))
 * apngasm (Optional: for [nolight.js](commands/images/nolight.js))
 * [Google credentials](https://cloud.google.com/docs/authentication/getting-started) (Optional: for [tts.js](commands/fun/tts/tts.js) and [ttsvc.js](commands/fun/tts/ttsvc.js), without that it will spam error on startup but not important)
@@ -46,6 +46,10 @@ If on linux you can also do
 ```
 nohup node index.js &
 ```
+
+To use [ytp.js](commands/fun/ytp.js)
+1. Download the folder 'sounds', 'music', 'resources', 'sources' from [YTPPlus](https://github.com/philosophofee/YTPPlus)
+2. Put them in the [asset/ytp](asset/ytp) folder
 
 To use dectalk on linux you will need
 1. Get dectalk 
