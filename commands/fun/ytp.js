@@ -40,8 +40,17 @@ class ytpCommand extends Command {
 	}
 
 	async exec(message, args) {
+		let MAX_CLIPS = 20;
+
 		if (args.pool) {
-			return message.channel.send(`here is currently ${fs.readdirSync('./asset/ytp/userVid/').length} videos, you can add yours by doing \`\`${prefix[0]}ytp --add (link or attachment)\`\``);
+			let mp4 = [];
+			fs.readdirSync('./asset/ytp/userVid/').forEach(file => {
+				if (file.endsWith('mp4')) {
+					mp4.push(file);
+				}
+			});
+
+			return message.channel.send(`here is currently ${mp4.length} videos, you can add yours by doing \`\`${prefix[0]}ytp --add (link or attachment)\`\``);
 		}
 
 		if (args.add) {
@@ -60,9 +69,15 @@ class ytpCommand extends Command {
 						loadingmsg.delete();
 						return message.channel.send('An error has occured, I can\'t download from the link you provided.');
 					} else {
-						let length = fs.readdirSync('./asset/ytp/userVid/').length;
+						let mp4 = [];
+						fs.readdirSync('./asset/ytp/userVid/').forEach(file => {
+							if (file.endsWith('mp4')) {
+								mp4.push(file);
+							}
+						});
+
 						loadingmsg.delete();
-						return message.reply(`Video sucessfully added to the pool! There is now ${length} videos`);
+						return message.reply(`Video sucessfully added to the pool! There is now ${mp4.length} videos`);
 					}
 				});
 			} else {
@@ -71,14 +86,21 @@ class ytpCommand extends Command {
 			}
 		} 
 
+
 		if (!message.channel.nsfw && !args.force) return message.channel.send('Please execute this command in an NSFW channel ( Content might not be NSFW but since the video are user submitted better safe than sorry ) OR --force to make the command work outside of nsfw channel BE AWARE THAT IT WON\'T CHANGE THE FINAL RESULT SO NSFW CAN STILL HAPPEN');
-		let loadingmsg = await message.channel.send(`Processing, this can take a **long** time, i'll ping you when i finished <a:loadingmin:527579785212329984>\nSome info: There is currently ${fs.readdirSync('./asset/ytp/userVid/').length} videos, you can add yours by doing \`\`${prefix[0]}ytp --add (link or attachment)\`\``);
 
 		// Read userVid folder and select random vid and only take .mp4
+		let mp4 = [];
 		let asset = [];
 		let files = fs.readdirSync('./asset/ytp/userVid/');
-		for (let i = 0; i < 20; i++) {
-			console.log(i);
+		// Count number of total vid
+		files.forEach(file => {
+			if (file.endsWith('mp4')) {
+				mp4.push(file);
+			}
+		});
+		// Select random vid depending on the ammount of MAX_CLIPS
+		for (let i = 0; i < MAX_CLIPS; i++) {
 			let random = Math.floor(Math.random() * files.length);
 			let vid = `./asset/ytp/userVid/${files[random]}`;
 			if (files[random].endsWith('mp4')) {
@@ -88,9 +110,11 @@ class ytpCommand extends Command {
 			}
 		}
 
+		let loadingmsg = await message.channel.send(`Processing, this can take a **long** time, i'll ping you when i finished <a:loadingmin:527579785212329984>\nSome info: There is currently ${mp4.length} videos, you can add yours by doing \`\`${prefix[0]}ytp --add (link or attachment)\`\``);
+
 
 		let options = {  
-			debug: true, // Better set this to false to avoid flood in console
+			debug: false, // Better set this to false to avoid flood in console
 			MIN_STREAM_DURATION: Math.floor((Math.random() * 3) + 1), // Random duration of video clip
 			sources: './asset/ytp/sources/',
 			sounds: './asset/ytp/sounds/',
@@ -100,7 +124,7 @@ class ytpCommand extends Command {
 			sourceList: asset,
 			outro: './asset/ytp/outro.mp4', // Need an outro or it won't work
 			OUTPUT_FILE: `${os.tmpdir()}/${message.id}_YTP.mp4`,
-			MAX_CLIPS: 20,
+			MAX_CLIPS: MAX_CLIPS,
 			transitions: true,
 			effects: {  
 				effect_RandomSound: true,
