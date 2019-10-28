@@ -103,7 +103,7 @@ class ytpCommand extends Command {
 		for (let i = 0; i < MAX_CLIPS; i++) {
 			let random = Math.floor(Math.random() * files.length);
 			let vid = `./asset/ytp/userVid/${files[random]}`;
-			if (files[random].endsWith('mp4')) {
+			if (files[random].endsWith('mp4') && !files[random].endsWith('temp.mp4')) {
 				if (!asset.includes(vid)) {
 					asset.push(vid);
 				}
@@ -114,7 +114,7 @@ class ytpCommand extends Command {
 
 
 		let options = {  
-			debug: false, // Better set this to false to avoid flood in console
+			debug: true, // Better set this to false to avoid flood in console
 			MIN_STREAM_DURATION: Math.floor((Math.random() * 3) + 1), // Random duration of video clip
 			sources: './asset/ytp/sources/',
 			sounds: './asset/ytp/sounds/',
