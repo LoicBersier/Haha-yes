@@ -63,7 +63,7 @@ class ytpCommand extends Command {
 			}
 			
 			if (url) {
-				return youtubedl.exec(url, ['--merge-output-format', 'mp4', '-o', `./asset/ytp/userVid/${message.id}.mp4`], {}, function(err) {
+				return youtubedl.exec(url, ['--format=mp4', '-o', `./asset/ytp/userVid/${message.id}.mp4`], {}, function(err) {
 					if (err) {
 						console.error(err);
 						loadingmsg.delete();

@@ -56,7 +56,7 @@ class vidshittifierCommand extends Command {
 		let loadingmsg = await message.channel.send('Processing <a:loadingmin:527579785212329984>');
 
 		if (url) {
-			return youtubedl.exec(url, ['--merge-output-format', 'mp4', '-o', input], {}, function(err) {
+			return youtubedl.exec(url, ['--format=mp4', '-o', input], {}, function(err) {
 				if (err) {
 					console.error(err);
 					loadingmsg.delete();

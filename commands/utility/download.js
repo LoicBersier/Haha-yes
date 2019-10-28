@@ -50,13 +50,12 @@ class DownloadCommand extends Command {
 					if (err);
 				});
 			}
-			return youtubedl.exec(args.link, ['--merge-output-format', 'mp4', '-o', `${os.tmpdir()}/${fileName}.mp4`], {}, async function(err, output) {
+			return youtubedl.exec(args.link, ['--format=mp4', '-o', `${os.tmpdir()}/${fileName}.mp4`], {}, async function(err) {
 				if (err) {
 					console.error(err);
 					loadingmsg.delete();
 					return message.channel.send('An error has occured, I can\'t download from the link you provided.');
 				}
-				console.log(output.join('\n'));
 
 				let file = fs.statSync(`${os.tmpdir()}/${fileName}.mp4`);
 				let fileSize = file.size / 1000000.0;
