@@ -50,7 +50,7 @@ class ytpCommand extends Command {
 				}
 			});
 
-			return message.channel.send(`here is currently ${mp4.length} videos, you can add yours by doing \`\`${prefix[0]}ytp --add (link or attachment)\`\``);
+			return message.channel.send(`There is currently ${mp4.length} videos, you can add yours by doing \`\`${prefix[0]}ytp --add (link or attachment)\`\``);
 		}
 
 		if (args.add) {
