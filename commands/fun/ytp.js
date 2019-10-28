@@ -74,56 +74,62 @@ class ytpCommand extends Command {
 		if (!message.channel.nsfw && !args.force) return message.channel.send('Please execute this command in an NSFW channel ( Content might not be NSFW but since the video are user submitted better safe than sorry ) OR --force to make the command work outside of nsfw channel BE AWARE THAT IT WON\'T CHANGE THE FINAL RESULT SO NSFW CAN STILL HAPPEN');
 		let loadingmsg = await message.channel.send(`Processing, this can take a **long** time, i'll ping you when i finished <a:loadingmin:527579785212329984>\nSome info: There is currently ${fs.readdirSync('./asset/ytp/userVid/').length} videos, you can add yours by doing \`\`${prefix[0]}ytp --add (link or attachment)\`\``);
 
-		// Read userVid folder and only take .mp4
+		// Read userVid folder and select random vid and only take .mp4
 		let asset = [];
-		fs.readdir('./asset/ytp/userVid/', (err, files) => {
-			files.forEach(file => {
-				if (file.endsWith('.mp4')) {
-					asset.push(`./asset/ytp/userVid/${file}`);
+		let files = fs.readdirSync('./asset/ytp/userVid/');
+		for (let i = 0; i < 20; i++) {
+			console.log(i);
+			let random = Math.floor(Math.random() * files.length);
+			let vid = `./asset/ytp/userVid/${files[random]}`;
+			if (files[random].endsWith('mp4')) {
+				if (!asset.includes(vid)) {
+					asset.push(vid);
 				}
-			});
+			}
+		}
 
-			let options = {  
-				debug: false, // Better set this to false to avoid flood in console
-				MIN_STREAM_DURATION: Math.floor((Math.random() * 2) + 1), // Random duration of video clip
-				sources: './asset/ytp/sources/',
-				sounds: './asset/ytp/sounds/',
-				music: './asset/ytp/music/',
-				resources: './asset/ytp/resources/',
-				temp: os.tmpdir(),
-				sourceList: asset,
-				outro: './asset/ytp/outro.mp4', // Need an outro or it won't work
-				OUTPUT_FILE: `${os.tmpdir()}/${message.id}_YTP.mp4`,
-				MAX_CLIPS: 20,
-				transitions: true,
-				effects: {  
-					effect_RandomSound: true,
-					effect_RandomSoundMute: true,
-					effect_Reverse: true,
-					effect_Chorus: true,
-					effect_Vibrato: true,
-					effect_HighPitch: true,
-					effect_LowPitch: true,
-					effect_SpeedUp: true,
-					effect_SlowDown: true,
-					effect_Dance: true,
-					effect_Squidward: false
-				}
-			};
+
+		let options = {  
+			debug: true, // Better set this to false to avoid flood in console
+			MIN_STREAM_DURATION: Math.floor((Math.random() * 2) + 1), // Random duration of video clip
+			sources: './asset/ytp/sources/',
+			sounds: './asset/ytp/sounds/',
+			music: './asset/ytp/music/',
+			resources: './asset/ytp/resources/',
+			temp: os.tmpdir(),
+			sourceList: asset,
+			outro: './asset/ytp/outro.mp4', // Need an outro or it won't work
+			OUTPUT_FILE: `${os.tmpdir()}/${message.id}_YTP.mp4`,
+			MAX_CLIPS: 20,
+			transitions: true,
+			effects: {  
+				effect_RandomSound: true,
+				effect_RandomSoundMute: true,
+				effect_Reverse: true,
+				effect_Chorus: true,
+				effect_Vibrato: true,
+				effect_HighPitch: true,
+				effect_LowPitch: true,
+				effect_SpeedUp: true,
+				effect_SlowDown: true,
+				effect_Dance: true,
+				effect_Squidward: false
+			}
+		};
 	
-			new YTPGenerator().configurateAndGo(options)
-				.then(() => {
-					loadingmsg.delete();
-					return message.reply('Here is your YTP!', {files: [`${os.tmpdir()}/${message.id}_YTP.mp4`]})
-						.catch(() => {
-							return message.channel.send('Whoops, look like the vid might be too big for discord, my bad, please try again');
-						});
-				})
-				.catch(() => {
-					loadingmsg.delete();
-					return message.reply('Oh no! An error has occured!');
-				});
-		});
+		new YTPGenerator().configurateAndGo(options)
+			.then(() => {
+				loadingmsg.delete();
+				return message.reply('Here is your YTP!', {files: [`${os.tmpdir()}/${message.id}_YTP.mp4`]})
+					.catch(() => {
+						return message.channel.send('Whoops, look like the vid might be too big for discord, my bad, please try again');
+					});
+			})
+			.catch(err => {
+				console.error(err);
+				loadingmsg.delete();
+				return message.reply('Oh no! An error has occured!');
+			});
 	}
 }
 
