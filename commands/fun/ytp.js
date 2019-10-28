@@ -67,7 +67,7 @@ class ytpCommand extends Command {
 					if (err) {
 						console.error(err);
 						loadingmsg.delete();
-						return message.channel.send('An error has occured, I can\'t download from the link you provided.');
+						return message.channel.send('An error has occured, I can\'t download from the link you provided. Is it an mp4?');
 					} else {
 						let mp4 = [];
 						fs.readdirSync('./asset/ytp/userVid/').forEach(file => {
