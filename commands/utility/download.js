@@ -50,7 +50,7 @@ class DownloadCommand extends Command {
 					if (err);
 				});
 			}
-			return youtubedl.exec(args.link, ['-o', `${os.tmpdir()}/${fileName}.mp4`], {}, async function(err, output) {
+			return youtubedl.exec(args.link, ['--merge-output-format', 'mp4', '-o', `${os.tmpdir()}/${fileName}.mp4`], {}, async function(err, output) {
 				if (err) {
 					console.error(err);
 					loadingmsg.delete();
