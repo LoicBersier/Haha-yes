@@ -115,7 +115,7 @@ class ytpCommand extends Command {
 
 		let options = {  
 			debug: false, // Better set this to false to avoid flood in console
-			MIN_STREAM_DURATION: Math.floor((Math.random() * 3) + 1), // Random duration of video clip
+			MAX_STREAM_DURATION: Math.floor((Math.random() * 3) + 1), // Random duration of video clip
 			sources: './asset/ytp/sources/',
 			sounds: './asset/ytp/sounds/',
 			music: './asset/ytp/music/',
