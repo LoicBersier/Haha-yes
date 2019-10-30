@@ -99,11 +99,11 @@ class ytpCommand extends Command {
 				mp4.push(file);
 			}
 		});
-		// Select random vid depending on the ammount of MAX_CLIPS
+		// Select random vid depending on the amount of MAX_CLIPS
 		for (let i = 0; i < MAX_CLIPS; i++) {
 			let random = Math.floor(Math.random() * files.length);
 			let vid = `./asset/ytp/userVid/${files[random]}`;
-			if (files[random].endsWith('mp4') && !files[random].endsWith('temp.mp4')) {
+			if (files[random].endsWith('mp4')) {
 				if (!asset.includes(vid)) {
 					asset.push(vid);
 				}
