@@ -18,7 +18,7 @@ class gif2vidCommand extends Command {
 			],
 			description: {
 				content: 'Transform gif into video.',
-				usage: '[link to video]',
+				usage: '[link to gif]',
 				examples: ['']
 			}
 		});
