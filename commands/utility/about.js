@@ -31,7 +31,7 @@ class aboutCommand extends Command {
 
 
 		const aboutEmbed = new MessageEmbed()
-			.setColor('#ff9900')
+			.setColor(message.member.displayHexColor)
 			.setAuthor(this.client.user.username, this.client.user.avatarURL())
 			.setTitle('About me')
 			.setURL('https://gitlab.com/LoicBersier/DiscordBot')

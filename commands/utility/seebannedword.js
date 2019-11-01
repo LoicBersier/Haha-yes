@@ -31,7 +31,7 @@ class seebannedwordCommand extends Command {
 		if (list == undefined) return message.channel.send('No word are banned yet.');
 		
 		const Embed = new MessageEmbed()
-			.setColor('#ff9900')
+			.setColor(message.member.displayHexColor)
 			.setTitle('List of banned words')
 			.setDescription(list);
 	

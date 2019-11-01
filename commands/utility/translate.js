@@ -48,7 +48,7 @@ class TranslationCommand extends Command {
 
 
 			const translationEmbed = new MessageEmbed()
-				.setColor('#0099ff')
+				.setColor(message.member.displayHexColor)
 				.setTitle('Asked for the following translation:')
 				.setAuthor(message.author.username)
 				.setDescription(response.text[0])

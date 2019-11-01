@@ -68,7 +68,7 @@ class musicCommand extends Command {
 					let seconds = time - minutes * 60;
 
 					const musicEmbed = new MessageEmbed()
-						.setColor('#ff9900')
+						.setColor(message.member.displayHexColor)
 						.setTitle('Music found!')
 						.addField('Title', response.results[0].recordings[0].title, true)
 						.addField('Artist', response.results[0].recordings[0].artists[0].name, true)

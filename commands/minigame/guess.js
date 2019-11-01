@@ -36,7 +36,7 @@ class guessCommand extends Command {
 			const leaderboard = await guessLeaderboard.findAll({order: ['try']});
 			let top = [];
 			let leaderboardEmbed = new MessageEmbed()
-				.setColor('#0099ff')
+				.setColor(message.member.displayHexColor)
 				.setTitle('Guess leaderboard');
 			for (let i = 0; i < leaderboard.length; i++) {
 				this.client.users.fetch(leaderboard[i].get('memberID'))

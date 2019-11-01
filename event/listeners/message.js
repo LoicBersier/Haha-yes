@@ -34,7 +34,7 @@ class messageListener extends Listener {
 				censoredMessage = censoredMessage.replace(regex, '█'.repeat(bannedWords[i].get('word').length));
 			}
 			let Embed = new MessageEmbed()
-				.setColor('#FF0000')
+				.setColor(message.member.displayHexColor)
 				.setAuthor(message.author.username, message.author.displayAvatarURL())
 				.setDescription(censoredMessage);
 

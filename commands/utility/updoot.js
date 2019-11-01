@@ -17,7 +17,7 @@ class UpdootCommand extends Command {
 
 	async exec(message) {
 		const upDoot = new MessageEmbed()
-			.setColor('#0099ff')
+			.setColor(message.member.displayHexColor)
 			.setTitle('Vote for my bot')
 			.setAuthor(message.author.username)
 			.setDescription('You can vote for my bot if you think the bot is awesome!')

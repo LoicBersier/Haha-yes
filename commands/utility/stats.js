@@ -51,7 +51,7 @@ class StatsCommand extends Command {
 		}
 
 		const statsEmbed = new MessageEmbed()
-			.setColor('#0099ff')
+			.setColor(message.member.displayHexColor)
 			.setTitle('Bot stats')
 			.setAuthor('Haha yes')
 			.addField('Servers', this.client.guilds.size, true)

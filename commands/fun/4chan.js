@@ -62,7 +62,7 @@ class FourchanCommand extends Command {
 			}
 
 			const FourchanEmbed = new MessageEmbed()
-				.setColor('#ff9900')
+				.setColor(message.member.displayHexColor)
 				.setTitle(title)
 				.setDescription(htmlToText.fromString(description))
 				.setImage(`https://i.4cdn.org/${args.board}/${response.threads[i].posts[0].tim}${response.threads[i].posts[0].ext}`)

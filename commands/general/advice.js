@@ -20,7 +20,7 @@ class AdviceCommand extends Command {
 			return response.json();
 		}).then((response) => {
 			const adviceEmbed = new MessageEmbed()
-				.setColor('#ff9900')
+				.setColor(message.member.displayHexColor)
 				.setTitle(response.slip.slip_id)
 				.setDescription(response.slip.advice);
   

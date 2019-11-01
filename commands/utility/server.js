@@ -17,7 +17,7 @@ class ServerCommand extends Command {
 
 	async exec(message) {
 		const addEmbed = new MessageEmbed()
-			.setColor('#0099ff')
+			.setColor(message.member.displayHexColor)
 			.setTitle(message.guild.name)
 			.setThumbnail(message.guild.iconURL())
 			.addField('Number of users', message.guild.members.filter(member => !member.user.bot).size, true)

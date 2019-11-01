@@ -16,7 +16,7 @@ class donateCommand extends Command {
 
 	async exec(message) {
 		const Embed = new MessageEmbed()
-			.setColor('#ff9900')
+			.setColor(message.member.displayHexColor)
 			.setTitle('Donation link')
 			.setDescription('If you decide to donate, please use the feedback command to let the owner know about it so he can put you in the about and donator command\n[Paypal](https://www.paypal.me/supositware)\n[Patreon](https://www.patreon.com/bePatron?u=15330358)');
 
