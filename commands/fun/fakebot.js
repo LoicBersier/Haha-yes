@@ -33,7 +33,13 @@ class fakebotCommand extends Command {
 	}
 
 	async exec(message, args) {
-
+		let Attachment = (message.attachments).array();
+		let url;
+		// Get attachment link
+		if (Attachment[0]) {
+			url = Attachment[0].url;
+		}
+		
 		message.channel.createWebhook(args.member.username, {
 			avatar: args.member.displayAvatarURL(),
 			reason: `Fakebot/user command triggered by: ${message.author.username}`
@@ -48,7 +54,12 @@ class fakebotCommand extends Command {
 				this.client.fetchWebhook(webhook.id, webhook.token)
 					.then(webhook => {
 						message.delete();
-						webhook.send(args.message);
+						
+						if (url)
+							webhook.send(args.message, {files: [url]});
+						else
+							webhook.send(args.message);
+
 						setTimeout(() => {
 							webhook.delete();
 						}, 3000);
