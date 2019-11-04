@@ -29,7 +29,7 @@ class dectalkCommand extends Command {
 	async exec(message, args) {
 		args.decMessage = rand.random(args.decMessage, message);
 		args.decMessage = args.decMessage.replace('\n', ' ');
-		let decMessage = '[:phoneme on] ' + args.decMessage;
+		let decMessage = '[:phoneme on] ' + args.decMessage.replace(/(["\s'$`\\])/g,'\\$1');
 
 		if (process.platform == 'win32') {
 			exec(`cd .\\dectalk && .\\say.exe -w dectalk.wav "${decMessage}"`)
