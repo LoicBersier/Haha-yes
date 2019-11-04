@@ -23,7 +23,7 @@ class aboutCommand extends Command {
 		
 		if (Donator[0]) {
 			for (let i = 0; i < Donator.length; i++) {
-				description += `**${this.client.users.get(Donator[i].get('userID')).username}#${this.client.users.get(Donator[i].get('userID')).discriminator} (${Donator[i].get('userID')}) ${Donator[i].get('comment')}**\n`;
+				description += `**${this.client.users.get(Donator[i].get('userID')).username}#${this.client.users.get(Donator[i].get('userID')).discriminator} (${Donator[i].get('userID')}) | ${Donator[i].get('comment')}**\n`;
 			}
 		} else {
 			description += 'No one :(';
