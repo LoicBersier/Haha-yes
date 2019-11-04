@@ -50,7 +50,7 @@ class nolightCommand extends Command {
 		});
 
 		async function apng() {
-			const { stdout, stderr } = await exec(`apngasm -o ${os.tmpdir()}/${message.id}nolight.png img/frame00*.png -s`)
+			const { stdout, stderr } = await exec(`apngasm -o ${os.tmpdir()}/${message.id}nolight.png asset/img/frame00*.png -s`)
 				.then(() => message.channel.send({files: [`${os.tmpdir()}/${message.id}nolight.png`]}));
 			console.log(`stdout: ${stdout}`);
 			console.log(`stderr: ${stderr}`);
