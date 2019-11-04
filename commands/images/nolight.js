@@ -2,6 +2,7 @@ const { Command } = require('discord-akairo');
 const { createCanvas, loadImage } = require('canvas');
 const superagent = require('superagent');
 const fs = require('fs');
+const os = require('os');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 
@@ -42,20 +43,15 @@ class nolightCommand extends Command {
 		ctx.fillStyle = '#FFFFFF';
 		ctx.fillText(text, 10, 20);
 
-		fs.writeFile('./img/frame001.png', canvas.toBuffer(), function (err) {
+		fs.writeFile('./asset/img/frame001.png', canvas.toBuffer(), function (err) {
 			if (err) {
 				return console.error(err);
 			}
 		});
 
 		async function apng() {
-			if (fs.existsSync('./img/nolight.png')) {
-				fs.unlink('./img/nolight.png', (err) => {
-					if (err) throw err;
-				});
-			}
-			const { stdout, stderr } = await exec('apngasm -o img/nolight.png img/frame00*.png -s')
-				.then(() => message.channel.send({files: ['./img/nolight.png']}));
+			const { stdout, stderr } = await exec(`apngasm -o ${os.tmpdir()}/${message.id}nolight.png img/frame00*.png -s`)
+				.then(() => message.channel.send({files: [`${os.tmpdir()}/${message.id}nolight.png`]}));
 			console.log(`stdout: ${stdout}`);
 			console.log(`stderr: ${stderr}`);
 		}

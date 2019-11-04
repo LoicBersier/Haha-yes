@@ -1,6 +1,7 @@
 const { Command } = require('discord-akairo');
 const fs = require('fs');
 const fetch = require('node-fetch');
+const os = require('os');
 
 class spbCommand extends Command {
 	constructor() {
@@ -33,10 +34,10 @@ class spbCommand extends Command {
 
 		fetch(link)
 			.then(res => {
-				const dest = fs.createWriteStream('./img/spb.png');
+				const dest = fs.createWriteStream(`${os.tmpdir()}/${message.id}.jpg`);
 				res.body.pipe(dest);
 				dest.on('finish', () => {
-					return message.channel.send({files: ['./img/spb.png']});
+					return message.channel.send({files: [`${os.tmpdir()}/${message.id}.jpg`]});
 				});
 			});
 	}

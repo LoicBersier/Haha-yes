@@ -18,10 +18,10 @@ class dosentexistCommand extends Command {
 	async exec(message) {
 		fetch('https://thispersondoesnotexist.com/image')
 			.then(res => {
-				const dest = fs.createWriteStream('./img/de.png');
+				const dest = fs.createWriteStream('./asset/img/de.png');
 				res.body.pipe(dest);
 				dest.on('finish', () => {
-					return message.channel.send({files: ['./img/de.png']});
+					return message.channel.send({files: ['./asset/img/de.png']});
 				});
 			});	}
 }
