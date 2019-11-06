@@ -19,6 +19,11 @@ class DownloadCommand extends Command {
 					}
 				},
 				{
+					id: 'caption',
+					type: 'string',
+					match: 'rest'
+				},
+				{
 					id: 'spoiler',
 					match: 'flag',
 					flag: ['--spoil', '--spoiler', '-s']
@@ -27,13 +32,15 @@ class DownloadCommand extends Command {
 			clientPermissions: ['ATTACH_FILES'],
 			description: {
 				content: 'Download videos from different website from the link you provided, use "-s" to make the vid a spoiler',
-				usage: '[link]',
-				examples: ['https://www.youtube.com/watch?v=6n3pFFPSlW4']
+				usage: '[link] [caption]',
+				examples: ['https://www.youtube.com/watch?v=6n3pFFPSlW4 Look at this funny gnome']
 			}
 		});
 	}
 
 	async exec(message, args) {
+		if (args.caption == null) args.caption = '';
+		
 		let link = args.link;
 		let fileName;
 
@@ -95,6 +102,7 @@ class DownloadCommand extends Command {
 						const Embed = new MessageEmbed()
 							.setColor(message.member.displayHexColor)
 							.setTitle(`Downloaded by ${message.author.username}`)
+							.setDescription(args.caption)
 							.setURL(link);
 
 						return message.channel.send({embed: Embed, files: [`${os.tmpdir()}/${fileName}compressed.mp4`]})
@@ -111,6 +119,7 @@ class DownloadCommand extends Command {
 					const Embed = new MessageEmbed()
 						.setColor(message.member.displayHexColor)
 						.setTitle(`Downloaded by ${message.author.username}`)
+						.setDescription(args.caption)
 						.setURL(link);
 
 					return message.channel.send({embed: Embed, files: [`${os.tmpdir()}/${fileName}.mp4`]})
