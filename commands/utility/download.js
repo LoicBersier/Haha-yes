@@ -3,6 +3,7 @@ const fs = require('fs');
 const youtubedl = require('youtube-dl');
 const hbjs = require('handbrake-js');
 const os = require('os');
+const { MessageEmbed } = require('discord.js');
 
 class DownloadCommand extends Command {
 	constructor() {
@@ -50,7 +51,7 @@ class DownloadCommand extends Command {
 					if (err);
 				});
 			}
-			return youtubedl.exec(args.link, ['--format=mp4', '-o', `${os.tmpdir()}/${fileName}.mp4`], {}, async function(err) {
+			return youtubedl.exec(link, ['--format=mp4', '-o', `${os.tmpdir()}/${fileName}.mp4`], {}, async function(err) {
 				if (err) {
 					console.error(err);
 					loadingmsg.delete();
@@ -90,7 +91,13 @@ class DownloadCommand extends Command {
 					handbrake.on('end', async function () {
 						message.delete();
 						compressmsg.delete();
-						return message.channel.send(`Downloaded by ${message.author.username}`, { files: [`${os.tmpdir()}/${fileName}compressed.mp4`] })
+						
+						const Embed = new MessageEmbed()
+							.setColor(message.member.displayHexColor)
+							.setTitle(`Downloaded by ${message.author.username}`)
+							.setURL(link);
+
+						return message.channel.send({embed: Embed, files: [`${os.tmpdir()}/${fileName}compressed.mp4`]})
 							.catch(err => {
 								console.error(err);
 								compressmsg.delete();
@@ -98,10 +105,15 @@ class DownloadCommand extends Command {
 							});			
 					});
 				} else {
-					console.log('file smaller than 8MB');
 					message.delete();
 					loadingmsg.delete();
-					return message.channel.send(`Downloaded by ${message.author.username}`, { files: [`${os.tmpdir()}/${fileName}.mp4`] })
+
+					const Embed = new MessageEmbed()
+						.setColor(message.member.displayHexColor)
+						.setTitle(`Downloaded by ${message.author.username}`)
+						.setURL(link);
+
+					return message.channel.send({embed: Embed, files: [`${os.tmpdir()}/${fileName}.mp4`]})
 						.catch(err => {
 							console.error(err);
 							loadingmsg.delete();
