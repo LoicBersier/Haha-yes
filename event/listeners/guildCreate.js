@@ -26,7 +26,7 @@ class guildCreateListener extends Listener {
 			.addField('Number of bots', guild.members.filter(member => member.user.bot).size, true)
 			.addField('Owner', guild.owner.user.username, true)
 			.addField('Owner ID', guild.owner.id, true)
-			.setFooter(`Im now in ${this.client.guilds.size} servers!`)
+			.setFooter(`I'm now in ${this.client.guilds.size} servers!`)
 			.setTimestamp();
 	
 		channel.send({ embed: addEmbed });
