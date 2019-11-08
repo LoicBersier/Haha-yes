@@ -54,6 +54,14 @@ class HelpCommand extends Command {
 			embed.addField('Aliases', `\`${command.aliases.join('` `')}\``, true);
 		}
 
+		if (command.userPermissions) {
+			embed.addField('User permission', `\`${command.userPermissions.join('` `')}\``, true);
+		}
+
+		if (command.clientPermissions) {
+			embed.addField('Bot permission', `\`${command.clientPermissions.join('` `')}\``, true);
+		}
+
 		return message.util.send({ embed });
 	}
 
