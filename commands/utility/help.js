@@ -70,11 +70,11 @@ class HelpCommand extends Command {
 		for (const category of this.handler.categories.values()) {
 			const title = {
 				general: '📝\u2000General',
-				fun: '🔩\u2000Fun',
-				minigame: '🍔\u2000Minigames (WIP)',
-				images: '💕\u2000Images',
-				utility: '⭐\u2000Utility',
-				admin: '😎\u2000Admin',
+				fun: '🎉\u2000Fun',
+				minigame: '🕹\u2000Minigames (WIP)',
+				images: '🖼\u2000Images',
+				utility: '🔩\u2000Utility',
+				admin: '⚡\u2000Admin',
 			}[category.id];
 
 			if (title) embed.addField(title, `\`${category.map(cmd => cmd.aliases[0]).join('` `')}\``);
