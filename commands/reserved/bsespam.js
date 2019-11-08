@@ -6,7 +6,7 @@ class bsespamCommand extends Command {
 			aliases: ['bsespam'] ,	//Required
 			category: 'reserved',	//recommended
 			channelRestriction: 'guild',	  //needed if you want to restrict where we can launch the command
-			cooldown: 3600,
+			cooldown: 1800000,
 			ratelimit: 2,
 			args: [						//if need args
 				{
@@ -28,8 +28,10 @@ class bsespamCommand extends Command {
 	}
 
 	async exec(message, args) {
+		/*
 		if (message.author.id != '428387534842626048')
 			return;
+			*/
 		if (args.number <= 10) {
 			for(let i = 0; i < args.number; i++) {
 				message.channel.send(args.text);
