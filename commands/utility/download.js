@@ -53,9 +53,10 @@ class DownloadCommand extends Command {
 
 		const Embed = new MessageEmbed()
 			.setColor(message.member.displayHexColor)
-			.setTitle(`Downloaded by ${message.author.username}`)
-			.setURL(link)
-			.setDescription(args.caption);
+			.setAuthor(`Downloaded by ${message.author.username}`, message.author.displayAvatarURL(), link)
+			.setDescription(args.caption)
+			.setFooter('You can get the original video by clicking on the "downloaded by" message!');
+
 
 		if (link.includes('http') || link.includes('www')) {
 			let loadingmsg = await message.channel.send('Downloading <a:loadingmin:527579785212329984>');
