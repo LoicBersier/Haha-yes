@@ -7,6 +7,7 @@ class AdviceCommand extends Command {
 		super('advice', {
 			aliases: ['advice'],
 			category: 'general',
+			clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS'],
 			description: {
 				content: 'Send some random advices',
 				usage: '',

@@ -6,6 +6,7 @@ class ServerCommand extends Command {
 		super('server', {
 			aliases: ['server', 'serverinfo'],
 			category: 'utility',
+			clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS'],
 			channelRestriction: 'guild',
 			description: {
 				content: 'Show info about the server',

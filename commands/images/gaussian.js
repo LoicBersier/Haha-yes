@@ -7,6 +7,7 @@ class gaussianCommand extends Command {
 		super('gaussian', {
 			aliases: ['gaussian'],
 			category: 'images',
+			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
 			args: [
 				{
 					id: 'link',

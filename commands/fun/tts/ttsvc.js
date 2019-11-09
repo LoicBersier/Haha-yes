@@ -9,6 +9,7 @@ class TtsvcCommand extends Command {
 		super('ttsvc', {
 			aliases: ['ttsvc'],
 			category: 'fun',
+			clientPermissions: ['ATTACH_FILES'],
 			args: [
 				{
 					id: 'text',

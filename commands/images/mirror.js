@@ -7,6 +7,7 @@ class mirrorCommand extends Command {
 		super('mirror', {
 			aliases: ['mirror', 'flip'],
 			category: 'images',
+			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
 			args: [
 				{
 					id: 'link',

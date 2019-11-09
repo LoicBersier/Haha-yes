@@ -7,6 +7,7 @@ class FetishCommand extends Command {
 		super('fetish', {
 			aliases: ['fetish'],
 			category: 'images',
+			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
 			args: [
 				{
 					id: 'image',

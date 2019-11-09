@@ -5,6 +5,7 @@ class ClapCommand extends Command {
 		super('clap', {
 			aliases: ['clap'],
 			category: 'general',
+			clientPermissions: ['SEND_MESSAGES'],
 			args: [
 				{
 					id: 'text',

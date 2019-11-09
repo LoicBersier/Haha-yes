@@ -5,6 +5,7 @@ class serverIconCommand extends Command {
 		super('serverIcon', {
 			aliases: ['serverIcon'],
 			category: 'utility',
+			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
 			args: [
 				{
 					id: 'serverid',

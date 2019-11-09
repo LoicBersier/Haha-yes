@@ -14,9 +14,7 @@ class StarBoardCommand extends Command {
 					type: 'string',
 					prompt: {
 						start: 'What emote should be used to enter the shameboard?',
-						optional: true
 					},
-					default: '🌟'
 				},
 				{
 					id: 'count',
@@ -34,7 +32,7 @@ class StarBoardCommand extends Command {
 				}
 			],
 			description: {
-				content: 'Set starboard --remove to remove the starboard',
+				content: 'Set starboard to the current channel. --remove to remove the starboard',
 				usage: '[emote] [minimum number required to enter starboard]',
 				examples: ['']
 			}

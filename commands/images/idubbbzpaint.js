@@ -7,6 +7,7 @@ class IdubbbzPaintCommand extends Command {
 		super('idubbbzpaint', {
 			aliases: ['idubbbzpaint', 'edupspaint'],
 			category: 'images',
+			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
 			args: [
 				{
 					id: 'text',

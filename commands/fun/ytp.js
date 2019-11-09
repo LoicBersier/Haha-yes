@@ -10,6 +10,7 @@ class ytpCommand extends Command {
 		super('ytp', {
 			aliases: ['ytp', 'ytpplus', 'ytp+'],
 			category: 'fun',
+			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
 			args: [
 				{
 					id: 'add',
@@ -114,7 +115,7 @@ class ytpCommand extends Command {
 
 
 		let options = {  
-			debug: false, // Better set this to false to avoid flood in console
+			debug: true, // Better set this to false to avoid flood in console
 			MAX_STREAM_DURATION: Math.floor((Math.random() * 3) + 1), // Random duration of video clip
 			sources: './asset/ytp/sources/',
 			sounds: './asset/ytp/sounds/',
@@ -122,7 +123,7 @@ class ytpCommand extends Command {
 			resources: './asset/ytp/resources/',
 			temp: os.tmpdir(),
 			sourceList: asset,
-			outro: './asset/ytp/outro.mp4', // Need an outro or it won't work
+			//outro: './asset/ytp/outro.mp4', // Need an outro or it won't work
 			OUTPUT_FILE: `${os.tmpdir()}/${message.id}_YTP.mp4`,
 			MAX_CLIPS: MAX_CLIPS,
 			transitions: true,
@@ -137,7 +138,7 @@ class ytpCommand extends Command {
 				effect_SpeedUp: true,
 				effect_SlowDown: true,
 				effect_Dance: true,
-				effect_Squidward: false // Not yet implemented
+				effect_Squidward: true // Not yet implemented
 			}
 		};
 	
@@ -145,7 +146,8 @@ class ytpCommand extends Command {
 			.then(() => {
 				loadingmsg.delete();
 				return message.reply('Here is your YTP!', {files: [`${os.tmpdir()}/${message.id}_YTP.mp4`]})
-					.catch(() => {
+					.catch(err => {
+						console.error(err);
 						return message.channel.send('Whoops, look like the vid might be too big for discord, my bad, please try again');
 					});
 			})

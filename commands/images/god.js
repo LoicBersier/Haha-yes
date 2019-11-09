@@ -8,6 +8,7 @@ class GodCommand extends Command {
 		super('god', {
 			aliases: ['god'],
 			category: 'images',
+			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
 			args: [
 				{
 					id: 'image',

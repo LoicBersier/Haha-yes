@@ -5,6 +5,7 @@ class AvatarCommand extends Command {
 		super('avatar', {
 			aliases: ['avatar', 'avy'],
 			category: 'utility',
+			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
 			args: [
 				{
 					id: 'user',

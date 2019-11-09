@@ -6,6 +6,7 @@ class explosmCommand extends Command {
 		super('explosm', {
 			aliases: ['explosm', 'rcg'],
 			category: 'fun',
+			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
 			description: {
 				content: 'Comic randomly generated from http://explosm.net/rcg',
 				usage: '',

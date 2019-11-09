@@ -7,6 +7,7 @@ class dosentexistCommand extends Command {
 		super('dosentexist', {
 			aliases: ['doesntexist', 'thispersondoesnotexist', 'de'],
 			category: 'fun',
+			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
 			description: {
 				content: 'Send images from thispersondoesnotexist.com',
 				usage: '',

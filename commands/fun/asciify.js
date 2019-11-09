@@ -13,6 +13,7 @@ class asciifyCommand extends Command {
 		super('asciify', {
 			aliases: ['asciify'],
 			category: 'fun',
+			clientPermissions: ['SEND_MESSAGES'],
 			cooldown: 600000,
 			ratelimit: 2,
 			description: {

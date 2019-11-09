@@ -7,6 +7,7 @@ class jpegifyCommand extends Command {
 		super('jpegify', {
 			aliases: ['jpegify'],
 			category: 'images',
+			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
 			args: [
 				{
 					id: 'link',

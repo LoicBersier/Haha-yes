@@ -8,6 +8,7 @@ class fakejoinCommand extends Command {
 			aliases: ['fakejoin'],
 			category: 'admin',
 			channelRestriction: 'guild',
+			clientPermissions: ['SEND_MESSAGES'],
 			args: [
 				{
 					id: 'member',

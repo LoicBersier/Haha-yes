@@ -10,6 +10,7 @@ class borgarCommand extends Command {
 		super('borgar', {
 			aliases: ['borgar', 'hamburgor', 'hamborgar', 'burger', 'hamburger', 'borger'],
 			category: 'minigame',
+			clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS'],
 			description: {
 				content: 'Make amborgar,,,,,,,,,, ( MINI GAME VERY WIP, LEVEL/XP SYSTEM MIGHT BE BULLSHIT )',
 				usage: '',

@@ -11,6 +11,7 @@ class nolightCommand extends Command {
 		super('nolight', {
 			aliases: ['nolight', 'nl'],
 			category: 'images',
+			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
 			args: [
 				{
 					id: 'text',

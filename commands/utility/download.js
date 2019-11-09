@@ -10,6 +10,7 @@ class DownloadCommand extends Command {
 		super('download', {
 			aliases: ['download', 'dl'],
 			category: 'utility',
+			clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS', 'ATTACH_FILES'],
 			args: [
 				{
 					id: 'link',
@@ -29,7 +30,6 @@ class DownloadCommand extends Command {
 					flag: ['--spoil', '--spoiler', '-s']
 				}
 			],
-			clientPermissions: ['ATTACH_FILES'],
 			description: {
 				content: 'Download videos from different website from the link you provided, use "-s" to make the vid a spoiler',
 				usage: '[link] [caption]',
@@ -101,9 +101,9 @@ class DownloadCommand extends Command {
 						
 						const Embed = new MessageEmbed()
 							.setColor(message.member.displayHexColor)
-							.setTitle(`Downloaded by ${message.author.username}`)
+							.setAuthor(`Downloaded by ${message.author.username}`, message.author.displayAvatarURL(), link)
 							.setDescription(args.caption)
-							.setURL(link);
+							.setFooter('You can get the original video by clicking on the "downloaded by" message!');
 
 						return message.channel.send({embed: Embed, files: [`${os.tmpdir()}/${fileName}compressed.mp4`]})
 							.catch(err => {
@@ -118,9 +118,10 @@ class DownloadCommand extends Command {
 
 					const Embed = new MessageEmbed()
 						.setColor(message.member.displayHexColor)
-						.setTitle(`Downloaded by ${message.author.username}`)
+						.setAuthor(`Downloaded by ${message.author.username}`, message.author.displayAvatarURL(), link)
 						.setDescription(args.caption)
-						.setURL(link);
+						.setFooter('You can get the original video by clicking on the "downloaded by" message!');
+						
 
 					return message.channel.send({embed: Embed, files: [`${os.tmpdir()}/${fileName}.mp4`]})
 						.catch(err => {

@@ -10,6 +10,7 @@ class gif2vidCommand extends Command {
 		super('gif2vid', {
 			aliases: ['gif2vid', 'g2v', 'gv'],
 			category: 'utility',
+			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
 			args: [
 				{
 					id: 'vid',

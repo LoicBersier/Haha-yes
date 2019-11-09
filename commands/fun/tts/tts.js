@@ -9,6 +9,7 @@ class TtsCommand extends Command {
 		super('tts', {
 			aliases: ['tts'],
 			category: 'fun',
+			clientPermissions: ['ATTACH_FILES'],
 			args: [
 				{
 					id: 'text',

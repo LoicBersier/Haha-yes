@@ -10,6 +10,7 @@ class seetagCommand extends Command {
 		super('taglist', {
 			aliases: ['seetag', 'taglist', 'tags'],
 			category: 'utility',
+			clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS'],
 			channelRestriction: 'guild',
 			args: [
 				{

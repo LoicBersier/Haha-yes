@@ -7,6 +7,7 @@ class paintCommand extends Command {
 		super('paint', {
 			aliases: ['paint'],
 			category: 'images',
+			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
 			args: [
 				{
 					id: 'image',

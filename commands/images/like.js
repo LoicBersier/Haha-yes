@@ -7,6 +7,7 @@ class LikeCommand extends Command {
 		super('like', {
 			aliases: ['like'],
 			category: 'images',
+			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
 			args: [
 				{
 					id: 'image',

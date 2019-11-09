@@ -14,9 +14,7 @@ class shameboardCommand extends Command {
 					type: 'string',
 					prompt: {
 						start: 'What emote should be used to enter the shameboard?',
-						optional: true
 					},
-					default: '✡'
 				},
 				{
 					id: 'count',
@@ -34,7 +32,7 @@ class shameboardCommand extends Command {
 				}
 			],
 			description: {
-				content: 'Set shameobard --remove to remove the shameboard',
+				content: 'Set shameobard in the current channel. --remove to remove the shameboard',
 				usage: '[emote] [minimum number required to enter shameboard]',
 				examples: ['']
 			}

@@ -8,6 +8,7 @@ class seebannedwordCommand extends Command {
 		super('seebannedword', {
 			aliases: ['seebannedword', 'seeban', 'seebanword'],
 			category: 'utility',
+			clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS'],
 			channelRestriction: 'guild',
 			description: {
 				content: 'Show the list of banned word',

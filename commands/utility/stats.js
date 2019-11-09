@@ -9,6 +9,7 @@ class StatsCommand extends Command {
 		super('stats', {
 			aliases: ['stats'],
 			category: 'utility',
+			clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS'],
 			description: {
 				content: 'Show some stats about the bot',
 				usage: '',

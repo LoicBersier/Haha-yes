@@ -7,6 +7,7 @@ class IdubbbzCommand extends Command {
 		super('idubbbz', {
 			aliases: ['idubbbz', 'edups'],
 			category: 'images',
+			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
 			args: [
 				{
 					id: 'text',

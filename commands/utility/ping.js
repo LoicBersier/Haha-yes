@@ -11,6 +11,7 @@ class PingCommand extends Command {
 					type: 'string',
 				}
 			],
+			clientPermissions: ['SEND_MESSAGES'],
 			description: {
 				content: 'Ping the bot',
 				usage: '',

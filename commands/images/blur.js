@@ -7,6 +7,7 @@ class blurCommand extends Command {
 		super('blur', {
 			aliases: ['blur'],
 			category: 'images',
+			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
 			args: [
 				{
 					id: 'link',

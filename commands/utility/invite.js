@@ -6,6 +6,7 @@ class InviteCommand extends Command {
 		super('invite', {
 			aliases: ['invite'],
 			category: 'utility',
+			clientPermissions: ['SEND_MESSAGES'],
 			args: [
 				{
 					id: 'here',

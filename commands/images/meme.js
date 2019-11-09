@@ -9,6 +9,7 @@ class memeCommand extends Command {
 		super('meme', {
 			aliases: ['meme', 'impact'],
 			category: 'images',
+			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
 			args: [
 				{
 					id: 'link',

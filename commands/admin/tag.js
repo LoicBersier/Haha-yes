@@ -22,7 +22,6 @@ class TagCommand extends Command {
 					match: 'rest',
 					prompt: {
 						start: 'What word or sentence should the response be?',
-						optional: true
 					}
 				},
 				{

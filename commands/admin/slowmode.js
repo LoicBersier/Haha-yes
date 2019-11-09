@@ -27,8 +27,8 @@ class SlowmodeCommand extends Command {
 			channelRestriction: 'guild',
 			description: {
 				content: 'Put a channel in slowmode',
-				usage: '[1-120 slowmode] [time it stays on]',
-				examples: ['267065637183029248']
+				usage: '[1-120 slowmode] [Number of minutes the slowmode stay active]',
+				examples: ['5 60']
 			}
 		});
 	}

@@ -8,6 +8,7 @@ class samCommand extends Command {
 		super('sam', {
 			aliases: ['sam'],
 			category: 'fun',
+			clientPermissions: ['ATTACH_FILES'],
 			args: [
 				{
 					id: 'samMessage',

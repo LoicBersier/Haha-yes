@@ -6,6 +6,7 @@ class playCommand extends Command {
 		super('play', {
 			aliases: ['play'],
 			category: 'utility',
+			clientPermissions: ['SEND_MESSAGES', 'SPEAK'],
 			args: [
 				{
 					id: 'ytblink',

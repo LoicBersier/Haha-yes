@@ -23,12 +23,12 @@ class KickCommand extends Command {
 					match: 'rest'
 				}
 			],
-			clientPermissions: ['KICK_MEMBERS'],
+			clientPermissions: ['KICK_MEMBERS', 'SEND_MESSAGES'],
 			userPermissions: ['KICK_MEMBERS'],
 			channelRestriction: 'guild',
 			description: {
 				content: 'Kick user',
-				usage: '[@user]',
+				usage: '[@user] [reason]',
 				examples: ['@user big dumb dumb']
 			}
 		});

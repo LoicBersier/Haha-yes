@@ -7,6 +7,7 @@ class FeedbackCommand extends Command {
 		super('feedback', {
 			aliases: ['feedback'],
 			category: 'utility',
+			clientPermissions: ['SEND_MESSAGES'],
 			args: [
 				{
 					id: 'text',
@@ -40,6 +41,7 @@ class FeedbackCommand extends Command {
 			.addField('Feedback', args.text)
 			.setTimestamp();
 		channel.send({embed: Embed});
+
 		message.channel.send('Your feedback has been sent!');
 	}
 }

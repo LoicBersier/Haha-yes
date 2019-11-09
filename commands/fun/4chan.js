@@ -8,6 +8,7 @@ class FourchanCommand extends Command {
 	constructor() {
 		super('4chan', {
 			aliases: ['4chan'],
+			clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES'],
 			category: 'fun',
 			
 			args: [

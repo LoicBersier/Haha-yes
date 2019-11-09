@@ -7,6 +7,7 @@ class SayCommand extends Command {
 		super('say', {
 			aliases: ['say'],
 			category: 'general',
+			clientPermissions: ['SEND_MESSAGES'],
 			args: [
 				{
 					id: 'text',

@@ -5,6 +5,7 @@ class spoilerCommand extends Command {
 		super('spoiler', {
 			aliases: ['spoiler'],
 			category: 'general',
+			clientPermissions: ['SEND_MESSAGES'],
 			args: [
 				{
 					id: 'text',

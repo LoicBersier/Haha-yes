@@ -7,6 +7,7 @@ class EmotesayCommand extends Command {
 		super('emotesay', {
 			aliases: ['emotesay', 'esay'],
 			category: 'general',
+			clientPermissions: ['SEND_MESSAGES'],
 			args: [
 				{
 					id: 'text',

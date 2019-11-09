@@ -6,6 +6,7 @@ class donateCommand extends Command {
 		super('donate', {
 			aliases: ['donate', 'donation', 'giveallmymoney', 'givemoney'],
 			category: 'utility',
+			clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS'],
 			description: {
 				content: 'Send donate link for the bot and support server',
 				usage: '',

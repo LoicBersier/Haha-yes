@@ -7,6 +7,7 @@ class UglyCommand extends Command {
 		super('ugly', {
 			aliases: ['ugly'],
 			category: 'images',
+			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
 			args: [
 				{
 					id: 'image',

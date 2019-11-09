@@ -6,6 +6,7 @@ class ImgurCommand extends Command {
 		super('imgur', {
 			aliases: ['imgur', 'badmeme'],
 			category: 'fun',
+			clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS'],
 			description: {
 				content: 'Send some random images from imgur',
 				usage: '',

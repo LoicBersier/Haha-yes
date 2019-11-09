@@ -7,6 +7,7 @@ class guessCommand extends Command {
 		super('guess', {
 			aliases: ['guess'],
 			category: 'minigame',
+			clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS'],
 			args: [
 				{
 					id: 'leaderboard',

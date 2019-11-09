@@ -7,6 +7,7 @@ class RedditCommand extends Command {
 		super('reddit', {
 			aliases: ['reddit'],
 			category: 'fun',
+			clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS'],
 			args: [
 				{
 					id: 'sub',

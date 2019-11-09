@@ -8,6 +8,7 @@ class spbCommand extends Command {
 		super('spb', {
 			aliases: ['spb'],
 			category: 'fun',
+			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
 			args: [
 				{
 					id: 'link',

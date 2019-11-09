@@ -19,6 +19,7 @@ class autoresponseCommand extends Command {
 					type: 'string'
 				}
 			],
+			clientPermissions: ['SEND_MESSAGES'],
 			userPermissions: ['MANAGE_MESSAGES'],
 			channelRestriction: 'guild',
 			description: {

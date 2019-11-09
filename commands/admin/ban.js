@@ -23,12 +23,12 @@ class BanCommand extends Command {
 					match: 'rest'
 				}
 			],
-			clientPermissions: ['BAN_MEMBERS'],
+			clientPermissions: ['BAN_MEMBERS', 'SEND_MESSAGES'],
 			userPermissions: ['BAN_MEMBERS'],
 			channelRestriction: 'guild',
 			description: {
 				content: 'Ban user',
-				usage: '[@user]',
+				usage: '[@user] [reason]',
 				examples: ['@user big dumb dumb']
 			}
 		});

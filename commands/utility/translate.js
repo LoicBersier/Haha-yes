@@ -8,6 +8,7 @@ class TranslationCommand extends Command {
 		super('translation', {
 			aliases: ['translation', 'trn'],
 			category: 'utility',
+			clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS'],
 			args: [
 				{
 					id: 'language',

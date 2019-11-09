@@ -8,6 +8,7 @@ class dectalkCommand extends Command {
 		super('dectalk', {
 			aliases: ['dectalk', 'dec'],
 			category: 'fun',
+			clientPermissions: ['ATTACH_FILES'],
 			args: [
 				{
 					id: 'decMessage',

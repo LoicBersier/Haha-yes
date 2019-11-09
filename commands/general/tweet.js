@@ -12,6 +12,7 @@ class tweetCommand extends Command {
 		super('tweet', {
 			aliases: ['tweet'],
 			category: 'general',
+			clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS'],
 			cooldown: 3600000,
 			ratelimit: 3,
 			args: [

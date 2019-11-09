@@ -6,6 +6,7 @@ class SayCommand extends Command {
 		super('strawpoll', {
 			aliases: ['strawpoll', 'poll'],
 			category: 'general',
+			clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS'],
 			args: [
 				{
 					id: 'title',

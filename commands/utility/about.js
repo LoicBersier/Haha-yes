@@ -8,6 +8,7 @@ class aboutCommand extends Command {
 		super('about', {
 			aliases: ['about', 'credit'],
 			category: 'utility',
+			clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS'],
 			description: {
 				content: 'About me ( the bot )',
 				usage: '',

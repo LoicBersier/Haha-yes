@@ -6,6 +6,7 @@ class donatorCommand extends Command {
 		super('donator', {
 			aliases: ['donator'],
 			category: 'utility',
+			clientPermissions: ['SEND_MESSAGES'],
 			description: {
 				content: 'All the people who donated for this bot <3',
 				usage: '',

@@ -9,6 +9,7 @@ class vidshittifierCommand extends Command {
 		super('vidshittifier', {
 			aliases: ['vidshittifier', 'vs', 'shittifier', 'vid2shit', 'v2s'],
 			category: 'fun',
+			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
 			args: [
 				{
 					id: 'link',
@@ -36,6 +37,7 @@ class vidshittifierCommand extends Command {
 		}
 
 		let input = `${os.tmpdir()}/${message.id}.mp4`;
+		let input2 = `${os.tmpdir()}/tmp${message.id}.mp4`;
 		let output = `${os.tmpdir()}/Shittified${message.id}.mp4`;
 
 		let compression;
@@ -44,13 +46,11 @@ class vidshittifierCommand extends Command {
 		if (args.compression == 1) {
 			compression = '50k';
 			audioCompression = '100k';
-		} else if (args.compression == 2) {
+		} else {
 			compression = '30k';
 			audioCompression = '60k';
-		} else {
-			compression = '10k';
-			audioCompression = '20k';
 		}
+		
 		let option = `-b:v ${compression} -b:a ${audioCompression}`;
 
 		let loadingmsg = await message.channel.send('Processing <a:loadingmin:527579785212329984>');
@@ -70,21 +70,26 @@ class vidshittifierCommand extends Command {
 		}
 
 		function shittifie() {
-			exec(`ffmpeg -i ${input} ${option} -vcodec libx264 -r 15 -f mp4 ${output}`)
+			// reduce video resolution
+			exec(`ffmpeg -i ${input}  -vf "scale=iw/4:ih/4" ${input2}`)
 				.then(() => {
-					loadingmsg.delete();
-					message.delete();
-					return message.channel.send({files: [output]})
+					// upscale video and change bitrate
+					exec(`ffmpeg -i ${input2} ${option} -vf "scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2" -vcodec libx264 -r 15 -f mp4 ${output}`)
+						.then(() => {
+							loadingmsg.delete();
+							message.delete();
+							return message.channel.send({files: [output]})
+								.catch(err => {
+									console.error(err);
+									loadingmsg.delete();
+									return message.channel.send('On no! an error just occured! perhaps the file is too big?');
+								});
+						})
 						.catch(err => {
 							console.error(err);
 							loadingmsg.delete();
-							return message.channel.send('On no! an error just occured! perhaps the file is too big?');
+							return message.channel.send('On no! an error just occured! Im gonna be honest with you, i don\'t know what caused it yet! but worry not! my owner will look into it soon!');
 						});
-				})
-				.catch(err => {
-					console.error(err);
-					loadingmsg.delete();
-					return message.channel.send('On no! an error just occured! Im gonna be honest with you, i don\'t know what caused it yet! but worry not! my owner will look into it soon!');
 				});
 		}
 	}

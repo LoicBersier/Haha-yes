@@ -7,6 +7,7 @@ class autocropCommand extends Command {
 		super('autocrop', {
 			aliases: ['autocrop', 'crop'],
 			category: 'images',
+			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
 			args: [
 				{
 					id: 'link',

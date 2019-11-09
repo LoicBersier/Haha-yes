@@ -6,6 +6,7 @@ class InspiroBotCommand extends Command {
 		super('InspiroBot', {
 			aliases: ['inspirobot', 'ib'],
 			category: 'fun',
+			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
 			description: {
 				content: 'Send images from Inspirobot',
 				usage: '',

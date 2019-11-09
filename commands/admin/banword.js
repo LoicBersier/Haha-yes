@@ -7,7 +7,7 @@ class BannedWordsCommand extends Command {
 			aliases: ['bannedword', 'banword'],
 			category: 'admin',
 			userPermissions: ['MANAGE_MESSAGES'],
-			clientPermissions: ['MANAGE_MESSAGES'],
+			clientPermissions: ['MANAGE_MESSAGES', 'SEND_MESSAGES'],
 			args: [
 				{
 					id: 'word',

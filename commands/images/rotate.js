@@ -7,6 +7,7 @@ class rotateCommand extends Command {
 		super('rotate', {
 			aliases: ['rotate'],
 			category: 'images',
+			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
 			args: [
 				{
 					id: 'link',
