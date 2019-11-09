@@ -27,7 +27,7 @@ class commandStartedListener extends Listener {
 			if (count < 10) {
 				console.log('Gold triggered!');
 				this.client.user.setActivity('people buy haha yes gold™', { type: 'WATCHING' });
-				return message.channel.send('To further utilize this command, please visit https://namejeff.xyz/gold', {files: ['img/gold.png']});
+				return message.channel.send('To further utilize this command, please visit https://namejeff.xyz/gold', {files: ['./asset/img/gold.png']});
 			}
 		}
 	}
