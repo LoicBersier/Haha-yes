@@ -50,6 +50,13 @@ class DownloadCommand extends Command {
 			fileName = `${message.author.id}_video`;
 		}
 
+
+		const Embed = new MessageEmbed()
+			.setColor(message.member.displayHexColor)
+			.setTitle(`Downloaded by ${message.author.username}`)
+			.setURL(link)
+			.setDescription(args.caption);
+
 		if (link.includes('http') || link.includes('www')) {
 			let loadingmsg = await message.channel.send('Downloading <a:loadingmin:527579785212329984>');
 
@@ -98,12 +105,6 @@ class DownloadCommand extends Command {
 					handbrake.on('end', async function () {
 						message.delete();
 						compressmsg.delete();
-						
-						const Embed = new MessageEmbed()
-							.setColor(message.member.displayHexColor)
-							.setAuthor(`Downloaded by ${message.author.username}`, message.author.displayAvatarURL(), link)
-							.setDescription(args.caption)
-							.setFooter('You can get the original video by clicking on the "downloaded by" message!');
 
 						return message.channel.send({embed: Embed, files: [`${os.tmpdir()}/${fileName}compressed.mp4`]})
 							.catch(err => {
@@ -115,13 +116,6 @@ class DownloadCommand extends Command {
 				} else {
 					message.delete();
 					loadingmsg.delete();
-
-					const Embed = new MessageEmbed()
-						.setColor(message.member.displayHexColor)
-						.setAuthor(`Downloaded by ${message.author.username}`, message.author.displayAvatarURL(), link)
-						.setDescription(args.caption)
-						.setFooter('You can get the original video by clicking on the "downloaded by" message!');
-						
 
 					return message.channel.send({embed: Embed, files: [`${os.tmpdir()}/${fileName}.mp4`]})
 						.catch(err => {
