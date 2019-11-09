@@ -17,7 +17,7 @@ class playCommand extends Command {
 				}
 			],
 			description: {
-				content: 'play music from the link you send ( This command might or might not stay in the bot, as it is basic, if people abuse it e.g: making play 10 hours song just for the purpose of making the bot slow, i will remove this command! )',
+				content: 'play music from the link you send ( WIP )',
 				usage: '[youtube link]',
 				examples: ['https://www.youtube.com/watch?v=mzHWLLn5Z4A']
 			}
