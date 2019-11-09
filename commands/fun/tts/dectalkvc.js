@@ -49,7 +49,7 @@ class dectalkvcCommand extends Command {
 						return null;
 					} catch (err) {
 						voiceChannel.leave();
-						return message.reply(`Oh no, an error occurred: \`${err.message}\`. Try again later!`);
+						return message.reply(`Oh no, an error occurred: \`${err.message}\`.`);
 					}
 				});
 			
@@ -75,7 +75,7 @@ class dectalkvcCommand extends Command {
 					} catch (err) {
 						voiceChannel.leave();
 						loadingmsg.delete();
-						return message.reply(`Oh no, an error occurred: \`${err.message}\`. Try again later!`);
+						return message.reply(`Oh no, an error occurred: \`${err.message}\`.`);
 					}
 				});
 		}

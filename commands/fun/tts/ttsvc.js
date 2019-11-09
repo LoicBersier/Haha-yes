@@ -69,7 +69,7 @@ class TtsvcCommand extends Command {
 					return null;
 				} catch (err) {
 					voiceChannel.leave();
-					return message.reply(`Oh no, an error occurred: \`${err.message}\`. Try again later!`);
+					return message.reply(`Oh no, an error occurred: \`${err.message}\`.`);
 				}
 			});
 		});
