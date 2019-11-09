@@ -21,6 +21,9 @@ class TranslationCommand extends Command {
 				{
 					id: 'text',
 					type: 'string',
+					prompt: {
+						start: 'What sentences/words do you want to translate?',
+					},
 					match: 'rest'
 				}
 			],
