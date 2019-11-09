@@ -8,7 +8,7 @@ class samvcCommand extends Command {
 		super('samvc', {
 			aliases: ['samvc'],
 			category: 'fun',
-			clientPermissions: ['ATTACH_FILES'],
+			clientPermissions: ['ATTACH_FILES', 'SPEAK'],
 			args: [
 				{
 					id: 'samMessage',
