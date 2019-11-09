@@ -46,7 +46,12 @@ class playCommand extends Command {
 					voiceChannel.leave();
 					return message.channel.send('Music ended, i left the channel');
 				});
-			});
+			})
+				.catch(err => {
+					console.error(err);
+					voiceChannel.leave();
+					return message.channel.send('An error has occured! is the link you sent valid?');
+				});
 	}
 }
 
