@@ -18,7 +18,7 @@ class playCommand extends Command {
 				}
 			],
 			description: {
-				content: 'play music from the link you send ( WIP )',
+				content: 'play music from the link you send ( WIP & very basic at the moment )',
 				usage: '[youtube link]',
 				examples: ['https://www.youtube.com/watch?v=mzHWLLn5Z4A']
 			}
