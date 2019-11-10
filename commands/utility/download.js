@@ -96,16 +96,32 @@ class DownloadCommand extends Command {
 						compressmsg.delete();
 						return message.channel.send('An error has occured while compressing the video');
 					});
+
+
+					let percentComplete;
+					let eta;
+
 					handbrake.on('progress', progress => {
-						console.log(
-							'Percent complete: %s, ETA: %s',
-							progress.percentComplete,
-							progress.eta
-						);
+						percentComplete = progress.percentComplete;
+						eta = progress.eta;
+						console.log(`Percent complete: ${progress.percentComplete}, ETA: ${progress.eta}`);
 					});
+
+					// Every 5 seconds update the compress message with the %
+					setInterval(() => {
+						compressmsg.edit(`Compression status: Percent complete: ${percentComplete}, ETA: ${eta}\nWant it to go faster? Donate to the dev with the donate command, so i can get a better server and do it faster!`);
+					}, 5000);
+
 					handbrake.on('end', async function () {
+						file = fs.statSync(`${os.tmpdir()}/${fileName}compressed.mp4`);
+						fileSize = file.size / 1000000.0;
+
 						message.delete();
 						compressmsg.delete();
+
+						if (fileSize > 8) {
+							return message.channel.send('File too big!');
+						}
 
 						return message.channel.send({embed: Embed, files: [`${os.tmpdir()}/${fileName}compressed.mp4`]})
 							.catch(err => {
