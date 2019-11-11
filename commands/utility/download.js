@@ -127,12 +127,13 @@ class DownloadCommand extends Command {
 							.catch(err => {
 								console.error(err);
 								compressmsg.delete();
+								loadingmsg.delete();
 								return message.channel.send('File too big');		
 							});			
 					});
 				} else {
-					message.delete();
 					loadingmsg.delete();
+					message.delete();
 
 					return message.channel.send({embed: Embed, files: [`${os.tmpdir()}/${fileName}.mp4`]})
 						.catch(err => {
