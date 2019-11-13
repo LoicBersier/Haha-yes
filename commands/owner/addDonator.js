@@ -35,6 +35,8 @@ class addDonatorCommand extends Command {
 		let userComment = '';
 		if (args.userComment) {
 			userComment = args.userComment;
+		} else if (args.userComment == '') {
+			userComment = null;
 		}
 		const Donator = await donator.findOne({where: {userID: args.id}});
 
@@ -51,6 +53,9 @@ class addDonatorCommand extends Command {
 					if (messageContent == 'y' || messageContent == 'yes') {
 						const body = {comment: userComment};
 						donator.update(body, {where: {userID: args.id}});
+						if (userComment == null) {
+							return message.channel.send(`Removed the comment from ${this.client.users.get(args.id).username}#${this.client.users.get(args.id).discriminator} (${args.id})`);
+						}
 						return message.channel.send(`You edited the comment for ${this.client.users.get(args.id).username}#${this.client.users.get(args.id).discriminator} (${args.id}) with ${args.userComment}`);
 					}
 				})
