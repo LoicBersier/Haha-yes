@@ -37,11 +37,12 @@ class userInfoCommand extends Command {
 			.addField('Current rank hex color', member.displayHexColor, true)
 			.addField('Joined guild at', member.joinedAt, true)
 			.addField('Date when account created', user.createdAt, true)
-			.addBlankField()
 			.setTimestamp();
 
 		// Show user status
 		if (user.presence.activity) Embed.addField('Presence', user.presence.activity, true);
+
+		Embed.addBlankField();
 
 		// Show on which platform they are using discord from
 		if (user.presence.clientStatus) {
