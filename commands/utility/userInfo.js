@@ -59,9 +59,9 @@ class userInfoCommand extends Command {
 		// Show on which platform they are using discord from if its not a bot
 		if (user.presence.clientStatus && !user.bot) {
 			Embed.addBlankField();
-			if (user.presence.clientStatus['mobile']) Embed.addField('Using discord on', '📱 ' + user.presence.clientStatus['mobile'], true);
-			if (user.presence.clientStatus['desktop']) Embed.addField('Using discord on', '💻 ' + user.presence.clientStatus['desktop'], true);
-			if (user.presence.clientStatus['web']) Embed.addField('Using discord on', '☁️ ' + user.presence.clientStatus['web'], true);
+			if (user.presence.clientStatus.mobile) Embed.addField('Using discord on', '📱 ' + user.presence.clientStatus.mobile, true);
+			if (user.presence.clientStatus.desktop) Embed.addField('Using discord on', '💻 ' + user.presence.clientStatus.desktop, true);
+			if (user.presence.clientStatus.web) Embed.addField('Using discord on', '☁️ ' + user.presence.clientStatus.web, true);
 		}
 		
 		return message.channel.send({ embed: Embed });
