@@ -16,8 +16,8 @@ class userInfoCommand extends Command {
 			],
 			description: {
 				content: 'Show info about a user',
-				usage: '',
-				examples: ['']
+				usage: '[@user]',
+				examples: ['@SomeoneReallyCoolInMyGuild']
 			}
 		});
 	}
