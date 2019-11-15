@@ -18,14 +18,14 @@ class ReadyListener extends Listener {
 
 		//Bot status
 		if (Math.floor((Math.random() * 2) + 1) == 1) {
-			console.log('Status type: Watching');
+			console.log('Status type: \x1b[32mWatching\x1b[0m');
 
 			let status = watch[Math.floor((Math.random() * watch.length))];
 			status = status.replace('${prefix}', prefix[0]);
 		
 			this.client.user.setActivity(`${status} | My prefix is: ${prefix[0]} `, { type: 'WATCHING' });
 		} else {
-			console.log('Status type: Playing');
+			console.log('Status type: \x1b[32mPlaying\x1b[0m');
 
 			let status = game[Math.floor((Math.random() * game.length))];
 			status = status.replace('${prefix}', prefix[0]);
@@ -36,7 +36,7 @@ class ReadyListener extends Listener {
 		//  Send stats to the 'stats' channel in the support server if its not the test bot
 		if (this.client.user.id == botID) {
 			const channel = this.client.channels.get(statsChannel);
-			channel.send(`Ready to serve in ${this.client.channels.size} channels on ${this.client.guilds.size} servers, for a total of ${this.client.users.size} users. ${this.client.readyAt}`);
+			channel.send(`Ready to serve in ${this.client.channels.size} channels on ${this.client.guilds.size} servers, for a total of ${this.client.users.size} users.\n${this.client.readyAt}`);
 		}
 		/*
 		//Fetch messages in every channel ( so they can still enter starboard in case of reboot)
