@@ -9,7 +9,7 @@ class usernameCommand extends Command {
 			args: [
 				{
 					id: 'username',
-					prompt: 'Wich username should i have?',
+					prompt: 'which username should i have?',
 					type: 'string',
 					match: 'rest'
 				}

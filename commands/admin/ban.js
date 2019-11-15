@@ -10,7 +10,7 @@ class BanCommand extends Command {
 					id: 'member',
 					type: 'member',
 					prompt: {
-						start: 'Wich member do you want to ban?',
+						start: 'which member do you want to ban?',
 					}
 				},
 				{

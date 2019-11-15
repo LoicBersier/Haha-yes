@@ -3,7 +3,7 @@ import os
 
 print('Welcome to Haha Yes config builder.')
 
-print('Wich config version do you want?')
+print('which config version do you want?')
 version = input('"A" for minimum, "B" for recommanded, "C" for all\n')
 if version == 'A' or 'a':
 	print('You choosed the minimum version')

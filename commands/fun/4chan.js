@@ -16,7 +16,7 @@ class FourchanCommand extends Command {
 					id: 'board',
 					type: 'string',
 					prompt: {
-						start: 'Wich board do you want to browse?',
+						start: 'which board do you want to browse?',
 					},
 					match: 'rest'
 				}

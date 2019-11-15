@@ -9,7 +9,7 @@ class emitCommand extends Command {
 			args: [
 				{
 					id: 'event',
-					prompt: 'Wich event should i trigger?',
+					prompt: 'which event should i trigger?',
 					type: 'string',
 					match: 'rest'
 				}

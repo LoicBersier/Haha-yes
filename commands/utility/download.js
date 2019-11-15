@@ -16,7 +16,7 @@ class DownloadCommand extends Command {
 					id: 'link',
 					type: 'string',
 					prompt: {
-						start: 'Send the link of wich video you want to download',
+						start: 'Send the link of which video you want to download',
 					}
 				},
 				{

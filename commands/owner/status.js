@@ -9,7 +9,7 @@ class StatusCommand extends Command {
 			args: [
 				{
 					id: 'status',
-					prompt: 'Wich status should i have?',
+					prompt: 'which status should i have?',
 					type: 'string',
 					match: 'rest'
 				}

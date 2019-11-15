@@ -14,7 +14,7 @@ class removeResponseCommand extends Command {
 					type: 'string',
 					match: 'rest',
 					prompt: {
-						start: 'wich tag do you want to remove?',
+						start: 'which tag do you want to remove?',
 					}
 				}
 			],

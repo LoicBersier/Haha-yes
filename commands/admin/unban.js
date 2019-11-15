@@ -10,7 +10,7 @@ class UnbanCommand extends Command {
 					id: 'member',
 					type: 'member',
 					prompt: {
-						start: 'Wich member do you want to unban?',
+						start: 'which member do you want to unban?',
 					}
 				}
 			],
