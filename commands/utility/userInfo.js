@@ -44,12 +44,15 @@ class userInfoCommand extends Command {
 
 		Embed.addBlankField();
 
-		// Show on which platform they are using discord from
-		if (user.presence.clientStatus) {
+		// Show on which platform they are using discord from if its not a bot
+		if (user.presence.clientStatus && !user.bot) {
 			if (user.presence.clientStatus['mobile']) Embed.addField('Using discord on', '📱 ' + user.presence.clientStatus['mobile'], true);
 			if (user.presence.clientStatus['desktop']) Embed.addField('Using discord on', '💻 ' + user.presence.clientStatus['desktop'], true);
 			if (user.presence.clientStatus['web']) Embed.addField('Using discord on', '☁️ ' + user.presence.clientStatus['web'], true);
 		}
+
+		// Is the user a bot?
+		if (user.bot) Embed.addField('Is a bot?', '✅', true); else if (!user.bot) Embed.addField('Is a bot?', '❌', true);
 		
 		// Show guild nickname
 		if (member.nickname) Embed.addField('Nickname', member.nickname, true);
