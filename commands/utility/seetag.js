@@ -35,6 +35,7 @@ class seetagCommand extends Command {
 	async exec(message, args) {
 		if (args.raw) {
 			let tagList = await Tag.findOne({attributes: ['trigger','response','ownerID'], where: {trigger: args.raw, serverID: message.guild.id}});
+			if (!tagList) return message.channel.send('Tag not found.');
 			this.client.users.fetch(tagList.dataValues.ownerID)
 				.then(user => {
 					const TagEmbed = new MessageEmbed()
@@ -58,6 +59,7 @@ class seetagCommand extends Command {
 				});
 		} else if (args.all) {
 			let tagList = await Tag.findAll({attributes: ['trigger','response','ownerID'], where: {serverID: message.guild.id}});
+			if (!tagList[0]) return message.channel.send('This guild do not have any tag.');
 			var tagArray = [];
 			tagList.forEach(tag => {
 				tagArray.push(tag.dataValues);
