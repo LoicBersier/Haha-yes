@@ -17,17 +17,14 @@ class TagCommand extends Command {
 					}
 				},
 				{
-					id: 'response',
-					type: 'string',
-					match: 'rest',
-					prompt: {
-						start: 'What word or sentence should the response be?',
-					}
-				},
-				{
 					id: 'remove',
 					match: 'flag',
 					flag: '--remove'
+				},
+				{
+					id: 'response',
+					type: 'string',
+					match: 'rest',
 				}
 			],
 			channelRestriction: 'guild',
@@ -53,6 +50,10 @@ class TagCommand extends Command {
 			} else {
 				return message.channel.send('Did not find the specified tag, are you sure it exist?');
 			}
+		}
+
+		if (!args.response) {
+			return message.channel.send('Please provide the response for that tag');
 		}
 
 		if (!tag) {
