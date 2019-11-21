@@ -45,7 +45,13 @@ class seetagCommand extends Command {
 						.addField('Response:', tagList['dataValues']['response'])
 						.addField('Creator:', `${user.username}#${user.discriminator} (${user.id})`);
 		
-					return message.channel.send(TagEmbed);
+					return message.channel.send(TagEmbed)
+						.catch(() => {
+							tagTxt(args.raw, tagList)
+								.then(path => {
+									return message.channel.send('This tag is to big to be shown on discord! Sending it as a file', {files: [path]});
+								});
+						});
 				})
 				.catch(() => {
 					const TagEmbed = new MessageEmbed()
@@ -54,8 +60,14 @@ class seetagCommand extends Command {
 						.addField('Trigger:', tagList['dataValues']['trigger'])
 						.addField('Response:', tagList['dataValues']['response'])
 						.addField('Creator:', 'No user info.');
-	
-					return message.channel.send(TagEmbed);
+
+					return message.channel.send(TagEmbed)
+						.catch(() => {
+							tagTxt(args.raw, tagList)
+								.then(path => {
+									return message.channel.send('This tag is to big to be shown on discord! Sending it as a file', {files: [path]});
+								});
+						});
 				});
 		} else if (args.all) {
 			let tagList = await Tag.findAll({attributes: ['trigger','response','ownerID'], where: {serverID: message.guild.id}});
@@ -64,10 +76,10 @@ class seetagCommand extends Command {
 			tagList.forEach(tag => {
 				tagArray.push(tag.dataValues);
 			});
-			fs.writeFile(`${os.tmpdir()}/tagslist.txt`,JSON.stringify(tagArray, null, 2), function(err) {
-				if (err) return console.error(err);
-				return message.channel.send('Here are your tags', {files: [`${os.tmpdir()}/tagslist.txt`]});
-			});
+			tagTxt('taglist', tagArray)
+				.then(path => {
+					return message.channel.send('Here are all your tags!', {files: [path]});
+				});
 		} else {
 			let tagList = await Tag.findAll({attributes: ['trigger'], where: {serverID: message.guild.id}});
 			const tagString = tagList.map(t => t.trigger).join(', ') || 'No tags set.';
@@ -77,7 +89,21 @@ class seetagCommand extends Command {
 				.setDescription(tagString)
 				.setFooter('Use this command with the name of the tag to see more info about it!');
 	
-			return message.channel.send(TagEmbed);
+			return message.channel.send(TagEmbed)
+				.catch(() => {
+					tagTxt('tags', tagList)
+						.then(path => {
+							return message.channel.send('This tag is to big to be shown on discord! Sending it as a file', {files: [path]});
+						});
+				});
+		}
+
+		async function tagTxt(name, tagArray) {
+			let path = `${os.tmpdir()}/${name.substring(0, 10)}.json`;
+			fs.writeFile(path,JSON.stringify(tagArray, null, 2), function(err) {
+				if (err) return console.error(err);
+			});
+			return path;
 		}
 	}
 }
