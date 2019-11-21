@@ -93,7 +93,7 @@ class seetagCommand extends Command {
 				.catch(() => {
 					tagTxt('tags', tagList)
 						.then(path => {
-							return message.channel.send('This tag is to big to be shown on discord! Sending it as a file', {files: [path]});
+							return message.channel.send('There is too much tag to be shown on discord! Sending it as a file', {files: [path]});
 						});
 				});
 		}
