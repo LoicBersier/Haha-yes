@@ -29,7 +29,7 @@ class unloadCommand extends Command {
 	async exec(message, args) {
 		this.handler.remove(args.command);
 		if (!args.noplaceholder) {
-			fs.writeFile('./unloaded.js', `const { Command } = require('discord-akairo');
+			fs.writeFile(`./${args.command}_unloaded.js`, `const { Command } = require('discord-akairo');
 			
 			class ${args.command}Command extends Command {
 				constructor() {
@@ -49,8 +49,7 @@ class unloadCommand extends Command {
 			}
 			
 			module.exports = ${args.command}Command;`,() => {
-				this.handler.load(`${__dirname}/../../unloaded.js`);
-
+				this.handler.load(`${__dirname}/../../${args.command}_unloaded.js`);
 			});
 		}
 		return message.channel.send(`Sucessfully unloaded command ${args.command}`);
