@@ -1,5 +1,4 @@
 const { Listener } = require('discord-akairo');
-const { MessageEmbed } = require('discord.js');
 const fs = require('fs');
 let messageID = require('../../json/starboard.json');
 
@@ -59,7 +58,7 @@ class MessageReactionAddListener extends Listener {
 				channel = client.channels.get(shameboardChannel['shameboard']);
 			}
 
-			let Embed = new MessageEmbed()
+			let Embed = this.client.util.embed()
 				.setColor(reaction.message.member.displayHexColor)
 				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
 				.addField('Jump to', `[message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`, true)

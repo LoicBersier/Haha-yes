@@ -1,5 +1,4 @@
 const { Command } = require('discord-akairo');
-const { MessageEmbed } = require('discord.js');
 const fetch = require('node-fetch');
 
 class RedditCommand extends Command {
@@ -43,7 +42,7 @@ class RedditCommand extends Command {
 			let i = Math.floor((Math.random() * response.data.children.length));
 			if (response.data.children[i].data.over_18 == true && !message.channel.nsfw)
 				return message.channel.send('No nsfw');
-			const redditEmbed = new MessageEmbed()
+			const redditEmbed = this.client.util.embed()
 				.setColor(message.member.displayHexColor)
 				.setTitle(response.data.children[i].data.title)
 				.setDescription(response.data.children[i].data.selftext)

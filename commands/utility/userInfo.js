@@ -1,5 +1,4 @@
 const { Command } = require('discord-akairo');
-const { MessageEmbed } = require('discord.js');
 
 class userInfoCommand extends Command {
 	constructor() {
@@ -31,7 +30,7 @@ class userInfoCommand extends Command {
 
 		let member = message.guild.member(user);
 
-		const Embed = new MessageEmbed()
+		const Embed = this.client.util.embed()
 			.setColor(member.displayHexColor)
 			.setAuthor(`${user.tag} (${user.id})`, user.displayAvatarURL())
 			.addField('Current rank hex color', member.displayHexColor, true)

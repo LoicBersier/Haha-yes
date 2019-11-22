@@ -1,5 +1,4 @@
 const { Command } = require('discord-akairo');
-const { MessageEmbed } = require('discord.js');
 const { ownerID } = require('../../config.json');
 const donator = require('../../models').donator;
 
@@ -31,7 +30,7 @@ class aboutCommand extends Command {
 		}
 
 
-		const aboutEmbed = new MessageEmbed()
+		const aboutEmbed = this.client.util.embed()
 			.setColor(message.member.displayHexColor)
 			.setAuthor(this.client.user.username, this.client.user.avatarURL())
 			.setTitle('About me')

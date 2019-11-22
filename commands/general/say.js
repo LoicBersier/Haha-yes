@@ -1,5 +1,4 @@
 const { Command } = require('discord-akairo');
-const { MessageEmbed } = require('discord.js');
 const rand = require('../../rand.js');
 
 class SayCommand extends Command {
@@ -130,7 +129,7 @@ class SayCommand extends Command {
 				}
 			}
 
-			const embed = new MessageEmbed()
+			const embed = this.client.util.embed()
 				.setColor(color)
 				.setTitle(title)
 				.setImage(image)

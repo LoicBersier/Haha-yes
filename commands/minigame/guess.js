@@ -1,6 +1,5 @@
 const { Command } = require('discord-akairo');
 const guessLeaderboard = require('../../models').guessLeaderboard;
-const { MessageEmbed } = require('discord.js');
 
 class guessCommand extends Command {
 	constructor() {
@@ -36,7 +35,7 @@ class guessCommand extends Command {
 		if (args.leaderboard) {
 			const leaderboard = await guessLeaderboard.findAll({order: ['try']});
 			let top = [];
-			let leaderboardEmbed = new MessageEmbed()
+			let leaderboardEmbed = this.client.util.embed()
 				.setColor(message.member.displayHexColor)
 				.setTitle('Guess leaderboard');
 			for (let i = 0; i < leaderboard.length; i++) {

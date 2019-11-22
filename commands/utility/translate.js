@@ -1,5 +1,4 @@
 const { Command } = require('discord-akairo');
-const { MessageEmbed } = require('discord.js');
 const fetch = require('node-fetch');
 const { yandexAPI } = require('../../config.json');
 
@@ -51,7 +50,7 @@ class TranslationCommand extends Command {
 				return message.channel.send('An error has occured');
 
 
-			const translationEmbed = new MessageEmbed()
+			const translationEmbed = this.client.util.embed()
 				.setColor(message.member.displayHexColor)
 				.setTitle('Asked for the following translation:')
 				.setAuthor(message.author.username)

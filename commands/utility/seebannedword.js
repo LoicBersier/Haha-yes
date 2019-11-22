@@ -1,6 +1,5 @@
 const { Command } = require('discord-akairo');
 const BannedWords = require('../../models').bannedWords;
-const { MessageEmbed } = require('discord.js');
 
 
 class seebannedwordCommand extends Command {
@@ -31,7 +30,7 @@ class seebannedwordCommand extends Command {
 
 		if (list == undefined) return message.channel.send('No word are banned yet.');
 		
-		const Embed = new MessageEmbed()
+		const Embed = this.client.util.embed()
 			.setColor(message.member.displayHexColor)
 			.setTitle('List of banned words')
 			.setDescription(list);

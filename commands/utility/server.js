@@ -1,5 +1,4 @@
 const { Command } = require('discord-akairo');
-const { MessageEmbed } = require('discord.js');
 
 class ServerCommand extends Command {
 	constructor() {
@@ -17,7 +16,7 @@ class ServerCommand extends Command {
 	}
 
 	async exec(message) {
-		const addEmbed = new MessageEmbed()
+		const addEmbed = this.client.util.embed()
 			.setColor(message.member.displayHexColor)
 			.setTitle(message.guild.name)
 			.setThumbnail(message.guild.iconURL())

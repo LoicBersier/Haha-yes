@@ -2,7 +2,6 @@
 // Higher the level the less time you have to complete it
 // Make the command less shit
 const { Command } = require('discord-akairo');
-const { MessageEmbed } = require('discord.js');
 const borgar = require('../../models').borgar;
 
 class borgarCommand extends Command {
@@ -57,7 +56,7 @@ class borgarCommand extends Command {
 		hamIngredient.push('bun');
 
 
-		let borgarEmbed = new MessageEmbed()
+		let borgarEmbed = this.client.util.embed()
 			.setTitle('hamborger info')
 			.setDescription(`could you do me an **amborgar** that contain **${hamIngredient}**`)
 			.setFooter(`Level ${level} | Once the ingredients dissapear you have 10 seconds to do it!`)
@@ -66,7 +65,7 @@ class borgarCommand extends Command {
 		message.util.send(borgarEmbed)
 			.then(() => {
 				setTimeout(async () => {
-					borgarEmbed = new MessageEmbed()
+					borgarEmbed = this.client.util.embed()
 						.setTitle('hamborger delivery')
 						.setDescription('You have to put each ingredients in seperate messages!')
 						.setFooter(`Level ${level} | you have 10 seconds to make that hamborgor`)

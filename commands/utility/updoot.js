@@ -1,5 +1,4 @@
 const { Command } = require('discord-akairo');
-const { MessageEmbed } = require('discord.js');
 
 class UpdootCommand extends Command {
 	constructor() {
@@ -17,7 +16,7 @@ class UpdootCommand extends Command {
 	}
 
 	async exec(message) {
-		const upDoot = new MessageEmbed()
+		const upDoot = this.client.util.embed()
 			.setColor(message.member.displayHexColor)
 			.setTitle('Vote for my bot')
 			.setAuthor(message.author.username)

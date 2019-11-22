@@ -1,5 +1,4 @@
 const { Listener } = require('discord-akairo');
-const { MessageEmbed } = require('discord.js');
 const rand = require('../../rand.js');
 const Sequelize = require('sequelize');
 const Tag = require('../../models').Tag;
@@ -33,7 +32,7 @@ class messageListener extends Listener {
 				let regex = new RegExp(bannedWords[i].get('word'), 'g');
 				censoredMessage = censoredMessage.replace(regex, '█'.repeat(bannedWords[i].get('word').length));
 			}
-			let Embed = new MessageEmbed()
+			let Embed = this.client.util.embed()
 				.setColor(message.member.displayHexColor)
 				.setAuthor(message.author.username, message.author.displayAvatarURL())
 				.setDescription(censoredMessage);
@@ -183,7 +182,7 @@ class messageListener extends Listener {
 						}
 					}
 		
-					const embed = new MessageEmbed()
+					const embed = this.client.util.embed()
 						.setColor(color)
 						.setTitle(title)
 						.setImage(image)

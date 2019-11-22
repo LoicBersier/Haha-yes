@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const akairoVersion = require('discord-akairo').version;
-const { MessageEmbed, version } = require('discord.js');
+const { version } = require('discord.js');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 
@@ -51,7 +51,7 @@ class StatsCommand extends Command {
 			cpu = stdout.replace('Name', '');
 		}
 
-		const statsEmbed = new MessageEmbed()
+		const statsEmbed = this.client.util.embed()
 			.setColor(message.member.displayHexColor)
 			.setTitle('Bot stats')
 			.setAuthor('Haha yes')

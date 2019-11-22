@@ -1,6 +1,5 @@
 const { Command } = require('discord-akairo');
 const { feedbackChannel } = require('../../config.json');
-const { MessageEmbed } = require('discord.js');
 
 class FeedbackCommand extends Command {
 	constructor() {
@@ -35,7 +34,7 @@ class FeedbackCommand extends Command {
 
 		const channel = this.client.channels.get(feedbackChannel);
 
-		const Embed = new MessageEmbed()
+		const Embed = this.client.util.embed()
 			.setAuthor(`${message.author.username} (${message.author.id})`, message.author.displayAvatarURL())
 			.addField('Guild', `${message.guild.name} (${message.guild.id})`, true)
 			.addField('Feedback', args.text)

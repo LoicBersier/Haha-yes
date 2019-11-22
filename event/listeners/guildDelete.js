@@ -1,5 +1,4 @@
 const { Listener } = require('discord-akairo');
-const { MessageEmbed } = require('discord.js');
 const { statsChannel } = require('../../config.json');
 
 
@@ -15,7 +14,7 @@ class guildCreateListener extends Listener {
 		console.log(`***BOT KICKED***\n${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\nOwner ID: ${guild.owner}\n***BOT KICKED***`);
 		const channel = this.client.channels.get(statsChannel);
 
-		const kickEmbed = new MessageEmbed()
+		const kickEmbed = this.client.util.embed()
 			.setColor('#FF0000')
 			.setTitle('Some mofo just removed me from there guild :(')
 			.setURL('https://www.youtube.com/watch?v=6n3pFFPSlW4')

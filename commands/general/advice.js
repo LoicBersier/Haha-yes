@@ -1,5 +1,4 @@
 const { Command } = require('discord-akairo');
-const { MessageEmbed } = require('discord.js');
 const fetch = require('node-fetch');
 
 class AdviceCommand extends Command {
@@ -20,7 +19,7 @@ class AdviceCommand extends Command {
 		fetch('http://api.adviceslip.com/advice').then((response) => {
 			return response.json();
 		}).then((response) => {
-			const adviceEmbed = new MessageEmbed()
+			const adviceEmbed = this.client.util.embed()
 				.setColor(message.member.displayHexColor)
 				.setTitle(response.slip.slip_id)
 				.setDescription(response.slip.advice);

@@ -3,7 +3,6 @@ const fs = require('fs');
 const youtubedl = require('youtube-dl');
 const hbjs = require('handbrake-js');
 const os = require('os');
-const { MessageEmbed } = require('discord.js');
 
 class DownloadCommand extends Command {
 	constructor() {
@@ -51,7 +50,7 @@ class DownloadCommand extends Command {
 		}
 
 
-		const Embed = new MessageEmbed()
+		const Embed = this.client.util.embed()
 			.setColor(message.member.displayHexColor)
 			.setAuthor(`Downloaded by ${message.author.username}`, message.author.displayAvatarURL(), link)
 			.setDescription(args.caption)

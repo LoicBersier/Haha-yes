@@ -1,5 +1,4 @@
 const { Command } = require('discord-akairo');
-const { MessageEmbed } = require('discord.js');
 const fetch = require('node-fetch');
 const boards = require('4chan-boards');
 const htmlToText = require('html-to-text');
@@ -62,7 +61,7 @@ class FourchanCommand extends Command {
 				title = 'No title';
 			}
 
-			const FourchanEmbed = new MessageEmbed()
+			const FourchanEmbed = this.client.util.embed()
 				.setColor(message.member.displayHexColor)
 				.setTitle(title)
 				.setDescription(htmlToText.fromString(description))

@@ -1,7 +1,6 @@
 const { Command } = require('discord-akairo');
 const Twitter = require('twitter-lite');
 const rand = require('../../rand.js');
-const { MessageEmbed } = require('discord.js');
 //const Filter = require('bad-words');
 //let filter = new Filter();
 const TwitterBlacklist = require('../../models').TwitterBlacklist;
@@ -84,7 +83,7 @@ class tweetCommand extends Command {
 	
 			const tweetid = response.id_str;
 			
-			const publicEmbed = new MessageEmbed()
+			const publicEmbed = this.client.util.embed()
 				.setAuthor('Some user of discord said...')
 				.setDescription(args.text)
 				.addField('Link', `https://twitter.com/HahaYesDB/status/${tweetid}`)
@@ -94,7 +93,7 @@ class tweetCommand extends Command {
 			let channel = this.client.channels.get('597964498921455637');
 			channel.send({embed: publicEmbed});
 
-			const Embed = new MessageEmbed()
+			const Embed = this.client.util.embed()
 				.setAuthor(message.author.username, message.author.displayAvatarURL())
 				.setDescription(args.text)
 				.addField('Link', `https://twitter.com/HahaYesDB/status/${tweetid}`, true)
