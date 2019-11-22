@@ -17,16 +17,18 @@ class EvalCommand extends Command {
 	}
 
 	async exec(message) {
-		const { stdout, stderr } = await exec('git pull');
-		const Embed = this.client.util.embed()
-			.addField('stdout', stdout)
-			.addField('stderr', stderr);
-		message.channel.send({embed: Embed})
-			.catch(() => {
-				message.channel.send(`stdout: ${stdout}\nstderr: ${stderr}`);
+		await exec('git pull')
+			.then(output => {
+				const Embed = this.client.util.embed()
+					.addField('stdout', output.stdout)
+					.addField('stderr', output.stderr);
+				message.channel.send({embed: Embed})
+					.catch(() => {
+						message.channel.send(`stdout: ${output.stdout}\nstderr: ${output.stderr}`);
+					});
+				console.log(`stdout: ${output.stdout}`);
+				console.error(`stderr: ${output.stderr}`);
 			});
-		console.log(`stdout: ${stdout}`);
-		console.error(`stderr: ${stderr}`);
 	}
 }
 
