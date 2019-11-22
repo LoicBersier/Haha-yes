@@ -20,6 +20,8 @@ You need to install the following
 * [Google credentials](https://cloud.google.com/docs/authentication/getting-started) (Optional: for [tts.js](commands/fun/tts/tts.js) and [ttsvc.js](commands/fun/tts/ttsvc.js), without that it will spam error on startup but not important)
 * Wine (Optional: required for linux/mac for [dectalk.js](commands/fun/tts/dectalk.js) and [dectalkvc.js](commands/fun/tts/dectalkvc.js))
 * xvfb (Optional: for wine if using headless server)
+* waon (Optional: use to convert sound files to midi for [midify.js](commands/fun/midify.js))
+* timidity (Optional: use to convert the midi files back to mp3 for [midify.js](commands/fun/midify.js))
 
 ### Installing
 ```
