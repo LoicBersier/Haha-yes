@@ -70,7 +70,6 @@ class midifyCommand extends Command {
 					exec(`timidity ${output} -Ow -o - | ffmpeg -i - -acodec libmp3lame -ab 64k ${output2}`)
 						.then(() => {
 							loadingmsg.delete();
-							message.delete();
 							return message.channel.send({files: [output2]})
 								.catch(err => {
 									console.error(err);
