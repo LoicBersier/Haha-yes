@@ -22,7 +22,10 @@ class EvalCommand extends Command {
 			const Embed = this.client.util.embed()
 				.addField('stdout', stdout)
 				.addField('stderr', stderr);
-			message.channel.send({embed: Embed});
+			message.channel.send({embed: Embed})
+				.catch(() => {
+					message.channel.send(`stdout: ${stdout}\nstderr: ${stderr}`);
+				});
 			console.log(`stdout: ${stdout}`);
 			console.error(`stderr: ${stderr}`);
 		}
