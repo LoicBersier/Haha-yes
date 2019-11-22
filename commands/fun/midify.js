@@ -38,7 +38,7 @@ class midifyCommand extends Command {
 		let output2 = `${os.tmpdir()}/${message.id}.mp3`;
 
 		
-		let loadingmsg = await message.channel.send('Processing <a:loadingmin:527579785212329984>');
+		let loadingmsg = await message.channel.send('Processing (this can take some time) <a:loadingmin:527579785212329984>');
 
 		if (url) {
 			return youtubedl.exec(url, ['--format=mp4', '-o', input], {}, function(err) {
