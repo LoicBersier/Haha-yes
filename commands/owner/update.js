@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
-const util = require('util');
-const exec = util.promisify(require('child_process').exec);
+const Util = require('util');
+const exec = Util.promisify(require('child_process').exec);
 
 class EvalCommand extends Command {
 	constructor() {
