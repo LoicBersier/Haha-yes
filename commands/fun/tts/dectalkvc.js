@@ -8,7 +8,7 @@ class dectalkvcCommand extends Command {
 		super('dectalkvc', {
 			aliases: ['dectalkvc', 'decvc'],
 			category: 'fun',
-			clientPermissions: ['ATTACH_FILES', 'SPEAK'],
+			clientPermissions: ['SPEAK'],
 			args: [
 				{
 					id: 'decMessage',

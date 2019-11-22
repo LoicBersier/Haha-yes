@@ -8,7 +8,7 @@ class fakeleaveCommand extends Command {
 			aliases: ['fakeleave'],
 			category: 'admin',
 			channelRestriction: 'guild',
-			clientPermissions: ['SEND_MESSAGES'],
+			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
 			args: [
 				{
 					id: 'member',
