@@ -6,7 +6,7 @@ class playCommand extends Command {
 		super('play', {
 			aliases: ['play'],
 			category: 'utility',
-			clientPermissions: ['SEND_MESSAGES', 'SPEAK'],
+			clientPermissions: ['SEND_MESSAGES', 'SPEAK', 'CONNECT'],
 			args: [
 				{
 					id: 'ytblink',
@@ -26,6 +26,7 @@ class playCommand extends Command {
 	}
 
 	async exec(message, args) {
+		if(!message.channel.permissionsFor(this.client.user).has('CONNECT')) return message.channel.send('Im missing the required permissions for this command!, `VOICE_JOIN_CHANNEL`');
 		const voiceChannel = message.member.voice.channel;
 
 		//  If not in voice channel ask user to join
