@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const Twitter = require('twitter-lite');
+const Twit = require('twit');
 const { twiConsumer, twiConsumerSecret, twiToken, twiTokenSecret } = require('../../config.json');
 
 class rtweetCommand extends Command {
@@ -26,14 +26,14 @@ class rtweetCommand extends Command {
 	async exec(message, args) {
 		let text = args.text;
 		try {
-			let client = new Twitter({
+			let T = new Twit({
 				consumer_key: twiConsumer,
 				consumer_secret: twiConsumerSecret,
-				access_token_key: twiToken,
+				access_token: twiToken,
 				access_token_secret: twiTokenSecret
 			});
 
-			client.post('statuses/destroy', {
+			T.post('statuses/destroy', {
 				id: text
 			});
 			return message.channel.send('Tweet have been deleted!');
