@@ -1,5 +1,8 @@
 const { Command } = require('discord-akairo');
-const Twitter = require('twitter-lite');
+const Twit = require('twit');
+const fetch = require('node-fetch');
+const os = require('os');
+const fs = require('fs');
 const rand = require('../../rand.js');
 //const Filter = require('bad-words');
 //let filter = new Filter();
@@ -33,6 +36,17 @@ class tweetCommand extends Command {
 	}
 
 	async exec(message, args) {
+		const client = this.client;
+		let date = new Date();
+		let Attachment = (message.attachments).array();
+
+		let T = new Twit({
+			consumer_key: twiConsumer,
+			consumer_secret: twiConsumerSecret,
+			access_token: twiToken,
+			access_token_secret: twiTokenSecret
+		});
+
 		/*
 		// Censor words
 		let censor = reload('../../json/censor.json');
@@ -47,8 +61,12 @@ class tweetCommand extends Command {
 			return message.channel.send(`You have been blacklisted for the following reasons: \`\`${blacklist.get('reason')}\`\` be less naughty less time.`);
 		}
 
+		// If account is younger than 6 months old don't accept attachment
+		if (Attachment[0] && message.author.createdAt > date.setMonth(date.getMonth() - 6)) {
+			return message.channel.send('Your account need to be 6 months or older to be able to send attachment!');
+		} 
+
 		// Don't let account new account use this command to prevent spam
-		let date = new Date();
 		if (message.author.createdAt > date.setDate(date.getDate() - 7)) {
 			return message.channel.send('Your account is too new to be able to use this command!');
 		}
@@ -70,45 +88,83 @@ class tweetCommand extends Command {
 		}
 
 		try {
-			let client = new Twitter({
-				consumer_key: twiConsumer,
-				consumer_secret: twiConsumerSecret,
-				access_token_key: twiToken,
-				access_token_secret: twiTokenSecret
-			});
-
-			const response = await client.post('statuses/update', {
-				status: text
-			});
-	
-			const tweetid = response.id_str;
-			
-			const publicEmbed = this.client.util.embed()
-				.setAuthor('Some user of discord said...')
-				.setDescription(args.text)
-				.addField('Link', `https://twitter.com/HahaYesDB/status/${tweetid}`)
-				.setTimestamp();
-
-			// Im too lazy for now to make an entry in config.json
-			let channel = this.client.channels.get('597964498921455637');
-			channel.send({embed: publicEmbed});
-
-			const Embed = this.client.util.embed()
-				.setAuthor(message.author.username, message.author.displayAvatarURL())
-				.setDescription(args.text)
-				.addField('Link', `https://twitter.com/HahaYesDB/status/${tweetid}`, true)
-				.addField('Tweet ID', tweetid, true)
-				.addField('Author', `${message.author.username} (${message.author.id})`, true)
-				.addField('Guild', `${message.guild.name} (${message.guild.id})`, true)
-				.setTimestamp();
-
-			channel = this.client.channels.get(twiChannel);
-			channel.send({embed: Embed});
-
-			return message.channel.send(`Go see ur epic tweet https://twitter.com/HahaYesDB/status/${tweetid}`);
+			// Make sure there is an attachment and if its an image
+			if (Attachment[0]) {
+				if (Attachment[0].name.endsWith('.jpg') || Attachment[0].name.endsWith('.png') || Attachment[0].name.endsWith('.gif')) {
+					fetch(Attachment[0].url)
+						.then(res => {
+							const dest = fs.createWriteStream(`${os.tmpdir()}/${Attachment[0].name}`);
+							res.body.pipe(dest);
+							dest.on('finish', () => {
+								let b64Image = fs.readFileSync(`${os.tmpdir()}/${Attachment[0].name}`, { encoding: 'base64'});
+								T.post('media/upload', { media_data: b64Image }, function (err, data) {
+									if (err) {
+										console.log('OH NO AN ERROR!!!!!!!');
+										return console.error(err);
+									} else {
+										Tweet(data);
+									}
+								});
+							});
+						});
+				} else {
+					return message.channel.send('File type not supported, you can send jpg/png/gif');
+				}
+			} else {
+				Tweet();
+			}
 		} catch(err) {
 			console.error(err);
 			return message.channel.send('Oh no, an error has occured :(');
+		}
+
+		function Tweet(data) {
+			let options = {
+				status: text
+			};
+
+			if (data) {
+				options = {
+					status: text,
+					media_ids: new Array(data.media_id_string)
+				};
+			}
+
+			T.post('statuses/update', options, function (err, response) {
+				if (err) {
+					console.error('OH NO!!!!');
+					return console.error(err);
+				} 
+	
+				const tweetid = response.id_str;
+				const publicEmbed = client.util.embed()
+					.setAuthor('Some user of discord said...')
+					.setDescription(args.text)
+					.addField('Link', `https://twitter.com/HahaYesDB/status/${tweetid}`)
+					.setTimestamp();
+				
+				if (Attachment[0]) publicEmbed.setImage(Attachment[0].url);
+
+				// Im too lazy for now to make an entry in config.json
+				let channel = client.channels.get('597964498921455637');
+				channel.send({embed: publicEmbed});
+	
+				const Embed = client.util.embed()
+					.setAuthor(message.author.username, message.author.displayAvatarURL())
+					.setDescription(args.text)
+					.addField('Link', `https://twitter.com/HahaYesDB/status/${tweetid}`, true)
+					.addField('Tweet ID', tweetid, true)
+					.addField('Author', `${message.author.username} (${message.author.id})`, true)
+					.addField('Guild', `${message.guild.name} (${message.guild.id})`, true)
+					.setTimestamp();
+
+				if (Attachment[0]) Embed.setImage(Attachment[0].url);
+				
+				channel = client.channels.get(twiChannel);
+				channel.send({embed: Embed});
+	
+				return message.channel.send(`Go see ur epic tweet https://twitter.com/HahaYesDB/status/${tweetid}`);
+			});
 		}
 
 	}
