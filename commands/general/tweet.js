@@ -21,9 +21,6 @@ class tweetCommand extends Command {
 				{
 					id: 'text',
 					type: 'string',
-					prompt: {
-						start: 'Write something to tweet',
-					},
 					match: 'rest'
 				}
 			],
@@ -39,6 +36,8 @@ class tweetCommand extends Command {
 		const client = this.client;
 		let date = new Date();
 		let Attachment = (message.attachments).array();
+
+		if (!Attachment[0] && !args.text) return message.channel.send('You need to input something for me to tweet!');
 
 		let T = new Twit({
 			consumer_key: twiConsumer,
