@@ -122,9 +122,13 @@ class tweetCommand extends Command {
 				status: text
 			};
 
-			if (data) {
+			if (data && args.text) {
 				options = {
 					status: text,
+					media_ids: new Array(data.media_id_string)
+				};
+			} else if (data) {
+				options = {
 					media_ids: new Array(data.media_id_string)
 				};
 			}
