@@ -1,12 +1,13 @@
 const { Command } = require('discord-akairo');
+const { MessageEmbed } = require('discord.js');
 const rand = require('../../rand.js');
 
 class SayCommand extends Command {
 	constructor() {
 		super('say', {
-			aliases: ['say'],
+			aliases: ['say', 'sayd'],
 			category: 'general',
-			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
+			clientPermissions: ['SEND_MESSAGES', 'MANAGE_MESSAGES'],
 			args: [
 				{
 					id: 'text',
@@ -15,15 +16,10 @@ class SayCommand extends Command {
 						start: 'Write something so i can say it back',
 					},
 					match: 'rest'
-				},
-				{
-					id: 'delete',
-					match: 'flag',
-					flag: ['--del', '--delete', '-d']
 				}
 			],
 			description: {
-				content: 'Repeat what you say, (Use "-d" to delete the message you sent) [Click here to see the complete list of "tag"](https://cdn.discordapp.com/attachments/502198809355354133/561043193949585418/unknown.png)',
+				content: 'Repeat what you say, (Use sayd to delete your message) [Click here to see the complete list of "tag"](https://cdn.discordapp.com/attachments/502198809355354133/561043193949585418/unknown.png)',
 				usage: '[text]',
 				examples: ['[member] is a big [adverbs] [verbs]']
 			}
@@ -129,7 +125,7 @@ class SayCommand extends Command {
 				}
 			}
 
-			const embed = this.client.util.embed()
+			const embed = new MessageEmbed()
 				.setColor(color)
 				.setTitle(title)
 				.setImage(image)
@@ -151,11 +147,11 @@ class SayCommand extends Command {
 	
 		//	  Send the final text
 		if (attach) {
-			if (args.delete)
+			if (message.util.parsed.alias == 'sayd')
 				message.delete();
 			return message.channel.send(text, {files: [attach]});
 		} else {
-			if (args.delete)
+			if (message.util.parsed.alias == 'sayd')
 				message.delete();
 			return message.channel.send(text);
 		}
