@@ -6,7 +6,6 @@
     "4chan-boards": "^2.0.1",
     "@google-cloud/text-to-speech": "^0.4.0",
     "asciify-image": "^0.1.5",
-    "auto-reload": "^0.1.0",
     "bad-words": "^3.0.3",
     "canvas": "^2.6.0",
     "cheerio": "^1.0.0-rc.3",
@@ -29,7 +28,7 @@
     "sequelize": "^5.21.1",
     "sqlite3": "^4.1.0",
     "superagent": "^4.1.0",
-    "twitter-lite": "^0.9.4",
+    "twit": "^2.2.11",
     "youtube-dl": "^1.13.1",
     "ytdl-core": "^0.29.7",
     "ytpplus-node": "^1.1.2"
