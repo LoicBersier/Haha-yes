@@ -98,6 +98,15 @@ class tweetCommand extends Command {
 							const dest = fs.createWriteStream(`${os.tmpdir()}/${Attachment[0].name}`);
 							res.body.pipe(dest);
 							dest.on('finish', () => {
+								let file = fs.statSync(`${os.tmpdir()}/${Attachment[0].name}`);
+								let fileSize = file.size / 1000000.0;
+
+								if ((Attachment[0].name.endsWith('.jpg') || Attachment[0].name.endsWith('.png')) && fileSize > 5) {
+									return message.channel.send('Images can\'t be larger than 5 MB!');
+								} else if (Attachment[0].name.endsWith('.gif') && fileSize > 15) {
+									return message.channel.send('Gifs can\'t be larger than 15 MB!');
+								}
+								
 								let b64Image = fs.readFileSync(`${os.tmpdir()}/${Attachment[0].name}`, { encoding: 'base64'});
 								T.post('media/upload', { media_data: b64Image }, function (err, data) {
 									if (err) {
