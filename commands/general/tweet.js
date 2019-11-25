@@ -71,16 +71,19 @@ class tweetCommand extends Command {
 		}
 
 		// remove zero width space
-		let text = args.text.replace('​', '');
-		if (!text)
-			return;
+		let text = '';
+		if (args.text) {
+			text = args.text.replace('​', '');
 
-		/*
-		//Filter out swear word
-		text = filter.clean(text);
-		*/
+			/*
+			//Filter out swear word
+			text = filter.clean(text);
+			*/
 
-		text = rand.random(text, message);
+			text = rand.random(text, message);
+		}
+
+
 
 		if (text.length > 280) {
 			return message.channel.send('Your message is more than the 280 characters limit!');
