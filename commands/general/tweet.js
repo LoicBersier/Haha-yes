@@ -25,7 +25,7 @@ class tweetCommand extends Command {
 				}
 			],
 			description: {
-				content: 'Send tweet from Haha yes twitter account (NOTE: all the tweet sent using this command are logged, so don\'t say nasty thing or you might get blacklisted from it! )',
+				content: 'Send tweet from Haha yes twitter account (NOTE: all the tweet sent using this command are logged, so don\'t say nasty thing or you might get blacklisted from it!)',
 				usage: '[text]',
 				examples: ['this epic tweet is in my epic twitter']
 			}
