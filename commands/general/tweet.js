@@ -102,7 +102,8 @@ class tweetCommand extends Command {
 								T.post('media/upload', { media_data: b64Image }, function (err, data) {
 									if (err) {
 										console.log('OH NO AN ERROR!!!!!!!');
-										return console.error(err);
+										console.error(err);
+										return message.channel.send('OH NO!!! AN ERROR HAS OCCURED!!! please hold on while i find what\'s causing this issue! ');
 									} else {
 										Tweet(data);
 									}
@@ -139,7 +140,8 @@ class tweetCommand extends Command {
 			T.post('statuses/update', options, function (err, response) {
 				if (err) {
 					console.error('OH NO!!!!');
-					return console.error(err);
+					console.error(err);
+					return message.channel.send('OH NO!!! AN ERROR HAS OCCURED!!! please hold on while i find what\'s causing this issue! ');
 				} 
 	
 				const tweetid = response.id_str;
