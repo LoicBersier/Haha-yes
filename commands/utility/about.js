@@ -1,5 +1,4 @@
 const { Command } = require('discord-akairo');
-const { ownerID } = require('../../config.json');
 const donator = require('../../models').donator;
 
 class aboutCommand extends Command {
@@ -35,7 +34,7 @@ class aboutCommand extends Command {
 			.setAuthor(this.client.user.username, this.client.user.avatarURL())
 			.setTitle('About me')
 			.setDescription(description)
-			.addField('Current owner: ', `${this.client.users.get(ownerID).username}#${this.client.users.get(ownerID).discriminator} (${ownerID})`)
+			.addField('Current owner: ', `${this.client.users.get(this.client.ownerID).username}#${this.client.users.get(this.client.ownerID).discriminator} (${this.client.ownerID})`)
 			.addField('Gitlab', 'https://gitlab.com/LoicBersier/DiscordBot', true)
 			.addField('Github', 'https://github.com/loicbersier/Haha-yes', true)
 			.setFooter(`Original bot made by ${this.client.users.get('267065637183029248').username}#${this.client.users.get('267065637183029248').discriminator} (267065637183029248)`); // Please don't change the "original bot made by"

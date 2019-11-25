@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const Tag = require('../../models').Tag;
-const { prefix, ownerID } = require('../../config.json');
+const { prefix } = require('../../config.json');
 
 class TagCommand extends Command {
 	constructor() {
@@ -38,6 +38,8 @@ class TagCommand extends Command {
 
 	async exec(message, args) {
 		const tag = await Tag.findOne({where: {trigger: args.trigger, serverID: message.guild.id}});
+		const ownerID = this.client.ownerID;
+
 
 		if (args.remove) {
 			if (tag) {

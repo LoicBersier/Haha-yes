@@ -1,5 +1,4 @@
 const { Command } = require('discord-akairo');
-const { ownerID } = require('../../config.json');
 
 class OwnedCommand extends Command {
 	constructor() {
@@ -30,7 +29,7 @@ class OwnedCommand extends Command {
 
 			if (args.member.id == this.client.user.id) {
 				return message.channel.send('You really thought you could own me?, pathetic...');
-			} else if (args.member.id == ownerID) {
+			} else if (args.member.id == this.client.ownerID) {
 				return message.channel.send('You really thought you could own him?, pathetic...');
 			} else if (args.member.id == '286054184623538177' || args.member.id == '172112210863194113') {
 				owned = message.author;
