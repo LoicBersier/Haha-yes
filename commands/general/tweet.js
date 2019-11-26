@@ -120,7 +120,7 @@ class tweetCommand extends Command {
 							});
 						});
 				} else {
-					return message.channel.send('File type not supported, you can send jpg/png/gif');
+					return message.channel.send('File type not supported, you can only send jpg/png/gif');
 				}
 			} else {
 				Tweet();
