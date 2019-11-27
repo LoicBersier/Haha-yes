@@ -157,7 +157,7 @@ class tweetCommand extends Command {
 				const publicEmbed = client.util.embed()
 					.setAuthor('Some user of discord said...')
 					.setDescription(text)
-					.addField('Link', `https://twitter.com/HahaYesDB/status/${tweetid}`)
+					.addField('Link', `https://twitter.com/i/status/${tweetid}`)
 					.setTimestamp();
 				
 				if (Attachment[0]) publicEmbed.setImage(Attachment[0].url);
@@ -169,7 +169,7 @@ class tweetCommand extends Command {
 				const Embed = client.util.embed()
 					.setAuthor(message.author.username, message.author.displayAvatarURL())
 					.setDescription(args.text)
-					.addField('Link', `https://twitter.com/HahaYesDB/status/${tweetid}`, true)
+					.addField('Link', `https://twitter.com/i/status/${tweetid}`, true)
 					.addField('Tweet ID', tweetid, true)
 					.addField('Author', `${message.author.username} (${message.author.id})`, true)
 					.addField('Guild', `${message.guild.name} (${message.guild.id})`, true)
@@ -180,7 +180,7 @@ class tweetCommand extends Command {
 				channel = client.channels.get(twiChannel);
 				channel.send({embed: Embed});
 	
-				return message.channel.send(`Go see ur epic tweet https://twitter.com/HahaYesDB/status/${tweetid}`);
+				return message.channel.send(`Go see ur epic tweet https://twitter.com/i/status/${tweetid}`);
 			});
 		}
 
