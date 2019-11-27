@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const fs = require('fs');
+const leaveChannel = require('../../models').leaveChannel;
 const rand = require('../../rand.js');
 
 class fakeleaveCommand extends Command {
@@ -25,21 +25,13 @@ class fakeleaveCommand extends Command {
 	}
 
 	async exec(message, args) {
-		if (fs.existsSync(`./bye/${message.guild.id}.json`)) {
-			let member;
-			if (args.member) {
-				member = args.member.username;
-			} else {
-				member = message.author.username;
-			}
+		const leave = await leaveChannel.findOne({where: {guildID: message.guild.id}});
+		if (leave) {
+			const channel = this.client.channels.get(leave.get('channelID'));
 
-			let bye = require(`../../bye/${message.guild.id}.json`);
+			let byeMessage = leave.get('message');
 
-			const channel = this.client.channels.get(bye['channel']);
-
-			let byeMessage = bye['message'];
-
-			byeMessage = byeMessage.replace(/\[member\]/, member);
+			byeMessage = byeMessage.replace(/\[member\]/, args.member);
 			byeMessage = byeMessage.replace(/\[server\]/, message.guild.name);
 
 			let attach;
@@ -63,7 +55,7 @@ class fakeleaveCommand extends Command {
 				return channel.send(byeMessage);
 			}
 		} else {
-			return message.channel.send('The server need a leave message first!');
+			return message.channel.send('Are you sure this server have a leave message?');
 		}
 	}
 }

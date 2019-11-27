@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const fs = require('fs');
+const joinChannel = require('../../models').joinChannel;
 const rand = require('../../rand.js');
 
 class fakejoinCommand extends Command {
@@ -25,45 +25,38 @@ class fakejoinCommand extends Command {
 	}
 
 	async exec(message, args) {
-		if (fs.existsSync(`./welcome/${message.guild.id}.json`)) {
-			let member;
-			if (args.member) {
-				member = args.member;
-			} else {
-				member = message.author.username;
-			}
+		const join = await joinChannel.findOne({where: {guildID: message.guild.id}});
 
-			let welcome = require(`../../welcome/${message.guild.id}.json`);
+		if (join) {
+			const channel = this.client.channels.get(join.get('channelID'));
 
-			const channel = this.client.channels.get(welcome['channel']);
+			let welcomeMessage = join.get('message');
 
-			let byeMessage = welcome['message'];
-
-			byeMessage = byeMessage.replace(/\[member\]/, member);
-			byeMessage = byeMessage.replace(/\[server\]/, message.guild.name);
-
+			welcomeMessage = welcomeMessage.replace(/\[member\]/, args.member);
+			welcomeMessage = welcomeMessage.replace(/\[server\]/, message.guild.name);
+	
 			let attach;
-			if (byeMessage.includes('[attach:')) {
-				attach = byeMessage.split(/(\[attach:.*?])/);
+			if (welcomeMessage.includes('[attach:')) {
+				attach = welcomeMessage.split(/(\[attach:.*?])/);
 				for (let i = 0, l = attach.length; i < l; i++) {
 					if (attach[i].includes('[attach:')) {
 						attach = attach[i].replace('[attach:', '').slice(0, -1);
 						i = attach.length;
 					}
 				}
-				byeMessage = byeMessage.replace(/(\[attach:.*?])/, '');
+				welcomeMessage = welcomeMessage.replace(/(\[attach:.*?])/, '');
 			}
-
-			byeMessage = rand.random(byeMessage);	
-
+	
+			welcomeMessage = rand.random(welcomeMessage);	
+	
 			message.delete();
 			if (attach) {
-				return channel.send(byeMessage, {files: [attach]});
+				return channel.send(welcomeMessage, {files: [attach]});
 			} else {
-				return channel.send(byeMessage);
+				return channel.send(welcomeMessage);
 			}
 		} else {
-			return message.channel.send('The server need a join message first!');
+			return message.channel.send('Are you sure this server have a join message?');
 		}
 	}
 }

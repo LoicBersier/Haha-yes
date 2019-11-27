@@ -1,5 +1,5 @@
 const { Listener } = require('discord-akairo');
-const fs = require('fs');
+const leaveChannel = require('../../models').leaveChannel;
 const rand = require('../../rand.js');
 
 class guildMemberRemoveListener extends Listener {
@@ -11,12 +11,11 @@ class guildMemberRemoveListener extends Listener {
 	}
 
 	async exec(guild) {
-		if (fs.existsSync(`./bye/${guild.guild.id}.json`)) {
-			let bye = require(`../../bye/${guild.guild.id}.json`);
+		const leave = await leaveChannel.findOne({where: {guildID: guild.id}});
+		if (leave) {
+			const channel = this.client.channels.get(leave.get('channelID'));
 
-			const channel = this.client.channels.get(bye['channel']);
-
-			let byeMessage = bye['message'];
+			let byeMessage = leave.get('message');
 
 			byeMessage = byeMessage.replace(/\[member\]/, guild.user.username);
 			byeMessage = byeMessage.replace(/\[server\]/, guild.guild.name);

@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const fs = require('fs');
+const joinChannel = require('../../models').joinChannel;
 
 class welcomeCommand extends Command {
 	constructor() {
@@ -30,27 +30,44 @@ class welcomeCommand extends Command {
 	}
 
 	async exec(message, args) {
-		let welcomeChannel = message.channel.id;
+		const join = await joinChannel.findOne({where: {guildID: message.guild.id}});
 
 		if (args.remove) {
-			fs.unlink(`./welcome/${message.guild.id}.json`, (err) => {
-				if (err) {
-					console.error(err);
-					return message.channel.send('An error has occured, there is most likely no welcome message set!');
-				} else {
-					return message.channel.send('Disabled unwelcome message');
-				}
-			});
+			if (join) {
+				join.destroy({where: {guildID: message.guild.id, channelID: message.channel.id}});
+				return message.channel.send('successfully deleted the join message');
+			} else {
+				return message.channel.send('Did not find the a join message, are you sure you have one setup?');
+			}
 		}
 
-		fs.writeFile(`./welcome/${message.guild.id}.json`, `{"channel": "${welcomeChannel}", "message": "${args.message}"}`, function (err) {
-			if (err) {
-				console.log(err);
-				return message.channel.send('An error has occured! im gonna be honest with you, i do not know what happened yet! but fear not! i will look into it!');
-			}
-		});
-		
-		return message.channel.send(`This channel will now be used to welcome new user with the following message: ${args.message}`);
+		if (!args.message) {
+			return message.channel.send('Please provide a message');
+		}
+
+		if (!join) {
+			const body = {guildID: message.guild.id, channelID: message.channel.id, message: args.message};
+			await joinChannel.create(body);
+			return message.channel.send(`The join message have been set with ${args.message}`);
+		} else {
+			message.channel.send('The server already have a join message, do you want to replace it? y/n');
+			const filter = m =>  m.content && m.author.id == message.author.id;
+			message.channel.awaitMessages(filter, {time: 5000, max: 1, errors: ['time'] })
+				.then(async messages => {
+					let messageContent = messages.map(messages => messages.content);
+					if (messageContent == 'y' || messageContent == 'yes') {
+						const body = {guildID: message.guild.id, channelID: message.channel.id, message: args.message};
+						await join.update(body, {where: {guildID: message.guild.id}});
+						return message.channel.send(`The join message have been set with ${args.message}`);
+					} else {
+						return message.channel.send('Not updating.');
+					}
+				})
+				.catch(err => {
+					console.error(err);
+					return message.channel.send('Took too long to answer. didin\'t update anything.');
+				});
+		}
 	}
 }
 

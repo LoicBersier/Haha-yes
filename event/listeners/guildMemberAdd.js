@@ -1,5 +1,5 @@
 const { Listener } = require('discord-akairo');
-const fs = require('fs');
+const joinChannel = require('../../models').joinChannel;
 const rand = require('../../rand.js');
 
 class guildMemberAddListener extends Listener {
@@ -15,11 +15,12 @@ class guildMemberAddListener extends Listener {
 			guild.setNickname('fart piss');
 		}
 
-		if (fs.existsSync(`./welcome/${guild.guild.id}.json`)) {
-			let welcome = require(`../../welcome/${guild.guild.id}.json`);
-			const channel = this.client.channels.get(welcome['channel']);
+		const join = await joinChannel.findOne({where: {guildID: guild.id}});
 
-			let welcomeMessage = welcome['message'];
+		if (join) {
+			const channel = this.client.channels.get(join.get('channelID'));
+
+			let welcomeMessage = join.get('message');
 
 			welcomeMessage = welcomeMessage.replace(/\[member\]/, guild.user.username);
 			welcomeMessage = welcomeMessage.replace(/\[server\]/, guild.guild.name);
