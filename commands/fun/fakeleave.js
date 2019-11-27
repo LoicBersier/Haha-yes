@@ -31,7 +31,7 @@ class fakeleaveCommand extends Command {
 
 			let byeMessage = leave.get('message');
 
-			byeMessage = byeMessage.replace(/\[member\]/, args.member);
+			byeMessage = byeMessage.replace(/\[member\]/, args.member.username);
 			byeMessage = byeMessage.replace(/\[server\]/, message.guild.name);
 
 			let attach;
