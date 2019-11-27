@@ -76,14 +76,27 @@ class HelpCommand extends Command {
 			.setFooter(`All the available prefix: ${prefix.join(' | ')}`);
 
 		for (const category of this.handler.categories.values()) {
-			const title = {
-				general: '📝\u2000General',
-				fun: '🎉\u2000Fun',
-				minigame: '🕹\u2000Minigames (WIP)',
-				images: '🖼\u2000Images',
-				utility: '🔩\u2000Utility',
-				admin: '⚡\u2000Admin',
-			}[category.id];
+			let title;
+			if (message.author.id == this.client.ownerID) {
+				title = {
+					general: '📝\u2000General',
+					fun: '🎉\u2000Fun',
+					minigame: '🕹\u2000Minigames (WIP)',
+					images: '🖼\u2000Images',
+					utility: '🔩\u2000Utility',
+					admin: '⚡\u2000Admin',
+					owner: '🛠️\u2000Owner',
+				}[category.id];
+			} else {
+				title = {
+					general: '📝\u2000General',
+					fun: '🎉\u2000Fun',
+					minigame: '🕹\u2000Minigames (WIP)',
+					images: '🖼\u2000Images',
+					utility: '🔩\u2000Utility',
+					admin: '⚡\u2000Admin',
+				}[category.id];
+			}
 
 			if (title) embed.addField(title, `\`${category.map(cmd => cmd.aliases[0]).join('` `')}\``);
 		}
