@@ -58,7 +58,7 @@ class MessageReactionAddListener extends Listener {
 				channel = client.channels.get(shameboardChannel['shameboard']);
 			}
 
-			let Embed = this.client.util.embed()
+			let Embed = client.util.embed()
 				.setColor(reaction.message.member.displayHexColor)
 				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
 				.addField('Jump to', `[message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`, true)
