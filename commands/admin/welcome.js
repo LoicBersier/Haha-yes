@@ -57,7 +57,7 @@ class welcomeCommand extends Command {
 					let messageContent = messages.map(messages => messages.content);
 					if (messageContent == 'y' || messageContent == 'yes') {
 						const body = {guildID: message.guild.id, channelID: message.channel.id, message: args.message};
-						await join.update(body, {where: {guildID: message.guild.id}});
+						await joinChannel.update(body, {where: {guildID: message.guild.id}});
 						return message.channel.send(`The join message have been set with ${args.message}`);
 					} else {
 						return message.channel.send('Not updating.');
