@@ -33,9 +33,25 @@ class tweetCommand extends Command {
 	}
 
 	async exec(message, args) {
-		const client = this.client;
 		let date = new Date();
 		let Attachment = (message.attachments).array();
+		// see if user is not banned
+		const blacklist = await TwitterBlacklist.findOne({where: {userID:message.author.id}});
+		if (blacklist) {
+			return message.channel.send(`You have been blacklisted for the following reasons: \`\`${blacklist.get('reason')}\`\` be less naughty less time.`);
+		}
+
+		// If account is younger than 6 months old don't accept attachment
+		if (Attachment[0] && message.author.createdAt > date.setMonth(date.getMonth() - 6)) {
+			return message.channel.send('Your account need to be 6 months or older to be able to send attachment!');
+		} 
+		
+		// Don't let account new account use this command to prevent spam
+		if (message.author.createdAt > date.setDate(date.getDate() - 7)) {
+			return message.channel.send('Your account is too new to be able to use this command!');
+		}
+				
+		const client = this.client;
 
 		if (!Attachment[0] && !args.text) return message.channel.send('You need to input something for me to tweet!');
 
@@ -53,22 +69,6 @@ class tweetCommand extends Command {
 		filter.addWords(...censor);
 		filter.removeWords(...uncensor);
 		*/
-
-		// see if user is not banned
-		const blacklist = await TwitterBlacklist.findOne({where: {userID:message.author.id}});
-		if (blacklist) {
-			return message.channel.send(`You have been blacklisted for the following reasons: \`\`${blacklist.get('reason')}\`\` be less naughty less time.`);
-		}
-
-		// If account is younger than 6 months old don't accept attachment
-		if (Attachment[0] && message.author.createdAt > date.setMonth(date.getMonth() - 6)) {
-			return message.channel.send('Your account need to be 6 months or older to be able to send attachment!');
-		} 
-
-		// Don't let account new account use this command to prevent spam
-		if (message.author.createdAt > date.setDate(date.getDate() - 7)) {
-			return message.channel.send('Your account is too new to be able to use this command!');
-		}
 
 		// remove zero width space
 		let text = '';
