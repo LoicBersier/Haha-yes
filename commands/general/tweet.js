@@ -83,12 +83,6 @@ class tweetCommand extends Command {
 			text = rand.random(text, message);
 		}
 
-
-
-		if (text.length > 280) {
-			return message.channel.send('Your message is more than the 280 characters limit!');
-		}
-
 		try {
 			// Make sure there is an attachment and if its an image
 			if (Attachment[0]) {
@@ -148,7 +142,10 @@ class tweetCommand extends Command {
 
 			T.post('statuses/update', options, function (err, response) {
 				if (err) {
-					if (err.code == 324) return message.channel.send(err.message);
+					if (err.code == 88) return message.channel.send(err.message); // Rate limit exceeded	
+					if (err.code == 186) return message.channel.send(err.message); // Tweet needs to be a bit shorter.	
+					if (err.code == 187) return message.channel.send(err.message); // Status is a duplicate.
+					if (err.code == 326) return message.channel.send(err.message); // To protect our users from spam and other malicious activity, this account is temporarily locked.
 					console.error('OH NO!!!!');
 					console.error(err);
 					return message.channel.send('OH NO!!! AN ERROR HAS OCCURED!!! please hold on while i find what\'s causing this issue! ');
