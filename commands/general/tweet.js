@@ -50,10 +50,10 @@ class tweetCommand extends Command {
 		if (message.author.createdAt > date.setDate(date.getDate() - 7)) {
 			return message.channel.send('Your account is too new to be able to use this command!');
 		}
-				
-		const client = this.client;
-
+		
 		if (!Attachment[0] && !args.text) return message.channel.send('You need to input something for me to tweet!');
+		
+		const client = this.client;
 
 		let T = new Twit({
 			consumer_key: twiConsumer,
@@ -148,6 +148,7 @@ class tweetCommand extends Command {
 
 			T.post('statuses/update', options, function (err, response) {
 				if (err) {
+					if (err.code == 324) return message.channel.send(err.message);
 					console.error('OH NO!!!!');
 					console.error(err);
 					return message.channel.send('OH NO!!! AN ERROR HAS OCCURED!!! please hold on while i find what\'s causing this issue! ');
@@ -179,7 +180,6 @@ class tweetCommand extends Command {
 				
 				channel = client.channels.get(twiChannel);
 				channel.send({embed: Embed});
-	
 				return message.channel.send(`Go see ur epic tweet https://twitter.com/i/status/${tweetid}`);
 			});
 		}
