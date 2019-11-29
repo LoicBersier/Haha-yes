@@ -41,7 +41,7 @@ class fakebotCommand extends Command {
 			url = Attachment[0].url;
 		}
 		// Show nickname if user is in guild
-		if (message.guild.members.get(args.user.id)) {
+		if (message.guild.members.get(args.user.id).nickname) {
 			username = message.guild.members.get(args.user.id).nickname;
 		}
 		
