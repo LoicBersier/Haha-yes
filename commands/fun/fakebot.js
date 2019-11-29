@@ -36,13 +36,16 @@ class fakebotCommand extends Command {
 		let Attachment = (message.attachments).array();
 		let url;
 		let username = args.user.username;
+		let member = message.guild.members.get(args.user.id);
 		// Get attachment link
 		if (Attachment[0]) {
 			url = Attachment[0].url;
 		}
 		// Show nickname if user is in guild
-		if (message.guild.members.get(args.user.id).nickname) {
-			username = message.guild.members.get(args.user.id).nickname;
+		if (member) {
+			if (member.nickname) {
+				username = member.nickname;
+			}
 		}
 		
 		message.channel.createWebhook(username, {
