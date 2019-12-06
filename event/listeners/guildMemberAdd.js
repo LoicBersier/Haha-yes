@@ -15,7 +15,7 @@ class guildMemberAddListener extends Listener {
 			guild.setNickname('fart piss');
 		}
 
-		const join = await joinChannel.findOne({where: {guildID: guild.id}});
+		const join = await joinChannel.findOne({where: {guildID: guild.guild.id}});
 
 		if (join) {
 			const channel = this.client.channels.get(join.get('channelID'));

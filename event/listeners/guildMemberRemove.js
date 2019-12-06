@@ -11,7 +11,7 @@ class guildMemberRemoveListener extends Listener {
 	}
 
 	async exec(guild) {
-		const leave = await leaveChannel.findOne({where: {guildID: guild.id}});
+		const leave = await leaveChannel.findOne({where: {guildID: guild.guild.id}});
 		if (leave) {
 			const channel = this.client.channels.get(leave.get('channelID'));
 
