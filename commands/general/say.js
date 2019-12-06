@@ -7,7 +7,7 @@ class SayCommand extends Command {
 		super('say', {
 			aliases: ['say', 'sayd'],
 			category: 'general',
-			clientPermissions: ['SEND_MESSAGES', 'MANAGE_MESSAGES'],
+			clientPermissions: ['SEND_MESSAGES'],
 			args: [
 				{
 					id: 'text',
@@ -148,11 +148,18 @@ class SayCommand extends Command {
 		//	  Send the final text
 		if (attach) {
 			if (message.util.parsed.alias == 'sayd')
-				message.delete();
+				if (message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES'))
+					message.delete();
+				else
+					message.channel.send('Im missing he `MANAGE_MESSAGES` perm to delete your message!');
+
 			return message.channel.send(text, {files: [attach]});
 		} else {
 			if (message.util.parsed.alias == 'sayd')
-				message.delete();
+				if (message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES'))
+					message.delete();
+				else
+					message.channel.send('Im missing he `MANAGE_MESSAGES` perm to delete your message!');
 			return message.channel.send(text);
 		}
 	}

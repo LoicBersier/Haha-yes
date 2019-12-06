@@ -8,7 +8,7 @@ class fakebotCommand extends Command {
 			clientPermissions: ['MANAGE_WEBHOOKS'],
 			args: [
 				{
-					id: 'member',
+					id: 'user',
 					type: 'user',
 					prompt: {
 						start: 'Who should i fake?',
@@ -35,20 +35,28 @@ class fakebotCommand extends Command {
 	async exec(message, args) {
 		let Attachment = (message.attachments).array();
 		let url;
+		let username = args.user.username;
+		let member = message.guild.members.get(args.user.id);
 		// Get attachment link
 		if (Attachment[0]) {
 			url = Attachment[0].url;
 		}
+		// Show nickname if user is in guild
+		if (member) {
+			if (member.nickname) {
+				username = member.nickname;
+			}
+		}
 		
-		message.channel.createWebhook(args.member.username, {
-			avatar: args.member.displayAvatarURL(),
+		message.channel.createWebhook(username, {
+			avatar: args.user.displayAvatarURL(),
 			reason: `Fakebot/user command triggered by: ${message.author.username}`
 		})
 			.then(webhook => {
 				// Have to edit after creation otherwise the picture doesn't get applied
 				webhook.edit({
-					name: args.member.username,
-					avatar: args.member.displayAvatarURL(),
+					name: username,
+					avatar: args.user.displayAvatarURL(),
 					reason: `Fakebot/user command triggered by: ${message.author.username}`
 				});
 				this.client.fetchWebhook(webhook.id, webhook.token)
@@ -61,7 +69,9 @@ class fakebotCommand extends Command {
 							webhook.send(args.message);
 
 						setTimeout(() => {
-							webhook.delete();
+							webhook.delete({
+								reason: `Fakebot/user command triggered by: ${message.author.username}`
+							});
 						}, 3000);
 					});
 			});

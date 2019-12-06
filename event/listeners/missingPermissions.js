@@ -12,7 +12,7 @@ class missingPermissionsListener extends Listener {
 		switch(type) {
 		case 'client':
 			if (missing == 'SEND_MESSAGES') {
-				return message.author.send(`Im missing the required permissions for this command!, \`${missing}\``);
+				return;
 			} else {
 				message.reply(`Im missing the required permissions for this command!, \`${missing}\``);
 			}

@@ -33,11 +33,27 @@ class tweetCommand extends Command {
 	}
 
 	async exec(message, args) {
-		const client = this.client;
 		let date = new Date();
 		let Attachment = (message.attachments).array();
+		// see if user is not banned
+		const blacklist = await TwitterBlacklist.findOne({where: {userID:message.author.id}});
+		if (blacklist) {
+			return message.channel.send(`You have been blacklisted for the following reasons: \`\`${blacklist.get('reason')}\`\` be less naughty less time.`);
+		}
 
+		// If account is younger than 6 months old don't accept attachment
+		if (Attachment[0] && message.author.createdAt > date.setMonth(date.getMonth() - 6)) {
+			return message.channel.send('Your account need to be 6 months or older to be able to send attachment!');
+		} 
+		
+		// Don't let account new account use this command to prevent spam
+		if (message.author.createdAt > date.setDate(date.getDate() - 7)) {
+			return message.channel.send('Your account is too new to be able to use this command!');
+		}
+		
 		if (!Attachment[0] && !args.text) return message.channel.send('You need to input something for me to tweet!');
+		
+		const client = this.client;
 
 		let T = new Twit({
 			consumer_key: twiConsumer,
@@ -54,22 +70,6 @@ class tweetCommand extends Command {
 		filter.removeWords(...uncensor);
 		*/
 
-		// see if user is not banned
-		const blacklist = await TwitterBlacklist.findOne({where: {userID:message.author.id}});
-		if (blacklist) {
-			return message.channel.send(`You have been blacklisted for the following reasons: \`\`${blacklist.get('reason')}\`\` be less naughty less time.`);
-		}
-
-		// If account is younger than 6 months old don't accept attachment
-		if (Attachment[0] && message.author.createdAt > date.setMonth(date.getMonth() - 6)) {
-			return message.channel.send('Your account need to be 6 months or older to be able to send attachment!');
-		} 
-
-		// Don't let account new account use this command to prevent spam
-		if (message.author.createdAt > date.setDate(date.getDate() - 7)) {
-			return message.channel.send('Your account is too new to be able to use this command!');
-		}
-
 		// remove zero width space
 		let text = '';
 		if (args.text) {
@@ -81,12 +81,6 @@ class tweetCommand extends Command {
 			*/
 
 			text = rand.random(text, message);
-		}
-
-
-
-		if (text.length > 280) {
-			return message.channel.send('Your message is more than the 280 characters limit!');
 		}
 
 		try {
@@ -148,6 +142,10 @@ class tweetCommand extends Command {
 
 			T.post('statuses/update', options, function (err, response) {
 				if (err) {
+					if (err.code == 88) return message.channel.send(err.message); // Rate limit exceeded	
+					if (err.code == 186) return message.channel.send(err.message); // Tweet needs to be a bit shorter.	
+					if (err.code == 187) return message.channel.send(err.message); // Status is a duplicate.
+					if (err.code == 326) return message.channel.send(err.message); // To protect our users from spam and other malicious activity, this account is temporarily locked.
 					console.error('OH NO!!!!');
 					console.error(err);
 					return message.channel.send('OH NO!!! AN ERROR HAS OCCURED!!! please hold on while i find what\'s causing this issue! ');
@@ -179,7 +177,6 @@ class tweetCommand extends Command {
 				
 				channel = client.channels.get(twiChannel);
 				channel.send({embed: Embed});
-	
 				return message.channel.send(`Go see ur epic tweet https://twitter.com/i/status/${tweetid}`);
 			});
 		}
