@@ -16,12 +16,13 @@ class ServerCommand extends Command {
 	}
 
 	async exec(message) {
+		let botCount = message.guild.members.filter(member => member.user.bot).size;
 		const addEmbed = this.client.util.embed()
 			.setColor(message.member.displayHexColor)
 			.setTitle(message.guild.name)
 			.setThumbnail(message.guild.iconURL())
-			.addField('Number of users', message.guild.members.filter(member => !member.user.bot).size, true)
-			.addField('Number of bots', message.guild.members.filter(member => member.user.bot).size, true)
+			.addField('Number of users', message.guild.memberCount - botCount, true)
+			.addField('Number of bots', botCount, true)
 			.addField('Total number of members', message.guild.memberCount, true)
 			.addField('Number of channels', message.guild.channels.size, true)
 			.addBlankField()
