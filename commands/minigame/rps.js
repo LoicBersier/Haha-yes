@@ -14,7 +14,7 @@ class rpsCommand extends Command {
 				},
 			],
 			description: {
-				content: 'Simply rock paper scissors\nCredit to: druid#0425 (276882603158798336))',
+				content: 'Simply rock paper scissors\nCredit to: druid#0425 (276882603158798336)',
 				usage: '[rock/paper/scissors]',
 				examples: ['rock']
 			}

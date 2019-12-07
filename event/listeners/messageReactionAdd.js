@@ -50,7 +50,7 @@ class MessageReactionAddListener extends Listener {
 			}
 		}
 
-		function sendEmbed(name, emote, client) {
+		async function sendEmbed(name, emote, client) {
 			let channel;
 			if (name == 'starboard') {
 				channel = client.channels.get(starboardChannel['starboard']);
@@ -78,7 +78,7 @@ class MessageReactionAddListener extends Listener {
 			} else {
 				Embed.setDescription(messageContent);
 				return channel.send({files: messageAttachments, embed: Embed})
-					.catch(() => channel.send(messageAttachments, { embed: Embed}));
+					.catch(async () => channel.send(messageAttachments, { embed: Embed}));
 			}
 		}
 	}
