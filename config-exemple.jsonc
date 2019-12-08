@@ -5,7 +5,6 @@
 		"Your prefix " //IMPORTANT TO BE LIKE THAT ( you can add more prefix ofc )
 	],
 	"ownerID":  "Id of the owner ( probably you )", //optional but recommended
-	"botID":    "id of the bot", //optional but recommended
 	"statsChannel": "channel where the bot send his stats", //optional but recommended
 	"supportServer":    "Invite to the support server of the bot", //optional but recommended
 	"feedbackChannel": "id of the channel where the feedback goes", //optional but recommended
