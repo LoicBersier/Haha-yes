@@ -1,7 +1,11 @@
 const { Listener } = require('discord-akairo');
-const { prefix, statsChannel, botID } = require('../../config.json');
+const akairoVersion = require('discord-akairo').version;
+const djsVersion = require('discord.js').version;
+const pjson = require('../../package.json');
+const { prefix, statsChannel, ownerID, supportServer } = require('../../config.json');
 const game = require('../../json/status/playing.json');
 const watch = require('../../json/status/watching.json');
+
 
 class ReadyListener extends Listener {
 	constructor() {
@@ -12,9 +16,21 @@ class ReadyListener extends Listener {
 	}
 
 	async exec() {
+		let commandSize = this.client.commandHandler.modules.size;
+		let clientTag = this.client.user.tag;
+		let guildSize = this.client.guilds.size;
+		let userSize = this.client.users.size;
+		let channelSize = this.client.channels.size;
+		let profilePicture = this.client.user.displayAvatarURL();
+		let clientID = this.client.user.id;
+		let author = this.client.users.get(ownerID).tag;
+
 		//  Send stats to the console
-		console.log(`\x1b[32mLogged in as \x1b[34m${this.client.user.tag}\x1b[0m! (\x1b[33m${this.client.user.id}\x1b[0m)`);
-		console.log(`Ready to serve in \x1b[33m${this.client.channels.size}\x1b[0m channels on \x1b[33m${this.client.guilds.size}\x1b[0m servers, for a total of \x1b[33m${this.client.users.size}\x1b[0m users. \x1b${this.client.readyAt}\x1b[0m`);
+		console.log('===========[ READY ]===========');
+		console.log(`\x1b[32mLogged in as \x1b[34m${clientTag}\x1b[0m! (\x1b[33m${clientID}\x1b[0m)`);
+		console.log(`Ready to serve in \x1b[33m${channelSize}\x1b[0m channels on \x1b[33m${guildSize}\x1b[0m servers, for a total of \x1b[33m${userSize}\x1b[0m users.`);
+		console.log(`There is \x1b[33m${commandSize}\x1b[0m command loaded`);
+		console.log(`${this.client.readyAt}`);
 
 		//Bot status
 		if (Math.floor((Math.random() * 2) + 1) == 1) {
@@ -33,10 +49,10 @@ class ReadyListener extends Listener {
 			this.client.user.setActivity(`${status} | My prefix is: ${prefix[0]}`, { type: 'PLAYING' });
 		}
 
-		//  Send stats to the 'stats' channel in the support server if its not the test bot
-		if (this.client.user.id == botID) {
+		// If stats channel settings exist, send bot stats to it
+		if (statsChannel) {
 			const channel = this.client.channels.get(statsChannel);
-			channel.send(`Ready to serve in ${this.client.channels.size} channels on ${this.client.guilds.size} servers, for a total of ${this.client.users.size} users.\n${this.client.readyAt}`);
+			channel.send(`Ready to serve in ${channelSize} channels on ${guildSize} servers, for a total of ${userSize} users.\nThere is ${commandSize} command loaded\n${this.client.readyAt}`);
 		}
 		/*
 		//Fetch messages in every channel ( so they can still enter starboard in case of reboot)
@@ -55,6 +71,41 @@ class ReadyListener extends Listener {
 			}
 		}	
 		*/
+
+		// Expose stats
+		const port = 3000;
+
+		const http = require('http');
+
+		const requestHandler = (req, res) => {
+			let response = {
+				'commandSize': commandSize,
+				'ClientTag': clientTag,
+				'guildSize': guildSize,
+				'userSize': userSize,
+				'profilePicture': profilePicture,
+				'clientID': clientID,
+				'djsVersion': djsVersion,
+				'akairoVersion': akairoVersion,
+				'homepage': pjson.homepage,
+				'author': author,
+				'supportServer': supportServer
+			};
+			res.statusCode = 200;
+			res.setHeader('Content-Type', 'application/json');
+			res.end(JSON.stringify(response));
+		};
+		
+		const server = http.createServer(requestHandler);
+		
+		server.listen(port, (err) => {
+			if (err) {
+				return console.log('something bad happened', err);
+			}
+		});
+		console.log(`Exposing stats on port ${port}`);
+		console.log('===========[ READY ]===========');
+
 	}
 }
 
