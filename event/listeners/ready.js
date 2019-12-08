@@ -78,11 +78,18 @@ class ReadyListener extends Listener {
 		const http = require('http');
 
 		const requestHandler = (req, res) => {
+			// Refresh some info
+			commandSize = this.client.commandHandler.modules.size;
+			guildSize = this.client.guilds.size;
+			userSize = this.client.users.size;
+			profilePicture = this.client.user.displayAvatarURL();
+			
 			let response = {
 				'commandSize': commandSize,
 				'ClientTag': clientTag,
 				'guildSize': guildSize,
 				'userSize': userSize,
+				'prefixSize': prefix.length,
 				'profilePicture': profilePicture,
 				'clientID': clientID,
 				'djsVersion': djsVersion,
