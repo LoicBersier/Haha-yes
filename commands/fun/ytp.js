@@ -137,7 +137,7 @@ class ytpCommand extends Command {
 				effect_SpeedUp: true,
 				effect_SlowDown: true,
 				effect_Dance: true,
-				effect_Squidward: false // Not yet implemented
+				effect_Squidward: true
 			}
 		};
 	
