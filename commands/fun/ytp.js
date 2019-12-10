@@ -27,6 +27,61 @@ class ytpCommand extends Command {
 					flag: ['--force']
 				},
 				{
+					id: 'randomSound',
+					match: 'flag',
+					flag: ['--randomSound']
+				},
+				{
+					id: 'randomSoundMute',
+					match: 'flag',
+					flag: ['--randomSoundMute']
+				},
+				{
+					id: 'reverse',
+					match: 'flag',
+					flag: ['--reverse']
+				},
+				{
+					id: 'chorus',
+					match: 'flag',
+					flag: ['--chorus']
+				},
+				{
+					id: 'vibrato',
+					match: 'flag',
+					flag: ['--vibrato']
+				},
+				{
+					id: 'highPitch',
+					match: 'flag',
+					flag: ['--highPitch']
+				},
+				{
+					id: 'lowPitch',
+					match: 'flag',
+					flag: ['--lowPitch']
+				},
+				{
+					id: 'speedUp',
+					match: 'flag',
+					flag: ['--speedUp']
+				},
+				{
+					id: 'slowDown',
+					match: 'flag',
+					flag: ['--slowDown']
+				},
+				{
+					id: 'dance',
+					match: 'flag',
+					flag: ['--dance']
+				},
+				{
+					id: 'squidward',
+					match: 'flag',
+					flag: ['--squidward']
+				},
+				{
 					id: 'link',
 					type: 'string'
 				}
@@ -40,6 +95,7 @@ class ytpCommand extends Command {
 	}
 
 	async exec(message, args) {
+		console.log(!args.squidward);
 		let MAX_CLIPS = 20;
 
 		if (args.pool) {
@@ -127,17 +183,17 @@ class ytpCommand extends Command {
 			MAX_CLIPS: MAX_CLIPS,
 			transitions: true,
 			effects: {  
-				effect_RandomSound: true,
-				effect_RandomSoundMute: true,
-				effect_Reverse: true,
-				effect_Chorus: true,
-				effect_Vibrato: true,
-				effect_HighPitch: true,
-				effect_LowPitch: true,
-				effect_SpeedUp: true,
-				effect_SlowDown: true,
-				effect_Dance: true,
-				effect_Squidward: true
+				effect_RandomSound: !args.randomSound,
+				effect_RandomSoundMute: !args.randomSoundMute,
+				effect_Reverse: !args.reverse,
+				effect_Chorus: !args.chorus,
+				effect_Vibrato: !args.vibrato,
+				effect_HighPitch: !args.highPitch,
+				effect_LowPitch: !args.lowPitch,
+				effect_SpeedUp: !args.speedUp,
+				effect_SlowDown: !args.slowDown,
+				effect_Dance: !args.dance,
+				effect_Squidward: !args.squidward
 			}
 		};
 	
