@@ -31,7 +31,7 @@
     "twit": "^2.2.11",
     "youtube-dl": "^1.13.1",
     "ytdl-core": "^0.29.7",
-    "ytpplus-node": "^1.1.2"
+    "ytpplus-node": "git+https://git@github.com/loicbersier/ytpplus-node.git"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
