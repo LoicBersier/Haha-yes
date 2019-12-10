@@ -3,7 +3,6 @@ const YTPGenerator = require('ytpplus-node');
 const os = require('os');
 const fs = require('fs');
 const youtubedl = require('youtube-dl');
-const { prefix } = require('../../config.json');
 
 class ytpCommand extends Command {
 	constructor() {
@@ -51,7 +50,7 @@ class ytpCommand extends Command {
 				}
 			});
 
-			return message.channel.send(`There is currently ${mp4.length} videos, you can add yours by doing \`\`${prefix[0]}ytp --add (link or attachment)\`\``);
+			return message.channel.send(`There is currently ${mp4.length} videos, you can add yours by doing \`\`${this.client.commandHandler.prefix[0]}ytp --add (link or attachment)\`\``);
 		}
 
 		if (args.add) {
@@ -88,7 +87,7 @@ class ytpCommand extends Command {
 		} 
 
 
-		if (!message.channel.nsfw && !args.force) return message.channel.send('Please execute this command in an NSFW channel ( Content might not be NSFW but since the video are user submitted better safe than sorry ) OR --force to make the command work outside of nsfw channel BE AWARE THAT IT WON\'T CHANGE THE FINAL RESULT SO NSFW CAN STILL HAPPEN');
+		if (!message.channel.nsfw && !args.force) return message.channel.send(`Please execute this command in an NSFW channel ( Content might not be NSFW but since the video are user submitted better safe than sorry ) OR do \`\`${this.client.commandHandler.prefix[0]}--force\`\` to make the command work outside of nsfw channel BE AWARE THAT IT WON'T CHANGE THE FINAL RESULT SO NSFW CAN STILL HAPPEN`);
 
 		// Read userVid folder and select random vid and only take .mp4
 		let mp4 = [];
@@ -111,7 +110,7 @@ class ytpCommand extends Command {
 			}
 		}
 
-		let loadingmsg = await message.channel.send(`Processing, this can take a **long** time, i'll ping you when i finished <a:loadingmin:527579785212329984>\nSome info: There is currently ${mp4.length} videos, you can add yours by doing \`\`${prefix[0]}ytp --add (link or attachment)\`\``);
+		let loadingmsg = await message.channel.send(`Processing, this can take a **long** time, i'll ping you when i finished <a:loadingmin:527579785212329984>\nSome info: There is currently ${mp4.length} videos, you can add yours by doing \`\`${this.client.commandHandler.prefix[0]}ytp --add (link or attachment)\`\``);
 
 
 		let options = {  

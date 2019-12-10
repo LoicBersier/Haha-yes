@@ -1,5 +1,4 @@
 const { Command } = require('discord-akairo');
-const { prefix } = require('../../config.json');
 
 class HelpCommand extends Command {
 	constructor() {
@@ -39,14 +38,14 @@ class HelpCommand extends Command {
 
 		const embed = this.client.util.embed()
 			.setColor(message.member.displayHexColor)
-			.setTitle(`\`${prefix[0]}${command.aliases[0]} ${description.usage}\``)
+			.setTitle(`\`${this.client.commandHandler.prefix[0]}${command.aliases[0]} ${description.usage}\``)
 			.addField('Description', description.content)
-			.setFooter(`All the available prefix: ${prefix.join(' | ')}`);
+			.setFooter(`All the available prefix: ${this.client.commandHandler.prefix.join(' | ')}`);
 
 		for (const field of description.fields) embed.addField(field.name, field.value);
 
 		if (description.examples.length) {
-			const text = `${prefix[0]}${command.aliases[0]}`;
+			const text = `${this.client.commandHandler.prefix[0]}${command.aliases[0]}`;
 			embed.addField('Examples', `\`${text} ${description.examples.join(`\`\n\`${text} `)}\``, true);
 		}
 
@@ -71,9 +70,9 @@ class HelpCommand extends Command {
 			.addField('Command List',
 				[
 					'This is a list of commands.',
-					`To view details for a command, do \`${prefix[0]}help <command>\`.`
+					`To view details for a command, do \`${this.client.commandHandler.prefix[0]}help <command>\`.`
 				])
-			.setFooter(`All the available prefix: ${prefix.join(' | ')}`);
+			.setFooter(`All the available prefix: ${this.client.commandHandler.prefix.join(' | ')}`);
 
 		for (const category of this.handler.categories.values()) {
 			let title;

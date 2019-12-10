@@ -1,6 +1,5 @@
 const { Command } = require('discord-akairo');
 const Tag = require('../../models').Tag;
-const { prefix } = require('../../config.json');
 
 class TagCommand extends Command {
 	constructor() {
@@ -47,7 +46,7 @@ class TagCommand extends Command {
 					Tag.destroy({where: {trigger: args.trigger, serverID: message.guild.id}});
 					return message.channel.send('successfully deleted the following tag: ' + args.trigger);
 				} else {
-					return message.channel.send(`You are not the owner of this tag, if you think it is problematic ask an admin to remove it by doing ${prefix[0]}tag ${args.trigger} --remove`);
+					return message.channel.send(`You are not the owner of this tag, if you think it is problematic ask an admin to remove it by doing ${this.client.commandHandler.prefix[0]}tag ${args.trigger} --remove`);
 				}
 			} else {
 				return message.channel.send('Did not find the specified tag, are you sure it exist?');
@@ -81,7 +80,7 @@ class TagCommand extends Command {
 					return message.channel.send('Took too long to answer. didin\'t update anything.');
 				});
 		} else {
-			return message.channel.send(`You are not the owner of this tag, if you think it is problematic ask an admin to remove it by doing ${prefix[0]}tag ${args.trigger} --remove`);
+			return message.channel.send(`You are not the owner of this tag, if you think it is problematic ask an admin to remove it by doing ${this.client.commandHandler.prefix[0]}tag ${args.trigger} --remove`);
 		}
 	}
 }
