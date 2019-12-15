@@ -143,7 +143,7 @@ class tweetCommand extends Command {
 			T.post('statuses/update', options, function (err, response) {
 				if (err) {
 					if (err.code == 88) return message.channel.send(err.message); // Rate limit exceeded	
-					if (err.code == 186) return message.channel.send(err.message); // Tweet needs to be a bit shorter.	
+					if (err.code == 186) return message.channel.send(`${err.message} Your message was ${text.length} characters, you need to remove ${text.length - 280} characters`); // Tweet needs to be a bit shorter.	
 					if (err.code == 187) return message.channel.send(err.message); // Status is a duplicate.
 					if (err.code == 326) return message.channel.send(err.message); // To protect our users from spam and other malicious activity, this account is temporarily locked.
 					console.error('OH NO!!!!');
