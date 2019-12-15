@@ -36,7 +36,11 @@ class RedditCommand extends Command {
 		fetch('https://www.reddit.com/r/' + args.sub + '.json?limit=100').then((response) => {
 			return response.json();
 		}).then((response) => { 
-			if (!response.data)
+			console.log(response);
+			if (response.error == 404)
+				return message.channel.send('Not a valid subreddit');
+
+			if (response.data.dist == 0)
 				return message.channel.send('Not a valid subreddit');
 
 			let i = Math.floor((Math.random() * response.data.children.length));
