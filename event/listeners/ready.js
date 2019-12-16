@@ -2,7 +2,7 @@ const { Listener } = require('discord-akairo');
 const akairoVersion = require('discord-akairo').version;
 const djsVersion = require('discord.js').version;
 const pjson = require('../../package.json');
-const { prefix, statsChannel, ownerID, supportServer } = require('../../config.json');
+const { prefix, statsChannel, ownerID, supportServer, exposeStats } = require('../../config.json');
 const game = require('../../json/status/playing.json');
 const watch = require('../../json/status/watching.json');
 
@@ -73,44 +73,47 @@ class ReadyListener extends Listener {
 		*/
 
 		// Expose stats
-		const port = 3000;
+		if (exposeStats) {
+			const port = 3000;
 
-		const http = require('http');
-
-		const requestHandler = (req, res) => {
-			// Refresh some info
-			commandSize = this.client.commandHandler.modules.size;
-			guildSize = this.client.guilds.size;
-			userSize = this.client.users.size;
-			profilePicture = this.client.user.displayAvatarURL();
-			
-			let response = {
-				'commandSize': commandSize,
-				'ClientTag': clientTag,
-				'guildSize': guildSize,
-				'userSize': userSize,
-				'prefixSize': prefix.length,
-				'profilePicture': profilePicture,
-				'clientID': clientID,
-				'djsVersion': djsVersion,
-				'akairoVersion': akairoVersion,
-				'homepage': pjson.homepage,
-				'author': author,
-				'supportServer': supportServer
+			const http = require('http');
+	
+			const requestHandler = (req, res) => {
+				// Refresh some info
+				commandSize = this.client.commandHandler.modules.size;
+				guildSize = this.client.guilds.size;
+				userSize = this.client.users.size;
+				profilePicture = this.client.user.displayAvatarURL();
+				
+				let response = {
+					'commandSize': commandSize,
+					'ClientTag': clientTag,
+					'guildSize': guildSize,
+					'userSize': userSize,
+					'prefixSize': prefix.length,
+					'profilePicture': profilePicture,
+					'clientID': clientID,
+					'djsVersion': djsVersion,
+					'akairoVersion': akairoVersion,
+					'homepage': pjson.homepage,
+					'author': author,
+					'supportServer': supportServer
+				};
+				res.statusCode = 200;
+				res.setHeader('Content-Type', 'application/json');
+				res.end(JSON.stringify(response));
 			};
-			res.statusCode = 200;
-			res.setHeader('Content-Type', 'application/json');
-			res.end(JSON.stringify(response));
-		};
-		
-		const server = http.createServer(requestHandler);
-		
-		server.listen(port, (err) => {
-			if (err) {
-				return console.log('something bad happened', err);
-			}
-		});
-		console.log(`Exposing stats on port ${port}`);
+			
+			const server = http.createServer(requestHandler);
+			
+			server.listen(port, (err) => {
+				if (err) {
+					return console.log('something bad happened', err);
+				}
+			});
+			console.log(`Exposing stats on port ${port}`);
+		}
+
 		console.log('===========[ READY ]===========');
 
 	}
