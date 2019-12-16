@@ -18,6 +18,7 @@ class guildMemberRemoveListener extends Listener {
 			let byeMessage = leave.get('message');
 
 			byeMessage = byeMessage.replace(/\[member\]/, guild.user.username);
+			byeMessage = byeMessage.replace(/\[memberPing\]/, guild.user);
 			byeMessage = byeMessage.replace(/\[server\]/, guild.guild.name);
 
 			let attach;

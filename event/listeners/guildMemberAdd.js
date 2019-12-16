@@ -23,6 +23,7 @@ class guildMemberAddListener extends Listener {
 			let welcomeMessage = join.get('message');
 
 			welcomeMessage = welcomeMessage.replace(/\[member\]/, guild.user.username);
+			welcomeMessage = welcomeMessage.replace(/\[memberPing\]/, guild.user);
 			welcomeMessage = welcomeMessage.replace(/\[server\]/, guild.guild.name);
 	
 			let attach;
