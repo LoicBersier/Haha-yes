@@ -28,8 +28,8 @@ class execCommand extends Command {
 			const { stdout, stderr } = await exec(args.exec).catch(err => {
 				return message.channel.send(`Oh no, an error has occured\n${err}`);
 			});
-			message.channel.send(`stdout: ${stdout}`, { split: true });
-			message.channel.send(`stderr: ${stderr}`, { split: true });
+			message.channel.send(`stdout: \n\`\`\`${stdout}\`\`\``, { split: true });
+			message.channel.send(`stderr: \n\`\`\`${stderr}\`\`\``, { split: true });
 		}
 		return update();
 	}
