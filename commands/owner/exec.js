@@ -25,9 +25,11 @@ class execCommand extends Command {
 
 	async exec(message, args) {
 		async function update() {
-			const { stdout, stderr } = await exec(args.exec).catch(err => {
+			let { stdout, stderr } = await exec(args.exec).catch(err => {
 				return message.channel.send(`Oh no, an error has occured\n${err}`);
 			});
+			if (!stdout) stdout = 'Nothing';
+			if (!stderr) stderr = 'No error';
 			message.channel.send(`stdout: \n\`\`\`${stdout}\`\`\``, { split: true });
 			message.channel.send(`stderr: \n\`\`\`${stderr}\`\`\``, { split: true });
 		}
