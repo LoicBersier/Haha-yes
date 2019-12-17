@@ -3,7 +3,7 @@ const { Command } = require('discord-akairo');
 class PruneCommand extends Command {
 	constructor() {
 		super('Prune', {
-			aliases: ['Prune', 'clean', 'purge'],
+			aliases: ['Prune', 'clean', 'purge', 'clear'],
 			category: 'admin',
 			args: [
 				{
