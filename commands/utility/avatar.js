@@ -21,10 +21,36 @@ class AvatarCommand extends Command {
 	}
 
 	async exec(message, args) {
-		if (!args.user)
-			return message.channel.send('Your avatar:', {files: [message.author.displayAvatarURL() + '?size=2048']});
-		else
-			return message.channel.send(`${args.user.username}'s avatar:`, {files: [args.user.displayAvatarURL() + '?size=2048']});
+		const avatarEmbed = this.client.util.embed()
+			.setColor(message.member.displayHexColor)
+			.setTitle('Avatar');
+
+
+		if (!args.user) {
+			let format = message.author.displayAvatarURL().substr(message.author.displayAvatarURL().length - 3);
+			if (format == 'gif') {
+				avatarEmbed.setAuthor(message.author.username);
+				avatarEmbed.setDescription(`[gif](${message.author.displayAvatarURL({ format: 'gif', size: 2048 })})`);
+				avatarEmbed.setImage(message.author.displayAvatarURL({ format: 'gif', size: 2048 }));
+			} else {
+				avatarEmbed.setAuthor(message.author.username);
+				avatarEmbed.setDescription(`[png](${message.author.displayAvatarURL({ format: 'png', size: 2048 })}) | [jpeg](${message.author.displayAvatarURL({ format: 'jpg', size: 2048 })}) | [webp](${message.author.displayAvatarURL({ format: 'webp', size: 2048 })})`);
+				avatarEmbed.setImage(message.author.displayAvatarURL({ format: 'png', size: 2048 }));
+			}
+			return message.channel.send({embed: avatarEmbed});
+		} else {
+			let format = args.user.displayAvatarURL().substr(args.user.displayAvatarURL().length - 3);
+			if (format == 'gif') {
+				avatarEmbed.setAuthor(args.user.username);
+				avatarEmbed.setDescription(`[gif](${args.user.displayAvatarURL({ format: 'gif', size: 2048 })})`);
+				avatarEmbed.setImage(args.user.displayAvatarURL({ format: 'gif', size: 2048 }));
+			} else {
+				avatarEmbed.setAuthor(args.user.username);
+				avatarEmbed.setDescription(`[png](${args.user.displayAvatarURL({ format: 'png', size: 2048 })}) | [jpeg](${args.user.displayAvatarURL({ format: 'jpg', size: 2048 })}) | [webp](${args.user.displayAvatarURL({ format: 'webp', size: 2048 })})`);
+				avatarEmbed.setImage(args.user.displayAvatarURL({ format: 'png', size: 2048 }));
+			}
+			return message.channel.send({embed: avatarEmbed});
+		}
 	}
 }
 
