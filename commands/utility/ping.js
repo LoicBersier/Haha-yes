@@ -24,7 +24,7 @@ class PingCommand extends Command {
 		if (args.lazyping) return message.channel.send('Ping him yourself you lazy ass');
 		return message.util.reply('Pong!').then(sent => {
 			const timeDiff = (sent.editedAt || sent.createdAt) - (message.editedAt || message.createdAt);
-			const text = `🔂\u2000**PING**: ${timeDiff} ms`;
+			const text = `🔂\u2000**RTT**: ${timeDiff} ms\n💟\u2000**Heartbeat**: ${Math.round(this.client.ws.ping)} ms`;
 			return message.util.reply(`Pong!\n${text}`);
 		});
 	}
