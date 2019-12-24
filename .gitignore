@@ -4,7 +4,6 @@ config.json
 .DS_Store
 node_modules
 .vscode
-package-lock.json
 error/
 
 # video
