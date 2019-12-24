@@ -33,6 +33,7 @@ class FourchanCommand extends Command {
 		if (boards.getType(args.board) === boards.NSFW && !message.channel.nsfw) return message.channel.send('Sorry, this board only work in nsfw channel!');
 
 		if (!args.board) return;
+		args.board = args.board.replace(/\//g, '');
 		
 		let i = Math.floor((Math.random() * 5) + 1);
 
