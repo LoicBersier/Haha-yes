@@ -75,11 +75,8 @@ class DownloadCommand extends Command {
 				let file = fs.statSync(`${os.tmpdir()}/${fileName}.mp4`);
 				let fileSize = file.size / 1000000.0;
 
-				console.log(fileSize);
-
 				//Compress vid if bigger than 8MB
 				if (fileSize > 8) {
-					console.log('file bigger than 8MB');
 					let compressmsg = await message.channel.send('Video bigger than 8MB compressing now <a:loadingmin:527579785212329984> (This can take a long time!)\nWant it to go faster? Donate to the dev with the donate command, so i can get a better server and do it faster!');
 					loadingmsg.delete();
 
@@ -115,8 +112,8 @@ class DownloadCommand extends Command {
 						file = fs.statSync(`${os.tmpdir()}/${fileName}compressed.mp4`);
 						fileSize = file.size / 1000000.0;
 
-						message.delete();
 						compressmsg.delete();
+						message.delete();
 
 						if (fileSize > 8) {
 							return message.channel.send('File too big!');
@@ -125,20 +122,25 @@ class DownloadCommand extends Command {
 						return message.channel.send({embed: Embed, files: [`${os.tmpdir()}/${fileName}compressed.mp4`]})
 							.catch(err => {
 								console.error(err);
-								compressmsg.delete();
-								loadingmsg.delete();
 								return message.channel.send('File too big');		
+							})
+							.then(() => {
+								// Delete file after it have been sent
+								fs.unlinkSync(`${os.tmpdir()}/${fileName}.mp4`);
 							});			
 					});
 				} else {
 					loadingmsg.delete();
 					message.delete();
 
-					return message.channel.send({embed: Embed, files: [`${os.tmpdir()}/${fileName}.mp4`]})
+					message.channel.send({embed: Embed, files: [`${os.tmpdir()}/${fileName}.mp4`]})
 						.catch(err => {
 							console.error(err);
-							loadingmsg.delete();
-							return message.channel.send('File too big');	
+							message.channel.send('File too big');	
+						})
+						.then(() => {
+							// Delete file after it have been sent
+							fs.unlinkSync(`${os.tmpdir()}/${fileName}.mp4`);
 						});
 				}
 			});
