@@ -51,6 +51,8 @@ class FourchanCommand extends Command {
 
 			let title = response.threads[i].posts[0].sub;
 			let description = response.threads[i].posts[0].com;
+			let boardName = boards.getName(args.board);
+			if (boardName == undefined) boardName = args.board;
 
 			// If title or description is undefined, change it to "no title/description"
 			if (!description) {
@@ -67,7 +69,7 @@ class FourchanCommand extends Command {
 				.setDescription(htmlToText.fromString(description))
 				.setImage(`https://i.4cdn.org/${args.board}/${response.threads[i].posts[0].tim}${response.threads[i].posts[0].ext}`)
 				.setURL(`https://boards.4chan.org/${args.board}/thread/${response.threads[i].posts[0].no}/${response.threads[i].posts[0].semantic_url}`)
-				.setFooter(`${boards.getName(args.board)} | ${response.threads[i].posts[0].name} | ${response.threads[i].posts[0].no}  | ${response.threads[i].posts[0].now}`);
+				.setFooter(`${boardName} | ${response.threads[i].posts[0].name} | ${response.threads[i].posts[0].no}  | ${response.threads[i].posts[0].now}`);
 				
 			// If file type dosen't work on embed, send it as a link
 			if (response.threads[i].posts[0].ext == '.webm' || response.threads[i].posts[0].ext == '.pdf' || response.threads[i].posts[0].ext == '.swf') {
@@ -77,7 +79,12 @@ class FourchanCommand extends Command {
 			} else {
 				message.channel.send(FourchanEmbed);
 			}
-		});
+		})
+			.catch((err) => {
+				if (err.type == 'invalid-json') return message.channel.send('Could not find the board');
+				console.error(err);
+				return message.channel.send('Uh-oh, an error has occured and i don\'t know why!');
+			});
 	}
 }
 module.exports = FourchanCommand;
