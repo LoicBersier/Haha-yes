@@ -44,6 +44,11 @@ class FourchanCommand extends Command {
 
 			i = Math.floor((Math.random() * response.threads.length) + 1);
 
+			// Loop until it found a threads
+			while(!response.threads[i]) {
+				i = Math.floor((Math.random() * response.threads.length) + 1);
+			}
+
 			// If post is sticky search again
 			while(response.threads[i].posts[0].sticky == 1 || !response.threads[i].posts) {
 				i = Math.floor((Math.random() * response.threads.length));
