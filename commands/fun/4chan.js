@@ -1,7 +1,8 @@
 const { Command } = require('discord-akairo');
 const fetch = require('node-fetch');
 const boards = require('4chan-boards');
-const htmlToText = require('html-to-text');
+const Turndown = require('turndown');
+let turndown = new Turndown();
 
 class FourchanCommand extends Command {
 	constructor() {
@@ -70,8 +71,8 @@ class FourchanCommand extends Command {
 
 			const FourchanEmbed = this.client.util.embed()
 				.setColor(message.member.displayHexColor)
-				.setTitle(title)
-				.setDescription(htmlToText.fromString(description))
+				.setTitle(turndown.turndown(title))
+				.setDescription(turndown.turndown(description))
 				.setImage(`https://i.4cdn.org/${args.board}/${response.threads[i].posts[0].tim}${response.threads[i].posts[0].ext}`)
 				.setURL(`https://boards.4chan.org/${args.board}/thread/${response.threads[i].posts[0].no}/${response.threads[i].posts[0].semantic_url}`)
 				.setFooter(`${boardName} | ${response.threads[i].posts[0].name} | ${response.threads[i].posts[0].no}  | ${response.threads[i].posts[0].now}`);
