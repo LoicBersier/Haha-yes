@@ -15,6 +15,7 @@ class guildMemberAddListener extends Listener {
 			guild.setNickname('fart piss');
 		}
 
+
 		const join = await joinChannel.findOne({where: {guildID: guild.guild.id}});
 
 		if (join) {
@@ -22,8 +23,18 @@ class guildMemberAddListener extends Listener {
 
 			let welcomeMessage = join.get('message');
 
-			welcomeMessage = welcomeMessage.replace(/\[member\]/, guild.user.username);
-			welcomeMessage = welcomeMessage.replace(/\[memberPing\]/, guild.user);
+			let invite = new RegExp(/(https?:\/\/)?(www\.)?discord(?:app\.com|\.gg)[/invite/]?(?:(?!.*[Ii10OolL]).[a-zA-Z0-9]{5,6}|[a-zA-Z0-9-]{2,32})/g);
+
+			
+			let username = guild.user.username;
+			let user = guild.user;
+			if (guild.guild.member(guild.user).nickname.match(invite)) {
+				username = username.replace(/(https?:\/\/)?(www\.)?discord(?:app\.com|\.gg)[/invite/]?(?:(?!.*[Ii10OolL]).[a-zA-Z0-9]{5,6}|[a-zA-Z0-9-]{2,32})/g, '[REDACTED]');
+				user = username;
+			}
+
+			welcomeMessage = welcomeMessage.replace(/\[member\]/, username);
+			welcomeMessage = welcomeMessage.replace(/\[memberPing\]/, user);
 			welcomeMessage = welcomeMessage.replace(/\[server\]/, guild.guild.name);
 	
 			let attach;

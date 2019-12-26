@@ -17,8 +17,17 @@ class guildMemberRemoveListener extends Listener {
 
 			let byeMessage = leave.get('message');
 
-			byeMessage = byeMessage.replace(/\[member\]/, guild.user.username);
-			byeMessage = byeMessage.replace(/\[memberPing\]/, guild.user);
+			let invite = new RegExp(/(https?:\/\/)?(www\.)?discord(?:app\.com|\.gg)[/invite/]?(?:(?!.*[Ii10OolL]).[a-zA-Z0-9]{5,6}|[a-zA-Z0-9-]{2,32})/g);
+
+			let username = guild.user.username;
+			let user = guild.user;
+			if (guild.guild.member(guild.user).nickname.match(invite)) {
+				username = username.replace(/(https?:\/\/)?(www\.)?discord(?:app\.com|\.gg)[/invite/]?(?:(?!.*[Ii10OolL]).[a-zA-Z0-9]{5,6}|[a-zA-Z0-9-]{2,32})/g, '[REDACTED]');
+				user = username;
+			}
+
+			byeMessage = byeMessage.replace(/\[member\]/, username);
+			byeMessage = byeMessage.replace(/\[memberPing\]/, user);
 			byeMessage = byeMessage.replace(/\[server\]/, guild.guild.name);
 
 			let attach;
