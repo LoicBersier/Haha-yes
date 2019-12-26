@@ -1,6 +1,5 @@
 const { Listener } = require('discord-akairo');
 const fs = require('fs');
-let messageID = require('../../json/starboard.json');
 
 
 class MessageReactionAddListener extends Listener {
@@ -13,49 +12,50 @@ class MessageReactionAddListener extends Listener {
 
 	async exec(reaction, user) {
 		if (reaction.message.author == user) return;
-		let starboardChannel, shameboardChannel, staremote, starcount, shameemote, shamecount;
-
-		let messageContent = reaction.message.content;
-		let messageAttachments = reaction.message.attachments.map(u=> u.url);
+		let messageID = []; // Where reaction.message.id that entered a board will be stocked so it doesn't enter again
+		let starboardChannel, shameboardChannel;
 		
+		if (messageID.includes(reaction.message.id)) return;
+
 		//	Starboard
 		if (fs.existsSync(`./board/star${reaction.message.guild.id}.json`)) {
 			starboardChannel = require(`../../board/star${reaction.message.guild.id}.json`);
-			staremote = starboardChannel['emote'];
-			starcount = starboardChannel['count'];
+			let staremote = starboardChannel.emote;
+			let starcount = starboardChannel.count;
+			delete require.cache[require.resolve(`../../board/star${reaction.message.guild.id}.json`)]; // Delete the boardChannel cache so it can reload it next time
+
+			if (this.client.util.resolveEmoji(staremote, reaction.message.guild.emojis)) {
+				staremote = this.client.util.resolveEmoji(staremote, reaction.message.guild.emojis).name;
+			}
 
 			if (reaction.emoji.name == staremote && reaction.count == starcount) {
-				if (messageID.includes(reaction.message.id)) {
-					console.log('Message already in starboard!');
-				} else {
-					messageID.push(reaction.message.id);
-					sendEmbed('starboard', staremote, this.client);
-				}
+				messageID.push(reaction.message.id);
+				return sendEmbed('starboard', staremote, this.client);
 			}
 		}
 
 		//Shameboard
 		if (fs.existsSync(`./board/shame${reaction.message.guild.id}.json`)) {
 			shameboardChannel = require(`../../board/shame${reaction.message.guild.id}.json`);
-			shameemote = shameboardChannel['emote'];
-			shamecount = shameboardChannel['count'];
+			let shameemote = shameboardChannel.emote;
+			let shamecount = shameboardChannel.count;
+			delete require.cache[require.resolve(`../../board/shame${reaction.message.guild.id}.json`)]; // Delete the boardChannel cache so it can reload it next time
+
 
 			if (reaction.emoji.name == shameemote && reaction.count == shamecount) {
-				if (messageID.includes(reaction.message.id)) {
-					console.log('Message already in shameboard!');
-				} else {
-					messageID.push(reaction.message.id);
-					sendEmbed('shameboard', shameemote, this.client);
-				}
+				messageID.push(reaction.message.id);
+				return sendEmbed('shameboard', shameemote, this.client);
 			}
 		}
 
 		async function sendEmbed(name, emote, client) {
+			let messageAttachments = reaction.message.attachments.map(u=> u.url);
+			// Should change this so it automatically pic the channel ( I'm lazy right now )
 			let channel;
 			if (name == 'starboard') {
-				channel = client.channels.get(starboardChannel['starboard']);
+				channel = client.channels.get(starboardChannel.starboard);
 			} else {
-				channel = client.channels.get(shameboardChannel['shameboard']);
+				channel = client.channels.get(shameboardChannel.shameboard);
 			}
 
 			let Embed = client.util.embed()
@@ -66,19 +66,23 @@ class MessageReactionAddListener extends Listener {
 				.setFooter(reaction.count + ' ' + emote)
 				.setTimestamp();
 
+			if (reaction.message.guild.emojis.find(emoji => emoji.name === emote)) {
+				Embed.setFooter(reaction.count, reaction.message.guild.emojis.find(emoji => emoji.name === emote).url);
+			}
+
 			// if message come from nsfw channel and the star/shameboard channel isn't nsfw put it in spoiler
 			if (reaction.message.channel.nsfw && !channel.nsfw) {
-				Embed.setDescription(`||${messageContent}||`);
+				Embed.setDescription(`||${reaction.message.content}||`);
 				if (messageAttachments != '') {
-					return channel.send(`||${messageAttachments}||`, {embed: Embed});
+					return channel.send(`||${messageAttachments}||`, { embed: Embed });
 				}
 				else {
 					return channel.send({embed: Embed});
 				}
 			} else {
-				Embed.setDescription(messageContent);
-				return channel.send({files: messageAttachments, embed: Embed})
-					.catch(async () => channel.send(messageAttachments, { embed: Embed}));
+				Embed.setDescription(reaction.message.content);
+				return channel.send({ files: messageAttachments, embed: Embed })
+					.catch(async () => channel.send(messageAttachments, { embed: Embed }));
 			}
 		}
 	}
