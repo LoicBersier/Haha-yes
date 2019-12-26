@@ -21,7 +21,7 @@ class guildMemberRemoveListener extends Listener {
 
 			let username = guild.user.username;
 			let user = guild.user;
-			if (guild.guild.member(guild.user).nickname.match(invite)) {
+			if (username.match(invite)) {
 				username = username.replace(/(https?:\/\/)?(www\.)?discord(?:app\.com|\.gg)[/invite/]?(?:(?!.*[Ii10OolL]).[a-zA-Z0-9]{5,6}|[a-zA-Z0-9-]{2,32})/g, '[REDACTED]');
 				user = username;
 			}
