@@ -26,7 +26,6 @@ class messageReactionRemoveListener extends Listener {
 			}
 
 			if (reaction.emoji.name == staremote && reaction.count < starcount) {
-				console.log('probably removed by now');
 				let channel = this.client.channels.get(starboardChannel.starboard);
 				let message = await channel.messages.get(messageID[reaction.message.id]);
 				message.delete();
@@ -47,7 +46,6 @@ class messageReactionRemoveListener extends Listener {
 			}
 
 			if (reaction.emoji.name == shameemote && reaction.count < shamecount) {
-				console.log('probably removed by now');
 				let channel = this.client.channels.get(shameboardChannel.shameboard);
 				let message = await channel.messages.get(messageID[reaction.message.id]);
 				message.delete();
