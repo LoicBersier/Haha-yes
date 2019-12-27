@@ -19,6 +19,7 @@ class hahaYesClient extends AkairoClient {
 				} 
 			}
 		}, {
+			partials: ['MESSAGE'],
 			disableEveryone: true
 		});
 
