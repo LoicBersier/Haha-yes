@@ -1,5 +1,6 @@
 const { Listener } = require('discord-akairo');
 const fs = require('fs');
+let messageID = []; // Where reaction.message.id that entered a board will be stocked so it doesn't enter again
 
 
 class MessageReactionAddListener extends Listener {
@@ -12,9 +13,8 @@ class MessageReactionAddListener extends Listener {
 
 	async exec(reaction, user) {
 		if (reaction.message.author == user) return;
-		let messageID = []; // Where reaction.message.id that entered a board will be stocked so it doesn't enter again
 		let starboardChannel, shameboardChannel;
-		
+
 		if (messageID.includes(reaction.message.id)) return;
 
 		//	Starboard
