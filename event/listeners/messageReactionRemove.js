@@ -28,6 +28,7 @@ class messageReactionRemoveListener extends Listener {
 			if (messageID[reaction.message.id] && reaction.emoji.name == staremote && reaction.count < starcount) {
 				let channel = this.client.channels.get(starboardChannel.starboard);
 				let message = await channel.messages.get(messageID[reaction.message.id]);
+				delete messageID[reaction.message.id];
 				message.delete();
 			} else if (reaction.emoji.name == staremote && reaction.count >= starcount) {
 				return editEmbed('starboard', staremote, messageID[reaction.message.id], this.client);
@@ -48,6 +49,7 @@ class messageReactionRemoveListener extends Listener {
 			if (messageID[reaction.message.id] && reaction.emoji.name == shameemote && reaction.count < shamecount) {
 				let channel = this.client.channels.get(shameboardChannel.shameboard);
 				let message = await channel.messages.get(messageID[reaction.message.id]);
+				delete messageID[reaction.message.id];
 				message.delete();
 			} else if (reaction.emoji.name == shameemote && reaction.count >= shamecount) {
 				return editEmbed('shameboard', shameemote, messageID[reaction.message.id], this.client);
