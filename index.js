@@ -11,6 +11,13 @@ class hahaYesClient extends AkairoClient {
 	constructor() {
 		super({
 			ownerID: ownerID,
+			presence: {
+				status: 'online',
+				activity: {
+					type: 'PLAYING',
+					name: 'Loading simulator...',
+				} 
+			}
 		}, {
 			disableEveryone: true
 		});
