@@ -1,6 +1,6 @@
 const { Listener } = require('discord-akairo');
 const fs = require('fs');
-let messageID = []; // Where reaction.message.id that entered a board will be stocked so it doesn't enter again
+let messageID = require('../../json/messageID.json'); // Save messages that ented starboard so we can edit/remove the embed
 
 
 class MessageReactionAddListener extends Listener {
@@ -15,8 +15,6 @@ class MessageReactionAddListener extends Listener {
 		if (reaction.message.author == user) return;
 		let starboardChannel, shameboardChannel;
 
-		if (messageID.includes(reaction.message.id)) return;
-
 		//	Starboard
 		if (fs.existsSync(`./board/star${reaction.message.guild.id}.json`)) {
 			starboardChannel = require(`../../board/star${reaction.message.guild.id}.json`);
@@ -28,9 +26,12 @@ class MessageReactionAddListener extends Listener {
 				staremote = this.client.util.resolveEmoji(staremote, reaction.message.guild.emojis).name;
 			}
 
-			if (reaction.emoji.name == staremote && reaction.count == starcount) {
-				messageID.push(reaction.message.id);
-				return sendEmbed('starboard', staremote, this.client);
+			if (reaction.emoji.name == staremote) {
+				if (messageID[reaction.message.id] && reaction.count > starcount) {
+					return editEmbed('starboard', staremote, messageID[reaction.message.id], this.client);
+				} else if (reaction.count == starcount) {
+					return sendEmbed('starboard', staremote, this.client);
+				}
 			}
 		}
 
@@ -41,11 +42,43 @@ class MessageReactionAddListener extends Listener {
 			let shamecount = shameboardChannel.count;
 			delete require.cache[require.resolve(`../../board/shame${reaction.message.guild.id}.json`)]; // Delete the boardChannel cache so it can reload it next time
 
-
-			if (reaction.emoji.name == shameemote && reaction.count == shamecount) {
-				messageID.push(reaction.message.id);
-				return sendEmbed('shameboard', shameemote, this.client);
+			if (this.client.util.resolveEmoji(shameemote, reaction.message.guild.emojis)) {
+				shameemote = this.client.util.resolveEmoji(shameemote, reaction.message.guild.emojis).name;
 			}
+
+			if (reaction.emoji.name == shameemote) {
+				if (messageID[reaction.message.id] && reaction.count > shamecount) {
+					return editEmbed('shameboard', shameemote, messageID[reaction.message.id], this.client);
+				} else if (reaction.count == shamecount) {
+					return sendEmbed('shameboard', shameemote, this.client);
+				}
+			}
+		}
+
+		async function editEmbed(name, emote, boardID, client) {
+			let channel;
+			if (name == 'starboard') {
+				channel = client.channels.get(starboardChannel.starboard);
+			} else {
+				channel = client.channels.get(shameboardChannel.shameboard);
+			}
+
+			let message = await channel.messages.get(boardID);
+
+			let Embed = client.util.embed()
+				.setColor(reaction.message.member.displayHexColor)
+				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
+				.addField('Jump to', `[message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`, true)
+				.addField('Channel', reaction.message.channel, true)
+				.setDescription(message.embeds[0].description)
+				.setFooter(reaction.count + ' ' + emote)
+				.setTimestamp();
+
+			if (reaction.message.guild.emojis.find(emoji => emoji.name === emote)) {
+				Embed.setFooter(reaction.count, reaction.message.guild.emojis.find(emoji => emoji.name === emote).url);
+			}
+
+			message.edit({ embed: Embed });
 		}
 
 		async function sendEmbed(name, emote, client) {
@@ -74,15 +107,22 @@ class MessageReactionAddListener extends Listener {
 			if (reaction.message.channel.nsfw && !channel.nsfw) {
 				Embed.setDescription(`||${reaction.message.content}||`);
 				if (messageAttachments != '') {
-					return channel.send(`||${messageAttachments}||`, { embed: Embed });
+					let message = await channel.send(`||${messageAttachments}||`, { embed: Embed });
+					messageID[reaction.message.id] = message.id;
+					//boardMessage.push({ reactionID: reaction.message.id, boardID: message.id });
 				}
 				else {
-					return channel.send({embed: Embed});
+					let message = await channel.send({embed: Embed});
+					messageID[reaction.message.id] = message.id;
+					//boardMessage.push({ reactionID: reaction.message.id, boardID: message.id });
 				}
 			} else {
 				Embed.setDescription(reaction.message.content);
-				return channel.send({ files: messageAttachments, embed: Embed })
+				let message = await channel.send({ files: messageAttachments, embed: Embed })
 					.catch(async () => channel.send(messageAttachments, { embed: Embed }));
+				messageID[reaction.message.id] = message.id;
+
+				//boardMessage.push({ reactionID: reaction.message.id, boardID: message.id });
 			}
 		}
 	}
