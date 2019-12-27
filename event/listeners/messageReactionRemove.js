@@ -25,7 +25,7 @@ class messageReactionRemoveListener extends Listener {
 				staremote = this.client.util.resolveEmoji(staremote, reaction.message.guild.emojis).name;
 			}
 
-			if (reaction.emoji.name == staremote && reaction.count < starcount) {
+			if (messageID[reaction.message.id] && reaction.emoji.name == staremote && reaction.count < starcount) {
 				let channel = this.client.channels.get(starboardChannel.starboard);
 				let message = await channel.messages.get(messageID[reaction.message.id]);
 				message.delete();
@@ -45,7 +45,7 @@ class messageReactionRemoveListener extends Listener {
 				shameemote = this.client.util.resolveEmoji(shameemote, reaction.message.guild.emojis).name;
 			}
 
-			if (reaction.emoji.name == shameemote && reaction.count < shamecount) {
+			if (messageID[reaction.message.id] && reaction.emoji.name == shameemote && reaction.count < shamecount) {
 				let channel = this.client.channels.get(shameboardChannel.shameboard);
 				let message = await channel.messages.get(messageID[reaction.message.id]);
 				message.delete();
