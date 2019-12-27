@@ -19,6 +19,12 @@ class messageReactionRemoveListener extends Listener {
 		}
 
 		let starboardChannel, shameboardChannel;
+		let reactionCount = reaction.count;
+
+		// If one of the reaction removed is the author of the message add 1 to the reaction count
+		reaction.users.forEach(user => {
+			if (reaction.message.author == user) reactionCount++;
+		});
 
 		//	Starboard
 		if (fs.existsSync(`./board/star${reaction.message.guild.id}.json`)) {
@@ -31,12 +37,12 @@ class messageReactionRemoveListener extends Listener {
 				staremote = this.client.util.resolveEmoji(staremote, reaction.message.guild.emojis).name;
 			}
 
-			if (messageID[reaction.message.id] && reaction.emoji.name == staremote && reaction.count < starcount) {
+			if (messageID[reaction.message.id] && reaction.emoji.name == staremote && reactionCount < starcount) {
 				let channel = this.client.channels.get(starboardChannel.starboard);
 				let message = await channel.messages.get(messageID[reaction.message.id]);
 				delete messageID[reaction.message.id];
 				message.delete();
-			} else if (reaction.emoji.name == staremote && reaction.count >= starcount) {
+			} else if (reaction.emoji.name == staremote && reactionCount >= starcount) {
 				return editEmbed('starboard', staremote, messageID[reaction.message.id], this.client);
 			}
 		}
@@ -52,12 +58,12 @@ class messageReactionRemoveListener extends Listener {
 				shameemote = this.client.util.resolveEmoji(shameemote, reaction.message.guild.emojis).name;
 			}
 
-			if (messageID[reaction.message.id] && reaction.emoji.name == shameemote && reaction.count < shamecount) {
+			if (messageID[reaction.message.id] && reaction.emoji.name == shameemote && reactionCount < shamecount) {
 				let channel = this.client.channels.get(shameboardChannel.shameboard);
 				let message = await channel.messages.get(messageID[reaction.message.id]);
 				delete messageID[reaction.message.id];
 				message.delete();
-			} else if (reaction.emoji.name == shameemote && reaction.count >= shamecount) {
+			} else if (reaction.emoji.name == shameemote && reactionCount >= shamecount) {
 				return editEmbed('shameboard', shameemote, messageID[reaction.message.id], this.client);
 			}
 		}
@@ -78,11 +84,11 @@ class messageReactionRemoveListener extends Listener {
 				.addField('Jump to', `[message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`, true)
 				.addField('Channel', reaction.message.channel, true)
 				.setDescription(message.embeds[0].description)
-				.setFooter(reaction.count + ' ' + emote)
+				.setFooter(reactionCount + ' ' + emote)
 				.setTimestamp();
 
 			if (reaction.message.guild.emojis.find(emoji => emoji.name === emote)) {
-				Embed.setFooter(reaction.count, reaction.message.guild.emojis.find(emoji => emoji.name === emote).url);
+				Embed.setFooter(reactionCount, reaction.message.guild.emojis.find(emoji => emoji.name === emote).url);
 			}
 
 			message.edit({ embed: Embed });
