@@ -14,7 +14,14 @@ class messageListener extends Listener {
 		});
 	}
 
-	async exec(message) {		
+	async exec(message) {	
+		if (message.partial) {
+			await message.fetch()
+				.catch(() => {
+					return;
+				});
+		}
+
 		if (message.author.bot) return;
 
 

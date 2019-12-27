@@ -12,6 +12,13 @@ class MessageReactionAddListener extends Listener {
 	}
 
 	async exec(reaction) {
+		if (reaction.message.partial) {
+			await reaction.message.fetch()
+				.catch(() => {
+					return;
+				});
+		}
+			
 		let starboardChannel, shameboardChannel;
 		let reactionCount = reaction.count;
 

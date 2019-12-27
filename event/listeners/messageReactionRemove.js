@@ -10,8 +10,14 @@ class messageReactionRemoveListener extends Listener {
 		});
 	}
 
-	async exec(reaction, user) {
-		if (reaction.message.author == user) return;
+	async exec(reaction) {
+		if (reaction.message.partial) {
+			await reaction.message.fetch()
+				.catch(() => {
+					return;
+				});
+		}
+
 		let starboardChannel, shameboardChannel;
 
 		//	Starboard
