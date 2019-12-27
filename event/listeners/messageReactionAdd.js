@@ -11,9 +11,15 @@ class MessageReactionAddListener extends Listener {
 		});
 	}
 
-	async exec(reaction, user) {
-		if (reaction.message.author == user) return;
+	async exec(reaction) {
 		let starboardChannel, shameboardChannel;
+		let reactionCount = reaction.count;
+
+		// If one of the reaction is the author of the message remove 1 to the reaction count
+		reaction.users.forEach(user => {
+			if (reaction.message.author == user) reactionCount--;
+		});
+		
 
 		//	Starboard
 		if (fs.existsSync(`./board/star${reaction.message.guild.id}.json`)) {
@@ -22,14 +28,15 @@ class MessageReactionAddListener extends Listener {
 			let starcount = starboardChannel.count;
 			delete require.cache[require.resolve(`../../board/star${reaction.message.guild.id}.json`)]; // Delete the boardChannel cache so it can reload it next time
 
+			// Get name of the custom emoji
 			if (this.client.util.resolveEmoji(staremote, reaction.message.guild.emojis)) {
 				staremote = this.client.util.resolveEmoji(staremote, reaction.message.guild.emojis).name;
 			}
 
 			if (reaction.emoji.name == staremote) {
-				if (messageID[reaction.message.id] && reaction.count > starcount) {
+				if (messageID[reaction.message.id] && reactionCount > starcount) {
 					return editEmbed('starboard', staremote, messageID[reaction.message.id], this.client);
-				} else if (reaction.count == starcount) {
+				} else if (reactionCount == starcount) {
 					return sendEmbed('starboard', staremote, this.client);
 				}
 			}
@@ -41,15 +48,16 @@ class MessageReactionAddListener extends Listener {
 			let shameemote = shameboardChannel.emote;
 			let shamecount = shameboardChannel.count;
 			delete require.cache[require.resolve(`../../board/shame${reaction.message.guild.id}.json`)]; // Delete the boardChannel cache so it can reload it next time
-
+			
+			// Get name of the custom emoji
 			if (this.client.util.resolveEmoji(shameemote, reaction.message.guild.emojis)) {
 				shameemote = this.client.util.resolveEmoji(shameemote, reaction.message.guild.emojis).name;
 			}
 
 			if (reaction.emoji.name == shameemote) {
-				if (messageID[reaction.message.id] && reaction.count > shamecount) {
+				if (messageID[reaction.message.id] && reactionCount > shamecount) {
 					return editEmbed('shameboard', shameemote, messageID[reaction.message.id], this.client);
-				} else if (reaction.count == shamecount) {
+				} else if (reactionCount == shamecount) {
 					return sendEmbed('shameboard', shameemote, this.client);
 				}
 			}
@@ -71,11 +79,11 @@ class MessageReactionAddListener extends Listener {
 				.addField('Jump to', `[message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`, true)
 				.addField('Channel', reaction.message.channel, true)
 				.setDescription(message.embeds[0].description)
-				.setFooter(reaction.count + ' ' + emote)
+				.setFooter(reactionCount + ' ' + emote)
 				.setTimestamp();
 
 			if (reaction.message.guild.emojis.find(emoji => emoji.name === emote)) {
-				Embed.setFooter(reaction.count, reaction.message.guild.emojis.find(emoji => emoji.name === emote).url);
+				Embed.setFooter(reactionCount, reaction.message.guild.emojis.find(emoji => emoji.name === emote).url);
 			}
 
 			message.edit({ embed: Embed });
@@ -96,11 +104,11 @@ class MessageReactionAddListener extends Listener {
 				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
 				.addField('Jump to', `[message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`, true)
 				.addField('Channel', reaction.message.channel, true)
-				.setFooter(reaction.count + ' ' + emote)
+				.setFooter(reactionCount + ' ' + emote)
 				.setTimestamp();
 
 			if (reaction.message.guild.emojis.find(emoji => emoji.name === emote)) {
-				Embed.setFooter(reaction.count, reaction.message.guild.emojis.find(emoji => emoji.name === emote).url);
+				Embed.setFooter(reactionCount, reaction.message.guild.emojis.find(emoji => emoji.name === emote).url);
 			}
 
 			// if message come from nsfw channel and the star/shameboard channel isn't nsfw put it in spoiler
@@ -109,20 +117,16 @@ class MessageReactionAddListener extends Listener {
 				if (messageAttachments != '') {
 					let message = await channel.send(`||${messageAttachments}||`, { embed: Embed });
 					messageID[reaction.message.id] = message.id;
-					//boardMessage.push({ reactionID: reaction.message.id, boardID: message.id });
 				}
 				else {
 					let message = await channel.send({embed: Embed});
 					messageID[reaction.message.id] = message.id;
-					//boardMessage.push({ reactionID: reaction.message.id, boardID: message.id });
 				}
 			} else {
 				Embed.setDescription(reaction.message.content);
 				let message = await channel.send({ files: messageAttachments, embed: Embed })
 					.catch(async () => channel.send(messageAttachments, { embed: Embed }));
 				messageID[reaction.message.id] = message.id;
-
-				//boardMessage.push({ reactionID: reaction.message.id, boardID: message.id });
 			}
 		}
 	}
