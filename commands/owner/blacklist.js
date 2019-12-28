@@ -27,7 +27,7 @@ class blacklistCommand extends Command {
 	}
 
 	async exec(message, args) {
-		const blacklist = await userBlacklist.findOne({where: {userID:message.author.id}});
+		const blacklist = await userBlacklist.findOne({where: {userID:args.userID}});
 		
 		if (!blacklist) {
 			const body = {userID: args.userID};
