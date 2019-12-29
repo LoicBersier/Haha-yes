@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const fetch = require('node-fetch');
-const { yandexAPI } = require('../../config.json');
+const { yandexTRN, yandexDICT } = require('../../config.json');
 
 class TranslationCommand extends Command {
 	constructor() {
@@ -40,7 +40,7 @@ class TranslationCommand extends Command {
 		let text = args.text;
 
 		let textURI = encodeURI(text);
-		fetch(`https://translate.yandex.net/api/v1.5/tr.json/translate?key=${yandexAPI}&text=${textURI}&lang=${language}&options=1`, {
+		fetch(`https://translate.yandex.net/api/v1.5/tr.json/translate?key=${yandexTRN}&text=${textURI}&lang=${language}&options=1`, {
 		}).then((response) => {
 			return response.json();
 		}).then((response) => {
@@ -48,19 +48,56 @@ class TranslationCommand extends Command {
 				return message.channel.send(`${response.message}, you probably didn't input the correct language code, you can check them here! https://tech.yandex.com/translate/doc/dg/concepts/api-overview-docpage/`);
 			else if (response.code != '200')
 				return message.channel.send('An error has occured');
+			let description = response.text[0];
+			let lang = response.detected.lang;
 
+			// Lookup in yandex dictionary the translated word and find other word for it
+			fetch(`https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=${yandexDICT}&lang=${language}-${language}&text=${encodeURI(response.text[0])}`, {
+			}).then((response) => {
+				return response.json();
+			}).then((response) => {
+				console.log(response);
+				if (response.code == '501') return message.channel.send(response.message);
+				// If it didn't find anything in the dictionary simply send the translation
+				if (response.def.length == 0) {
+					const translationEmbed = this.client.util.embed()
+						.setColor(message.member.displayHexColor)
+						.setTitle('Asked for the following translation:')
+						.setURL('https://tech.yandex.com/dictionary/')
+						.setAuthor(message.author.username)
+						.addField('Translated text', description)
+						.addField('Translated from', lang)
+						.setTimestamp()
+						.setFooter('Powered by Yandex.Translate');
 
-			const translationEmbed = this.client.util.embed()
-				.setColor(message.member.displayHexColor)
-				.setTitle('Asked for the following translation:')
-				.setAuthor(message.author.username)
-				.setDescription(response.text[0])
-				.addField('Original text', text)
-				.addField('Translated from', response.detected.lang)
-				.setTimestamp()
-				.setFooter('Powered by Yandex.Translate ');
+					return message.channel.send(translationEmbed);
+				}
+		
+				let dict = '';
 
-			message.channel.send(translationEmbed);
+				if (response.def[0].ts == undefined)
+					description = `${response.def[0].pos} - ${response.def[0].text}`;
+				else
+					description = `${response.def[0].pos} - ${response.def[0].text} - [${response.def[0].ts}]`;
+		
+				for (let i = 0; i < response.def[0].tr.length; i++ ) {
+					dict += `\n${response.def[0].tr[i].pos} - ${response.def[0].tr[i].text} `;
+				}	
+
+				const translationEmbed = this.client.util.embed()
+					.setColor(message.member.displayHexColor)
+					.setTitle('Asked for the following translation:')
+					.setURL('https://tech.yandex.com/dictionary/')
+					.setAuthor(message.author.username)
+					.addField('Translated text', description)
+					.addField('Dictionary', dict)
+					.addField('Translated from', lang)
+					.setTimestamp()
+					.setFooter('Powered by Yandex.Translate & Yandex.Dictionary');
+
+				return message.channel.send(translationEmbed);
+			});
+
 		});
 	}
 }
