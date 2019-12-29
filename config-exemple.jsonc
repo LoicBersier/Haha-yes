@@ -9,7 +9,8 @@
 	"supportServer":    "Invite to the support server of the bot", //optional but recommended
 	"exposeStats": true, // False or true, it open a webserver that expose various stats about the bot
 	"feedbackChannel": "id of the channel where the feedback goes", //optional but recommended
-	"yandexAPI": "yandex api key", //optional | for the translate command
+	"yandexTRN": "yandex api key", //optional | for the translate command
+	"yandexDICT": "yandex api key", //optional | for the translate command
 	"acoustID": "acoust api key",	//optional | for the music match command
 	"twiConsumer": "Twitter consumer key", //optional | for the twitter command
 	"twiConsumerSecret": "Twitter consumer key secret", //optional | for the twitter command
