@@ -7,10 +7,11 @@ class BanCommand extends Command {
 			category: 'admin',
 			args: [
 				{
-					id: 'member',
-					type: 'member',
+					id: 'user',
+					type: 'string',
 					prompt: {
-						start: 'which member do you want to ban?',
+						start: 'which user do you want to ban?',
+						retry: 'This doesn\'t look like a user, please try again!'
 					}
 				},
 				{
@@ -27,29 +28,42 @@ class BanCommand extends Command {
 			userPermissions: ['BAN_MEMBERS'],
 			channelRestriction: 'guild',
 			description: {
-				content: 'Ban user',
-				usage: '[@user] [reason]',
-				examples: ['@user big dumb dumb']
+				content: 'Ban user | For hackban precise the userid',
+				usage: '[@user] [reason] OR [userID] [reason]',
+				examples: ['@user big dumb dumb', 'userID hackban']
 			}
 		});
 	}
 
 	async exec(message, args) {
-		let member = args.member;
 		let reasons = args.reasons;
+		let user = args.user;
+		if (message.mentions.members.first())
+			user = message.mentions.members.first().id;
 
-		if(member == this.client) 
-			return message.channel.send('Cant ban me fool');
+		if(user === this.client.user.id) 
+			return message.channel.send('Can\'t ban me fool!');
 		if(!reasons)
 			reasons = 'Nothing have been specified';
-		if(member.id === message.author.id)
+		if(user === message.author.id)
 			return message.channel.send('Why would you ban yourself ?');
 
-		await member.send(`https://youtu.be/55-mHgUjZfY\nYou have been banned from **${message.guild.name}** for the following reasons: "**${reasons}**"`)
-			.catch(() => console.log('could not send message to the concerned user'));
+		if (message.mentions.members.first()) {
+			user = message.mentions.members.first();
+			await user.send(`You have been banned from **${message.guild.name}** for the following reasons: "**${reasons}**"`, {files: ['./asset/vid/You_Have_Been_Banned_From_Mickey_Mouse_Club.mp4']})
+				.catch(() => console.log('could not send message to the concerned user'));
 
-		return member.ban({reason: `Banned by : ${message.author.username} for the following reasons : ${reasons}`})
-			.then(() => message.reply(`${member.user.username} was succesfully banned with the following reasons "${reasons}".`));
+			return user.ban({reason: `Banned by : ${message.author.username} for the following reasons : ${reasons}`})
+				.then(() => message.reply(`${user.user.username} was succesfully banned with the following reasons "${reasons}".`))
+				//.catch(() => message.reply('Uh oh, an error has occured! can the bot ban this user?'));
+				.catch(err => console.error(err));
+
+		} else {
+			message.guild.members.ban(user, {reason: `Banned by : ${message.author.username} for the following reasons : ${reasons}`})
+				.then(() => message.reply(`user ID ${args.user} was succesfully hackbanned with the following reasons "${reasons}".`))
+				//.catch(() => message.reply('Uh oh, an error has occured! can the bot ban this user?'));
+				.catch(err => console.error(err));
+		}
 	}
 }
 
