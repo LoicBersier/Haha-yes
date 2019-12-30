@@ -8,9 +8,10 @@ class UnbanCommand extends Command {
 			args: [
 				{
 					id: 'member',
-					type: 'member',
+					type: 'integer',
 					prompt: {
 						start: 'which member do you want to unban?',
+						retry: 'This doesn\'t look like an ID, please try again'
 					}
 				}
 			],
@@ -26,8 +27,13 @@ class UnbanCommand extends Command {
 	}
 
 	async exec(message, args) {
-		message.guild.unban(args.member)
-			.then(() => message.reply('user was succesfully unbanned.'));
+		message.guild.members.unban(args.member.toString())
+			.then(() => {
+				return message.reply('user was succesfully unbanned.');
+			})
+			.catch(() => {
+				return message.reply('Could not unban this user, is he banned in the first place?');
+			});
 	}
 }
 
