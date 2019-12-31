@@ -77,13 +77,17 @@ class messageReactionRemoveListener extends Listener {
 			}
 
 			let message = await channel.messages.get(boardID);
+			// If the original embed description is empty make this embed empty ( and not undefined )
+			let description;
+			if (message.embeds[0].description == undefined) 
+				description = '';
 
 			let Embed = client.util.embed()
 				.setColor(reaction.message.member.displayHexColor)
 				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
 				.addField('Jump to', `[message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`, true)
 				.addField('Channel', reaction.message.channel, true)
-				.setDescription(message.embeds[0].description)
+				.setDescription(description)
 				.setFooter(reactionCount + ' ' + emote)
 				.setTimestamp();
 
