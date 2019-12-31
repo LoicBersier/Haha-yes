@@ -1,9 +1,9 @@
 const { Command } = require('discord-akairo');
 
-class reloadCommand extends Command {
+class reloadcmdCommand extends Command {
 	constructor() {
-		super('reload', {
-			aliases: ['reload'],
+		super('reloadcmd', {
+			aliases: ['reloadcmd'],
 			category: 'owner',
 			ownerOnly: 'true',
 			args: [
@@ -27,4 +27,4 @@ class reloadCommand extends Command {
 	}
 }
 
-module.exports = reloadCommand;
+module.exports = reloadcmdCommand;
