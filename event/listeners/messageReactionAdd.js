@@ -80,8 +80,8 @@ class MessageReactionAddListener extends Listener {
 
 			let message = await channel.messages.get(boardID);
 			// If the original embed description is empty make this embed empty ( and not undefined )
-			let description;
-			if (message.embeds[0].description == '') 
+			let description = message.embeds[0].description;
+			if (!message.embeds[0].description) 
 				description = '';
 
 			let Embed = client.util.embed()
@@ -122,9 +122,15 @@ class MessageReactionAddListener extends Listener {
 				Embed.setFooter(reactionCount, reaction.message.guild.emojis.find(emoji => emoji.name === emote).url);
 			}
 
+			let description = reaction.message.content;
 			// if message come from nsfw channel and the star/shameboard channel isn't nsfw put it in spoiler
+			if (!reaction.message.content && reaction.message.embeds[0].description) 
+				description = reaction.message.embeds[0].description;
+			else if (!reaction.message.content && !reaction.message.embeds[0].description) 
+				description = '';
+				
 			if (reaction.message.channel.nsfw && !channel.nsfw) {
-				Embed.setDescription(`||${reaction.message.content}||`);
+				Embed.setDescription(`||${description}||`);
 				if (messageAttachments != '') {
 					let message = await channel.send(`||${messageAttachments}||`, { embed: Embed });
 					messageID[reaction.message.id] = message.id;
@@ -134,7 +140,7 @@ class MessageReactionAddListener extends Listener {
 					messageID[reaction.message.id] = message.id;
 				}
 			} else {
-				Embed.setDescription(reaction.message.content);
+				Embed.setDescription(description);
 				let message = await channel.send({ files: messageAttachments, embed: Embed })
 					.catch(async () => channel.send(messageAttachments, { embed: Embed }));
 				messageID[reaction.message.id] = message.id;
