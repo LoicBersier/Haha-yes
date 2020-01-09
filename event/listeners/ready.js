@@ -33,44 +33,55 @@ class ReadyListener extends Listener {
 		console.log(`${this.client.readyAt}`);
 
 		//Bot status
-		if (Math.floor((Math.random() * 2) + 1) == 1) {
-			console.log('Status type: \x1b[32mWatching\x1b[0m');
+		setStatus(this.client);
+		// Change status every 30 minutes
+		setInterval(async () => {
+			setStatus(this.client);
+		}, 1800000);
 
-			let status = watch[Math.floor((Math.random() * watch.length))];
-			status = status.replace('${prefix}', prefix[0]);
-		
-			this.client.user.setActivity(`${status} | My prefix is: ${prefix[0]} `, { type: 'WATCHING' });
-		} else {
-			console.log('Status type: \x1b[32mPlaying\x1b[0m');
+		async function setStatus(client) {
+			let random = Math.floor((Math.random() * 3));
+			if (random == 0) { // Random "Watching" status taken from json
+				console.log('Status type: \x1b[32mWatching\x1b[0m');
+				
+				let status = watch[Math.floor((Math.random() * watch.length))];
+				status = status.replace('${prefix}', prefix[0]);
+						
+				client.user.setActivity(`${status} | My prefix is: ${prefix[0]} `, { type: 'WATCHING' });
+			} else if (random == 1) { // Random "Playing" status taken from json
+				console.log('Status type: \x1b[32mPlaying\x1b[0m');
+				
+				let status = game[Math.floor((Math.random() * game.length))];
+				status = status.replace('${prefix}', prefix[0]);
+						
+				client.user.setActivity(`${status} | My prefix is: ${prefix[0]}`, { type: 'PLAYING' });
+			} else if (random == 2) { // Bot owner status
+				console.log('Status type: \x1b[32mCopying owner status\x1b[0m');
+				let owner = client.users.get(client.ownerID);
+				// { type: owner.presence.activity.type, name: owner.presence.activity.name, url: owner.presence.activity.url }
+				client.user.setActivity(`${owner.presence.activity.name} | My prefix is: ${prefix[0]}`, owner.presence.activity);
+			} else { // Random user statuss
+				console.log('Status type: \x1b[32mCopying random user status\x1b[0m');
+				let randomuser = client.users.random();
+				// If the random user have no activity or is a bot pick a new user
+				while (randomuser.presence.activity == null || randomuser.presence.activity.type == 'CUSTOM_STATUS' ||  randomuser.bot) {
+					randomuser = client.users.random();
+				}			
+				// Get elapsed time from when the activity started		
+				let diffMs = (new Date() - randomuser.presence.activity.timestamps.start);
+				let diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000);
 
-			let status = game[Math.floor((Math.random() * game.length))];
-			status = status.replace('${prefix}', prefix[0]);
-		
-			this.client.user.setActivity(`${status} | My prefix is: ${prefix[0]}`, { type: 'PLAYING' });
+				client.user.setActivity(`${randomuser.username} is ${randomuser.presence.activity.type.toLowerCase()} ${randomuser.presence.activity.name} for ${diffMins} minutes | My prefix is: ${prefix[0]}`, { type: randomuser.presence.activity.type, url: randomuser.presence.activity.url, name: randomuser.presence.activity.name });
+					
+			}
 		}
+
 
 		// If stats channel settings exist, send bot stats to it
 		if (statsChannel) {
 			const channel = this.client.channels.get(statsChannel);
 			channel.send(`Ready to serve in ${channelSize} channels on ${guildSize} servers, for a total of ${userSize} users.\nThere is ${commandSize} command loaded\n${this.client.readyAt}`);
 		}
-		/*
-		//Fetch messages in every channel ( so they can still enter starboard in case of reboot)
-		let array = [];
-		let channels = this.client.channels.array();
-		for (const channel of channels.values()) {
-			array.push(channel.id);
-		}
-		
-		for (let i = 0; i < this.client.channels.size; i++) {
-			let channel = this.client.channels.get(array[i]);
-			if (channel.messages) {
-				channel.messages.fetch({ limit: 10 })
-					.then(messages => console.log(`Received ${messages.size} messages`))
-					.catch(err => console.error(err));
-			}
-		}	
-		*/
 
 		// Expose stats
 		if (exposeStats) {
