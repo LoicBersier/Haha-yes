@@ -48,7 +48,7 @@ class userInfoCommand extends Command {
 		if (user.presence.activity) Embed.addField('Presence', user.presence.activity, true);
 
 		// Is the user a bot?
-		if (user.bot) Embed.addField('Is a bot?', '✅', true); else if (!user.bot) Embed.addField('Is a bot?', '❌', true);
+		if (user.bot) Embed.addField('Is a bot?', '✅', true);
 		
 		// Show guild nickname
 		if (member.nickname) Embed.addField('Nickname', member.nickname, true);
