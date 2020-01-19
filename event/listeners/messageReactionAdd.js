@@ -78,6 +78,7 @@ class MessageReactionAddListener extends Listener {
 				channel = client.channels.get(shameboardChannel.shameboard);
 			}
 
+			reaction.message.fetch(boardID);
 			let message = await channel.messages.get(boardID);
 			// If the original embed description is empty make this embed empty ( and not undefined )
 			let description = message.embeds[0].description;
