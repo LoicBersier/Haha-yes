@@ -41,6 +41,9 @@ class messageReactionRemoveListener extends Listener {
 				let channel = this.client.channels.get(starboardChannel.starboard);
 				let message = await channel.messages.get(messageID[reaction.message.id]);
 				delete messageID[reaction.message.id];
+				// If it didn't find any message don't do anything
+				if (!message) return;
+
 				message.delete();
 			} else if (reaction.emoji.name == staremote && reactionCount >= starcount) {
 				return editEmbed('starboard', staremote, messageID[reaction.message.id], this.client);
@@ -76,8 +79,11 @@ class messageReactionRemoveListener extends Listener {
 				channel = client.channels.get(shameboardChannel.shameboard);
 			}
 
-			reaction.message.fetch(boardID);
 			let message = await channel.messages.get(boardID);
+			console.log(message);
+			// If the message doesn't have embeds assume it got deleted so don't do anything
+			if (!message) return;
+
 			// If the original embed description is empty make this embed empty ( and not undefined )
 			let description = message.embeds[0].description;
 			if (!message.embeds[0].description) 

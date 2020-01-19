@@ -78,8 +78,11 @@ class MessageReactionAddListener extends Listener {
 				channel = client.channels.get(shameboardChannel.shameboard);
 			}
 
-			reaction.message.fetch(boardID);
 			let message = await channel.messages.get(boardID);
+
+			// If the message doesn't have embeds assume it got deleted so don't do anything
+			if (!message) return;
+
 			// If the original embed description is empty make this embed empty ( and not undefined )
 			let description = message.embeds[0].description;
 			if (!message.embeds[0].description) 
@@ -125,9 +128,9 @@ class MessageReactionAddListener extends Listener {
 
 			let description = reaction.message.content;
 			// if message come from nsfw channel and the star/shameboard channel isn't nsfw put it in spoiler
-			if (!reaction.message.content && reaction.message.embeds[0].description) 
+			if (!reaction.message.content && reaction.message.embeds[0]) 
 				description = reaction.message.embeds[0].description;
-			else if (!reaction.message.content && !reaction.message.embeds[0].description) 
+			else if (!reaction.message.content) 
 				description = '';
 				
 			if (reaction.message.channel.nsfw && !channel.nsfw) {
