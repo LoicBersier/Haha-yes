@@ -12,20 +12,22 @@ class BannedWordsCommand extends Command {
 				{
 					id: 'word',
 					type: 'string',
-					prompt: {
-						start: 'What word should be banned',
-					},
 					match: 'rest'
 				},
 				{
 					id: 'remove',
 					match: 'flag',
 					flag: '--remove'
+				},
+				{
+					id: 'removeall',
+					match: 'flag',
+					flag: '--removeall'
 				}
 			],
 			channelRestriction: 'guild',
 			description: {
-				content: 'Ban word on the server. --remove to delete a banned word',
+				content: 'Ban word on the server. --remove to delete a banned word. --removeaall to remove every banned word',
 				usage: '[word to ban]',
 				examples: ['owo']
 			}
@@ -33,6 +35,13 @@ class BannedWordsCommand extends Command {
 	}
 
 	async exec(message, args) {
+		if (args.removeall) {
+			BannedWords.destroy({where: {serverID: message.guild.id}});
+			return message.channel.send('The banned word have been reset.');
+		}
+		
+		if (!args.word) return message.channel.send('Please specify a word to ban!');
+
 		args.word = args.word.replace(/[\u0250-\ue007]/g, '');
 		const bannedWords = await BannedWords.findOne({where: {word: args.word.toLowerCase(), serverID: message.guild.id}});
 
