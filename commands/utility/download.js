@@ -54,7 +54,7 @@ class DownloadCommand extends Command {
 			.setColor(message.member.displayHexColor)
 			.setAuthor(`Downloaded by ${message.author.username}`, message.author.displayAvatarURL(), link)
 			.setDescription(args.caption)
-			.setFooter('You can get the original video by clicking on the "downloaded by" message!');
+			.setFooter(`You can get the original video by clicking on the "downloaded by ${message.author.username}" message!`);
 
 
 		if (link.includes('http') || link.includes('www')) {
