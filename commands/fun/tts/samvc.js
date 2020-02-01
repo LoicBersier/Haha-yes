@@ -1,6 +1,7 @@
 const { Command } = require('discord-akairo');
 const axios = require('axios');
 const fs = require('fs');
+const os = require('os');
 const rand = require('../../../rand.js');
 
 class samvcCommand extends Command {
@@ -76,7 +77,7 @@ class samvcCommand extends Command {
 				'Content-Type': 'audio/mpeg',
 			},
 		}).then(async (result) => {
-			const outputFilename = './samvc.wav';
+			const outputFilename = `${os.tmpdir}/${message.id}_sam.wav`;
 
 			fs.writeFile(outputFilename, result.data, async function(err) {
 				if (err) console.error(err);
@@ -84,7 +85,7 @@ class samvcCommand extends Command {
 				if (!voiceChannel) return message.say('Please enter a voice channel first.');
 				try {
 					const connection = await voiceChannel.join();
-					const dispatcher = connection.play('./samvc.wav');
+					const dispatcher = connection.play(outputFilename);
 					dispatcher.once('finish', () => voiceChannel.leave());
 					dispatcher.once('error', () => voiceChannel.leave());
 					return null;

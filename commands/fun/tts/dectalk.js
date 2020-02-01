@@ -1,6 +1,7 @@
 const { Command } = require('discord-akairo');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
+const os = require('os');
 const rand = require('../../../rand.js');
 
 class dectalkCommand extends Command {
@@ -28,23 +29,24 @@ class dectalkCommand extends Command {
 	}
 
 	async exec(message, args) {
+		let output = `${os.tmpdir()}/${message.id}_dectalk.wav`;
 		args.decMessage = rand.random(args.decMessage, message);
 		args.decMessage = args.decMessage.replace('\n', ' ');
 		let decMessage = '[:phoneme on] ' + args.decMessage.replace(/(["'$`\\])/g,'\\$1');
 
 		if (process.platform == 'win32') {
-			exec(`cd .\\dectalk && .\\say.exe -w dectalk.wav "${decMessage}"`)
+			exec(`cd .\\dectalk && .\\say.exe -w ${output} "${decMessage}"`)
 				.catch(err => {
 					console.error(err);
 					return message.channel.send('Oh no! an error has occured!');
 				})
 				.then(() => {
-					return message.channel.send({files: ['./dectalk/dectalk.wav']});
+					return message.channel.send({files: [output]});
 				});
 		} else if (process.platform == 'linux' || process.platform == 'darwin') {
 			let loadingmsg = await message.channel.send('Processing ( this can take some time ) <a:loadingmin:527579785212329984>');
 
-			exec(`cd dectalk && DISPLAY=:0.0 wine say.exe -w dectalk.wav "${decMessage}"`)
+			exec(`cd dectalk && DISPLAY=:0.0 wine say.exe -w ${output} "${decMessage}"`)
 				.catch(err => {
 					loadingmsg.delete();
 					console.error(err);
@@ -52,7 +54,7 @@ class dectalkCommand extends Command {
 				})
 				.then(() => {
 					loadingmsg.delete();
-					return message.channel.send({files: ['./dectalk/dectalk.wav']});
+					return message.channel.send({files: [output]});
 				});
 		}
 	}

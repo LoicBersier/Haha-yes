@@ -3,6 +3,7 @@ const textToSpeech = require('@google-cloud/text-to-speech');
 const rand = require('../../../rand.js');
 const gclient = new textToSpeech.TextToSpeechClient();
 const fs = require('fs');
+const os = require('os');
 
 class TtsvcCommand extends Command {
 	constructor() {
@@ -30,7 +31,8 @@ class TtsvcCommand extends Command {
 
 	async exec(message, args) {
 		let text = args.text;
-		
+		let output = `${os.tmpdir()}/${message.id}_tts.mp3`;
+
 		text = rand.random(text, message);
 
 		// Construct the request
@@ -50,20 +52,19 @@ class TtsvcCommand extends Command {
 			}
 
 			// Write the binary audio content to a local file
-			fs.writeFile('ttsvc.mp3', response.audioContent, 'binary', async err => {
+			fs.writeFile(output, response.audioContent, 'binary', async err => {
 				if (err) {
 					console.error('ERROR:', err);
 					message.channel.send('An error has occured, the message is probably too long');
 					
 					return;
 				}
-				console.log('Audio content written to file: ttsvc.mp3');
 
 				const voiceChannel = message.member.voice.channel;
 				if (!voiceChannel) return message.say('Please enter a voice channel first.');
 				try {
 					const connection = await voiceChannel.join();
-					const dispatcher = connection.play('./ttsvc.mp3');
+					const dispatcher = connection.play(output);
 					dispatcher.once('finish', () => voiceChannel.leave());
 					dispatcher.once('error', () => voiceChannel.leave());
 					return null;

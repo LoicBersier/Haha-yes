@@ -1,6 +1,7 @@
 const { Command } = require('discord-akairo');
 const axios = require('axios');
 const fs = require('fs');
+const os = require('os');
 const rand = require('../../../rand.js');
 
 class samCommand extends Command {
@@ -76,9 +77,9 @@ class samCommand extends Command {
 				'Content-Type': 'audio/mpeg',
 			},
 		}).then((result) => {
-			const outputFilename = './sam.wav';
+			const outputFilename = `${os.tmpdir}/${message.id}_sam.wav`;
 			fs.writeFileSync(outputFilename, result.data);
-			return message.channel.send({files: ['./sam.wav']});
+			return message.channel.send({files: [outputFilename]});
 		});
 
 	}
