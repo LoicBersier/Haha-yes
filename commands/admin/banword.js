@@ -37,7 +37,7 @@ class BannedWordsCommand extends Command {
 	async exec(message, args) {
 		if (args.removeall) {
 			BannedWords.destroy({where: {serverID: message.guild.id}});
-			return message.channel.send('The banned word have been reset.');
+			return message.channel.send('The banned words have been reset.');
 		}
 		
 		if (!args.word) return message.channel.send('Please specify a word to ban!');
@@ -48,7 +48,7 @@ class BannedWordsCommand extends Command {
 		if (!bannedWords) {
 			const body = {word: args.word.toLowerCase(), serverID: message.guild.id};
 			await BannedWords.create(body);
-			return message.channel.send(`The word ${args.word.toLowerCase()} have been banned`);
+			return message.channel.send(`The word ${args.word.toLowerCase()} has been banned`);
 		} else if (args.remove && bannedWords) {
 			BannedWords.destroy({where: {word: args.word.toLowerCase(), serverID: message.guild.id}});
 			return message.channel.send(`The word ${args.word.toLowerCase()} is no longer banned`);
