@@ -80,13 +80,13 @@ class messageReactionRemoveListener extends Listener {
 			}
 
 			let message = await channel.messages.get(boardID);
-			console.log(message);
+
 			// If the message doesn't have embeds assume it got deleted so don't do anything
 			if (!message) return;
 
 			// If the original embed description is empty make this embed empty ( and not undefined )
 			let description = message.embeds[0].description;
-			if (!message.embeds[0].description) 
+			if (!message.embeds[0].description || message.embeds[0].description == undefined) 
 				description = '';
 
 			let Embed = client.util.embed()
