@@ -3,6 +3,7 @@ const textToSpeech = require('@google-cloud/text-to-speech');
 const rand = require('../../../rand.js');
 const gclient = new textToSpeech.TextToSpeechClient();
 const fs = require('fs');
+const os = require('os');
 
 class TtsCommand extends Command {
 	constructor() {
@@ -30,6 +31,7 @@ class TtsCommand extends Command {
 
 	async exec(message, args) {
 		let text = args.text;
+		let output = `${os.tmpdir()}/${message.id}_tts.mp3`;
 
 		text = rand.random(text, message);
 
@@ -51,7 +53,7 @@ class TtsCommand extends Command {
 			}
 
 			// Write the binary audio content to a local file
-			fs.writeFile('tts.mp3', response.audioContent, 'binary', err => {
+			fs.writeFile(output, response.audioContent, 'binary', err => {
 				if (err) {
 					console.error('ERROR:', err);
 					message.channel.send('An error has occured, the message is probably too long');
@@ -59,7 +61,7 @@ class TtsCommand extends Command {
 					return;
 				}
 				console.log('Audio content written to file: tts.mp3');
-				message.channel.send({ files: ['./tts.mp3'] });
+				message.channel.send({ files: [output] });
 			});
 			
 		});
