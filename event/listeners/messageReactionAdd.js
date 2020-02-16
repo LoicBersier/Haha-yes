@@ -128,9 +128,9 @@ class MessageReactionAddListener extends Listener {
 
 			let description = reaction.message.content;
 			// if message come from nsfw channel and the star/shameboard channel isn't nsfw put it in spoiler
-			if (!reaction.message.content && reaction.message.embeds[0].description) 
+			if (!reaction.message.content) 
 				description = reaction.message.embeds[0].description;
-			else 
+			else if (!reaction.message.content) 
 				description = '';
 				
 			if (reaction.message.channel.nsfw && !channel.nsfw) {

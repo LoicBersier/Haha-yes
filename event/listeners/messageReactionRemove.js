@@ -86,7 +86,7 @@ class messageReactionRemoveListener extends Listener {
 
 			// If the original embed description is empty make this embed empty ( and not undefined )
 			let description = message.embeds[0].description;
-			if (!message.embeds[0].description || message.embeds[0].description == undefined) 
+			if (!message.embeds[0].description) 
 				description = '';
 
 			let Embed = client.util.embed()
