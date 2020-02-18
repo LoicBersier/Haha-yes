@@ -1,4 +1,5 @@
 const { Command } = require('discord-akairo');
+const joinChannel = require('../../models').joinChannel;
 
 class fakejoinCommand extends Command {
 	constructor() {
@@ -24,11 +25,16 @@ class fakejoinCommand extends Command {
 
 	async exec(message, args) {
 		let member;
+		const join = await joinChannel.findOne({where: {guildID: message.guild.id}});
 		
-		if (args.user)
-			member = message.guild.members.get(args.user.id);
-		else
-			member = message.guild.members.get(message.author.id);
+		if (join) {
+			if (args.user)
+				member = message.guild.members.get(args.user.id);
+			else
+				member = message.guild.members.get(message.author.id);
+		} else {
+			return message.channel.send('There is no join channel setup');
+		}
 
 		this.client.emit('guildMemberAdd', member);
 	}
