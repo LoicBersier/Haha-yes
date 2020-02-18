@@ -71,7 +71,7 @@ class colorCommand extends Command {
 			message.guild.member(message.author).roles.add(role);
 			return message.channel.send('Role added!');
 		} else {
-			return message.channel.send(`${args.color} is not a valide color`);
+			return message.channel.send(`${args.color} is not a valid color`);
 		}
 	}
 }
