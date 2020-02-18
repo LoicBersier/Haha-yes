@@ -24,8 +24,7 @@ class wallpaperCommand extends Command {
 
 	async exec(message, args) {
 		let mkt = args.region;
-		console.log(mkt);
-		if (!args.region) mkt = 'en-us';
+		if (!args.region) mkt = 'en-US';
 		if (!['zh-CN', 'en-US', 'ja-JP', 'en-AU', 'en-UK', 'de-DE', 'en-NZ', 'en-CA'].includes(mkt)) return message.channel.send('Please choose a valid region settings: zh-CN, en-US, ja-JP, en-AU, en-UK, de-DE, en-NZ, en-CA');
 		fetch(`https://bing.biturl.top/?mkt=${mkt}`)
 			.then(res => {
