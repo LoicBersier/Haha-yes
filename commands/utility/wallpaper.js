@@ -5,18 +5,29 @@ class wallpaperCommand extends Command {
 	constructor() {
 		super('wallpaper', {
 			aliases: ['wallpaper'],
-			category: 'fun',
+			category: 'utility',
 			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
+			args: [
+				{
+					id: 'region',
+					type: 'string',
+					match: 'rest',
+				}
+			],
 			description: {
-				content: 'Show the Bing wallpaper of the day',
-				usage: '',
-				examples: ['']
+				content: 'Show the Bing wallpaper of the day, can use any of the following region: zh-CN, en-US, ja-JP, en-AU, en-UK, de-DE, en-NZ, en-CA',
+				usage: '[region]',
+				examples: ['', 'zh-CN']
 			}
 		});
 	}
 
-	async exec(message) {
-		fetch('https://bing.biturl.top/?mkt=en-US')
+	async exec(message, args) {
+		let mkt = args.region;
+		console.log(mkt);
+		if (!args.region) mkt = 'en-us';
+		if (!['zh-CN', 'en-US', 'ja-JP', 'en-AU', 'en-UK', 'de-DE', 'en-NZ', 'en-CA'].includes(mkt)) return message.channel.send('Please choose a valid region settings: zh-CN, en-US, ja-JP, en-AU, en-UK, de-DE, en-NZ, en-CA');
+		fetch(`https://bing.biturl.top/?mkt=${mkt}`)
 			.then(res => {
 				return res.json();
 			})
