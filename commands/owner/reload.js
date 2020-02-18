@@ -3,7 +3,7 @@ const { Command } = require('discord-akairo');
 class reloadcmdCommand extends Command {
 	constructor() {
 		super('reloadcmd', {
-			aliases: ['reloadcmd'],
+			aliases: ['reloadcmd', 'reloadlistener', 'reload'],
 			category: 'owner',
 			ownerOnly: 'true',
 			args: [
@@ -22,8 +22,15 @@ class reloadcmdCommand extends Command {
 	}
 
 	async exec(message, args) {
-		this.handler.reload(args.command);
-		return message.channel.send(`successfully reloaded command ${args.command}`);
+		if (message.util.parsed.alias == 'reloadlistener') {
+			this.client.listenerHandler.reload(args.command);
+			return message.channel.send(`successfully reloaded listener ${args.command}`);
+		} else {
+			this.handler.reload(args.command);
+			return message.channel.send(`successfully reloaded command ${args.command}`);
+		}
+
+
 	}
 }
 
