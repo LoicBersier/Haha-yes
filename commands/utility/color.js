@@ -9,6 +9,9 @@ class colorCommand extends Command {
 			args: [
 				{
 					id: 'color',
+					prompt: {
+						start: 'Please input a color, say `cancel` to stop the command'
+					},
 					type: 'string'
 				}
 			],
@@ -49,7 +52,11 @@ class colorCommand extends Command {
 			'dark_navy'
 		];
 
-		if (args.color.match(/^#[0-9A-F]{6}$/i) || ColorResolvable.includes(args.color.toLowerCase())) {
+		let colors = [
+			'black'
+		];
+
+		if (args.color.match(/^#[0-9A-F]{6}$/i) || ColorResolvable.includes(args.color.toLowerCase()) || colors.includes(args.color.toLowerCase())) {
 			let role = message.guild.roles.find(role => role.name === args.color);
 			if (!role) {
 				message.guild.roles.create({
