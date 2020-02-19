@@ -14,10 +14,15 @@ class midifyCommand extends Command {
 				{
 					id: 'link',
 					type: 'string',
+				},
+				{
+					id: 'raw',
+					type: 'flag',
+					flag: '--raw'
 				}
 			],
 			description: {
-				content: 'Transform the audio into midi',
+				content: 'Transform the audio into midi --raw to get the .mid file',
 				usage: '[link to video/music/whatever you want to be midi]',
 				examples: ['https://www.youtube.com/watch?v=kXYiU_JCYtU']
 			}
@@ -66,6 +71,17 @@ class midifyCommand extends Command {
 			// wav to midi
 			exec(`waon -i ${input2} -o ${output}`)
 				.then(() => {
+
+					if (args.raw) {
+						loadingmsg.delete();
+						return message.channel.send({files: [output]})
+							.catch(err => {
+								console.error(err);
+								loadingmsg.delete();
+								return message.channel.send('On no! an error just occured! perhaps the file is too big?');
+							});
+					}
+
 					// midi to mp3 so we can listen from discord
 					exec(`timidity ${output} -Ow -o - | ffmpeg -i - -acodec libmp3lame -ab 64k ${output2}`)
 						.then(() => {
