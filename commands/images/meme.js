@@ -45,12 +45,8 @@ class memeCommand extends Command {
 		else if (options[1] == undefined)
 			options[1] = '';
 
-		let Attachment = (message.attachments).array();
 		let url = args.link;
-		// Get attachment link
-		if (Attachment[0] && !args.link) {
-			url = Attachment[0].url;
-		}
+
 
 		if (!url) {
 			return message.channel.send('You need an image to use this command!');
@@ -71,7 +67,6 @@ class memeCommand extends Command {
 					const TOP_TEXT = options[0];
 					const BOTTOM_TEXT = options[1];
 					const FONT = './asset/impact.ttf';
-					const FONT_SIZE = 40;
 					const FONT_FILL = '#FFF';
 					const TEXT_POS = 'center';
 					const STROKE_COLOR = '#000';
@@ -84,6 +79,7 @@ class memeCommand extends Command {
 						// Set text position for top and bottom
 						const TOP_POS = Math.abs((value.height / 2) - PADDING) * -1;
 						const BOTTOM_POS = (value.height / 2) - PADDING;
+						const FONT_SIZE = (value.width / 10);
 			
 						// Write text on image using graphicsmagick
 						img.font(FONT, FONT_SIZE)
