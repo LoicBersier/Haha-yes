@@ -126,12 +126,17 @@ class MessageReactionAddListener extends Listener {
 				Embed.setFooter(reactionCount, reaction.message.guild.emojis.find(emoji => emoji.name === emote).url);
 			}
 
-			let description = reaction.message.content;
+			let description = '';
+			console.log(reaction.message.content);
 			// if message come from nsfw channel and the star/shameboard channel isn't nsfw put it in spoiler
-			if (!reaction.message.content) 
-				description = reaction.message.embeds[0].description;
-			else if (!reaction.message.content) 
-				description = '';
+			if (reaction.message.embeds[0]) {
+				if (reaction.message.embeds[0].description) {
+					description = reaction.message.embeds[0].description;
+				}
+			}
+			else if (reaction.message.content) {
+				description = reaction.message.content;
+			}
 				
 			if (reaction.message.channel.nsfw && !channel.nsfw) {
 				Embed.setDescription(`||${description}||`);
