@@ -13,10 +13,16 @@ class memeCommand extends Command {
 			args: [
 				{
 					id: 'link',
+					prompt: {
+						start: 'Please input a link to use, say `cancel` to stop the command'
+					},
 					type: 'string',
 				},
 				{
 					id: 'message',
+					prompt: {
+						start: 'Please input a caption, say `cancel` to stop the command'
+					},
 					type: 'string',
 					match: 'rest'
 				}
@@ -92,11 +98,10 @@ class memeCommand extends Command {
 							});
 					});
 				});
+			})
+			.catch((err) => {
+				return message.channel.send(`Please input a correct link \`${err}\``);
 			});
-
-
-
-
 	}
 }
 
