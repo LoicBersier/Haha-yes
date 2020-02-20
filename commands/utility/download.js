@@ -104,11 +104,12 @@ class DownloadCommand extends Command {
 					});
 
 					// Every 5 seconds update the compress message with the %
-					setInterval(() => {
+					let editmsg = setInterval(() => {
 						compressmsg.edit(`Compression status: Percent complete: ${percentComplete}, ETA: ${eta}\nWant it to go faster? Donate to the dev with the donate command, so i can get a better server and do it faster!`);
 					}, 5000);
 
 					handbrake.on('end', async function () {
+						clearInterval(editmsg);
 						file = fs.statSync(`${os.tmpdir()}/${fileName}compressed.mp4`);
 						fileSize = file.size / 1000000.0;
 
