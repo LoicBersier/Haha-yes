@@ -85,6 +85,7 @@ class posterCommand extends Command {
 						// Write text on image using graphicsmagick
 						img.shave(1,1)
 							.borderColor('white')
+							.frame(2,2,0,1)
 							.border(2,2)
 							.borderColor('black')
 							.border(50,200)
