@@ -25,12 +25,24 @@ class posterCommand extends Command {
 					},
 					type: 'string',
 					match: 'rest'
-				}
+				},
+				{
+					id: 'width',
+					match: 'option',
+					flag: '--width',
+					default: 50
+				},
+				{
+					id: 'height',
+					match: 'option',
+					flag: '--height',
+					default: 200
+				},
 			],
 			description: {
 				content: 'Create demotivational poster (use ``|`` to separate top text and bottom text) WIP',
-				usage: '[link to image] [topText|bottomText]',
-				examples: ['']
+				usage: '[link to image] [topText|bottomText] (optional) [--width number] [--height number]',
+				examples: ['https://cdn.discordapp.com/attachments/484013245158522909/679686216903426104/0nhsxje5vfg41-1.jpg NO PLEASE DON\'T | My mom said im not allowed to']
 			}
 		});
 	}
@@ -83,6 +95,10 @@ class posterCommand extends Command {
 							
 							const FONT_SIZE1 = (value.width / 12);
 							const FONT_SIZE2 = (value.width / 12) - 15;
+
+							let BORDER_WIDTH = args.width;
+							let BORDER_HEIGHT = args.height;
+
 				
 							// Write text on image using graphicsmagick
 							img.borderColor('black')
@@ -91,7 +107,7 @@ class posterCommand extends Command {
 								.frame(1,1,0,0.5)
 								.border(1,1)
 								.borderColor('black')
-								.border(50,200)
+								.border(BORDER_WIDTH,BORDER_HEIGHT)
 								.fill(FONT_FILL)
 								.stroke(STROKE_COLOR, -2)
 								.font(FONT, FONT_SIZE1)
