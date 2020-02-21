@@ -38,6 +38,16 @@ class posterCommand extends Command {
 					flag: '--height',
 					default: 200
 				},
+				{
+					id: 'title',
+					match: 'option',
+					flag: '--titleSize',
+				},
+				{
+					id: 'subtext',
+					match: 'option',
+					flag: '--subtextSize',
+				},
 			],
 			description: {
 				content: 'Create demotivational poster (use ``|`` to separate top text and bottom text) WIP',
@@ -93,8 +103,10 @@ class posterCommand extends Command {
 							const TOP_POS = Math.abs((value.height / 2) - PADDING + 110);
 							const BOTTOM_POS = Math.abs((value.height / 2) - PADDING + 180);
 							
-							const FONT_SIZE1 = (value.width / 12);
-							const FONT_SIZE2 = (value.width / 12) - 15;
+							let FONT_SIZE1 = (value.width / 12);
+							if (args.title) FONT_SIZE1 = args.title;
+							let FONT_SIZE2 = (value.width / 12) - 15;
+							if (args.subtext) FONT_SIZE2 = args.subtext;
 
 							let BORDER_WIDTH = args.width;
 							let BORDER_HEIGHT = args.height;
