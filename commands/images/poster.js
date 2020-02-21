@@ -79,7 +79,7 @@ class posterCommand extends Command {
 						const BOTTOM_POS = (value.height / 2) - PADDING + 180;
 						//const FONT_SIZE1 = 50;
 						const FONT_SIZE1 = (value.width / 12);
-						const FONT_SIZE2 = (value.width / 12) - 50;
+						const FONT_SIZE2 = (value.width / 12) - 30;
 						//const FONT_SIZE2 = 30;
 			
 						// Write text on image using graphicsmagick
