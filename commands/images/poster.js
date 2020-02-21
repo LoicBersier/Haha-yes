@@ -75,18 +75,18 @@ class posterCommand extends Command {
 					// Get the image size to calculate top and bottom text positions
 					img.size(function(err, value) {
 						// Set text position for top and bottom
-						const TOP_POS = Math.abs((value.height / 2) - PADDING) + 110;
-						const BOTTOM_POS = (value.height / 2) - PADDING + 180;
-						//const FONT_SIZE1 = 50;
+						const TOP_POS = Math.abs((value.height / 2) - PADDING + 110);
+						const BOTTOM_POS = Math.abs((value.height / 2) - PADDING + 180);
+						
 						const FONT_SIZE1 = (value.width / 12);
-						const FONT_SIZE2 = (value.width / 12) - 30;
-						//const FONT_SIZE2 = 30;
+						const FONT_SIZE2 = (value.width / 12) - 15;
 			
 						// Write text on image using graphicsmagick
-						img.shave(1,1)
+						img.borderColor('black')
+							.border(3,3)
 							.borderColor('white')
-							.frame(2,2,0,1)
-							.border(2,2)
+							.frame(1,1,0,0.5)
+							.border(1,1)
 							.borderColor('black')
 							.border(50,200)
 							.fill(FONT_FILL)
@@ -112,7 +112,6 @@ class posterCommand extends Command {
 									console.error(err);
 									return message.channel.send('An error just occured! is it a static image?');
 								}
-								//return message.channel.send({files: [output]});
 							});
 					});
 				});
