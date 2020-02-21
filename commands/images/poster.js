@@ -129,7 +129,7 @@ class posterCommand extends Command {
 								.write(output, function(err) {
 									// Chop the top part of the image
 									let img2 = gm(output);
-									img2.chop(0, 100)
+									img2.chop(0, BORDER_HEIGHT / 2)
 										.write(output, function(err) {
 											loadingmsg.delete();
 											if (err) {
