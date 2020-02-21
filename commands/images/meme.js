@@ -41,8 +41,6 @@ class memeCommand extends Command {
 	}
 
 	async exec(message, args) {
-		let output = `${os.tmpdir()}/meme${message.id}.jpg`;
-
 		let options = args.message.trim().split('|');
 
 		if (options[0] == undefined)
@@ -62,11 +60,11 @@ class memeCommand extends Command {
 		// Create new graphicsmagick instance
 		fetch(url)
 			.then(res => {
-				const dest = fs.createWriteStream(`${os.tmpdir()}/${message.id}.jpg`);
+				const dest = fs.createWriteStream(`${os.tmpdir()}/${message.id}`);
 				res.body.pipe(dest);
 				dest.on('finish', async () => {
 
-					let img = gm(`${os.tmpdir()}/${message.id}.jpg`);
+					let img = gm(`${os.tmpdir()}/${message.id}`);
 
 					// Set some defaults
 					const TOP_TEXT = options[0];
@@ -78,26 +76,36 @@ class memeCommand extends Command {
 					const STROKE_WEIGHT = 2;
 					const PADDING = 40;
 			
-					// Get the image size to calculate top and bottom text positions
-					img.size(function(err, value) {
-						console.log(value);
-						// Set text position for top and bottom
-						const TOP_POS = Math.abs((value.height / 2) - PADDING) * -1;
-						const BOTTOM_POS = (value.height / 2) - PADDING;
-						let FONT_SIZE = args.fontSize ? args.fontSize : (value.width / 10);
-			
-						// Write text on image using graphicsmagick
-						img.font(FONT, FONT_SIZE)
-							.fill(FONT_FILL)
-							.stroke(STROKE_COLOR, STROKE_WEIGHT)
-							.drawText(0, TOP_POS, TOP_TEXT, TEXT_POS)
-							.drawText(0, BOTTOM_POS, BOTTOM_TEXT, TEXT_POS)
-							.write(output, function(err) {
-								loadingmsg.delete();
-								if (err) return message.channel.send('An error just occured! is it a static image?');
-								return message.channel.send({files: [output]});
-							});
+					img.format(function(err, format) {
+						if (err) {
+							return message.channel.send('An error has occured, is it an image?');
+						}
+						let output = `${os.tmpdir()}/meme${message.id}.${format.toLocaleLowerCase()}`;
+						// Get the image size to calculate top and bottom text positions
+						img.size(function(err, value) {
+							// Set text position for top and bottom
+							const TOP_POS = Math.abs((value.height / 2) - PADDING) * -1;
+							const BOTTOM_POS = (value.height / 2) - PADDING;
+							let FONT_SIZE = args.fontSize ? args.fontSize : (value.width / 10);
+				
+							// Write text on image using graphicsmagick
+							img.font(FONT, FONT_SIZE)
+								.fill(FONT_FILL)
+								.stroke(STROKE_COLOR, STROKE_WEIGHT)
+								.drawText(0, TOP_POS, TOP_TEXT, TEXT_POS)
+								.drawText(0, BOTTOM_POS, BOTTOM_TEXT, TEXT_POS)
+								.write(output, function(err) {
+									loadingmsg.delete();
+									if (err) return message.channel.send('An error just occured! is it a static image?');
+									message.delete();
+									return message.channel.send(`Made by ${message.author.username}`,{files: [output]})
+										.catch(() => {
+											return message.channel.send('The image is too big to fit on discord!');
+										});
+								});
+						});
 					});
+
 				});
 			})
 			.catch((err) => {
