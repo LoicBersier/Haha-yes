@@ -78,6 +78,7 @@ class memeCommand extends Command {
 			
 					img.format(function(err, format) {
 						if (err) {
+							console.error(err);
 							return message.channel.send('An error has occured, is it an image?');
 						}
 						let output = `${os.tmpdir()}/meme${message.id}.${format.toLocaleLowerCase()}`;
