@@ -77,11 +77,11 @@ class posterCommand extends Command {
 		// Create new graphicsmagick instance
 		fetch(url)
 			.then(res => {
-				const dest = fs.createWriteStream(`${os.tmpdir()}/${message.id}`);
+				const dest = fs.createWriteStream(`${os.tmpdir()}/${message.id}.png`);
 				res.body.pipe(dest);
 				dest.on('finish', async () => {
 
-					let img = gm(`${os.tmpdir()}/${message.id}`);
+					let img = gm(`${os.tmpdir()}/${message.id}.png`);
 
 					// Set some defaults
 					const TOP_TEXT = options[0];
