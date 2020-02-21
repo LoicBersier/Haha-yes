@@ -60,11 +60,11 @@ class memeCommand extends Command {
 		// Create new graphicsmagick instance
 		fetch(url)
 			.then(res => {
-				const dest = fs.createWriteStream(`${os.tmpdir()}/${message.id}.png`);
+				const dest = fs.createWriteStream(`${os.tmpdir()}/${message.id}.${url.split('.').pop()}`);
 				res.body.pipe(dest);
 				dest.on('finish', async () => {
 
-					let img = gm(`${os.tmpdir()}/${message.id}.png`);
+					let img = gm(`${os.tmpdir()}/${message.id}.${url.split('.').pop()}`);
 
 					// Set some defaults
 					const TOP_TEXT = options[0];
