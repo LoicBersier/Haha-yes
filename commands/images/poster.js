@@ -108,7 +108,8 @@ class posterCommand extends Command {
 												console.error(err);
 												return message.channel.send('An error just occured! is it a static image?');
 											}
-											return message.channel.send({files: [output]})
+											message.delete();
+											return message.channel.send(`Made by ${message.author.username}`,{files: [output]})
 												.catch(() => {
 													return message.channel.send('The image is too big to fit on discord!');
 												});
