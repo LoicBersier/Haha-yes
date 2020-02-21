@@ -71,6 +71,9 @@ class posterCommand extends Command {
 					const PADDING = 40;
 
 					img.format(function(err, format) {
+						if (err) {
+							return message.channel.send('An error has occured, is it an image?');
+						}
 						let output = `${os.tmpdir()}/poster${message.id}.${format.toLocaleLowerCase()}`;
 						// Get the image size to calculate top and bottom text positions
 						img.size(function(err, value) {
