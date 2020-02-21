@@ -79,7 +79,7 @@ class posterCommand extends Command {
 						const BOTTOM_POS = (value.height / 2) - PADDING + 180;
 						//const FONT_SIZE1 = 50;
 						const FONT_SIZE1 = (value.width / 12);
-						const FONT_SIZE2 = (value.width / 12) - 20;
+						const FONT_SIZE2 = (value.width / 12) - 50;
 						//const FONT_SIZE2 = 30;
 			
 						// Write text on image using graphicsmagick
@@ -95,12 +95,23 @@ class posterCommand extends Command {
 							.font(FONT, FONT_SIZE2)
 							.drawText(0, BOTTOM_POS, BOTTOM_TEXT, TEXT_POS)
 							.write(output, function(err) {
-								loadingmsg.delete();
+								// Chop the top part of the image
+								let img2 = gm(output);
+								img2.chop(0, 100)
+									.write(output, function(err) {
+										loadingmsg.delete();
+										if (err) {
+											console.error(err);
+											return message.channel.send('An error just occured! is it a static image?');
+										}
+										return message.channel.send({files: [output]});
+									});
+
 								if (err) {
 									console.error(err);
 									return message.channel.send('An error just occured! is it a static image?');
 								}
-								return message.channel.send({files: [output]});
+								//return message.channel.send({files: [output]});
 							});
 					});
 				});
