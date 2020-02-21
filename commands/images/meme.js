@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-let gm = require('gm');
+const gm = require('gm').subClass({imageMagick: true});
 const os = require('os');
 const fetch = require('node-fetch');
 const fs = require('fs');
@@ -60,11 +60,11 @@ class memeCommand extends Command {
 		// Create new graphicsmagick instance
 		fetch(url)
 			.then(res => {
-				const dest = fs.createWriteStream(`${os.tmpdir()}/${message.id}.${url.split('.').pop()}`);
+				const dest = fs.createWriteStream(`${os.tmpdir()}/${message.id}`);
 				res.body.pipe(dest);
 				dest.on('finish', async () => {
 
-					let img = gm(`${os.tmpdir()}/${message.id}.${url.split('.').pop()}`);
+					let img = gm(`${os.tmpdir()}/${message.id}`);
 
 					// Set some defaults
 					const TOP_TEXT = options[0];
