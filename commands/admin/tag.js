@@ -11,14 +11,16 @@ class TagCommand extends Command {
 				{
 					id: 'trigger',
 					type: 'string',
-					prompt: {
-						start: 'What word or sentence should trigger it?',
-					}
 				},
 				{
 					id: 'remove',
 					match: 'flag',
 					flag: '--remove'
+				},
+				{
+					id: 'reset',
+					match: 'flag',
+					flag: '--reset'
 				},
 				{
 					id: 'response',
@@ -28,7 +30,7 @@ class TagCommand extends Command {
 			],
 			channelRestriction: 'guild',
 			description: {
-				content: 'Create custom autoresponse (--remove to delete a tag)  [Click here to see the complete list of "tag"](https://cdn.discordapp.com/attachments/502198809355354133/561043193949585418/unknown.png) (Need "" if the trigger contains spaces)',
+				content: 'Create custom autoresponse (--remove to delete a tag, --reset to delete EVERY tag on the server)  [Click here to see the complete list of "tag"](https://cdn.discordapp.com/attachments/502198809355354133/561043193949585418/unknown.png) (Need "" if the trigger contains spaces)',
 				usage: '[trigger] [response]',
 				examples: ['"do you know da wea" Fuck off dead meme', 'hello Hello [author], how are you today?', 'hello --remove']
 			}
@@ -39,6 +41,29 @@ class TagCommand extends Command {
 		const tag = await Tag.findOne({where: {trigger: args.trigger, serverID: message.guild.id}});
 		const ownerID = this.client.ownerID;
 
+		if (args.reset) {
+			if (message.member.hasPermission('ADMINISTRATOR')) {
+				message.channel.send('Are you sure you want to delete EVERY tag? There is no way to recover them. y/n');
+
+				const filter = m =>  m.content && m.author.id == message.author.id;
+				return message.channel.awaitMessages(filter, {time: 5000, max: 1, errors: ['time'] })
+					.then(async messages => {
+						let messageContent = messages.map(messages => messages.content.toLowerCase());
+						if (messageContent == 'y' || messageContent == 'yes') {
+							Tag.destroy({where: {serverID: message.guild.id}});
+							return message.channel.send('Tags have been reset.');
+						} else {
+							return message.channel.send('Not reseting.');
+						}
+					})
+					.catch(err => {
+						console.error(err);
+						return message.channel.send('Took too long to answer. didin\'t update anything.');
+					});
+			} else {
+				return message.channel.send('Only person with the `ADMINISTRATOR` rank can reset tags.');
+			}
+		}
 
 		if (args.remove) {
 			if (tag) {
@@ -53,9 +78,10 @@ class TagCommand extends Command {
 			}
 		}
 
-		if (!args.response) {
-			return message.channel.send('Please provide the response for that tag');
-		}
+
+		if (!args.trigger) return message.channel.send('Please provide a trigger in order to create a tag.');
+
+		if (!args.response) return message.channel.send('Please provide the response for that tag');
 
 		if (!tag) {
 			const body = {trigger: args.trigger, response: args.response, ownerID: message.author.id, serverID: message.guild.id};
