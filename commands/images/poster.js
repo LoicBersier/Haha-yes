@@ -96,7 +96,8 @@ class posterCommand extends Command {
 							console.error(err);
 							return message.channel.send('An error has occured, is it an image?');
 						}
-						let output = `${os.tmpdir()}/poster${message.id}.${format.toLocaleLowerCase()}`;
+						let output1 = `${os.tmpdir()}/poster${message.author.id}.${format.toLowerCase()}`;
+						let output2 = `${os.tmpdir()}/poster${message.id}.${format.toLowerCase()}`;
 						// Get the image size to calculate top and bottom text positions
 						img.size(function(err, value) {
 							// Set text position for top and bottom
@@ -109,6 +110,7 @@ class posterCommand extends Command {
 							let BORDER_WIDTH = args.width;
 							let BORDER_HEIGHT = args.height;
 
+							if (format.toLowerCase() == 'gif') img.coalesce();
 				
 							// Write text on image using graphicsmagick
 							img.borderColor('black')
@@ -124,27 +126,26 @@ class posterCommand extends Command {
 								.drawText(0, TOP_POS, TOP_TEXT, TEXT_POS)
 								.font(FONT, FONT_SIZE2)
 								.drawText(0, BOTTOM_POS, BOTTOM_TEXT, TEXT_POS)
-								.write(output, function(err) {
+								.write(output1, function(err) {									
+									if (err) {
+										console.error(err);
+										return message.channel.send('An error just occured! is it a static image?');
+									}
 									// Chop the top part of the image
-									let img2 = gm(output);
+									let img2 = gm(output1);
 									img2.chop(0, BORDER_HEIGHT / 2)
-										.write(output, function(err) {
+										.write(output2, function(err) {
 											loadingmsg.delete();
 											if (err) {
 												console.error(err);
 												return message.channel.send('An error just occured! is it a static image?');
 											}
 											message.delete();
-											return message.channel.send(`Made by ${message.author.username}`,{files: [output]})
+											return message.channel.send(`Made by ${message.author.username}`,{files: [output2]})
 												.catch(() => {
 													return message.channel.send('The image is too big to fit on discord!');
 												});
 										});
-	
-									if (err) {
-										console.error(err);
-										return message.channel.send('An error just occured! is it a static image?');
-									}
 								});
 						});
 					});
