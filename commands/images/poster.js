@@ -88,7 +88,6 @@ class posterCommand extends Command {
 					const FONT = './asset/times.ttf';
 					const FONT_FILL = '#FFF';
 					const TEXT_POS = 'center';
-					const STROKE_COLOR = '#000';
 					const PADDING = 40;
 
 					img.format(function(err, format) {
@@ -121,7 +120,6 @@ class posterCommand extends Command {
 								.borderColor('black')
 								.border(BORDER_WIDTH,BORDER_HEIGHT)
 								.fill(FONT_FILL)
-								.stroke(STROKE_COLOR)
 								.font(FONT, FONT_SIZE1)
 								.drawText(0, TOP_POS, TOP_TEXT, TEXT_POS)
 								.font(FONT, FONT_SIZE2)
