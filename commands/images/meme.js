@@ -85,8 +85,8 @@ class memeCommand extends Command {
 						// Get the image size to calculate top and bottom text positions
 						img.size(function(err, value) {
 							// Set text position for top and bottom
-							const TOP_POS = Math.abs((value.height / 2) - PADDING) * -1;
-							const BOTTOM_POS = (value.height / 2) - PADDING;
+							const TOP_POS = Math.abs((value.height / 2) - PADDING) * -0.9;
+							const BOTTOM_POS = ((value.height / 2) - PADDING * 3);
 							let FONT_SIZE = args.fontSize ? args.fontSize : (value.width / 10);
 				
 							// Write text on image using graphicsmagick
