@@ -81,7 +81,7 @@ class memeCommand extends Command {
 							console.error(err);
 							return message.channel.send('An error has occured, is it an image?');
 						}
-						let output = `${os.tmpdir()}/meme${message.id}.${format.toLocaleLowerCase()}`;
+						let output = `${os.tmpdir()}/meme${message.id}.${format.toLowerCase()}`;
 						// Get the image size to calculate top and bottom text positions
 						img.size(function(err, value) {
 							// Set text position for top and bottom
