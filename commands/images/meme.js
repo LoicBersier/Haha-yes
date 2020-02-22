@@ -73,7 +73,6 @@ class memeCommand extends Command {
 					const FONT_FILL = '#FFF';
 					const TEXT_POS = 'center';
 					const STROKE_COLOR = '#000';
-					const STROKE_WEIGHT = 2;
 					const PADDING = 40;
 			
 					img.format(function(err, format) {
@@ -95,7 +94,7 @@ class memeCommand extends Command {
 							// Write text on image using graphicsmagick
 							img.font(FONT, FONT_SIZE)
 								.fill(FONT_FILL)
-								.stroke(STROKE_COLOR, STROKE_WEIGHT)
+								.stroke(STROKE_COLOR)
 								.drawText(0, TOP_POS, TOP_TEXT, TEXT_POS)
 								.drawText(0, BOTTOM_POS, BOTTOM_TEXT, TEXT_POS)
 								.write(output, function(err) {

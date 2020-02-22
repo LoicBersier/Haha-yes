@@ -121,7 +121,7 @@ class posterCommand extends Command {
 								.borderColor('black')
 								.border(BORDER_WIDTH,BORDER_HEIGHT)
 								.fill(FONT_FILL)
-								.stroke(STROKE_COLOR, -2)
+								.stroke(STROKE_COLOR)
 								.font(FONT, FONT_SIZE1)
 								.drawText(0, TOP_POS, TOP_TEXT, TEXT_POS)
 								.font(FONT, FONT_SIZE2)
