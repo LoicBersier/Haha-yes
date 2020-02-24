@@ -5,6 +5,7 @@ const Tag = require('../../models').Tag;
 const autoResponse = require('../../models').autoresponse;
 const autoResponseStat = require('../../models').autoresponseStat;
 const BannedWords = require('../../models').bannedWords;
+const WhitelistWord = require('../../models').whitelistWord;
 
 class messageListener extends Listener {
 	constructor() {
@@ -27,6 +28,12 @@ class messageListener extends Listener {
 
 		// Banned words
 		const bannedWords = await BannedWords.findAll({where: {word: Sequelize.where(Sequelize.fn('LOCATE', Sequelize.col('word'), message.content.replace(/\u200B/g, '').replace(/[\u0250-\ue007]/g, '')), Sequelize.Op.ne, 0), serverID: message.guild.id}});
+		const whitelistWord = await WhitelistWord.findAll({where: {word: Sequelize.where(Sequelize.fn('LOCATE', Sequelize.col('word'), message.content.replace(/\u200B/g, '').replace(/[\u0250-\ue007]/g, '')), Sequelize.Op.ne, 0), serverID: message.guild.id}});
+		
+		if (whitelistWord[0]) {
+			return; // If word is whitelisted just return
+		}
+		
 		if (bannedWords[0]) {
 			// Remove accent
 			let censoredMessage = message.content.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
@@ -46,6 +53,7 @@ class messageListener extends Listener {
 
 			message.channel.send(Embed);
 			return message.delete({reason: `Deleted message: ${message.content}`});
+
 		} else {
 			// auto responses
 			const autoresponseStat = await autoResponseStat.findOne({where: {serverID: message.guild.id}});
