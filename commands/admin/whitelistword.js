@@ -4,7 +4,7 @@ const whitelistWord = require('../../models').whitelistWord;
 class whitelistWordCommand extends Command {
 	constructor() {
 		super('whitelistWord', {
-			aliases: ['whitelistWord'],
+			aliases: ['whitelistWord', 'unwhitelistword'],
 			category: 'admin',
 			userPermissions: ['MANAGE_MESSAGES'],
 			clientPermissions: ['MANAGE_MESSAGES', 'SEND_MESSAGES'],
@@ -27,9 +27,9 @@ class whitelistWordCommand extends Command {
 			],
 			channelRestriction: 'guild',
 			description: {
-				content: 'Ban word on the server. use the unbanword alias to delete a banned word, unbanword alias and --removeaall to remove every banned word',
-				usage: '[word to ban]',
-				examples: ['owo']
+				content: 'Whitelist word so it is not affected by the banned word, unwhitelistword alias and --removeaall to remove every banned whitelisted word',
+				usage: '[word to whitelist]',
+				examples: ['sexuality']
 			}
 		});
 	}
@@ -39,7 +39,7 @@ class whitelistWordCommand extends Command {
 		args.word = args.word.replace(/[\u0250-\ue007]/g, '');
 		const WhitelistWord = await whitelistWord.findOne({where: {word: args.word.toLowerCase(), serverID: message.guild.id}});
 
-		if (message.util.parsed.alias == 'unbanword') {
+		if (message.util.parsed.alias == 'unwhitelistword') {
 			if (args.removeall) {
 				whitelistWord.destroy({where: {serverID: message.guild.id}});
 				return message.channel.send('The whitelisted words has been reset.');
