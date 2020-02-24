@@ -3,6 +3,7 @@ const fs = require('fs');
 const youtubedl = require('youtube-dl');
 const hbjs = require('handbrake-js');
 const os = require('os');
+const filetype = require('file-type');
 
 class DownloadCommand extends Command {
 	constructor() {
@@ -60,19 +61,24 @@ class DownloadCommand extends Command {
 		if (link.includes('http') || link.includes('www')) {
 			let loadingmsg = await message.channel.send('Downloading <a:loadingmin:527579785212329984>');
 
-			if (fs.existsSync(`${os.tmpdir()}/${fileName}.mp4`)) {
-				fs.unlink(`${os.tmpdir()}/${fileName}.mp4`, (err) => {
+			if (fs.existsSync(`${os.tmpdir()}/${fileName}`)) {
+				fs.unlink(`${os.tmpdir()}/${fileName}`, (err) => {
 					if (err);
 				});
 			}
-			return youtubedl.exec(link, ['--format=mp4', '-o', `${os.tmpdir()}/${fileName}.mp4`], {}, async function(err) {
+			return youtubedl.exec(link, ['-o', `${os.tmpdir()}/${fileName}`], {}, async function(err) {
 				if (err) {
 					console.error(err);
 					loadingmsg.delete();
 					return message.channel.send('An error has occured, I can\'t download from the link you provided.');
 				}
 
-				let file = fs.statSync(`${os.tmpdir()}/${fileName}.mp4`);
+				let ext = await filetype.fromFile(`${os.tmpdir()}/${fileName}`);
+				ext = ext.ext; // This look stupid but hey, it work
+
+				fs.renameSync(`${os.tmpdir()}/${fileName}`, `${os.tmpdir()}/${fileName}.${ext}`);
+
+				let file = fs.statSync(`${os.tmpdir()}/${fileName}.${ext}`);
 				let fileSize = file.size / 1000000.0;
 
 				//Compress vid if bigger than 8MB
@@ -81,8 +87,8 @@ class DownloadCommand extends Command {
 					loadingmsg.delete();
 
 					const options = {
-						input: `${os.tmpdir()}/${fileName}.mp4`,
-						output: `${os.tmpdir()}/${fileName}compressed.mp4`,
+						input: `${os.tmpdir()}/${fileName}.${ext}`,
+						output: `${os.tmpdir()}/${fileName}compressed.${ext}`,
 						preset: 'General/Gmail Small 10 Minutes 288p30'
 					};
 	
@@ -110,7 +116,7 @@ class DownloadCommand extends Command {
 
 					handbrake.on('end', async function () {
 						clearInterval(editmsg);
-						file = fs.statSync(`${os.tmpdir()}/${fileName}compressed.mp4`);
+						file = fs.statSync(`${os.tmpdir()}/${fileName}compressed.${ext}`);
 						fileSize = file.size / 1000000.0;
 
 						compressmsg.delete();
@@ -120,28 +126,28 @@ class DownloadCommand extends Command {
 							return message.channel.send('File too big!');
 						}
 
-						return message.channel.send({embed: Embed, files: [`${os.tmpdir()}/${fileName}compressed.mp4`]})
+						return message.channel.send({embed: Embed, files: [`${os.tmpdir()}/${fileName}compressed.${ext}`]})
 							.catch(err => {
 								console.error(err);
 								return message.channel.send('File too big');		
 							})
 							.then(() => {
 								// Delete file after it have been sent
-								fs.unlinkSync(`${os.tmpdir()}/${fileName}.mp4`);
+								fs.unlinkSync(`${os.tmpdir()}/${fileName}.${ext}`);
 							});			
 					});
 				} else {
 					loadingmsg.delete();
 					message.delete();
 
-					message.channel.send({embed: Embed, files: [`${os.tmpdir()}/${fileName}.mp4`]})
+					message.channel.send({embed: Embed, files: [`${os.tmpdir()}/${fileName}.${ext}`]})
 						.catch(err => {
 							console.error(err);
 							message.channel.send('File too big');	
 						})
 						.then(() => {
 							// Delete file after it have been sent
-							fs.unlinkSync(`${os.tmpdir()}/${fileName}.mp4`);
+							fs.unlinkSync(`${os.tmpdir()}/${fileName}.${ext}`);
 						});
 				}
 			});
