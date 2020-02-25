@@ -45,9 +45,9 @@ class DownloadCommand extends Command {
 		let fileName;
 
 		if (args.spoiler) {
-			fileName = `SPOILER_${message.author.id}_video`;
+			fileName = `SPOILER_${message.id}_video`;
 		} else {
-			fileName = `${message.author.id}_video`;
+			fileName = `${message.id}_video`;
 		}
 
 
@@ -72,9 +72,11 @@ class DownloadCommand extends Command {
 					loadingmsg.delete();
 					return message.channel.send('An error has occured, I can\'t download from the link you provided.');
 				}
-
-				let ext = await filetype.fromFile(`${os.tmpdir()}/${fileName}`);
-				ext = ext.ext; // This look stupid but hey, it work
+				let ext = 'mp4';
+				if (fs.existsSync(`${os.tmpdir()}/${fileName}`)) {
+					ext = await filetype.fromFile(`${os.tmpdir()}/${fileName}`);
+					ext = ext.ext; // This look stupid but hey, it work
+				}
 
 				fs.renameSync(`${os.tmpdir()}/${fileName}`, `${os.tmpdir()}/${fileName}.${ext}`);
 
