@@ -72,13 +72,14 @@ class DownloadCommand extends Command {
 					loadingmsg.delete();
 					return message.channel.send('An error has occured, I can\'t download from the link you provided.');
 				}
+
 				let ext = 'mp4';
 				if (fs.existsSync(`${os.tmpdir()}/${fileName}`)) {
 					ext = await filetype.fromFile(`${os.tmpdir()}/${fileName}`);
 					ext = ext.ext; // This look stupid but hey, it work
+					fs.renameSync(`${os.tmpdir()}/${fileName}`, `${os.tmpdir()}/${fileName}.${ext}`);
 				}
 
-				fs.renameSync(`${os.tmpdir()}/${fileName}`, `${os.tmpdir()}/${fileName}.${ext}`);
 
 				let file = fs.statSync(`${os.tmpdir()}/${fileName}.${ext}`);
 				let fileSize = file.size / 1000000.0;
