@@ -37,6 +37,7 @@ class tweetCommand extends Command {
 		let Attachment = (message.attachments).array();
 		// see if user is not banned
 		const blacklist = await TwitterBlacklist.findOne({where: {userID:message.author.id}});
+
 		if (blacklist) {
 			return message.channel.send(`You have been blacklisted for the following reasons: \`\`${blacklist.get('reason')}\`\` be less naughty less time.`);
 		}
@@ -50,6 +51,8 @@ class tweetCommand extends Command {
 		if (message.author.createdAt > date.setDate(date.getDate() - 7)) {
 			return message.channel.send('Your account is too new to be able to use this command!');
 		}
+
+		if (args.text.includes('discord.gg')) return message.channel.send('No discord invite allowed.');
 		
 		if (!Attachment[0] && !args.text) return message.channel.send('You need to input something for me to tweet!');
 		
