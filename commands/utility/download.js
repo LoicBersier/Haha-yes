@@ -77,6 +77,7 @@ class DownloadCommand extends Command {
 				if (fs.existsSync(`${os.tmpdir()}/${fileName}`)) {
 					ext = await filetype.fromFile(`${os.tmpdir()}/${fileName}`);
 					ext = ext.ext; // This look stupid but hey, it work
+					if (ext == '3gp') ext = 'mp4'; // Change 3gp file extension to mp4 so discord show the video ( and to stop people from complaining )
 					fs.renameSync(`${os.tmpdir()}/${fileName}`, `${os.tmpdir()}/${fileName}.${ext}`);
 				}
 
