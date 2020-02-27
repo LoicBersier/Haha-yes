@@ -18,7 +18,8 @@ class audio2imageCommand extends Command {
 				{
 					id: 'video_size',
 					match: 'option',
-					flag: '--size'
+					flag: '--size',
+					default: '640x480'
 				}
 			],
 			description: {
@@ -58,7 +59,7 @@ class audio2imageCommand extends Command {
 								.input(`${os.tmpdir()}/${message.id}1.sw`)
 								//.size('1920x1080')
 								.inputOption('-pixel_format rgb24')
-								.inputOption('-video_size 640x480')
+								.inputOption(`-video_size ${args.video_size}`)
 								.inputFormat('rawvideo')
 								.frames('1')
 								.output(`${os.tmpdir()}/a2i${message.id}.png`)
