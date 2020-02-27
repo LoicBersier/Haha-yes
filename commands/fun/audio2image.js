@@ -72,10 +72,11 @@ class audio2imageCommand extends Command {
 								.on('end', () => {
 									console.log('finished');
 									loadingmsg.delete();
-									return message.channel.send({files: [`${os.tmpdir()}/a2i${message.id}.png`]})
+									let file = fs.statSync(`${os.tmpdir()}/a2i${message.id}.png`);
+									let fileSize = (file.size / 1000000.0).toFixed(2);
+									return message.channel.send(`Image is ${fileSize} MB for ${args.video_size} resolution`, {files: [`${os.tmpdir()}/a2i${message.id}.png`]})
 										.catch(() => {
-											return message.channel.send('End result is too big to fit on discord!');
-										});
+											return message.channel.send(`End result is too big to fit on discord! File is ${fileSize} MB`);										});
 								})
 								.run();
 						})
