@@ -66,7 +66,7 @@ class DownloadCommand extends Command {
 					if (err);
 				});
 			}
-			return youtubedl.exec(link, ['-o', `${os.tmpdir()}/${fileName}`], {}, async function(err) {
+			return youtubedl.exec(link, ['--recode-video', 'mp4', '-o', `${os.tmpdir()}/${fileName}`], {}, async function(err) {
 				if (err) {
 					console.error(err);
 					loadingmsg.delete();
@@ -80,7 +80,6 @@ class DownloadCommand extends Command {
 					if (ext == '3gp') ext = 'mp4'; // Change 3gp file extension to mp4 so discord show the video ( and to stop people from complaining )
 					fs.renameSync(`${os.tmpdir()}/${fileName}`, `${os.tmpdir()}/${fileName}.${ext}`);
 				}
-
 
 				let file = fs.statSync(`${os.tmpdir()}/${fileName}.${ext}`);
 				let fileSize = file.size / 1000000.0;
