@@ -56,7 +56,10 @@ class image2audioCommand extends Command {
 								.on('end', () => {
 									console.log('finished');
 									loadingmsg.delete();
-									return message.channel.send({files: [`${os.tmpdir()}/i2a_${message.id}.wav`]});
+									return message.channel.send({files: [`${os.tmpdir()}/i2a_${message.id}.wav`]})
+										.catch(() => {
+											return message.channel.send('End result is too big to fit on discord!');
+										});
 								})
 								.run();
 						})
