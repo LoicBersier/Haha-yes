@@ -60,7 +60,6 @@ class audio2imageCommand extends Command {
 						.on('end', () => {
 							ffmpeg()
 								.input(`${os.tmpdir()}/${message.id}1.sw`)
-								//.size('1920x1080')
 								.inputOption('-pixel_format rgb24')
 								.inputOption(`-video_size ${args.video_size}`)
 								.inputFormat('rawvideo')
@@ -73,7 +72,10 @@ class audio2imageCommand extends Command {
 								.on('end', () => {
 									console.log('finished');
 									loadingmsg.delete();
-									return message.channel.send({files: [`${os.tmpdir()}/a2i${message.id}.png`]});
+									return message.channel.send({files: [`${os.tmpdir()}/a2i${message.id}.png`]})
+										.catch(() => {
+											return message.channel.send('End result is too big to fit on discord!');
+										});
 								})
 								.run();
 						})
