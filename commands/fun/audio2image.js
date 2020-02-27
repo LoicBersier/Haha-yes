@@ -67,7 +67,7 @@ class audio2imageCommand extends Command {
 								.output(`${os.tmpdir()}/a2i${message.id}.png`)
 								.on('error', (err, stdout, stderr) => {
 									console.error(`${err}\n${stdout}\n${stderr}`);
-									return message.channel.send('Uh oh, an error has occured!');
+									return message.channel.send('Uh oh, an error has occured! The image size is most likely bigger than the content!');
 								})	
 								.on('end', () => {
 									console.log('finished');
