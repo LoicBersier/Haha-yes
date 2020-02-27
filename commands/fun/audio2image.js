@@ -25,7 +25,7 @@ class audio2imageCommand extends Command {
 			description: {
 				content: 'Transform audio file into image. --size (a number) to get a bigger image NOTE: bigger image might fail ',
 				usage: '[link to audio] [--size anumber]',
-				examples: ['']
+				examples: ['https://cdn.discordapp.com/attachments/532987690145021982/682654351772221480/jeff.wav (optional) --size 1920x1080']
 			}
 		});
 	}

@@ -19,7 +19,7 @@ class image2audioCommand extends Command {
 			description: {
 				content: 'Transform an image binary data into audio ( MIGHT BECOME EAR RAPE )',
 				usage: '[link to image]',
-				examples: ['']
+				examples: ['https://cdn.discordapp.com/attachments/532987690145021982/682694359313022987/a2i682694012309864452.png']
 			}
 		});
 	}
