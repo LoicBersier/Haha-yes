@@ -44,7 +44,10 @@ class image2audioCommand extends Command {
 					ffmpeg(`${os.tmpdir()}/${message.id}.png`)
 						.format('rawvideo')
 						.output(`${os.tmpdir()}/${message.id}1.png`)
-						.on('error', (err, stdout, stderr) => console.error(`${err}\n${stdout}\n${stderr}`))
+						.on('error', (err, stdout, stderr) => {
+							console.error(`${err}\n${stdout}\n${stderr}`);
+							return message.channel.send('Uh oh, an error has occured!');
+						})							
 						.on('end', () => {
 							ffmpeg()
 								.audioBitrate(44100)
@@ -52,7 +55,10 @@ class image2audioCommand extends Command {
 								.input(`${os.tmpdir()}/${message.id}1.png`)
 								.inputFormat('s16le')
 								.output(`${os.tmpdir()}/i2a_${message.id}.wav`)
-								.on('error', (err, stdout, stderr) => console.error(`${err}\n${stdout}\n${stderr}`))
+								.on('error', (err, stdout, stderr) => {
+									console.error(`${err}\n${stdout}\n${stderr}`);
+									return message.channel.send('Uh oh, an error has occured!');
+								})									
 								.on('end', () => {
 									console.log('finished');
 									loadingmsg.delete();

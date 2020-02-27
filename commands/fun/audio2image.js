@@ -53,7 +53,10 @@ class audio2imageCommand extends Command {
 						.format('s16le')
 						.audioCodec('pcm_s16le')
 						.output(`${os.tmpdir()}/${message.id}1.sw`)
-						.on('error', (err, stdout, stderr) => console.error(`${err}\n${stdout}\n${stderr}`))
+						.on('error', (err, stdout, stderr) => {
+							console.error(`${err}\n${stdout}\n${stderr}`);
+							return message.channel.send('Uh oh, an error has occured!');
+						})						
 						.on('end', () => {
 							ffmpeg()
 								.input(`${os.tmpdir()}/${message.id}1.sw`)
@@ -63,7 +66,10 @@ class audio2imageCommand extends Command {
 								.inputFormat('rawvideo')
 								.frames('1')
 								.output(`${os.tmpdir()}/a2i${message.id}.png`)
-								.on('error', (err, stdout, stderr) => console.error(`${err}\n${stdout}\n${stderr}`))
+								.on('error', (err, stdout, stderr) => {
+									console.error(`${err}\n${stdout}\n${stderr}`);
+									return message.channel.send('Uh oh, an error has occured!');
+								})	
 								.on('end', () => {
 									console.log('finished');
 									loadingmsg.delete();
