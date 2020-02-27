@@ -3,6 +3,8 @@ const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 const youtubedl = require('youtube-dl');
 const os = require('os');
+const filetype = require('file-type');
+const fs = require('fs');
 
 class midifyCommand extends Command {
 	constructor() {
@@ -37,7 +39,7 @@ class midifyCommand extends Command {
 			url = Attachment[0].url;
 		}
 
-		let input = `${os.tmpdir()}/${message.id}.mp4`;
+		let input = `${os.tmpdir()}/${message.id}`;
 		let input2 = `${os.tmpdir()}/${message.id}.wav`;
 		let output = `${os.tmpdir()}/${message.id}.mid`;
 		let output2 = `${os.tmpdir()}/${message.id}.mp3`;
@@ -46,22 +48,36 @@ class midifyCommand extends Command {
 		let loadingmsg = await message.channel.send('Processing (this can take some time) <a:loadingmin:527579785212329984>');
 
 		if (url) {
-			return youtubedl.exec(url, ['--format=mp4', '-o', input], {}, function(err) {
+			return youtubedl.exec(url, ['-o', input], {}, async function(err) {
+				
 				if (err) {
 					console.error(err);
 					loadingmsg.delete();
 					return message.channel.send('An error has occured, I can\'t download from the link you provided.');
-				} else {
-					// Convert to wav
-					exec(`ffmpeg -i ${input} ${input2}`)
-						.then(() => {
-							midify();
-						})
-						.catch(err => {
-							console.error(err);
-							return message.channel.send('Oh no! an error has occured during the conversion, are you sure it is a valid file?');
-						});
+				} 
+				let ext = 'mp4';
+
+				if (fs.existsSync(`${os.tmpdir()}/${input}`)) {
+					ext = await filetype.fromFile(`${os.tmpdir()}/${input}`);
+					ext = ext.ext; // This look stupid but hey, it work
+					if (ext == '3gp') ext = 'mp4'; // Change 3gp file extension to mp4 so discord show the video ( and to stop people from complaining )
+					fs.renameSync(`${os.tmpdir()}/${input}`, `${os.tmpdir()}/${input}.${ext}`);
+				} else if (fs.existsSync(`${os.tmpdir()}/${input}.mkv`)) { // If it can't find the video assume it got merged and end with mkv
+					fs.renameSync(`${os.tmpdir()}/${input}.mkv`, `${os.tmpdir()}/${input}.mp4`); // Discord play mkv just fine but it need to end with mp4
 				}
+
+				input = `${os.tmpdir()}/${message.id}.${ext}`;
+
+				// Convert to wav
+				exec(`ffmpeg -i ${input} ${input2}`)
+					.then(() => {
+						midify();
+					})
+					.catch(err => {
+						console.error(err);
+						return message.channel.send('Oh no! an error has occured during the conversion, are you sure it is a valid file?');
+					});
+
 			});
 		} else {
 			return message.channel.send('You need a valid video link!');
