@@ -14,10 +14,15 @@ class image2audioCommand extends Command {
 				{
 					id: 'link',
 					type: 'string',
+				},
+				{
+					id: 'wav',
+					type: 'flag',
+					flag: '--wav'
 				}
 			],
 			description: {
-				content: 'Transform an image binary data into audio ( MIGHT BECOME EAR RAPE )',
+				content: 'Transform an image binary data into audio ( MIGHT BECOME EAR RAPE ) --wav to get wav output',
 				usage: '[link to image]',
 				examples: ['https://cdn.discordapp.com/attachments/532987690145021982/682694359313022987/a2i682694012309864452.png']
 			}
@@ -54,7 +59,7 @@ class image2audioCommand extends Command {
 								.audioChannels(1)
 								.input(`${os.tmpdir()}/${message.id}1.png`)
 								.inputFormat('s16le')
-								.output(`${os.tmpdir()}/i2a_${message.id}.mp3`)
+								.output(`${os.tmpdir()}/i2a_${message.id}.${args.wav ? 'wav' : 'mp3'}`)
 								.on('error', (err, stdout, stderr) => {
 									console.error(`${err}\n${stdout}\n${stderr}`);
 									return message.channel.send('Uh oh, an error has occured!');
@@ -62,9 +67,9 @@ class image2audioCommand extends Command {
 								.on('end', () => {
 									console.log('finished');
 									loadingmsg.delete();
-									let file = fs.statSync(`${os.tmpdir()}/i2a_${message.id}.mp3`);
+									let file = fs.statSync(`${os.tmpdir()}/i2a_${message.id}.${args.wav ? 'wav' : 'mp3'}`);
 									let fileSize = (file.size / 1000000.0).toFixed(2);
-									return message.channel.send(`Audio file is ${fileSize} MB`, {files: [`${os.tmpdir()}/i2a_${message.id}.mp3`]})
+									return message.channel.send(`Audio file is ${fileSize} MB`, {files: [`${os.tmpdir()}/i2a_${message.id}.${args.wav ? 'wav' : 'mp3'}`]})
 										.catch(() => {
 											return message.channel.send(`End result is too big to fit on discord! File is ${fileSize} MB`);
 										});
