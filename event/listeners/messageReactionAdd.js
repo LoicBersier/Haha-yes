@@ -105,7 +105,7 @@ class MessageReactionAddListener extends Listener {
 		}
 
 		async function sendEmbed(name, emote, client) {
-			let messageAttachments = reaction.message.attachments.map(u=> u.url);
+			let messageAttachments = reaction.message.attachments.map(u=> u.url)[0];
 			// Should change this so it automatically pic the channel ( I'm lazy right now )
 			let channel;
 			if (name == 'starboard') {
@@ -127,31 +127,36 @@ class MessageReactionAddListener extends Listener {
 			}
 
 			let description = '';
-			console.log(reaction.message.content);
-			// if message come from nsfw channel and the star/shameboard channel isn't nsfw put it in spoiler
+
 			if (reaction.message.embeds[0]) {
+				console.log(reaction.message.embeds[0].url);
+				if (reaction.message.embeds[0].type == 'image') {
+					messageAttachments = reaction.message.embeds[0].url;
+				}
+
 				if (reaction.message.embeds[0].description) {
 					description = reaction.message.embeds[0].description;
+				} else if (reaction.message.content) {
+					description = reaction.message.content;
 				}
-			}
-			else if (reaction.message.content) {
+			} else if (reaction.message.content) {
 				description = reaction.message.content;
 			}
-				
+
+			// if message come from nsfw channel and the star/shameboard channel isn't nsfw put it in spoiler
 			if (reaction.message.channel.nsfw && !channel.nsfw) {
 				Embed.setDescription(`||${description}||`);
 				if (messageAttachments != '') {
 					let message = await channel.send(`||${messageAttachments}||`, { embed: Embed });
 					messageID[reaction.message.id] = message.id;
-				}
-				else {
+				} else {
 					let message = await channel.send({embed: Embed});
 					messageID[reaction.message.id] = message.id;
 				}
 			} else {
 				Embed.setDescription(description);
-				let message = await channel.send({ files: messageAttachments, embed: Embed })
-					.catch(async () => channel.send(messageAttachments, { embed: Embed }));
+				let message = await channel.send({ files: [messageAttachments], embed: Embed })
+					.catch(async () =>  channel.send(messageAttachments, { embed: Embed }));
 				messageID[reaction.message.id] = message.id;
 			}
 		}
