@@ -58,6 +58,12 @@ class DownloadCommand extends Command {
 			.setFooter(`You can get the original video by clicking on the "downloaded by ${message.author.username}" message!`);
 
 
+		let compressEmbed = this.client.util.embed()
+			.setColor(message.member.displayHexColor)
+			.setTitle('This one will need compression!')
+			.setDescription('Starting compression now!')
+			.setFooter('Want it to go faster? Donate to the dev with the donate command, so i can get a better server and do it faster!');
+
 		if (link.includes('http') || link.includes('www')) {
 			let loadingmsg = await message.channel.send('Downloading <a:loadingmin:527579785212329984>');
 
@@ -89,7 +95,7 @@ class DownloadCommand extends Command {
 
 				//Compress vid if bigger than 8MB
 				if (fileSize > 8) {
-					let compressmsg = await message.channel.send('Video bigger than 8MB compressing now <a:loadingmin:527579785212329984> (This can take a long time!)\nWant it to go faster? Donate to the dev with the donate command, so i can get a better server and do it faster!');
+					let compressmsg = await message.channel.send(compressEmbed);
 					loadingmsg.delete();
 
 					const options = {
@@ -117,7 +123,8 @@ class DownloadCommand extends Command {
 
 					// Every 5 seconds update the compress message with the %
 					let editmsg = setInterval(() => {
-						compressmsg.edit(`Compression status: Percent complete: ${percentComplete}, ETA: ${eta}\nWant it to go faster? Donate to the dev with the donate command, so i can get a better server and do it faster!`);
+						compressEmbed.setDescription(`Ready in ${eta == '' ? 'soon enough' : eta}. ${percentComplete}% complete.`);
+						compressmsg.edit(compressEmbed);
 					}, 5000);
 
 					handbrake.on('end', async function () {
