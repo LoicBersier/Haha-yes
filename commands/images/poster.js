@@ -50,7 +50,7 @@ class posterCommand extends Command {
 				},
 			],
 			description: {
-				content: 'Create demotivational poster (use ``|`` to separate top text and bottom text) WIP\nCan make use of --width, --border, --titleSize and --subtextSize to fine tune the image',
+				content: 'Create demotivational poster (use ``|`` to separate top text and bottom text) WIP\nCan make use of --width, --height, --titleSize and --subtextSize to fine tune the image',
 				usage: '[link to image] [topText|bottomText]',
 				examples: ['https://cdn.discordapp.com/attachments/484013245158522909/679686216903426104/0nhsxje5vfg41-1.jpg NO PLEASE DON\'T | My mom said im not allowed to']
 			}
