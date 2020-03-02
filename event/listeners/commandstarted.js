@@ -1,4 +1,5 @@
 const { Listener } = require('discord-akairo');
+let serverID = require('../../json/serverID.json'); 
 
 class commandStartedListener extends Listener {
 	constructor() {
@@ -22,9 +23,10 @@ class commandStartedListener extends Listener {
 		} 
 		today = dd + '/' + mm;
 		//Only execute when its april first
-		if (today == '01/04') {
+		if (today == '01/04' && !serverID.includes(message.guild.id)) {
 			let count = Math.random() * 100;
 			if (count < 10) {
+				serverID.push(message.guild.id);
 				console.log('Gold triggered!');
 				this.client.user.setActivity('people buy haha yes gold™', { type: 'WATCHING' });
 				let Embed = this.client.util.embed()
@@ -37,6 +39,8 @@ class commandStartedListener extends Listener {
 
 				return message.channel.send(Embed);
 			}
+		} else {
+			console.log('Gold already triggered for this guild!');
 		}
 	}
 }
