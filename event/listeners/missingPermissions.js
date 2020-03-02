@@ -9,21 +9,28 @@ class missingPermissionsListener extends Listener {
 	}
 
 	async exec(message, command, type, missing) {
+		let Embed = this.client.util.embed()
+			.setColor('RED')
+			.setTitle('Missing permission')
+			.setDescription(`Im missing the required permissions for the ${command.id} command!`)
+			.addField('Missing permission:', missing);
+
 		switch(type) {
 		case 'client':
 			if (missing == 'SEND_MESSAGES') {
 				return;
 			} else {
-				message.reply(`Im missing the required permissions for this command!, \`${missing}\``);
+				message.reply(Embed);
 			}
 			break;
 		case 'user':
 			if (missing == 'SEND_MESSAGES') {
-				return message.author.send(`You are missing some permissions to use this command!, \`${missing}\``);
+				Embed.setDescription(`You are missing the required permissions for the ${command.id} command!`);
+				return message.author.send(Embed);
 			} else {
-				message.reply(`You are missing some permissions to use this command!, \`${missing}\``);
+				Embed.setDescription(`You are missing the required permissions for the ${command.id} command!`);
+				message.reply(Embed);
 			}
-			
 			break;
 		}
 	}

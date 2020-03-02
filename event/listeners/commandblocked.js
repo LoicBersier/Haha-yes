@@ -12,11 +12,17 @@ class CommandBlockedListener extends Listener {
 		console.log(`${message.author.username} was blocked from using ${command.id} because of ${reason}!`);
 		let ownerMessage;
 		let blacklistMessage;
+		let Embed = this.client.util.embed()
+			.setColor('RED')
+			.setTitle('Error')
+			.setDescription('Something blocked you');
+
 		switch(reason) {
 		case 'owner':
 			ownerMessage = ['Nice try but you aren\'t the owner <a:memed:433320880135733248>', 'LOADING SUPER SECRET COMMAND <a:loadingmin:527579785212329984> Wait a minute... you aren\'t the owner!', 'uhm, how about no'];
-			ownerMessage = ownerMessage[Math.floor( Math.random() * ownerMessage.length )];
-			message.reply(ownerMessage);
+			Embed.setTitle('You are not the owner.');
+			Embed.setDescription(ownerMessage[Math.floor( Math.random() * ownerMessage.length )]);
+			message.reply(Embed);
 			break;
 		case 'guild':
 			message.reply('You can\'t use this command in a guild!');
@@ -26,11 +32,14 @@ class CommandBlockedListener extends Listener {
 			break;
 		case 'blacklist': 
 			blacklistMessage = ['bro... i think you are blacklisted.... OWNED!!!', 'You can\'t use this command because you have been blacklisted!',' you are blacklisted!!!1111!! be less naughty next time!', 'blacklisted,,,,,, lol owned bro'];
-			blacklistMessage = blacklistMessage[Math.floor( Math.random() * blacklistMessage.length )];
-			message.reply(blacklistMessage);
+			Embed.setTitle('You are blacklisted.');
+			Embed.setDescription(blacklistMessage[Math.floor( Math.random() * blacklistMessage.length )]);
+			message.reply(Embed);
 			break;
 		case 'serverblacklist': 
-			message.channel.send(`This server have been blacklisted... to appeal contact ${this.client.users.get(this.client.ownerID).username}#${this.client.users.get(this.client.ownerID).discriminator}, and now i will yeet out of here`);
+			Embed.setTitle('Server blacklisted.');
+			Embed.setDescription(`This server have been blacklisted... to appeal contact ${this.client.users.get(this.client.ownerID).username}#${this.client.users.get(this.client.ownerID).discriminator}, and now i will yeet out of here`);
+			message.channel.send(Embed);
 			message.guild.leave();
 			break;
 		}
