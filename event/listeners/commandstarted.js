@@ -27,7 +27,15 @@ class commandStartedListener extends Listener {
 			if (count < 10) {
 				console.log('Gold triggered!');
 				this.client.user.setActivity('people buy haha yes gold™', { type: 'WATCHING' });
-				return message.channel.send('To further utilize this command, please visit https://namejeff.xyz/gold', {files: ['./asset/img/gold.png']});
+				let Embed = this.client.util.embed()
+					.setColor(message.member.displayHexColor)
+					.setTitle('Haha yes **gold**')
+					.setDescription('To further utilize this command, please visit https://namejeff.xyz/gold')
+					.attachFiles(['./asset/img/gold.png'])
+					.setImage('attachment://gold.png')
+					.setFooter('This is an april fool\'s joke, no command will EVER be behind a paywall');
+
+				return message.channel.send(Embed);
 			}
 		}
 	}
