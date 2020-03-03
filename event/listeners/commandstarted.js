@@ -39,8 +39,6 @@ class commandStartedListener extends Listener {
 
 				return message.channel.send(Embed);
 			}
-		} else {
-			console.log('Gold already triggered for this guild!');
 		}
 	}
 }
