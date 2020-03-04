@@ -30,6 +30,8 @@ class userInfoCommand extends Command {
 
 		let member = message.guild.member(user);
 
+		console.log(member);
+
 		const Embed = this.client.util.embed()
 			.setColor(member.displayHexColor)
 			.setAuthor(`${user.tag} (${user.id})`, user.displayAvatarURL())
@@ -42,10 +44,10 @@ class userInfoCommand extends Command {
 		// Show since when this user have been boosting the current guild
 		if (member.premiumSince) Embed.addField('Boosting this guild since', member.premiumSince, true);
 
-		Embed.addBlankField();
+		Embed.addField('​', '​');
 		
 		// Show user status
-		if (user.presence.activity) Embed.addField('Presence', user.presence.activity, true);
+		if (user.presence.activity) Embed.addField('Presence', user.presence.activities[0], true);
 
 		// Is the user a bot?
 		if (user.bot) Embed.addField('Is a bot?', '✅', true);
@@ -57,7 +59,7 @@ class userInfoCommand extends Command {
 
 		// Show on which platform they are using discord from if its not a bot
 		if (user.presence.clientStatus && !user.bot) {
-			Embed.addBlankField();
+			Embed.addField('​', '​');
 			if (user.presence.clientStatus.mobile) Embed.addField('Using discord on', '📱 ' + user.presence.clientStatus.mobile, true);
 			if (user.presence.clientStatus.desktop) Embed.addField('Using discord on', '💻 ' + user.presence.clientStatus.desktop, true);
 			if (user.presence.clientStatus.web) Embed.addField('Using discord on', '☁️ ' + user.presence.clientStatus.web, true);

@@ -25,7 +25,7 @@ class ServerCommand extends Command {
 			.addField('Number of bots', botCount, true)
 			.addField('Total number of members', message.guild.memberCount, true)
 			.addField('Number of channels', message.guild.channels.size, true)
-			.addBlankField()
+			.addField('​', '​')
 			.addField('Date when guild created', message.guild.createdAt, true)
 			.addField('Owner', message.guild.owner, true)
 			.setTimestamp();
