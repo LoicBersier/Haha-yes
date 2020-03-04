@@ -16,7 +16,7 @@ class ServerCommand extends Command {
 	}
 
 	async exec(message) {
-		let botCount = message.guild.members.filter(member => member.user.bot).size;
+		let botCount = message.guild.members.cache.filter(member => member.user.bot).size;
 		const addEmbed = this.client.util.embed()
 			.setColor(message.member.displayHexColor)
 			.setTitle(message.guild.name)
@@ -24,7 +24,7 @@ class ServerCommand extends Command {
 			.addField('Number of users', message.guild.memberCount - botCount, true)
 			.addField('Number of bots', botCount, true)
 			.addField('Total number of members', message.guild.memberCount, true)
-			.addField('Number of channels', message.guild.channels.size, true)
+			.addField('Number of channels', message.guild.channels.cache.size, true) 
 			.addField('​', '​')
 			.addField('Date when guild created', message.guild.createdAt, true)
 			.addField('Owner', message.guild.owner, true)
