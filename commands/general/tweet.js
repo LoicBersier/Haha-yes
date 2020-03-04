@@ -4,8 +4,6 @@ const fetch = require('node-fetch');
 const os = require('os');
 const fs = require('fs');
 const rand = require('../../rand.js');
-//const Filter = require('bad-words');
-//let filter = new Filter();
 const TwitterBlacklist = require('../../models').TwitterBlacklist;
 const { twiConsumer, twiConsumerSecret, twiToken, twiTokenSecret, twiChannel } = require('../../config.json');
 
@@ -41,16 +39,16 @@ class tweetCommand extends Command {
 		if (blacklist) {
 			return message.channel.send(`You have been blacklisted for the following reasons: \`\`${blacklist.get('reason')}\`\` be less naughty less time.`);
 		}
+		// Don't let account new account use this command to prevent spam
+		if (message.author.createdAt > date.setDate(date.getDate() - 7)) {
+			return message.channel.send('Your account is too new to be able to use this command!');
+		}
 
 		// If account is younger than 6 months old don't accept attachment
 		if (Attachment[0] && message.author.createdAt > date.setMonth(date.getMonth() - 6)) {
 			return message.channel.send('Your account need to be 6 months or older to be able to send attachment!');
 		} 
 		
-		// Don't let account new account use this command to prevent spam
-		if (message.author.createdAt > date.setDate(date.getDate() - 7)) {
-			return message.channel.send('Your account is too new to be able to use this command!');
-		}
 
 		if (args.text.includes('discord.gg')) return message.channel.send('No discord invite allowed.');
 		
@@ -164,7 +162,7 @@ class tweetCommand extends Command {
 				if (Attachment[0]) publicEmbed.setImage(Attachment[0].url);
 
 				// Im too lazy for now to make an entry in config.json
-				let channel = client.channels.get('597964498921455637');
+				let channel = client.channels.resolve('597964498921455637');
 				channel.send({embed: publicEmbed});
 	
 				const Embed = client.util.embed()
@@ -178,7 +176,7 @@ class tweetCommand extends Command {
 
 				if (Attachment[0]) Embed.setImage(Attachment[0].url);
 				
-				channel = client.channels.get(twiChannel);
+				channel = client.channels.resolve(twiChannel);
 				channel.send({embed: Embed});
 				return message.channel.send(`Go see ur epic tweet https://twitter.com/i/status/${tweetid}`);
 			});

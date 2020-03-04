@@ -22,7 +22,7 @@ class donatorCommand extends Command {
 
 		if (Donator[0]) {
 			for (let i = 0; i < Donator.length; i++) {
-				donatorMessage += `**${this.client.users.get(Donator[i].get('userID')).username}#${this.client.users.get(Donator[i].get('userID')).discriminator} (${Donator[i].get('userID')}) | ${Donator[i].get('comment')}**\n`;
+				donatorMessage += `**${this.client.users.resolve(Donator[i].get('userID')).username}#${this.client.users.resolve(Donator[i].get('userID')).discriminator} (${Donator[i].get('userID')}) | ${Donator[i].get('comment')}**\n`;
 			}
 		} else {
 			donatorMessage += 'No one :(';

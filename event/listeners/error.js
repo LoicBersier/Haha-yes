@@ -14,7 +14,7 @@ class errorListener extends Listener {
 	async exec(message, error, command) {
 		console.log(message);
 		console.error(`Error happenend on the command: ${command.id}\n${message}\nOn the message: ${error}`);
-		const channel = this.client.channels.get(errorChannel);
+		const channel = this.client.channels.resolve(errorChannel);
 		const errorEmbed = this.client.util.embed()
 			.setColor('RED')
 			.setTitle('Shit happened!')

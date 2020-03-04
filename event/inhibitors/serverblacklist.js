@@ -9,6 +9,7 @@ class serverblacklistInhibitor extends Inhibitor {
 	}
 
 	async exec(message) {
+		if (message.channel.type == 'dm') return;
 		const blacklist = await guildBlacklist.findOne({where: {guildID:message.guild.id}});
 
 		if (blacklist) return true;

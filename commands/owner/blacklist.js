@@ -32,7 +32,7 @@ class blacklistCommand extends Command {
 		if (!blacklist) {
 			const body = {userID: args.userID};
 			userBlacklist.create(body);
-			return message.channel.send(`The following user have been blacklisted: ${this.client.users.get(args.userID).username}#${this.client.users.get(args.userID).discriminator} (${args.userID})`);
+			return message.channel.send(`The following user have been blacklisted: ${this.client.users.resolve(args.userID).username}#${this.client.users.resolve(args.userID).discriminator} (${args.userID})`);
 		} else {
 			message.channel.send('This user is already blacklisted, do you want to unblacklist him? y/n');
 			const filter = m =>  m.content && m.author.id == message.author.id;
@@ -41,7 +41,7 @@ class blacklistCommand extends Command {
 					let messageContent = messages.map(messages => messages.content);
 					if (messageContent == 'y' || messageContent == 'yes') {
 						userBlacklist.destroy({where: {userID:args.userID}});
-						return message.channel.send(`The following user have been unblacklisted: ${this.client.users.get(args.userID).username}#${this.client.users.get(args.userID).discriminator} (${args.userID})`);
+						return message.channel.send(`The following user have been unblacklisted: ${this.client.users.resolve(args.userID).username}#${this.client.users.resolve(args.userID).discriminator} (${args.userID})`);
 					}
 				})
 				.catch(err => {

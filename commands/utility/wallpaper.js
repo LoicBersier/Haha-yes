@@ -31,8 +31,6 @@ class wallpaperCommand extends Command {
 				return res.json();
 			})
 			.then(res => {
-				console.log(res);
-
 				const wallpaperEmbed = this.client.util.embed()
 					.setColor(message.member.displayHexColor)
 					.setTitle('Bing wallpaper of the day')

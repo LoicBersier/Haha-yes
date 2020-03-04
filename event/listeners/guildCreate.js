@@ -12,7 +12,7 @@ class guildCreateListener extends Listener {
 
 	async exec(guild) {
 		console.log(`${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\nOwner ID: ${guild.owner}`);
-		const channel = this.client.channels.get(statsChannel);
+		const channel = this.client.channels.resolve(statsChannel);
 		const addEmbed = this.client.util.embed()
 			.setColor('#52e80d')
 			.setTitle('New boiz in town')
@@ -25,7 +25,7 @@ class guildCreateListener extends Listener {
 			.addField('Number of bots', guild.members.filter(member => member.user.bot).size, true)
 			.addField('Owner', guild.owner.user.username, true)
 			.addField('Owner ID', guild.owner.id, true)
-			.setFooter(`I'm now in ${this.client.guilds.size} servers!`)
+			.setFooter(`I'm now in ${this.client.guilds.cache.size} servers!`)
 			.setTimestamp();
 	
 		channel.send({ embed: addEmbed });

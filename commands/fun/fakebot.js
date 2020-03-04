@@ -36,7 +36,7 @@ class fakebotCommand extends Command {
 		let Attachment = (message.attachments).array();
 		let url;
 		let username = args.user.username;
-		let member = message.guild.members.get(args.user.id);
+		let member = message.guild.members.resolve(args.user.id);
 		// Get attachment link
 		if (Attachment[0]) {
 			url = Attachment[0].url;

@@ -20,8 +20,8 @@ exports.random = function (text, message) {
 	do {
 		if (message) {
 			text = text.replace(/\[author\]/, message.author.username);
-			text = text.replace(/\[member\]/g, message.guild.members.random().user.username);
-			text = text.replace(/\[memberRand\]/, message.guild.members.random().user.username);
+			text = text.replace(/\[member\]/g, message.guild.members.cache.random().user.username);
+			text = text.replace(/\[memberRand\]/, message.guild.members.cache.random().user.username);
 		}
 		text = text.replace(/\[number\]/, Math.floor((Math.random() * 9) + 1));
 		text = text.replace(/\[kick\]/, ' ');

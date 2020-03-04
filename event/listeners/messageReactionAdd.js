@@ -23,11 +23,10 @@ class MessageReactionAddListener extends Listener {
 		let reactionCount = reaction.count;
 
 		// If one of the reaction is the author of the message remove 1 to the reaction count
-		reaction.users.forEach(user => {
+		reaction.users.cache.forEach(user => {
 			if (reaction.message.author == user) reactionCount--;
 		});
 		
-
 		//	Starboard
 		if (fs.existsSync(`./board/star${reaction.message.guild.id}.json`)) {
 			starboardChannel = require(`../../board/star${reaction.message.guild.id}.json`);
@@ -36,11 +35,11 @@ class MessageReactionAddListener extends Listener {
 			delete require.cache[require.resolve(`../../board/star${reaction.message.guild.id}.json`)]; // Delete the boardChannel cache so it can reload it next time
 
 			// Get name of the custom emoji
-			if (this.client.util.resolveEmoji(staremote, reaction.message.guild.emojis)) {
-				staremote = this.client.util.resolveEmoji(staremote, reaction.message.guild.emojis).name;
+			if (reaction.message.guild.emojis.resolve(staremote.replace(/\D/g,''))) {
+				staremote = reaction.message.guild.emojis.resolve(staremote.replace(/\D/g,''));
 			}
 
-			if (reaction.emoji.name == staremote) {
+			if (reaction.emoji == staremote || reaction.emoji.name == staremote) {
 				if (messageID[reaction.message.id] && reactionCount > starcount) {
 					return editEmbed('starboard', staremote, messageID[reaction.message.id], this.client);
 				} else if (reactionCount == starcount) {
@@ -57,11 +56,11 @@ class MessageReactionAddListener extends Listener {
 			delete require.cache[require.resolve(`../../board/shame${reaction.message.guild.id}.json`)]; // Delete the boardChannel cache so it can reload it next time
 			
 			// Get name of the custom emoji
-			if (this.client.util.resolveEmoji(shameemote, reaction.message.guild.emojis)) {
-				shameemote = this.client.util.resolveEmoji(shameemote, reaction.message.guild.emojis).name;
+			if (reaction.message.guild.emojis.resolve(shameemote.replace(/\D/g,''))) {
+				shameemote = reaction.message.guild.emojis.resolve(shameemote.replace(/\D/g,''));
 			}
 
-			if (reaction.emoji.name == shameemote) {
+			if (reaction.emoji == shameemote || reaction.emoji.name == shameemote) {
 				if (messageID[reaction.message.id] && reactionCount > shamecount) {
 					return editEmbed('shameboard', shameemote, messageID[reaction.message.id], this.client);
 				} else if (reactionCount == shamecount) {
@@ -73,12 +72,12 @@ class MessageReactionAddListener extends Listener {
 		async function editEmbed(name, emote, boardID, client) {
 			let channel;
 			if (name == 'starboard') {
-				channel = client.channels.get(starboardChannel.starboard);
+				channel = client.channels.resolve(starboardChannel.starboard);
 			} else {
-				channel = client.channels.get(shameboardChannel.shameboard);
+				channel = client.channels.resolve(shameboardChannel.shameboard);
 			}
 
-			let message = await channel.messages.get(boardID);
+			let message = await channel.messages.resolve(boardID);
 
 			// If the message doesn't have embeds assume it got deleted so don't do anything
 			if (!message) return;
@@ -94,12 +93,10 @@ class MessageReactionAddListener extends Listener {
 				.addField('Jump to', `[message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`, true)
 				.addField('Channel', reaction.message.channel, true)
 				.setDescription(description)
-				.setFooter(reactionCount + ' ' + emote)
+				.setFooter(`${emote} ${reactionCount}`)
 				.setTimestamp();
 
-			if (reaction.message.guild.emojis.find(emoji => emoji.name === emote)) {
-				Embed.setFooter(reactionCount, reaction.message.guild.emojis.find(emoji => emoji.name === emote).url);
-			}
+			if (reaction.message.guild.emojis.resolve(emote)) Embed.setFooter(reactionCount, reaction.message.guild.emojis.resolve(emote).url);
 
 			message.edit({ embed: Embed });
 		}
@@ -109,9 +106,9 @@ class MessageReactionAddListener extends Listener {
 			// Should change this so it automatically pic the channel ( I'm lazy right now )
 			let channel;
 			if (name == 'starboard') {
-				channel = client.channels.get(starboardChannel.starboard);
+				channel = client.channels.resolve(starboardChannel.starboard);
 			} else {
-				channel = client.channels.get(shameboardChannel.shameboard);
+				channel = client.channels.resolve(shameboardChannel.shameboard);
 			}
 
 			let Embed = client.util.embed()
@@ -119,17 +116,14 @@ class MessageReactionAddListener extends Listener {
 				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
 				.addField('Jump to', `[message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`, true)
 				.addField('Channel', reaction.message.channel, true)
-				.setFooter(reactionCount + ' ' + emote)
+				.setFooter(`${emote} ${reactionCount}`)
 				.setTimestamp();
 
-			if (reaction.message.guild.emojis.find(emoji => emoji.name === emote)) {
-				Embed.setFooter(reactionCount, reaction.message.guild.emojis.find(emoji => emoji.name === emote).url);
-			}
+			if (reaction.message.guild.emojis.resolve(emote)) Embed.setFooter(reactionCount, reaction.message.guild.emojis.resolve(emote).url);
 
 			let description = '';
 
 			if (reaction.message.embeds[0]) {
-				console.log(reaction.message.embeds[0].url);
 				if (reaction.message.embeds[0].type == 'image') {
 					messageAttachments = reaction.message.embeds[0].url;
 				}

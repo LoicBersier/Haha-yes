@@ -19,7 +19,7 @@ class guildMemberAddListener extends Listener {
 		const join = await joinChannel.findOne({where: {guildID: guild.guild.id}});
 
 		if (join) {
-			const channel = this.client.channels.get(join.get('channelID'));
+			const channel = this.client.channels.resolve(join.get('channelID'));
 
 			let welcomeMessage = join.get('message');
 

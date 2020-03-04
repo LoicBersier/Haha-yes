@@ -29,9 +29,9 @@ class fakeleaveCommand extends Command {
 
 		if (leave) {
 			if (args.user)
-				member = message.guild.members.get(args.user.id);
+				member = message.guild.members.resolve(args.user.id);
 			else
-				member = message.guild.members.get(message.author.id);
+				member = message.guild.members.resolve(message.author.id);
 		} else {
 			return message.channel.send('There is no leave channel setup');
 		}

@@ -32,7 +32,7 @@ class FeedbackCommand extends Command {
 			return message.channel.send('Your account is too new to be able to use this command!');
 		}
 
-		const channel = this.client.channels.get(feedbackChannel);
+		const channel = this.client.channels.resolve(feedbackChannel);
 
 		const Embed = this.client.util.embed()
 			.setAuthor(`${message.author.username} (${message.author.id})`, message.author.displayAvatarURL())

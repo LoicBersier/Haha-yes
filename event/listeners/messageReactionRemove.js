@@ -22,7 +22,7 @@ class messageReactionRemoveListener extends Listener {
 		let reactionCount = reaction.count;
 
 		// If one of the reaction removed is the author of the message add 1 to the reaction count
-		reaction.users.forEach(user => {
+		reaction.users.cache.forEach(user => {
 			if (reaction.message.author == user) reactionCount++;
 		});
 
@@ -33,19 +33,20 @@ class messageReactionRemoveListener extends Listener {
 			let starcount = starboardChannel.count;
 			delete require.cache[require.resolve(`../../board/star${reaction.message.guild.id}.json`)]; // Delete the boardChannel cache so it can reload it next time
 
-			if (this.client.util.resolveEmoji(staremote, reaction.message.guild.emojis)) {
-				staremote = this.client.util.resolveEmoji(staremote, reaction.message.guild.emojis).name;
+			// Get name of the custom emoji
+			if (reaction.message.guild.emojis.resolve(staremote.replace(/\D/g,''))) {
+				staremote = reaction.message.guild.emojis.resolve(staremote.replace(/\D/g,''));
 			}
 
-			if (messageID[reaction.message.id] && reaction.emoji.name == staremote && reactionCount < starcount) {
-				let channel = this.client.channels.get(starboardChannel.starboard);
-				let message = await channel.messages.get(messageID[reaction.message.id]);
+			if (messageID[reaction.message.id] && (reaction.emoji == staremote || reaction.emoji.name == staremote) && reactionCount < starcount) {
+				let channel = this.client.channels.resolve(starboardChannel.starboard);
+				let message = await channel.messages.resolve(messageID[reaction.message.id]);
 				delete messageID[reaction.message.id];
 				// If it didn't find any message don't do anything
 				if (!message) return;
 
 				message.delete();
-			} else if (reaction.emoji.name == staremote && reactionCount >= starcount) {
+			} else if ((reaction.emoji == staremote || reaction.emoji.name == staremote) && reactionCount >= starcount) {
 				return editEmbed('starboard', staremote, messageID[reaction.message.id], this.client);
 			}
 		}
@@ -57,16 +58,17 @@ class messageReactionRemoveListener extends Listener {
 			let shamecount = shameboardChannel.count;
 			delete require.cache[require.resolve(`../../board/shame${reaction.message.guild.id}.json`)]; // Delete the boardChannel cache so it can reload it next time
 
-			if (this.client.util.resolveEmoji(shameemote, reaction.message.guild.emojis)) {
-				shameemote = this.client.util.resolveEmoji(shameemote, reaction.message.guild.emojis).name;
+			// Get name of the custom emoji
+			if (reaction.message.guild.emojis.resolve(shameemote.replace(/\D/g,''))) {
+				shameemote = reaction.message.guild.emojis.resolve(shameemote.replace(/\D/g,''));
 			}
 
-			if (messageID[reaction.message.id] && reaction.emoji.name == shameemote && reactionCount < shamecount) {
-				let channel = this.client.channels.get(shameboardChannel.shameboard);
-				let message = await channel.messages.get(messageID[reaction.message.id]);
+			if (messageID[reaction.message.id] && (reaction.emoji == shameemote || reaction.emoji.name == shameemote) && reactionCount < shamecount) {
+				let channel = this.client.channels.resolve(shameboardChannel.shameboard);
+				let message = await channel.messages.resolve(messageID[reaction.message.id]);
 				delete messageID[reaction.message.id];
 				message.delete();
-			} else if (reaction.emoji.name == shameemote && reactionCount >= shamecount) {
+			} else if ((reaction.emoji == shameemote || reaction.emoji.name == shameemote) && reactionCount >= shamecount) {
 				return editEmbed('shameboard', shameemote, messageID[reaction.message.id], this.client);
 			}
 		}
@@ -74,19 +76,19 @@ class messageReactionRemoveListener extends Listener {
 		async function editEmbed(name, emote, boardID, client) {
 			let channel;
 			if (name == 'starboard') {
-				channel = client.channels.get(starboardChannel.starboard);
+				channel = client.channels.resolve(starboardChannel.starboard);
 			} else {
-				channel = client.channels.get(shameboardChannel.shameboard);
+				channel = client.channels.resolve(shameboardChannel.shameboard);
 			}
 
-			let message = await channel.messages.get(boardID);
+			let message = await channel.messages.resolve(boardID);
 
 			// If the message doesn't have embeds assume it got deleted so don't do anything
 			if (!message) return;
 
 			// If the original embed description is empty make this embed empty ( and not undefined )
 			let description = message.embeds[0].description;
-			if (!message.embeds[0].description) 
+			if (!message.embeds[0].description || message.embeds[0].description == undefined) 
 				description = '';
 
 			let Embed = client.util.embed()
@@ -95,12 +97,10 @@ class messageReactionRemoveListener extends Listener {
 				.addField('Jump to', `[message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`, true)
 				.addField('Channel', reaction.message.channel, true)
 				.setDescription(description)
-				.setFooter(reactionCount + ' ' + emote)
+				.setFooter(`${emote} ${reactionCount}`)
 				.setTimestamp();
 
-			if (reaction.message.guild.emojis.find(emoji => emoji.name === emote)) {
-				Embed.setFooter(reactionCount, reaction.message.guild.emojis.find(emoji => emoji.name === emote).url);
-			}
+			if (reaction.message.guild.emojis.resolve(emote)) Embed.setFooter(reactionCount, reaction.message.guild.emojis.resolve(emote).url);
 
 			message.edit({ embed: Embed });
 		}

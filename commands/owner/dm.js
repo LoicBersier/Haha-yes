@@ -31,7 +31,7 @@ class EvalCommand extends Command {
 
 		let Attachment = (message.attachments).array();
 		if (Attachment[0]) {
-			this.client.users.get(user.id).send(`**Message from the dev:**\n${text}\n**If you wish to respond use the feedback command**`, {files: [Attachment[0].url]})
+			this.client.users.resolve(user.id).send(`**Message from the dev:**\n${text}\n**If you wish to respond use the feedback command**`, {files: [Attachment[0].url]})
 				.then(() => {
 					return message.channel.send(`DM sent to ${user.username}`);
 				})
@@ -40,7 +40,7 @@ class EvalCommand extends Command {
 				});
 		}
 		else {
-			this.client.users.get(user.id).send(`**Message from the dev:**\n${text}\n**If you wish to respond use the feedback command**`)
+			this.client.users.resolve(user.id).send(`**Message from the dev:**\n${text}\n**If you wish to respond use the feedback command**`)
 				.then(() => {
 					return message.channel.send(`DM sent to ${user.username}`);
 				})

@@ -4,7 +4,7 @@ const BannedWords = require('../../models').bannedWords;
 class BannedWordsCommand extends Command {
 	constructor() {
 		super('BannedWords', {
-			aliases: ['bannedword', 'banword', 'unbanword'],
+			aliases: ['bannedword', 'banword', 'unbanword', 'censor', 'uncensor'],
 			category: 'admin',
 			userPermissions: ['MANAGE_MESSAGES'],
 			clientPermissions: ['MANAGE_MESSAGES', 'SEND_MESSAGES'],

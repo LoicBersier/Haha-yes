@@ -18,12 +18,13 @@ class ReadyListener extends Listener {
 	async exec() {
 		let commandSize = this.client.commandHandler.modules.size;
 		let clientTag = this.client.user.tag;
-		let guildSize = this.client.guilds.size;
-		let userSize = this.client.users.size;
-		let channelSize = this.client.channels.size;
+		let guildSize = this.client.guilds.cache.size;
+		let userSize = this.client.users.cache.size;
+		let channelSize = this.client.channels.cache.size;
 		let profilePicture = this.client.user.displayAvatarURL();
 		let clientID = this.client.user.id;
-		let author = this.client.users.get(ownerID).tag;
+		let author = this.client.users.resolve(ownerID).tag;
+
 
 		//  Send stats to the console
 		console.log('===========[ READY ]===========');
@@ -40,7 +41,7 @@ class ReadyListener extends Listener {
 		}, 1800000);
 
 		async function setStatus(client) {
-			let owner = client.users.get(client.ownerID);
+			let owner = client.users.resolve(client.ownerID);
 			let random = Math.floor((Math.random() * 3));
 			if (random == 0) { // Random "Watching" status taken from json
 				console.log('Status type: \x1b[32mWatching\x1b[0m');
@@ -56,38 +57,38 @@ class ReadyListener extends Listener {
 				status = status.replace('${prefix}', prefix[0]);
 						
 				client.user.setActivity(`${status} | My prefix is: ${prefix[0]}`, { type: 'PLAYING' });
-			} else if (random == 2 && owner.presence.activity != null) { // Bot owner status
+			} else if (random == 2 && owner.presence.activities != null) { // Bot owner status
 				console.log('Status type: \x1b[32mCopying owner status\x1b[0m');
 				// Get elapsed time from when the activity started		
 				let diffMins = 0;
-				if (owner.presence.activity.timestamps) {
-					let diffMs = (new Date() - owner.presence.activity.timestamps.start);
+				if (owner.presence.activities[0].timestamps) {
+					let diffMs = (new Date() - owner.presence.activities[0].timestamps.start);
 					diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000);					
 				}
-				client.user.setActivity(`${owner.presence.activity.name}\nfor ${diffMins} minutes | My prefix is: ${prefix[0]}`, owner.presence.activity);
+				client.user.setActivity(`${owner.presence.activities[0].name}\nfor ${diffMins} minutes | My prefix is: ${prefix[0]}`, owner.presence.activities[0]);
 			} else { // Random user statuss
 				console.log('Status type: \x1b[32mCopying random user status\x1b[0m');
 				let randomuser = client.users.random();
 				// If the random user have no activity or is a bot pick a new user
-				while (randomuser.presence.activity == null || randomuser.presence.activity.type == 'CUSTOM_STATUS' ||  randomuser.bot) {
+				while (randomuser.presence.activities[0] == null || randomuser.presence.activities[0].type == 'CUSTOM_STATUS' ||  randomuser.bot) {
 					randomuser = client.users.random();
 				}			
 
 				// Get elapsed time from when the activity started		
 				let diffMins = 0;
-				if (randomuser.presence.activity.timestamps) {
-					let diffMs = (new Date() - randomuser.presence.activity.timestamps.start);
+				if (randomuser.presence.activities[0].timestamps) {
+					let diffMs = (new Date() - randomuser.presence.activities[0].timestamps.start);
 					diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000);
 				}
 
-				client.user.setActivity(`${randomuser.username} is ${randomuser.presence.activity.type.toLowerCase()} ${randomuser.presence.activity.name}\nfor ${diffMins} minutes | My prefix is: ${prefix[0]}`, { type: randomuser.presence.activity.type, url: randomuser.presence.activity.url, name: randomuser.presence.activity.name });	
+				client.user.setActivity(`${randomuser.username} is ${randomuser.presence.activities[0].type.toLowerCase()} ${randomuser.presence.activities[0].name}\nfor ${diffMins} minutes | My prefix is: ${prefix[0]}`, { type: randomuser.presence.activities[0].type, url: randomuser.presence.activities[0].url, name: randomuser.presence.activities[0].name });	
 			}
 		}
 
 
 		// If stats channel settings exist, send bot stats to it
 		if (statsChannel) {
-			const channel = this.client.channels.get(statsChannel);
+			const channel = this.client.channels.resolve(statsChannel);
 			channel.send(`Ready to serve in ${channelSize} channels on ${guildSize} servers, for a total of ${userSize} users.\nThere is ${commandSize} command loaded\n${this.client.readyAt}`);
 		}
 
@@ -100,8 +101,8 @@ class ReadyListener extends Listener {
 			const requestHandler = (req, res) => {
 				// Refresh some info
 				commandSize = this.client.commandHandler.modules.size;
-				guildSize = this.client.guilds.size;
-				userSize = this.client.users.size;
+				guildSize = this.client.guilds.cache.size;
+				userSize = this.client.users.cache.size;
 				profilePicture = this.client.user.displayAvatarURL();
 				
 				let response = {
