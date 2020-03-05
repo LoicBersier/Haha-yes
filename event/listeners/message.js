@@ -237,6 +237,7 @@ class messageListener extends Listener {
 			*	This section will contain the code for the quotation feature, it will detect link for it and send it as embed
 			*
 			*/
+			/*
 			const quotationstat = await quotationStat.findOne({where: {serverID: message.guild.id, stat: 'enable'}});
 
 			if (quotationstat && message.content.includes('discordapp.com/channels/')) { 
@@ -275,6 +276,7 @@ class messageListener extends Listener {
 						message.delete();
 					});
 			}
+			*/
 
 		}
 	}
