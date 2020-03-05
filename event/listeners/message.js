@@ -264,7 +264,7 @@ class messageListener extends Listener {
 					.addField('In channel', quote.channel, true)
 					.addField('Quoted by', message.author, true)
 					.setDescription(quote.content)
-					.setTimestamp();
+					.setTimestamp(quote.createdTimestamp);
 				
 				if (guild.id != message.guild.id) Embed.addField('In guild', guild.name, true);
 				let Attachment = (quote.attachments).array();
