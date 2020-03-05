@@ -268,6 +268,7 @@ class messageListener extends Listener {
 				
 				if (guild.id != message.guild.id) Embed.addField('In guild', guild.name, true);
 
+				message.delete();
 				return message.channel.send(Embed);
 			}
 
