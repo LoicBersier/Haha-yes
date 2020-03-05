@@ -270,8 +270,10 @@ class messageListener extends Listener {
 				let Attachment = (quote.attachments).array();
 				if (Attachment[0]) Embed.setImage(Attachment[0].url);
 
-				message.delete();
-				return message.channel.send(Embed);
+				return message.channel.send(Embed)
+					.then(() => {
+						message.delete();
+					});
 			}
 
 		}
