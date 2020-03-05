@@ -261,7 +261,7 @@ class messageListener extends Listener {
 					.setColor(quote.member.displayHexColor)
 					.setAuthor(quote.author.username, quote.author.displayAvatarURL())
 					.addField('Jump to', `[message](https://discordapp.com/channels/${message.guild.id}/${channelID}/${messageID})`, true)
-					.addField('In channel', quote.channel, true)
+					.addField('In channel', quote.channel.name, true)
 					.addField('Quoted by', message.author, true)
 					.setDescription(quote.content)
 					.setTimestamp(quote.createdTimestamp);
