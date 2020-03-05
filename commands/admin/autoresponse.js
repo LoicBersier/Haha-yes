@@ -13,10 +13,6 @@ class autoresponseCommand extends Command {
 					prompt: {
 						start: 'Do you want to **enable** or **disable** auto response?',
 					}
-				},
-				{
-					id: 'all',
-					type: 'string'
 				}
 			],
 			clientPermissions: ['SEND_MESSAGES'],
@@ -24,8 +20,8 @@ class autoresponseCommand extends Command {
 			channelRestriction: 'guild',
 			description: {
 				content: 'enable/disable autoresponse',
-				usage: '[enable/disable] (optional) [all]',
-				examples: ['enable all']
+				usage: '[enable/disable]',
+				examples: ['enable']
 			}
 		});
 	}
