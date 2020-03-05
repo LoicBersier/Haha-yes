@@ -267,6 +267,8 @@ class messageListener extends Listener {
 					.setTimestamp();
 				
 				if (guild.id != message.guild.id) Embed.addField('In guild', guild.name, true);
+				let Attachment = (quote.attachments).array();
+				if (Attachment[0]) Embed.setImage(Attachment[0].url);
 
 				message.delete();
 				return message.channel.send(Embed);
