@@ -88,6 +88,8 @@ class DownloadCommand extends Command {
 					fs.renameSync(`${os.tmpdir()}/${fileName}`, `${os.tmpdir()}/${fileName}.${ext}`);
 				} else if (fs.existsSync(`${os.tmpdir()}/${fileName}.mkv`)) { // If it can't find the video assume it got merged and end with mkv
 					fs.renameSync(`${os.tmpdir()}/${fileName}.mkv`, `${os.tmpdir()}/${fileName}.mp4`); // Discord play mkv just fine but it need to end with mp4
+				} else if (fs.existsSync(`${os.tmpdir()}/${fileName}.webm`)) { // Same as mkv
+					ext = 'webm';
 				}
 
 				let file = fs.statSync(`${os.tmpdir()}/${fileName}.${ext}`);
