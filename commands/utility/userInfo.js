@@ -47,8 +47,7 @@ class userInfoCommand extends Command {
 		Embed.addField('​', '​');
 		
 		// Show user status
-		if (user.presence.activity) Embed.addField('Presence', user.presence.activities[0], true);
-
+		if (user.presence.activities) Embed.addField('Presence', user.presence.activities[0], true);
 		// Is the user a bot?
 		if (user.bot) Embed.addField('Is a bot?', '✅', true);
 		
