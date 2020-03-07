@@ -30,8 +30,6 @@ class userInfoCommand extends Command {
 
 		let member = message.guild.member(user);
 
-		console.log(member);
-
 		const Embed = this.client.util.embed()
 			.setColor(member.displayHexColor)
 			.setAuthor(`${user.tag} (${user.id})`, user.displayAvatarURL())
@@ -47,7 +45,11 @@ class userInfoCommand extends Command {
 		Embed.addField('​', '​');
 		
 		// Show user status
-		if (user.presence.activities[0]) Embed.addField('Presence', user.presence.activities[0], true);
+		if (user.presence.activities[0]) {
+			Embed.addField('Presence', user.presence.activities[0], true);
+			if (user.presence.activities[0].details) Embed.addField('​', user.presence.activities[0].details, true);
+			if (user.presence.activities[0].state) Embed.addField('​', user.presence.activities[0].state, true);
+		}
 		// Is the user a bot?
 		if (user.bot) Embed.addField('Is a bot?', '✅', true);
 		
