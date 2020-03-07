@@ -258,7 +258,6 @@ class messageListener extends Listener {
 				if (!quote) return;
 
 				let Embed = this.client.util.embed()
-					.setColor(quote.member.displayHexColor)
 					.setAuthor(quote.author.username, quote.author.displayAvatarURL())
 					.addField('Jump to', `[message](https://discordapp.com/channels/${message.guild.id}/${channelID}/${messageID})`, true)
 					.addField('In channel', quote.channel.name, true)
@@ -266,6 +265,8 @@ class messageListener extends Listener {
 					.setDescription(quote.content)
 					.setTimestamp(quote.createdTimestamp);
 				
+				if (quote.member) Embed.setColor(quote.member.displayHexColor);
+
 				if (guild.id != message.guild.id) Embed.addField('In guild', guild.name, true);
 				let Attachment = (quote.attachments).array();
 				if (Attachment[0]) Embed.setImage(Attachment[0].url);
