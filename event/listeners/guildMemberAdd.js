@@ -49,23 +49,6 @@ class guildMemberAddListener extends Listener {
 				}
 				welcomeMessage = welcomeMessage.replace(/(\[attach:.*?])/, '');
 			}
-
-			// Give a role
-			let role;
-			if (welcomeMessage.includes('[role:')) {
-				role = welcomeMessage.split(/(\[role:.*?])/);
-				for (let i = 0, l = role.length; i < l; i++) {
-					if (role[i].includes('[role:')) {
-						role = role[i].replace('[role:', '').slice(0, -1);
-						i = role.length;
-					}
-				}
-
-				const rank = member.guild.roles.cache.find(rank => rank.name === role);
-				member.roles.add(rank);
-				
-				welcomeMessage = welcomeMessage.replace(/(\[role:.*?])/, '');
-			}
 	
 			welcomeMessage = rand.random(welcomeMessage);	
 	
