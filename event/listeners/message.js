@@ -6,6 +6,7 @@ const autoResponse = require('../../models').autoresponse;
 const autoResponseStat = require('../../models').autoresponseStat;
 const BannedWords = require('../../models').bannedWords;
 const WhitelistWord = require('../../models').whitelistWord;
+const quotationStat = require('../../models').quotationStat;
 
 class messageListener extends Listener {
 	constructor() {
@@ -25,6 +26,11 @@ class messageListener extends Listener {
 
 		if (message.author.bot) return;
 
+		/*	Banned words section
+		*	
+		*	This section contains code about the banned words features	
+		*
+		*/
 
 		// Banned words
 		const bannedWords = await BannedWords.findAll({where: {word: Sequelize.where(Sequelize.fn('LOCATE', Sequelize.col('word'), message.content.replace(/\u200B/g, '').replace(/[\u0250-\ue007]/g, '')), Sequelize.Op.ne, 0), serverID: message.guild.id}});
@@ -55,8 +61,14 @@ class messageListener extends Listener {
 			return message.delete({reason: `Deleted message: ${message.content}`});
 
 		} else {
+			/* Autoresponse feature & tag
+			*
+			*	This section contains autoresponse and tag feature
+			*
+			*/
+
 			// auto responses
-			const autoresponseStat = await autoResponseStat.findOne({where: {serverID: message.guild.id}});
+			const autoresponseStat = await autoResponseStat.findOne({where: {serverID: message.guild.id, stat: 'enable'}});
 			if (autoresponseStat) {
 			// Infinit haha very yes
 				if (message.content.toLowerCase().startsWith('haha very') && message.content.toLowerCase().endsWith('yes')) {
@@ -68,28 +80,25 @@ class messageListener extends Listener {
 					return message.channel.send('haha very yes');
 				}
 
-				//  If autoresponse is enable send the response
-				if (autoresponseStat.get('stat') == 'enable' && autoresponseStat.get('serverID') == message.guild.id) {
 				//  Reply with images as attachement
-					const autoresponse = await autoResponse.findOne({where: {trigger: message.content.toLowerCase()}});
+				const autoresponse = await autoResponse.findOne({where: {trigger: message.content.toLowerCase()}});
 
-					if (autoresponse) {
-						autoResponse.findOne({where: {trigger: message.content.toLowerCase()}});
-						let trigger = autoresponse.get('trigger');
-						let type = autoresponse.get('type');
-						let content = autoresponse.get('response');
+				if (autoresponse) {
+					autoResponse.findOne({where: {trigger: message.content.toLowerCase()}});
+					let trigger = autoresponse.get('trigger');
+					let type = autoresponse.get('type');
+					let content = autoresponse.get('response');
 
-						if (trigger == message.content.toLowerCase() && type == 'text') {
-							return message.channel.send(content);
-						} else if (trigger == message.content.toLowerCase() && type == 'react') {
-							return message.react(content);
-						} else if (trigger == message.content.toLowerCase() && type == 'image') {
-							return message.channel.send({files: [content]});
-						}
+					if (trigger == message.content.toLowerCase() && type == 'text') {
+						return message.channel.send(content);
+					} else if (trigger == message.content.toLowerCase() && type == 'react') {
+						return message.react(content);
+					} else if (trigger == message.content.toLowerCase() && type == 'image') {
+						return message.channel.send({files: [content]});
 					}
-
 				}
 			}
+
 			//  User autoresponse
 			const tag = await Tag.findOne({where: {trigger: message.content.toLowerCase(), serverID: message.guild.id}});
 			if (tag) {
@@ -221,6 +230,51 @@ class messageListener extends Listener {
 					return message.channel.send(text);
 				}
 
+			}
+
+			/*	Quotation feature
+			*
+			*	This section will contain the code for the quotation feature, it will detect link for it and send it as embed
+			*
+			*/
+			const quotationstat = await quotationStat.findOne({where: {serverID: message.guild.id, stat: 'enable'}});
+
+			if (quotationstat && message.content.includes('discordapp.com/channels/')) { 
+				let url = message.content.split('/');
+				let guildID = url[4];
+				let channelID = url[5];
+				let messageID = url[6];
+
+
+				// Verify if the guild, channel and message exist
+				let guild = this.client.guilds.resolve(guildID);
+				if (!guild) return;
+				let channel = this.client.channels.resolve(channelID);
+				if (!channel) return;
+				let quote = await channel.messages.fetch(messageID)
+					.catch(() => {
+						return;
+					});
+				if (!quote) return;
+
+				let Embed = this.client.util.embed()
+					.setAuthor(quote.author.username, quote.author.displayAvatarURL())
+					.addField('Jump to', `[message](https://discordapp.com/channels/${message.guild.id}/${channelID}/${messageID})`, true)
+					.addField('In channel', quote.channel.name, true)
+					.addField('Quoted by', message.author, true)
+					.setDescription(quote.content)
+					.setTimestamp(quote.createdTimestamp);
+				
+				if (quote.member) Embed.setColor(quote.member.displayHexColor);
+
+				if (guild.id != message.guild.id) Embed.addField('In guild', guild.name, true);
+				let Attachment = (quote.attachments).array();
+				if (Attachment[0]) Embed.setImage(Attachment[0].url);
+
+				return message.channel.send(Embed)
+					.then(() => {
+						message.delete();
+					});
 			}
 		}
 	}

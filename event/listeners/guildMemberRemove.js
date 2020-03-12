@@ -10,8 +10,8 @@ class guildMemberRemoveListener extends Listener {
 		});
 	}
 
-	async exec(guild) {
-		const leave = await leaveChannel.findOne({where: {guildID: guild.guild.id}});
+	async exec(member) {
+		const leave = await leaveChannel.findOne({where: {guildID: member.guild.id}});
 		if (leave) {
 			const channel = this.client.channels.resolve(leave.get('channelID'));
 
@@ -19,8 +19,8 @@ class guildMemberRemoveListener extends Listener {
 
 			let invite = new RegExp(/(https?:\/\/)?(www\.)?discord(?:app\.com|\.gg)[/invite/]?(?:(?!.*[Ii10OolL]).[a-zA-Z0-9]{5,6}|[a-zA-Z0-9-]{2,32})/g);
 
-			let username = guild.user.username;
-			let user = guild.user;
+			let username = member.user.username;
+			let user = member.user;
 			if (username.match(invite)) {
 				username = username.replace(/(https?:\/\/)?(www\.)?discord(?:app\.com|\.gg)[/invite/]?(?:(?!.*[Ii10OolL]).[a-zA-Z0-9]{5,6}|[a-zA-Z0-9-]{2,32})/g, '[REDACTED]');
 				user = username;
@@ -28,7 +28,7 @@ class guildMemberRemoveListener extends Listener {
 
 			byeMessage = byeMessage.replace(/\[member\]/, username);
 			byeMessage = byeMessage.replace(/\[memberPing\]/, user);
-			byeMessage = byeMessage.replace(/\[server\]/, guild.guild.name);
+			byeMessage = byeMessage.replace(/\[server\]/, member.guild.name);
 
 			let attach;
 			if (byeMessage.includes('[attach:')) {

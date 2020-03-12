@@ -12,14 +12,14 @@ class audio2imageCommand extends Command {
 			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
 			args: [
 				{
-					id: 'link',
-					type: 'string',
-				},
-				{
 					id: 'video_size',
 					match: 'option',
 					flag: '--size',
 					default: '640x480'
+				},
+				{
+					id: 'link',
+					type: 'string',
 				}
 			],
 			description: {

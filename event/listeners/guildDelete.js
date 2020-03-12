@@ -14,6 +14,8 @@ class guildCreateListener extends Listener {
 		console.log(`***BOT KICKED***\n${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\nOwner ID: ${guild.owner}\n***BOT KICKED***`);
 		const channel = this.client.channels.resolve(statsChannel);
 
+		let botCount = guild.members.cache.filter(member => member.user.bot).size;
+
 		const kickEmbed = this.client.util.embed()
 			.setColor('#FF0000')
 			.setTitle('Some mofo just removed me from there guild :(')
@@ -22,8 +24,8 @@ class guildCreateListener extends Listener {
 			.addField('Guild name', guild.name, true)
 			.addField('Guild ID', guild.id, true)
 			.addField('Total number of members', guild.memberCount, true)
-			.addField('Number of users', guild.members.filter(member => !member.user.bot).size, true)
-			.addField('Number of bots', guild.members.filter(member => member.user.bot).size, true)
+			.addField('Number of users', guild.memberCount - botCount, true)
+			.addField('Number of bots', botCount, true)
 			.addField('Owner', guild.owner.user.username, true)
 			.addField('Owner ID', guild.owner.id, true)
 			.setFooter(`I'm now in ${this.client.guilds.cache.size} servers!`)
