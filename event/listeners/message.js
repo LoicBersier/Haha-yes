@@ -100,7 +100,7 @@ class messageListener extends Listener {
 				} else if (text.includes('[kick]')) {
 					message.member.kick('Tag kick :^)');
 				} else if (text.includes('[delete]')) {
-					message.delete('Tag delete :^)');
+					message.delete();
 				}
 		
 				text = rand.random(text, message);
