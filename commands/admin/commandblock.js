@@ -20,7 +20,7 @@ class commandblockCommand extends Command {
 			userPermissions: ['ADMINISTRATOR'],
 			channelRestriction: 'guild',
 			description: {
-				content: 'Block a command',
+				content: 'Block a command. Execute that command again to unblock a command',
 				usage: '[command name]',
 				examples: ['owned']
 			}
