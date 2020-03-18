@@ -16,10 +16,14 @@ class rotateCommand extends Command {
 				{
 					id: 'rotate',
 					type: 'integer',
+					prompt: {
+						start: 'Please enter the number of degrees you want to rotate.',
+						retry: 'This doesn\'t look like a number to me, please try again.'
+					}
 				}
 			],
 			description: {
-				content: 'Make your vid shit quality.',
+				content: 'Rotate your image',
 				usage: '[link to image] [angle of rotation]',
 				examples: ['']
 			}
