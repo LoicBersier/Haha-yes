@@ -31,8 +31,10 @@ class tweetCommand extends Command {
 	}
 
 	async exec(message, args) {
-		let date = new Date();
 		let Attachment = (message.attachments).array();
+		if (!Attachment[0] && !args.text) return message.channel.send('You need to input something for me to tweet!');
+
+		let date = new Date();
 		// see if user is not banned
 		const blacklist = await TwitterBlacklist.findOne({where: {userID:message.author.id}});
 
@@ -52,7 +54,6 @@ class tweetCommand extends Command {
 
 		if (args.text.includes('discord.gg')) return message.channel.send('No discord invite allowed.');
 		
-		if (!Attachment[0] && !args.text) return message.channel.send('You need to input something for me to tweet!');
 		
 		const client = this.client;
 
