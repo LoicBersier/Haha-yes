@@ -57,7 +57,7 @@ class colorCommand extends Command {
 		];
 
 		if (args.color.match(/^#[0-9A-F]{6}$/i) || ColorResolvable.includes(args.color.toLowerCase()) || colors.includes(args.color.toLowerCase())) {
-			let role = message.guild.roles.find(role => role.name === args.color);
+			let role = message.guild.roles.cache.find(role => role.name === args.color);
 			if (!role) {
 				message.guild.roles.create({
 					data: {
@@ -68,7 +68,7 @@ class colorCommand extends Command {
 					reason: 'Color command'
 				});
 				return message.channel.send('Role created! try again to apply it to yourself!');
-			} else if (message.guild.member(message.author).roles.has(role.id)) {
+			} else if (message.guild.member(message.author).roles.cache.has(role.id)) {
 				message.guild.member(message.author).roles.remove(role);
 				return message.channel.send('Role removed!');
 			}
