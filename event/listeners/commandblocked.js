@@ -42,6 +42,11 @@ class CommandBlockedListener extends Listener {
 			message.channel.send(Embed);
 			message.guild.leave();
 			break;
+		case 'commandblock':
+			Embed.setTitle('Command blocked.');
+			Embed.setDescription('The admins of this server blocked this command.');
+			message.channel.send(Embed);
+			break;
 		}
 	}
 }
