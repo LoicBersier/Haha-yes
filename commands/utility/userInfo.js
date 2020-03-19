@@ -6,7 +6,7 @@ class userInfoCommand extends Command {
 			aliases: ['userInfo', 'user'],
 			category: 'utility',
 			clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS'],
-			channelRestriction: 'guild',
+			channel: 'guild',
 			args: [
 				{
 					id: 'user',

@@ -26,7 +26,7 @@ class TwitterBlacklistCommand extends Command {
 					}
 				}
 			],
-			channelRestriction: 'guild',
+			channel: 'guild',
 			description: {
 				content: 'Blacklist user from the twitter command',
 				usage: '[userID]',

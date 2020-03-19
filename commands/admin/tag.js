@@ -28,7 +28,7 @@ class TagCommand extends Command {
 					match: 'rest',
 				}
 			],
-			channelRestriction: 'guild',
+			channel: 'guild',
 			description: {
 				content: 'Create custom autoresponse (--remove to delete a tag, --reset to delete EVERY tag on the server)  [Click here to see the complete list of "tag"](https://cdn.discordapp.com/attachments/502198809355354133/561043193949585418/unknown.png) (Need "" if the trigger contains spaces)',
 				usage: '[trigger] [response]',

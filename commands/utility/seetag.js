@@ -9,7 +9,7 @@ class seetagCommand extends Command {
 			aliases: ['seetag', 'taglist', 'tags'],
 			category: 'utility',
 			clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS', 'ATTACH_FILES'],
-			channelRestriction: 'guild',
+			channel: 'guild',
 			args: [
 				{
 					id: 'raw',

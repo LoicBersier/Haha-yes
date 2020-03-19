@@ -6,6 +6,7 @@ class serverIconCommand extends Command {
 			aliases: ['serverIcon'],
 			category: 'utility',
 			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
+			channel: 'guild',
 			args: [
 				{
 					id: 'serverid',

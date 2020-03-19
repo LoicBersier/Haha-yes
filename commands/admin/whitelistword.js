@@ -25,7 +25,7 @@ class whitelistWordCommand extends Command {
 					flag: '--removeall'
 				}
 			],
-			channelRestriction: 'guild',
+			channel: 'guild',
 			description: {
 				content: 'Whitelist word so it is not affected by the banned word, unwhitelistword alias and --removeaall to remove every banned whitelisted word',
 				usage: '[word to whitelist]',

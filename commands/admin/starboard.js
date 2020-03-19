@@ -6,7 +6,7 @@ class StarBoardCommand extends Command {
 		super('starboard', {
 			aliases: ['starboard'],
 			category: 'admin',
-			channelRestriction: 'guild',
+			channel: 'guild',
 			userPermissions: ['MANAGE_CHANNELS'],
 			args: [
 				{

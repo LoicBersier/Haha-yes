@@ -18,7 +18,7 @@ class removeResponseCommand extends Command {
 					}
 				}
 			],
-			channelRestriction: 'guild',
+			channel: 'guild',
 			description: {
 				content: 'Remove created custom autoresponse',
 				usage: '[trigger]',

@@ -16,7 +16,7 @@ class PruneCommand extends Command {
 			],
 			clientPermissions: ['MANAGE_MESSAGES', 'SEND_MESSAGES'],
 			userPermissions: ['MANAGE_MESSAGES'],
-			channelRestriction: 'guild',
+			channel: 'guild',
 			description: {
 				content: 'Bulk delete messages',
 				usage: '[amount]',

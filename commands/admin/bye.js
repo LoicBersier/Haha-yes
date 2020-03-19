@@ -6,7 +6,7 @@ class byeCommand extends Command {
 		super('bye', {
 			aliases: ['bye', 'leave'],
 			category: 'admin',
-			channelRestriction: 'guild',
+			channel: 'guild',
 			userPermissions: ['MANAGE_CHANNELS'],
 			clientPermissions: ['SEND_MESSAGES'],
 			args: [

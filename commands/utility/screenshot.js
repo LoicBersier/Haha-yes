@@ -20,7 +20,7 @@ class screenshotCommand extends Command {
 					flag: '--full'
 				}
 			],
-			channelRestriction: 'guild',
+			channel: 'guild',
 			description: {
 				content: 'Take a screenshot of a website. Need to start with http(s)://. Use --full to take a full page capture',
 				usage: '[link to a website] [optional: --full]',

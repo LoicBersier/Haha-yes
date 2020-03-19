@@ -31,7 +31,7 @@ class addResponseCommand extends Command {
 					}
 				}
 			],
-			channelRestriction: 'guild',
+			channel: 'guild',
 			description: {
 				content: 'Create custom autoresponse',
 				usage: '[trigger] [response]',

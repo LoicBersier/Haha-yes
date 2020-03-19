@@ -25,10 +25,10 @@ class CommandBlockedListener extends Listener {
 			message.reply(Embed);
 			break;
 		case 'guild':
-			message.reply('You can\'t use this command in a guild!');
+			message.reply('You can\'t use this command in DM!');
 			break;
 		case 'dm':
-			message.reply('You can\'t use this command in DM!');
+			message.reply('You can\'t use this command in a guild!');
 			break;
 		case 'blacklist': 
 			blacklistMessage = ['bro... i think you are blacklisted.... OWNED!!!', 'You can\'t use this command because you have been blacklisted!',' you are blacklisted!!!1111!! be less naughty next time!', 'blacklisted,,,,,, lol owned bro'];

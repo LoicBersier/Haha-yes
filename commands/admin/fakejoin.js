@@ -6,7 +6,7 @@ class fakejoinCommand extends Command {
 		super('fakejoin', {
 			aliases: ['fakejoin'],
 			category: 'admin',
-			channelRestriction: 'guild',
+			channel: 'guild',
 			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
 			args: [
 				{

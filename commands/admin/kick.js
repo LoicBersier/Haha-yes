@@ -25,7 +25,7 @@ class KickCommand extends Command {
 			],
 			clientPermissions: ['KICK_MEMBERS', 'SEND_MESSAGES'],
 			userPermissions: ['KICK_MEMBERS'],
-			channelRestriction: 'guild',
+			channel: 'guild',
 			description: {
 				content: 'Kick user',
 				usage: '[@user] [reason]',

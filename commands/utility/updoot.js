@@ -5,7 +5,7 @@ class UpdootCommand extends Command {
 		super('updoot', {
 			aliases: ['updoot', 'upvote', 'vote'],
 			category: 'utility',
-			channelRestriction: 'guild',
+			channel: 'guild',
 			clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS'],
 			description: {
 				content: 'Send a link to vote for my bot',

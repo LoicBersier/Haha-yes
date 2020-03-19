@@ -26,7 +26,7 @@ class BanCommand extends Command {
 			],
 			clientPermissions: ['BAN_MEMBERS', 'SEND_MESSAGES'],
 			userPermissions: ['BAN_MEMBERS'],
-			channelRestriction: 'guild',
+			channel: 'guild',
 			description: {
 				content: 'Ban user | For hackban precise the userid',
 				usage: '[@user] [reason] OR [userID] [reason]',

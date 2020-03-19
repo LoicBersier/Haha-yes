@@ -17,7 +17,7 @@ class blacklistCommand extends Command {
 					}
 				}
 			],
-			channelRestriction: 'guild',
+			channel: 'guild',
 			description: {
 				content: 'Blacklist user from the bot',
 				usage: '[userID]',

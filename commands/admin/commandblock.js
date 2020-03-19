@@ -18,7 +18,7 @@ class commandblockCommand extends Command {
 			],
 			clientPermissions: ['SEND_MESSAGES'],
 			userPermissions: ['ADMINISTRATOR'],
-			channelRestriction: 'guild',
+			channel: 'guild',
 			description: {
 				content: 'Block a command. Execute that command again to unblock a command',
 				usage: '[command name]',

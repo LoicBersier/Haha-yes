@@ -25,7 +25,7 @@ class BannedWordsCommand extends Command {
 					flag: '--removeall'
 				}
 			],
-			channelRestriction: 'guild',
+			channel: 'guild',
 			description: {
 				content: 'Ban word on the server. use the unbanword alias to delete a banned word, unbanword alias and --removeaall to remove every banned word',
 				usage: '[word to ban]',

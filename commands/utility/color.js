@@ -6,6 +6,7 @@ class colorCommand extends Command {
 			aliases: ['color', 'colour'],
 			category: 'utility',
 			clientPermissions: ['SEND_MESSAGES', 'MANAGE_ROLES'],
+			channel: 'guild',
 			args: [
 				{
 					id: 'color',

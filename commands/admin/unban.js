@@ -17,7 +17,7 @@ class UnbanCommand extends Command {
 			],
 			clientPermissions: ['BAN_MEMBERS'],
 			userPermissions: ['BAN_MEMBERS'],
-			channelRestriction: 'guild',
+			channel: 'guild',
 			description: {
 				content: 'unban users',
 				usage: '[user id]',

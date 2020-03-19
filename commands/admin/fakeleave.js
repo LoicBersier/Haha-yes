@@ -6,7 +6,7 @@ class fakeleaveCommand extends Command {
 		super('fakeleave', {
 			aliases: ['fakeleave'],
 			category: 'admin',
-			channelRestriction: 'guild',
+			channel: 'guild',
 			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
 			args: [
 				{

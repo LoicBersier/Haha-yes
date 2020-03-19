@@ -22,7 +22,7 @@ class addDonatorCommand extends Command {
 					match: 'rest'
 				}
 			],
-			channelRestriction: 'guild',
+			channel: 'guild',
 			description: {
 				content: 'Add id to the list of people who donated',
 				usage: '[userID] [userComment]',

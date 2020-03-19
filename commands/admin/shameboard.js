@@ -6,7 +6,7 @@ class shameboardCommand extends Command {
 		super('shameboard', {
 			aliases: ['shameboard'],
 			category: 'admin',
-			channelRestriction: 'guild',
+			channel: 'guild',
 			userPermissions: ['MANAGE_CHANNELS'],
 			args: [
 				{

@@ -17,7 +17,7 @@ class autoresponseCommand extends Command {
 			],
 			clientPermissions: ['SEND_MESSAGES'],
 			userPermissions: ['MANAGE_MESSAGES'],
-			channelRestriction: 'guild',
+			channel: 'guild',
 			description: {
 				content: 'enable/disable autoresponse',
 				usage: '[enable/disable]',

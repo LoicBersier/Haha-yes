@@ -17,7 +17,7 @@ class quotationCommand extends Command {
 			],
 			clientPermissions: ['SEND_MESSAGES'],
 			userPermissions: ['MANAGE_MESSAGES'],
-			channelRestriction: 'guild',
+			channel: 'guild',
 			description: {
 				content: 'enable/disable quotation',
 				usage: '[enable/disable]',
