@@ -35,6 +35,8 @@ class screenshotCommand extends Command {
 			.setColor(message.member.displayHexColor)
 			.setTitle(args.url);
 
+		let loadingmsg = await message.channel.send('Taking a screenshot <a:loadingmin:527579785212329984>');
+
 		// eslint-disable-next-line no-useless-escape
 		let urlregex = new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/);
 		if (args.url.match(urlregex)) { // Only allow link with http/https
@@ -48,16 +50,19 @@ class screenshotCommand extends Command {
 				.catch((err) => {
 					console.error(err);
 					Embed.setDescription(err.toString());
+					loadingmsg.delete();
 					return message.channel.send(Embed);
 				})
 				.then(() => {
 					if (fs.existsSync(`${os.tmpdir()}/${message.id}.jpg`)) {
 						Embed.attachFiles([`${os.tmpdir()}/${message.id}.jpg`]);
 						Embed.setImage(`attachment://${message.id}.jpg`);
+						loadingmsg.delete();
 						return message.channel.send(Embed);
 					}
 				});
 		} else {
+			loadingmsg.delete();
 			return message.channel.send('The URL you used doesn\'t correspond to a website!');
 		}
 	}
