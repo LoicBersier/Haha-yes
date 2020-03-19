@@ -35,9 +35,9 @@ class FeedbackCommand extends Command {
 		const channel = this.client.channels.resolve(feedbackChannel);
 
 		const Embed = this.client.util.embed()
-			.setAuthor(`${message.author.username} (${message.author.id})`, message.author.displayAvatarURL())
-			.addField('Guild', `${message.guild.name} (${message.guild.id})`, true)
-			.addField('Feedback', args.text)
+			.setAuthor(`${message.author.username} (${message.author.id})`, message.author.displayAvatarURL());
+		if (message.guild) Embed.addField('Guild', `${message.guild.name} (${message.guild.id})`, true);
+		Embed.addField('Feedback', args.text)
 			.setTimestamp();
 		channel.send({embed: Embed});
 
