@@ -9,7 +9,6 @@ class screenshotCommand extends Command {
 			aliases: ['screenshot', 'webshot', 'ss'],
 			category: 'utility',
 			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
-			ownerOnly: 'true', // Owner only until i am sure there is no security issue
 			args: [
 				{
 					id: 'url',
@@ -31,6 +30,7 @@ class screenshotCommand extends Command {
 	}
 
 	async exec(message, args) {
+		if (args.url.includes('config.json')) return message.channel.send('I don\'t think so');
 		let Embed = this.client.util.embed()
 			.setColor(message.member.displayHexColor)
 			.setTitle(args.url);
