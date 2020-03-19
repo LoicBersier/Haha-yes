@@ -2,10 +2,10 @@ const { Command } = require('discord-akairo');
 const fetch = require('node-fetch');
 const { yandexTRN, yandexDICT } = require('../../config.json');
 
-class TranslationCommand extends Command {
+class translateCommand extends Command {
 	constructor() {
-		super('translation', {
-			aliases: ['translation', 'trn'],
+		super('translate', {
+			aliases: ['translate', 'trn'],
 			category: 'utility',
 			clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS'],
 			args: [
@@ -102,4 +102,4 @@ class TranslationCommand extends Command {
 	}
 }
 
-module.exports = TranslationCommand;
+module.exports = translateCommand;
