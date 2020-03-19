@@ -39,9 +39,9 @@ class KickCommand extends Command {
 		let reasons = args.reasons;
 
 		if(member === this.client.user) 
-			return message.channel.say('Cant kick me fool');
+			return message.channel.send('Cant kick me fool');
 		if(member.id === message.author.id)
-			return message.channel.say('Why would you kick yourself ?');
+			return message.channel.send('Why would you kick yourself ?');
 		if(!reasons)
 			reasons = 'Nothing have been specified.';
 
