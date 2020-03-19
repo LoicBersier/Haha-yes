@@ -22,9 +22,9 @@ class screenshotCommand extends Command {
 			],
 			channelRestriction: 'guild',
 			description: {
-				content: 'Take a screenshot of a website',
+				content: 'Take a screenshot of a website. Need to start with http(s)://',
 				usage: '[link to a website]',
-				examples: ['www.google.com']
+				examples: ['https://google.com']
 			}
 		});
 	}
