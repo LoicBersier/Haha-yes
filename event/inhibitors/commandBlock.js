@@ -9,7 +9,7 @@ class commandblockInhibitor extends Inhibitor {
 	}
 
 	async exec(message, command) {
-		if (message.channel.type == 'dm' || message.author.id == this.client.ownerID) return false;
+		if (message.channel.type == 'dm' || message.author.id == this.client.ownerID || message.member.hasPermission('ADMINISTRATOR')) return false;
 		const blacklist = await commandblock.findOne({where: {serverID:message.guild.id, command: command.id}});
 
 		if (blacklist) return true;
