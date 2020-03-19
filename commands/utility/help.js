@@ -1,4 +1,5 @@
 const { Command } = require('discord-akairo');
+const fs = require('fs');
 
 class HelpCommand extends Command {
 	constructor() {
@@ -59,6 +60,11 @@ class HelpCommand extends Command {
 
 		if (command.clientPermissions) {
 			embed.addField('Bot permission', `\`${command.clientPermissions.join('` `')}\``, true);
+		}
+
+		if (fs.existsSync(`./asset/img/command/${command.category.id}/${command.id}.png`)) {
+			embed.attachFiles(`./asset/img/command/${command.category.id}/${command.id}.png`);
+			embed.setImage(`attachment://${command.id}.png`);
 		}
 
 		return message.util.send({ embed });
