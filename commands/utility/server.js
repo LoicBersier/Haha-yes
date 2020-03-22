@@ -18,7 +18,7 @@ class ServerCommand extends Command {
 	async exec(message) {
 		let botCount = message.guild.members.cache.filter(member => member.user.bot).size;
 		const addEmbed = this.client.util.embed()
-			.setColor(message.member.displayHexColor)
+			.setColor(message.member ? message.member.displayHexColor : 'NAVY')
 			.setTitle(message.guild.name)
 			.setThumbnail(message.guild.iconURL())
 			.addField('Number of users', message.guild.memberCount - botCount, true)

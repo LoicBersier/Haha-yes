@@ -61,7 +61,7 @@ class translateCommand extends Command {
 				// If it didn't find anything in the dictionary simply send the translation
 				if (response.def.length == 0) {
 					const translationEmbed = this.client.util.embed()
-						.setColor(message.member.displayHexColor)
+						.setColor(message.member ? message.member.displayHexColor : 'NAVY')
 						.setTitle('Asked for the following translation:')
 						.setURL('https://tech.yandex.com/dictionary/')
 						.setAuthor(message.author.username)
@@ -85,7 +85,7 @@ class translateCommand extends Command {
 				}	
 
 				const translationEmbed = this.client.util.embed()
-					.setColor(message.member.displayHexColor)
+					.setColor(message.member ? message.member.displayHexColor : 'NAVY')
 					.setTitle('Asked for the following translation:')
 					.setURL('https://tech.yandex.com/dictionary/')
 					.setAuthor(message.author.username)

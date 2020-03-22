@@ -23,7 +23,7 @@ class serverIconCommand extends Command {
 
 	async exec(message, args) {
 		const serverEmbed = this.client.util.embed()
-			.setColor(message.member.displayHexColor)
+			.setColor(message.member ? message.member.displayHexColor : 'NAVY')
 			.setTitle('Server icon');
 
 

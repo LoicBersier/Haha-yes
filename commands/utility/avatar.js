@@ -22,7 +22,7 @@ class AvatarCommand extends Command {
 
 	async exec(message, args) {
 		const avatarEmbed = this.client.util.embed()
-			.setColor(message.member.displayHexColor)
+			.setColor(message.member ? message.member.displayHexColor : 'NAVY')
 			.setTitle('Avatar');
 
 

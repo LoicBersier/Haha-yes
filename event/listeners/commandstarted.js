@@ -30,7 +30,7 @@ class commandStartedListener extends Listener {
 				console.log('Gold triggered!');
 				this.client.user.setActivity('people buy haha yes gold™', { type: 'WATCHING' });
 				let Embed = this.client.util.embed()
-					.setColor(message.member.displayHexColor)
+					.setColor(message.member ? message.member.displayHexColor : 'NAVY')
 					.setTitle('Haha yes **gold**')
 					.setDescription('To further utilize this command, please visit https://namejeff.xyz/gold')
 					.attachFiles(['./asset/img/gold.png'])

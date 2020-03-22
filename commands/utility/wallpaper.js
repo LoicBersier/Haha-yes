@@ -32,7 +32,7 @@ class wallpaperCommand extends Command {
 			})
 			.then(res => {
 				const wallpaperEmbed = this.client.util.embed()
-					.setColor(message.member.displayHexColor)
+					.setColor(message.member ? message.member.displayHexColor : 'NAVY')
 					.setTitle('Bing wallpaper of the day')
 					.addField('Copyright', `[${res.copyright}](${res.copyright_link})`)
 					.setDescription(`[1366](https://bing.biturl.top/?resolution=1366&format=image&mkt=${mkt}) | [1920](https://bing.biturl.top/?resolution=1920&format=image&mkt=${mkt})`)

@@ -47,7 +47,7 @@ class RedditCommand extends Command {
 			if (response.data.children[i].data.over_18 == true && !message.channel.nsfw)
 				return message.channel.send('No nsfw');
 			const redditEmbed = this.client.util.embed()
-				.setColor(message.member.displayHexColor)
+				.setColor(message.member ? message.member.displayHexColor : 'NAVY')
 				.setTitle(response.data.children[i].data.title)
 				.setDescription(response.data.children[i].data.selftext)
 				.setURL('https://reddit.com' + response.data.children[i].data.permalink)

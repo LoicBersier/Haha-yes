@@ -38,7 +38,7 @@ class HelpCommand extends Command {
 		}, command.description);
 
 		const embed = this.client.util.embed()
-			.setColor(message.member.displayHexColor)
+			.setColor(message.member ? message.member.displayHexColor : 'NAVY')
 			.setTitle(`\`${this.client.commandHandler.prefix[0]}${command.aliases[0]} ${description.usage}\``)
 			.addField('Description', description.content)
 			.setFooter(`All the available prefix: ${this.client.commandHandler.prefix.join(' | ')}`);
@@ -72,7 +72,7 @@ class HelpCommand extends Command {
 
 	async execCommandList(message) {
 		const embed = this.client.util.embed()
-			.setColor(message.member.displayHexColor)
+			.setColor(message.member ? message.member.displayHexColor : 'NAVY')
 			.addField('Command List',
 				[
 					'This is a list of commands.',

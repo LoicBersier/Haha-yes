@@ -20,7 +20,7 @@ class AdviceCommand extends Command {
 			return response.json();
 		}).then((response) => {
 			const adviceEmbed = this.client.util.embed()
-				.setColor(message.member.displayHexColor)
+				.setColor(message.member ? message.member.displayHexColor : 'NAVY')
 				.setTitle(response.slip.slip_id)
 				.setDescription(response.slip.advice);
   

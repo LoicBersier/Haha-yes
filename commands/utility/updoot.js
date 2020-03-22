@@ -17,7 +17,7 @@ class UpdootCommand extends Command {
 
 	async exec(message) {
 		const upDoot = this.client.util.embed()
-			.setColor(message.member.displayHexColor)
+			.setColor(message.member ? message.member.displayHexColor : 'NAVY')
 			.setTitle('Vote for my bot')
 			.setAuthor(message.author.username)
 			.setDescription('You can vote for my bot if you think the bot is awesome!')

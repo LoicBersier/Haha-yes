@@ -52,14 +52,14 @@ class DownloadCommand extends Command {
 
 
 		const Embed = this.client.util.embed()
-			.setColor(message.member.displayHexColor)
+			.setColor(message.member ? message.member.displayHexColor : 'NAVY')
 			.setAuthor(`Downloaded by ${message.author.username}`, message.author.displayAvatarURL(), link)
 			.setDescription(args.caption)
 			.setFooter(`You can get the original video by clicking on the "downloaded by ${message.author.username}" message!`);
 
 
 		let compressEmbed = this.client.util.embed()
-			.setColor(message.member.displayHexColor)
+			.setColor(message.member ? message.member.displayHexColor : 'NAVY')
 			.setTitle('This one will need compression!')
 			.setDescription('Starting compression now!')
 			.setFooter('Want it to go faster? Donate to the dev with the donate command, so i can get a better server and do it faster!');

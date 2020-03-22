@@ -37,7 +37,7 @@ class seetagCommand extends Command {
 			this.client.users.fetch(tagList.dataValues.ownerID)
 				.then(user => {
 					const TagEmbed = this.client.util.embed()
-						.setColor(message.member.displayHexColor)
+						.setColor(message.member ? message.member.displayHexColor : 'NAVY')
 						.setTitle(message.guild.name)
 						.addField('Trigger:', tagList['dataValues']['trigger'])
 						.addField('Response:', tagList['dataValues']['response'])
@@ -53,7 +53,7 @@ class seetagCommand extends Command {
 				})
 				.catch(() => {
 					const TagEmbed = this.client.util.embed()
-						.setColor(message.member.displayHexColor)
+						.setColor(message.member ? message.member.displayHexColor : 'NAVY')
 						.setTitle(message.guild.name)
 						.addField('Trigger:', tagList['dataValues']['trigger'])
 						.addField('Response:', tagList['dataValues']['response'])
@@ -82,7 +82,7 @@ class seetagCommand extends Command {
 			let tagList = await Tag.findAll({attributes: ['trigger'], where: {serverID: message.guild.id}});
 			const tagString = tagList.map(t => t.trigger).join(', ') || 'No tags set.';
 			const TagEmbed = this.client.util.embed()
-				.setColor(message.member.displayHexColor)
+				.setColor(message.member ? message.member.displayHexColor : 'NAVY')
 				.setTitle('List of tags')
 				.setDescription(tagString)
 				.setFooter('Use this command with the name of the tag to see more info about it!');

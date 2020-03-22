@@ -32,7 +32,7 @@ class screenshotCommand extends Command {
 	async exec(message, args) {
 		if (args.url.includes('config.json')) return message.channel.send('I don\'t think so');
 		let Embed = this.client.util.embed()
-			.setColor(message.member.displayHexColor)
+			.setColor(message.member ? message.member.displayHexColor : 'NAVY')
 			.setTitle(args.url);
 
 		let loadingmsg = await message.channel.send('Taking a screenshot <a:loadingmin:527579785212329984>');

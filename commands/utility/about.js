@@ -30,7 +30,7 @@ class aboutCommand extends Command {
 
 
 		const aboutEmbed = this.client.util.embed()
-			.setColor(message.member.displayHexColor)
+			.setColor(message.member ? message.member.displayHexColor : 'NAVY')
 			.setAuthor(this.client.user.username, this.client.user.avatarURL())
 			.setTitle('About me')
 			.setDescription(description)

@@ -71,7 +71,7 @@ class FourchanCommand extends Command {
 			}
 
 			const FourchanEmbed = this.client.util.embed()
-				.setColor(message.member.displayHexColor)
+				.setColor(message.member ? message.member.displayHexColor : 'NAVY')
 				.setTitle(turndown.turndown(title))
 				.setDescription(turndown.turndown(description))
 				.setImage(`https://i.4cdn.org/${args.board}/${response.threads[i].posts[0].tim}${response.threads[i].posts[0].ext}`)
