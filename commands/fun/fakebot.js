@@ -24,6 +24,7 @@ class fakebotCommand extends Command {
 					match: 'rest',
 				}
 			],
+			channel: 'guild',
 			description: {
 				content: 'Fake a bot/user with webhook',
 				usage: '[user] [message]',
