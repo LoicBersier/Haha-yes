@@ -39,7 +39,7 @@ class BannedWordsCommand extends Command {
 		args.word = args.word.replace(/[\u0250-\ue007]/g, '');
 		const bannedWords = await BannedWords.findOne({where: {word: args.word.toLowerCase(), serverID: message.guild.id}});
 
-		if (message.util.parsed.alias == 'unbanword') {
+		if (message.util.parsed.alias == 'unbanword' || args.remove) {
 			if (args.removeall) {
 				BannedWords.destroy({where: {serverID: message.guild.id}});
 				return message.channel.send('The banned words have been reset.');
