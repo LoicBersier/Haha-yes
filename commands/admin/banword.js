@@ -1,4 +1,5 @@
 const { Command } = require('discord-akairo');
+const safe = require('safe-regex');
 const BannedWords = require('../../models').bannedWords;
 
 class BannedWordsCommand extends Command {
@@ -35,8 +36,7 @@ class BannedWordsCommand extends Command {
 	}
 
 	async exec(message, args) {
-		// eslint-disable-next-line no-useless-escape
-		if (message.content.includes('(?:\s|/\*.*\*/|//.*|#.*)*\(.*\)')) return; // This make bot crash
+		if (!safe(message.content)) return;
 		
 		if (!args.word) args.word = '';
 		args.word = args.word.replace(/[\u0250-\ue007]/g, '');

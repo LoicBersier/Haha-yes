@@ -1,12 +1,16 @@
 const { Listener } = require('discord-akairo');
 const rand = require('../../rand.js');
 const Sequelize = require('sequelize');
+const safe = require('safe-regex');
+// Database
 const Tag = require('../../models').Tag;
 const autoResponse = require('../../models').autoresponse;
 const autoResponseStat = require('../../models').autoresponseStat;
 const BannedWords = require('../../models').bannedWords;
 const WhitelistWord = require('../../models').whitelistWord;
 const quotationStat = require('../../models').quotationStat;
+const userBlacklist = require('../../models').userBlacklist;
+
 
 class messageListener extends Listener {
 	constructor() {
@@ -17,6 +21,10 @@ class messageListener extends Listener {
 	}
 
 	async exec(message) {	
+		const blacklist = await userBlacklist.findOne({where: {userID:message.author.id}});
+
+		if (blacklist) return;
+
 		if (message.partial) {
 			await message.fetch()
 				.catch(() => {
@@ -49,6 +57,7 @@ class messageListener extends Listener {
 			censoredMessage = censoredMessage.replace(/[\u0250-\ue007]/g, '');
 			
 			for (let i = 0; i < bannedWords.length; i++) {
+				if (!safe(bannedWords[i].get('word'))) return;
 				let regex = new RegExp(bannedWords[i].get('word'), 'g');
 				censoredMessage = censoredMessage.replace(regex, '█'.repeat(bannedWords[i].get('word').length));
 			}
