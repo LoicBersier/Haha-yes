@@ -124,12 +124,18 @@ class ytpCommand extends Command {
 			}
 			
 			if (url) {
-				return youtubedl.exec(url, ['--format=mp4', '-o', `./asset/ytp/userVid/${message.id}.mp4`], {}, function(err) {
+				return youtubedl.exec(url, ['--max-filesize', '50m', '--format=mp4', '-o', `./asset/ytp/userVid/${message.id}.mp4`], {}, function(err, output) {
+					console.log(output[2]);
 					if (err) {
 						console.error(err);
 						loadingmsg.delete();
 						return message.channel.send('An error has occured, I can\'t download from the link you provided. Is it an mp4?');
 					} else {
+						if (output[2].includes('File is larger than max-filesize')) {
+							loadingmsg.delete();
+							return message.channel.send(output[2]);
+						} 
+
 						let mp4 = [];
 						fs.readdirSync('./asset/ytp/userVid/').forEach(file => {
 							if (file.endsWith('mp4')) {
