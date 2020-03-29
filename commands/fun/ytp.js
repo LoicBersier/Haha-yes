@@ -125,7 +125,6 @@ class ytpCommand extends Command {
 			
 			if (url) {
 				return youtubedl.exec(url, ['--max-filesize', '50m', '--format=mp4', '-o', `./asset/ytp/userVid/${message.id}.mp4`], {}, function(err, output) {
-					console.log(output[2]);
 					if (err) {
 						console.error(err);
 						loadingmsg.delete();
