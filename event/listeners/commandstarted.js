@@ -27,7 +27,10 @@ class commandStartedListener extends Listener {
 			let count = Math.random() * 100;
 			if (count < 10) {
 				serverID.push(message.guild.id);
-				console.log('Gold triggered!');
+
+				const channel = this.client.channels.resolve('694715943372193803'); // Too lazy to make entry for it
+				channel.send(`${message.guild.name} (${message.guild.id}) got april fool triggered! hueheheh owned`);
+
 				this.client.user.setActivity('people buy haha yes gold™', { type: 'WATCHING' });
 				let Embed = this.client.util.embed()
 					.setColor(message.member ? message.member.displayHexColor : 'NAVY')
