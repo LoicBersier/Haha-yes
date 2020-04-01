@@ -1,5 +1,8 @@
 const { Listener } = require('discord-akairo');
+const { dailyStats } = require('../../config.json');
 let serverID = require('../../json/serverID.json'); 
+let report = [];
+let time = new Date();
 
 class commandStartedListener extends Listener {
 	constructor() {
@@ -9,21 +12,22 @@ class commandStartedListener extends Listener {
 		});
 	}
 
-	async exec(message) {
+	async exec(message, command) {
 		//This is for april fools
-		let today = new Date();
+		let today = new Date(), lastUpdate;
+		
 		let dd = today.getDate();
 		let mm = today.getMonth() + 1; //January is 0!
-		
+
 		if (dd < 10) {
 			dd = '0' + dd;
 		} 
 		if (mm < 10) {
 			mm = '0' + mm;
 		} 
-		today = dd + '/' + mm;
+		let curDate = dd + '.' + mm;
 		//Only execute when its april first
-		if (today == '01/04' && !serverID.includes(message.guild.id)) {
+		if (curDate == '01.04' && !serverID.includes(message.guild.id)) {
 			let count = Math.random() * 100;
 			if (count < 10) {
 				serverID.push(message.guild.id);
@@ -40,9 +44,72 @@ class commandStartedListener extends Listener {
 					.setImage('attachment://gold.png')
 					.setFooter('This is an april fool\'s joke, no command will EVER be behind a paywall');
 
-				return message.channel.send(Embed);
+				message.channel.send(Embed);
 			}
 		}
+
+		if (dailyStats) {
+			let obj = {
+				guild: message.guild.id,
+				command: command.id
+			};
+			
+			report.push(obj);
+	
+			let uniqueGuild = [];
+			let commands = {};
+	
+			report.forEach(e => {
+				if (!uniqueGuild.includes(e.guild)) {
+					uniqueGuild.push(e.guild);
+				}
+	
+				if (!commands[e.command]) {
+					commands[e.command] = 1;
+				} else {
+					commands[e.command] = commands[e.command] + 1;
+				}
+			});
+	
+			if ( !lastUpdate || ( today.getTime() - lastUpdate.getTime() ) > 30000 ) {
+				// Set the last time we checked, and then check if the date has changed.
+				lastUpdate = today;
+				if ( time.getDate() !== today.getDate() ) {
+				// If the date has changed, set the date to the new date, and refresh stuff.
+					time = today;
+	
+					let arr = Object.values(commands);
+					let max = Math.max(...arr);
+					let min = Math.min(...arr);
+	
+					let Embed = this.client.util.embed()
+						.setColor('GREEN')
+						.setTitle('Daily usage report!')
+						.addField('Number of unique guild', uniqueGuild.length)
+						.addField('Number of command exectued', Object.keys(commands).length, true)
+						.addField('Most used command', `${getKeyByValue(commands, max)} (${max} times)`, true )
+						.addField('Least used command', `${getKeyByValue(commands, min)} (${min} times)`, true)
+						.setFooter(`Bot usage as of ${today}`);
+	
+	
+	
+					const channel = this.client.channels.resolve('586308815868395535');
+					channel.send(Embed);
+	
+					console.log(`Min value: ${min}, max value: ${max}\nLeast used command: ${getKeyByValue(commands, min)}, Most used command: ${getKeyByValue(commands, max)}`);
+			
+					uniqueGuild = [];
+					commands = {};
+					report = [];
+				//this_is_where_you_would_reset_stuff()
+				}
+			}
+		}
+
+		function getKeyByValue(object, value) {
+			return Object.keys(object).find(key => object[key] === value);
+		}
+
 	}
 }
 
