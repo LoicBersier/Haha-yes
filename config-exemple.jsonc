@@ -8,6 +8,7 @@
 	"statsChannel": "channel where the bot send his stats", //optional but recommended
 	"feedbackChannel": "id of the channel where the feedback goes", //optional but recommended
 	"errorChannel": "id of the channel where the errors goes", //optional
+	"dailyStats": "id of the channel where daily stats should go", //optional
 	"supportServer":    "Invite to the support server of the bot", //optional but recommended
 	"exposeStats": true, // False or true, it open a webserver that expose various stats about the bot
 	"yandexTRN": "yandex api key", //optional | for the translate command
