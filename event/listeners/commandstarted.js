@@ -58,6 +58,7 @@ class commandStartedListener extends Listener {
 	
 			let uniqueGuild = [];
 			let commands = {};
+			let executedCommands = 0;
 	
 			report.forEach(e => {
 				if (!uniqueGuild.includes(e.guild)) {
@@ -69,6 +70,9 @@ class commandStartedListener extends Listener {
 				} else {
 					commands[e.command] = commands[e.command] + 1;
 				}
+
+				executedCommands++;
+				
 			});
 	
 			if ( !lastUpdate || ( today.getTime() - lastUpdate.getTime() ) > 30000 ) {
@@ -86,22 +90,19 @@ class commandStartedListener extends Listener {
 						.setColor('GREEN')
 						.setTitle('Daily usage report!')
 						.addField('Number of unique guild', uniqueGuild.length)
-						.addField('Number of command exectued', Object.keys(commands).length, true)
+						.addField('Number of command exectued', executedCommands, true)
 						.addField('Most used command', `${getKeyByValue(commands, max)} (${max} times)`, true )
 						.addField('Least used command', `${getKeyByValue(commands, min)} (${min} times)`, true)
 						.setFooter(`Bot usage as of ${today}`);
 	
 	
 	
-					const channel = this.client.channels.resolve('586308815868395535');
+					const channel = this.client.channels.resolve(dailyStats);
 					channel.send(Embed);
-	
-					console.log(`Min value: ${min}, max value: ${max}\nLeast used command: ${getKeyByValue(commands, min)}, Most used command: ${getKeyByValue(commands, max)}`);
-			
+
 					uniqueGuild = [];
 					commands = {};
 					report = [];
-				//this_is_where_you_would_reset_stuff()
 				}
 			}
 		}
