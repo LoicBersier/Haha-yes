@@ -30,7 +30,7 @@ class commandblockCommand extends Command {
 	async exec(message, args) {
 		if (args.command.id == 'commandblock') return message.channel.send('Whoa there, i can\'t let you block this command or else how would you unblock it?');
 
-		const blocked = await commandblock.findOne({where: {serverID: message.guild.id}});
+		const blocked = await commandblock.findOne({where: {serverID: message.guild.id, command: args.command.id}});
 
 		if (!blocked) {
 			const body = {serverID: message.guild.id, command: args.command.id};
