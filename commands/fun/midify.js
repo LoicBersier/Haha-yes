@@ -18,11 +18,22 @@ class midifyCommand extends Command {
 				{
 					id: 'link',
 					type: 'string',
+					match: 'rest'
 				},
 				{
 					id: 'raw',
-					type: 'flag',
-					flag: '--raw'
+					match: 'flag',
+					flag: ['--raw']
+				},
+				{
+					id: 'noteblock',
+					match: 'flag',
+					flag: ['--noteblock']
+				},
+				{
+					id: 'voice',
+					match: 'flag',
+					flag: ['--voice']
 				}
 			],
 			description: {
@@ -102,8 +113,16 @@ class midifyCommand extends Command {
 							});
 					}
 
+					let option;
+
+					if (args.noteblock) {
+						option = '-c ./asset/timidity/config/noteblock.cfg';
+					} else if (args.voice) {
+						option = '-c ./asset/timidity/config/voice.cfg';
+					}
+
 					// midi to mp3 so we can listen from discord
-					exec(`timidity ${output} -Ow -o - | ffmpeg -i - -acodec libmp3lame -ab 64k ${output2}`)
+					exec(`timidity ${output} ${option} -Ow -o - | ffmpeg -i - -acodec libmp3lame -ab 64k ${output2}`)
 						.then(() => {
 							loadingmsg.delete();
 							return message.channel.send({files: [output2]})
