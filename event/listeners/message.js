@@ -252,7 +252,7 @@ class messageListener extends Listener {
 				let url = message.content.split('/');
 				let guildID = url[4];
 				let channelID = url[5];
-				let messageID = url[6];
+				let messageID = url[6].split(' ')[0];
 
 
 				// Verify if the guild, channel and message exist
@@ -268,22 +268,22 @@ class messageListener extends Listener {
 
 				let Embed = this.client.util.embed()
 					.setAuthor(quote.author.username, quote.author.displayAvatarURL())
+					.setColor(message.member ? message.member.displayHexColor : 'NAVY')
 					.addField('Jump to', `[message](https://discordapp.com/channels/${message.guild.id}/${channelID}/${messageID})`, true)
 					.addField('In channel', quote.channel.name, true)
 					.addField('Quoted by', message.author, true)
 					.setDescription(quote.content)
 					.setTimestamp(quote.createdTimestamp);
 				
-				if (quote.member) Embed.setColor(quote.member.displayHexColor);
+				if (quote.member) Embed.setAuthor(`${quote.author.username}#${quote.author.discriminator}`, quote.author.displayAvatarURL());
+
+				if (quote.author.bot) Embed.setAuthor(`${quote.author.username}#${quote.author.discriminator} (bot)`, quote.author.displayAvatarURL());
 
 				if (guild.id != message.guild.id) Embed.addField('In guild', guild.name, true);
 				let Attachment = (quote.attachments).array();
 				if (Attachment[0]) Embed.setImage(Attachment[0].url);
 
-				return message.channel.send(Embed)
-					.then(() => {
-						message.delete();
-					});
+				return message.channel.send(Embed);
 			}
 		}
 	}
