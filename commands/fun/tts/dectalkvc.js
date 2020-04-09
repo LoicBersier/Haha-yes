@@ -1,7 +1,6 @@
 const { Command } = require('discord-akairo');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
-const os = require('os');
 const rand = require('../../../rand.js');
 
 class dectalkvcCommand extends Command {
@@ -29,13 +28,12 @@ class dectalkvcCommand extends Command {
 	}
 
 	async exec(message, args) {
-		let output = `${os.tmpdir()}/${message.id}_dectalk.wav`;
 		args.decMessage = rand.random(args.decMessage, message);
 		args.decMessage = args.decMessage.replace('\n', ' ');
 		let decMessage = '[:phoneme on] ' + args.decMessage.replace(/(["'$`\\])/g,'\\$1');
 
 		if (process.platform == 'win32') {
-			exec(`cd .\\dectalk && .\\say.exe -w ${output} "${decMessage}"`)
+			exec(`cd .\\dectalk && .\\say.exe -w dectalkvc.wav "${decMessage}"`)
 				.catch(err => {
 					console.error(err);
 					return message.channel.send('Oh no! an error has occured!');
@@ -45,7 +43,7 @@ class dectalkvcCommand extends Command {
 					if (!voiceChannel) return message.say('Please enter a voice channel first.');
 					try {
 						const connection = await voiceChannel.join();
-						const dispatcher = connection.play(output);
+						const dispatcher = connection.play('./dectalk/dectalk.wav');
 						dispatcher.once('finish', () => voiceChannel.leave());
 						dispatcher.once('error', () => voiceChannel.leave());
 						return null;
@@ -58,7 +56,7 @@ class dectalkvcCommand extends Command {
 		} else if (process.platform == 'linux' || process.platform == 'darwin') {
 			let loadingmsg = await message.channel.send('Processing ( this can take some time ) <a:loadingmin:527579785212329984>');
 
-			exec(`cd dectalk && DISPLAY=:0.0 wine say.exe -w ${output} "${decMessage}"`)
+			exec(`cd dectalk && DISPLAY=:0.0 wine say.exe -w dectalkvc.wav "${decMessage}"`)
 				.catch(err => {
 					loadingmsg.delete();
 					console.error(err);
@@ -70,7 +68,7 @@ class dectalkvcCommand extends Command {
 					try {
 						loadingmsg.delete();
 						const connection = await voiceChannel.join();
-						const dispatcher = connection.play(output);
+						const dispatcher = connection.play('./dectalk/dectalkvc.wav');
 						dispatcher.once('finish', () => voiceChannel.leave());
 						dispatcher.once('error', () => voiceChannel.leave());
 						return null;
