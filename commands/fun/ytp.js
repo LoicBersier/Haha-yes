@@ -100,7 +100,6 @@ class ytpCommand extends Command {
 	}
 
 	async exec(message, args) {
-		console.log(!args.squidward);
 		let MAX_CLIPS = 20;
 
 		if (args.pool) {
