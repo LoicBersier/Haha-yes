@@ -32,6 +32,8 @@ class dectalkCommand extends Command {
 		args.decMessage = args.decMessage.replace('\n', ' ');
 		let decMessage = '[:phoneme on] ' + args.decMessage.replace(/(["'$`\\])/g,'\\$1');
 
+		console.log(decMessage);
+
 		if (process.platform == 'win32') {
 			exec(`cd .\\dectalk && .\\say.exe -w dectalk.wav "${decMessage}"`)
 				.catch(err => {

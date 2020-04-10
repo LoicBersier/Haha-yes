@@ -61,7 +61,7 @@ class TtsvcCommand extends Command {
 				}
 
 				const voiceChannel = message.member.voice.channel;
-				if (!voiceChannel) return message.say('Please enter a voice channel first.');
+				if (!voiceChannel) return message.channel.send('Please enter a voice channel first.');
 				try {
 					const connection = await voiceChannel.join();
 					const dispatcher = connection.play(output);
