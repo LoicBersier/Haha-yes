@@ -66,6 +66,10 @@ class HelpCommand extends Command {
 			embed.addField('Command flags', `\`${command.contentParser.flagWords.join('` `')}\``, true);
 		}
 
+		if (command.contentParser.optionFlagWords.length) {
+			embed.addField('Command options flags', `\`${command.contentParser.optionFlagWords.join('` `')}\``, true);
+		}
+
 		if (fs.existsSync(`./asset/img/command/${command.category.id}/${command.id}.png`)) {
 			embed.attachFiles(`./asset/img/command/${command.category.id}/${command.id}.png`);
 			embed.setImage(`attachment://${command.id}.png`);
