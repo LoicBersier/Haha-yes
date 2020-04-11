@@ -62,6 +62,10 @@ class HelpCommand extends Command {
 			embed.addField('Bot permission', `\`${command.clientPermissions.join('` `')}\``, true);
 		}
 
+		if (command.contentParser.flagWords.length) {
+			embed.addField('Command flags', `\`${command.contentParser.flagWords.join('` `')}\``, true);
+		}
+
 		if (fs.existsSync(`./asset/img/command/${command.category.id}/${command.id}.png`)) {
 			embed.attachFiles(`./asset/img/command/${command.category.id}/${command.id}.png`);
 			embed.setImage(`attachment://${command.id}.png`);
