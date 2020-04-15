@@ -32,7 +32,7 @@ class userInfoCommand extends Command {
 		const Embed = this.client.util.embed()
 			.setColor(member ? member.displayHexColor : 'NAVY')
 			.setAuthor(`${user.tag} (${user.id})`, user.displayAvatarURL())
-			.addField('Current rank hex color', member.displayHexColor, true)
+			.addField('Current rank hex color', member ? member.displayHexColor : 'No rank color', true)
 			.addField('Joined guild at', member.joinedAt, true)
 			.addField('Date when account created', user.createdAt, true)
 			.setTimestamp();
