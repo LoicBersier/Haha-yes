@@ -38,8 +38,14 @@ class userInfoCommand extends Command {
 			.setTimestamp();
 
 
-		// Show since when this user have been boosting the current guild
-		if (member.premiumSince) Embed.addField('Boosting this guild since', member.premiumSince, true);
+
+		if (member) {
+			// Show since when this user have been boosting the current guild
+			if (member.premiumSince) Embed.addField('Boosting this guild since', member.premiumSince, true);
+			// Show guild nickname
+			if (member.nickname) Embed.addField('Nickname', member.nickname, true);
+
+		}
 
 		Embed.addField('​', '​');
 		
@@ -52,8 +58,6 @@ class userInfoCommand extends Command {
 		// Is the user a bot?
 		if (user.bot) Embed.addField('Is a bot?', '✅', true);
 		
-		// Show guild nickname
-		if (member.nickname) Embed.addField('Nickname', member.nickname, true);
 		// Show user locale ( i have no idea what it is ) https://discord.js.org/#/docs/main/master/class/User?scrollTo=locale
 		if (user.locale) Embed.addField('Locale settings', user.locale, true);
 
