@@ -31,7 +31,7 @@ class userInfoCommand extends Command {
 		let member = message.guild.member(user);
 
 		const Embed = this.client.util.embed()
-			.setColor(member.displayHexColor)
+			.setColor(message.member ? message.member.displayHexColor : 'NAVY')
 			.setAuthor(`${user.tag} (${user.id})`, user.displayAvatarURL())
 			.addField('Current rank hex color', member.displayHexColor, true)
 			.addField('Joined guild at', member.joinedAt, true)
