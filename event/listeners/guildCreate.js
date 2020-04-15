@@ -1,5 +1,6 @@
 const { Listener } = require('discord-akairo');
 const { statsChannel } = require('../../config.json');
+const userBlacklist = require('../../models').userBlacklist;
 
 
 class guildCreateListener extends Listener {
@@ -28,7 +29,14 @@ class guildCreateListener extends Listener {
 			.addField('Owner ID', guild.owner.id, true)
 			.setFooter(`I'm now in ${this.client.guilds.cache.size} servers!`)
 			.setTimestamp();
-	
+
+		const blacklist = await userBlacklist.findOne({where: {userID:guild.owner.id}});
+
+		if (blacklist) {
+			guild.leave();
+			return channel.send(`${guild.owner.user.username} (${guild.owner.id}) tried to add me to their guild while being blacklisted!\n${guild.name} (${guild.id})`);
+		}
+
 		channel.send({ embed: addEmbed });
 	}
 }

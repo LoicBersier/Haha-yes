@@ -1,5 +1,6 @@
 const { Listener } = require('discord-akairo');
 const { statsChannel } = require('../../config.json');
+const userBlacklist = require('../../models').userBlacklist;
 
 
 class guildCreateListener extends Listener {
@@ -30,6 +31,13 @@ class guildCreateListener extends Listener {
 			.addField('Owner ID', guild.owner.id, true)
 			.setFooter(`I'm now in ${this.client.guilds.cache.size} servers!`)
 			.setTimestamp();
+
+		const blacklist = await userBlacklist.findOne({where: {userID:guild.owner.id}});
+
+		if (blacklist) {
+			guild.leave();
+			kickEmbed.setFooter(kickEmbed.footer + ' | Left this guild because owner is blacklisted!');
+		}
 
 		channel.send({ embed: kickEmbed });
 	}
