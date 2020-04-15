@@ -33,7 +33,7 @@ class userInfoCommand extends Command {
 			.setColor(member ? member.displayHexColor : 'NAVY')
 			.setAuthor(`${user.tag} (${user.id})`, user.displayAvatarURL())
 			.addField('Current rank hex color', member ? member.displayHexColor : 'No rank color', true)
-			.addField('Joined guild at', member.joinedAt, true)
+			.addField('Joined guild at', member ? member.joinedAt : 'Not in this guild', true)
 			.addField('Date when account created', user.createdAt, true)
 			.setTimestamp();
 
