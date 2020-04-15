@@ -29,18 +29,23 @@ class userInfoCommand extends Command {
 		}
 
 		let member = message.guild.member(user);
-
 		const Embed = this.client.util.embed()
-			.setColor(member.displayHexColor)
+			.setColor(member ? member.displayHexColor : 'NAVY')
 			.setAuthor(`${user.tag} (${user.id})`, user.displayAvatarURL())
-			.addField('Current rank hex color', member.displayHexColor, true)
-			.addField('Joined guild at', member.joinedAt, true)
+			.addField('Current rank hex color', member ? member.displayHexColor : 'No rank color', true)
+			.addField('Joined guild at', member ? member.joinedAt : 'Not in this guild', true)
 			.addField('Date when account created', user.createdAt, true)
 			.setTimestamp();
 
 
-		// Show since when this user have been boosting the current guild
-		if (member.premiumSince) Embed.addField('Boosting this guild since', member.premiumSince, true);
+
+		if (member) {
+			// Show since when this user have been boosting the current guild
+			if (member.premiumSince) Embed.addField('Boosting this guild since', member.premiumSince, true);
+			// Show guild nickname
+			if (member.nickname) Embed.addField('Nickname', member.nickname, true);
+
+		}
 
 		Embed.addField('​', '​');
 		
@@ -53,8 +58,6 @@ class userInfoCommand extends Command {
 		// Is the user a bot?
 		if (user.bot) Embed.addField('Is a bot?', '✅', true);
 		
-		// Show guild nickname
-		if (member.nickname) Embed.addField('Nickname', member.nickname, true);
 		// Show user locale ( i have no idea what it is ) https://discord.js.org/#/docs/main/master/class/User?scrollTo=locale
 		if (user.locale) Embed.addField('Locale settings', user.locale, true);
 
