@@ -194,6 +194,7 @@ class ytpCommand extends Command {
 			OUTPUT_FILE: `${os.tmpdir()}/${message.id}_YTP.mp4`,
 			MAX_CLIPS: MAX_CLIPS,
 			transitions: true,
+			showFileNames: true,
 			effects: {  
 				effect_RandomSound: !args.randomSound,
 				effect_RandomSoundMute: !args.randomSoundMute,
@@ -213,7 +214,8 @@ class ytpCommand extends Command {
 			.then(() => {
 				loadingmsg.delete();
 				return message.reply('Here is your YTP!', {files: [`${os.tmpdir()}/${message.id}_YTP.mp4`]})
-					.catch(() => {
+					.catch(err => {
+						console.error(err);
 						return message.channel.send('Whoops, look like the vid might be too big for discord, my bad, please try again');
 					});
 			})
