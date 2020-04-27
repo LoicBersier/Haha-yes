@@ -27,7 +27,7 @@ class serverBlacklistCommand extends Command {
 	}
 
 	async exec(message, args) {
-		const blacklist = await guildBlacklist.findOne({where: {guildID:message.author.id}});
+		const blacklist = await guildBlacklist.findOne({where: {guildID:args.guildID}});
 		
 		if (!blacklist) {
 			const body = {guildID: args.guildID};
