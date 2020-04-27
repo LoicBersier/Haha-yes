@@ -172,8 +172,9 @@ class tweetCommand extends Command {
 					.addField('Link', `https://twitter.com/i/status/${tweetid}`, true)
 					.addField('Tweet ID', tweetid, true)
 					.addField('Author', `${message.author.username} (${message.author.id})`, true)
-					.addField('Guild', `${message.guild.name} (${message.guild.id})`, true)
 					.setTimestamp();
+
+				if (message.guild) Embed.addField('Guild', `${message.guild.name} (${message.guild.id})`, true);
 
 				if (Attachment[0]) Embed.setImage(Attachment[0].url);
 				
