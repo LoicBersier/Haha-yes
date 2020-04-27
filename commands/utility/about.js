@@ -1,5 +1,7 @@
 const { Command } = require('discord-akairo');
 const donator = require('../../models').donator;
+const util = require('util');
+const exec = util.promisify(require('child_process').exec);
 
 class aboutCommand extends Command {
 	constructor() {
@@ -28,18 +30,22 @@ class aboutCommand extends Command {
 			description += 'No one :(';
 		}
 
+		exec('git rev-parse --short HEAD')
+			.then(out => {
+				console.log(out);
+				const aboutEmbed = this.client.util.embed()
+					.setColor(message.member ? message.member.displayHexColor : 'NAVY')
+					.setAuthor(this.client.user.username, this.client.user.avatarURL())
+					.setTitle('About me')
+					.setDescription(description)
+					.addField('Current commit', out.stdout)
+					.addField('Current owner: ', `${this.client.users.resolve(this.client.ownerID).username}#${this.client.users.resolve(this.client.ownerID).discriminator} (${this.client.ownerID})`)
+					.addField('Gitlab', 'https://gitlab.com/LoicBersier/DiscordBot', true)
+					.addField('Github', 'https://github.com/loicbersier/Haha-yes', true)
+					.setFooter(`Original bot made by ${this.client.users.resolve('267065637183029248').username}#${this.client.users.resolve('267065637183029248').discriminator} (267065637183029248)`); // Please don't change the "original bot made by"
 
-		const aboutEmbed = this.client.util.embed()
-			.setColor(message.member ? message.member.displayHexColor : 'NAVY')
-			.setAuthor(this.client.user.username, this.client.user.avatarURL())
-			.setTitle('About me')
-			.setDescription(description)
-			.addField('Current owner: ', `${this.client.users.resolve(this.client.ownerID).username}#${this.client.users.resolve(this.client.ownerID).discriminator} (${this.client.ownerID})`)
-			.addField('Gitlab', 'https://gitlab.com/LoicBersier/DiscordBot', true)
-			.addField('Github', 'https://github.com/loicbersier/Haha-yes', true)
-			.setFooter(`Original bot made by ${this.client.users.resolve('267065637183029248').username}#${this.client.users.resolve('267065637183029248').discriminator} (267065637183029248)`); // Please don't change the "original bot made by"
-				
-		message.channel.send(aboutEmbed);
+				message.channel.send(aboutEmbed);
+			});
 	}
 }
 
