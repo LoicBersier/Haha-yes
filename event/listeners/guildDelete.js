@@ -32,7 +32,7 @@ class guildCreateListener extends Listener {
 			.setFooter(`I'm now in ${this.client.guilds.cache.size} servers!`)
 			.setTimestamp();
 
-		const blacklist = await userBlacklist.findOne({where: {userID:guild.owner.id}});
+		const blacklist = await userBlacklist.findOne({where: {userID:guild.id}});
 
 		if (blacklist) {
 			guild.leave();
