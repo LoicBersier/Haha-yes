@@ -100,7 +100,7 @@ class ytpCommand extends Command {
 	}
 
 	async exec(message, args) {
-		let MAX_CLIPS = 20;
+		let MAX_CLIPS = 5;
 
 		if (args.pool) {
 			let mp4 = [];
@@ -190,6 +190,7 @@ class ytpCommand extends Command {
 			resources: './asset/ytp/resources/',
 			temp: os.tmpdir(),
 			sourceList: asset,
+			intro: args.force ? './asset/ytp/intro.mp4' : null,
 			outro: './asset/ytp/outro.mp4', // Need an outro or it won't work
 			OUTPUT_FILE: `${os.tmpdir()}/${message.id}_YTP.mp4`,
 			MAX_CLIPS: MAX_CLIPS,
@@ -213,7 +214,7 @@ class ytpCommand extends Command {
 		new YTPGenerator().configurateAndGo(options)
 			.then(() => {
 				loadingmsg.delete();
-				return message.reply('Here is your YTP!', {files: [`${os.tmpdir()}/${message.id}_YTP.mp4`]})
+				return message.reply('Here is your YTP! Remember, it might contains nsfw!', {files: [`${os.tmpdir()}/${message.id}_YTP.mp4`]})
 					.catch(err => {
 						console.error(err);
 						return message.channel.send('Whoops, look like the vid might be too big for discord, my bad, please try again');
