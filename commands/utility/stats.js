@@ -1,8 +1,7 @@
 const { Command } = require('discord-akairo');
 const akairoVersion = require('discord-akairo').version;
 const { version } = require('discord.js');
-const util = require('util');
-const exec = util.promisify(require('child_process').exec);
+const os = require('os');
 
 class StatsCommand extends Command {
 	constructor() {
@@ -36,20 +35,12 @@ class StatsCommand extends Command {
 		if (seconds > 0) segments.push(seconds + ' second' + ((seconds == 1) ? '' : 's'));
 		const dateString = segments.join(', ');
 
-		const used = process.memoryUsage().heapUsed / 1024 / 1024;
-
-		// Get cpu model
-		let cpu;
-		if (process.platform == 'darwin') {
-			const { stdout } = await exec('sysctl -n machdep.cpu.brand_string');
-			cpu = stdout;
-		} else if (process.platform == 'linux') {
-			const { stdout } = await exec('lscpu | grep "Model name:" | sed -r \'s/Model name:\\s{1,}//g\'');
-			cpu = stdout;
-		} else if (process.platform == 'win32') {
-			const { stdout } = await exec('wmic CPU get NAME');
-			cpu = stdout.replace('Name', '');
-		}
+		const bytesToSize = (bytes) => {
+			const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+			if (bytes == 0) return '0 Byte';
+			const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+			return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+		};
 
 		const statsEmbed = this.client.util.embed()
 			.setColor(message.member ? message.member.displayHexColor : 'NAVY')
@@ -58,10 +49,10 @@ class StatsCommand extends Command {
 			.addField('Servers', this.client.guilds.cache.size, true)
 			.addField('Channels', this.client.channels.cache.size, true)
 			.addField('Users', this.client.users.cache.size, true)
-			.addField('Uptime', dateString, true)
-			.addField('Ram usage', `${Math.round(used * 100) / 100} MB`, true)
-			.addField('CPU', cpu, true)
-			.addField('OS', process.platform, true)
+			.addField('Uptime', dateString)
+			.addField('Ram usage', `${bytesToSize(process.memoryUsage().heapUsed)}/${bytesToSize(os.totalmem)}`, true)
+			.addField('CPU', `${os.cpus()[0].model} (${os.cpus().length} core)`, true)
+			.addField('OS', `${os.platform()} ${os.release()}`, true)
 			.addField('Nodejs version', process.version, true)
 			.addField('Discord.js version', version, true)
 			.addField('Discord-Akairo version', akairoVersion, true)
