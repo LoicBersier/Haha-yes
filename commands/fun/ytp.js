@@ -100,7 +100,7 @@ class ytpCommand extends Command {
 	}
 
 	async exec(message, args) {
-		let MAX_CLIPS = 5;
+		let MAX_CLIPS = 20;
 
 		if (args.pool) {
 			let mp4 = [];
