@@ -21,13 +21,11 @@ class guildCreateListener extends Listener {
 			.setTitle('Some mofo just removed me from there guild :(')
 			.setURL('https://www.youtube.com/watch?v=6n3pFFPSlW4')
 			.setThumbnail(guild.iconURL())
-			.addField('Guild name', guild.name, true)
-			.addField('Guild ID', guild.id, true)
+			.addField('Guild', `${guild.name} (${guild.id})`)
 			.addField('Total number of members', guild.memberCount, true)
 			.addField('Number of users', guild.memberCount - botCount, true)
 			.addField('Number of bots', botCount, true)
-			.addField('Owner', guild.owner.user.username, true)
-			.addField('Owner ID', guild.owner.id, true)
+			.addField('Owner', `${guild.owner.user.username} (${guild.owner.id})`, true)
 			.setFooter(`I'm now in ${this.client.guilds.cache.size} servers!`)
 			.setTimestamp();
 
