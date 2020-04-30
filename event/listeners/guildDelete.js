@@ -1,7 +1,6 @@
 const { Listener } = require('discord-akairo');
 const { statsChannel } = require('../../config.json');
-const userBlacklist = require('../../models').userBlacklist;
-
+const guildBlacklist = require('../../models').guildBlacklist;
 
 class guildCreateListener extends Listener {
 	constructor() {
@@ -32,7 +31,7 @@ class guildCreateListener extends Listener {
 			.setFooter(`I'm now in ${this.client.guilds.cache.size} servers!`)
 			.setTimestamp();
 
-		const blacklist = await userBlacklist.findOne({where: {userID:guild.id}});
+		const blacklist = await guildBlacklist.findOne({where: {guildID:guild.id}});
 
 		if (blacklist) {
 			guild.leave();
