@@ -16,7 +16,7 @@ You need to install the following
 * mysql
 * ffmpeg (Optional but recommanded: for all command that require to interact with voice chat and [vid2gif.js](commands/utility/vid2gif.js), [vidshittifier.js](commands/fun/vidshittifier.js) and [ytp.js](commands/fun/ytp.js))
 * handbrake-cli (Optional but recommanded: for [download.js](commands/utility/download.js))
-* apngasm (Optional: for [nolight.js](commands/images/nolight.js))
+* apngasm (Optional: for [nolight.js](commands/images/nolight))
 * [Google credentials](https://cloud.google.com/docs/authentication/getting-started) (Optional: for [tts.js](commands/fun/tts/tts.js) and [ttsvc.js](commands/fun/tts/ttsvc.js), without that it will spam error on startup but not important)
 * Wine (Optional: required for linux/mac for [dectalk.js](commands/fun/tts/dectalk.js) and [dectalkvc.js](commands/fun/tts/dectalkvc.js))
 * xvfb (Optional: for wine if using headless server)
@@ -82,3 +82,6 @@ This project is licensed under the **GNU Affero General Public License v3.0** Li
 * [1computer1](https://github.com/1Computer1/) for discord-akairo & the help command from [hoshi](https://github.com/1Computer1/hoshi)
 * [Rantionary](https://github.com/RantLang/Rantionary) for there dictionnary.
 * Tina the Cyclops girl#0064 for inspiring me for making this bot
+* [Jetbrains](https://www.jetbrains.com/?from=Hahayesdiscordbot) for their IDE 
+
+<img src="https://its.gamingti.me/XT8F.svg" width=20%></img>

@@ -27,12 +27,13 @@ class aboutCommand extends Command {
 				description += `**${this.client.users.resolve(Donator[i].get('userID')).username}#${this.client.users.resolve(Donator[i].get('userID')).discriminator} (${Donator[i].get('userID')}) | ${Donator[i].get('comment')}**\n`;
 			}
 		} else {
-			description += 'No one :(';
+			description += 'No one :(\n';
 		}
+
+		description += '\nThanks to Jetbrains for providing their IDE!';
 
 		exec('git rev-parse --short HEAD')
 			.then(out => {
-				console.log(out);
 				const aboutEmbed = this.client.util.embed()
 					.setColor(message.member ? message.member.displayHexColor : 'NAVY')
 					.setAuthor(this.client.user.username, this.client.user.avatarURL())
@@ -42,6 +43,7 @@ class aboutCommand extends Command {
 					.addField('Current owner: ', `${this.client.users.resolve(this.client.ownerID).username}#${this.client.users.resolve(this.client.ownerID).discriminator} (${this.client.ownerID})`)
 					.addField('Gitlab', 'https://gitlab.com/LoicBersier/DiscordBot', true)
 					.addField('Github', 'https://github.com/loicbersier/Haha-yes', true)
+					.setThumbnail('https://its.gamingti.me/ZiRe.png')
 					.setFooter(`Original bot made by ${this.client.users.resolve('267065637183029248').username}#${this.client.users.resolve('267065637183029248').discriminator} (267065637183029248)`); // Please don't change the "original bot made by"
 
 				message.channel.send(aboutEmbed);
