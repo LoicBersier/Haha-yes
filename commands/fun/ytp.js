@@ -214,7 +214,7 @@ class ytpCommand extends Command {
 		new YTPGenerator().configurateAndGo(options)
 			.then(() => {
 				loadingmsg.delete();
-				return message.reply('Here is your YTP! Remember, it might contains nsfw!', {files: [`${os.tmpdir()}/${message.id}_YTP.mp4`]})
+				return message.reply('Here is your YTP! Remember, it might contain nsfw!', {files: [`${os.tmpdir()}/${message.id}_YTP.mp4`]})
 					.catch(err => {
 						console.error(err);
 						return message.channel.send('Whoops, look like the vid might be too big for discord, my bad, please try again');
