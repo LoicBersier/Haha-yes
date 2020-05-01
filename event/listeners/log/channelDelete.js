@@ -12,7 +12,6 @@ class channelDeleteListener extends Listener {
 	async exec(GuildChannel) {
 		const logStats = await LogStats.findOne({where: {guild: GuildChannel.guild.id}});
 		if (logStats) {
-			console.log(GuildChannel);
 			const channel = this.client.channels.resolve(await logStats.get('channel'));
 			let Embed = this.client.util.embed()
 				.setColor('NAVY')
