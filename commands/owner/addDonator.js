@@ -43,21 +43,21 @@ class addDonatorCommand extends Command {
 		if (!Donator) {
 			const body = {userID: args.id, comment: userComment};
 			donator.create(body);
-			return message.channel.send(`A new donator have been added! ${this.client.users.resolve(args.id).username}#${this.client.users.resolve(args.id).discriminator} (${args.id}) ${userComment}`);
+			return message.channel.send(`A new donator have been added! ${this.client.users.resolve(args.id).tag} (${args.id}) ${userComment}`);
 		} else {
 			message.channel.send('This donator already exist, do you want to update it? y/n');
-			const filter = m =>  m.content && m.author.id == message.author.id;
+			const filter = m =>  m.content && m.author.id === message.author.id;
 			message.channel.awaitMessages(filter, {time: 5000 * 1000, max: 1, errors: ['time'] })
 				.then(messages => {
 					let messageContent = messages.map(messages => messages.content);
-					if (messageContent == 'y' || messageContent == 'yes') {
+					if (messageContent === 'y' || messageContent === 'yes') {
 						const body = {comment: userComment};
 						donator.update(body, {where: {userID: args.id}});
 						console.log(userComment);
-						if (userComment == '') {
-							return message.channel.send(`Removed the comment from ${this.client.users.resolve(args.id).username}#${this.client.users.resolve(args.id).discriminator} (${args.id})`);
+						if (userComment === '') {
+							return message.channel.send(`Removed the comment from ${this.client.users.resolve(args.id).tag} (${args.id})`);
 						} else {
-							return message.channel.send(`You edited the comment for ${this.client.users.resolve(args.id).username}#${this.client.users.resolve(args.id).discriminator} (${args.id}) with ${args.userComment}`);
+							return message.channel.send(`You edited the comment for ${this.client.users.resolve(args.id).tag} (${args.id}) with ${args.userComment}`);
 						}
 					}
 				})

@@ -20,11 +20,11 @@ class aboutCommand extends Command {
 	async exec(message) {
 		const Donator = await donator.findAll({order: ['id']});
 
-		let description = `This bot is made using [discord.js](https://github.com/discordjs/discord.js) & [Discord-Akairo](https://github.com/discord-akairo/discord-akairo)\nHelp command from [hoshi](https://github.com/1Computer1/hoshi)\n[Rantionary](https://github.com/RantLang/Rantionary) for their dictionnary.\nThanks to ${this.client.users.resolve('336492042299637771').username}#${this.client.users.resolve('336492042299637771').discriminator} (336492042299637771) for inspiring me for making this bot!\n\nThe people who donated for the bot <3\n`;
+		let description = `This bot is made using [discord.js](https://github.com/discordjs/discord.js) & [Discord-Akairo](https://github.com/discord-akairo/discord-akairo)\nHelp command from [hoshi](https://github.com/1Computer1/hoshi)\n[Rantionary](https://github.com/RantLang/Rantionary) for their dictionnary.\nThanks to ${this.client.users.resolve('336492042299637771').tag} (336492042299637771) for inspiring me for making this bot!\n\nThe people who donated for the bot <3\n`;
 		
 		if (Donator[0]) {
 			for (let i = 0; i < Donator.length; i++) {
-				description += `**${this.client.users.resolve(Donator[i].get('userID')).username}#${this.client.users.resolve(Donator[i].get('userID')).discriminator} (${Donator[i].get('userID')}) | ${Donator[i].get('comment')}**\n`;
+				description += `**${this.client.users.resolve(Donator[i].get('userID')).tag} (${Donator[i].get('userID')}) | ${Donator[i].get('comment')}**\n`;
 			}
 		} else {
 			description += 'No one :(\n';
@@ -40,11 +40,11 @@ class aboutCommand extends Command {
 					.setTitle('About me')
 					.setDescription(description)
 					.addField('Current commit', out.stdout)
-					.addField('Current owner: ', `${this.client.users.resolve(this.client.ownerID).username}#${this.client.users.resolve(this.client.ownerID).discriminator} (${this.client.ownerID})`)
+					.addField('Current owner: ', `${this.client.users.resolve(this.client.ownerID).tag} (${this.client.ownerID})`)
 					.addField('Gitlab', 'https://gitlab.com/LoicBersier/DiscordBot', true)
 					.addField('Github', 'https://github.com/loicbersier/Haha-yes', true)
 					.setThumbnail('https://its.gamingti.me/ZiRe.png')
-					.setFooter(`Original bot made by ${this.client.users.resolve('267065637183029248').username}#${this.client.users.resolve('267065637183029248').discriminator} (267065637183029248)`); // Please don't change the "original bot made by"
+					.setFooter(`Original bot made by ${this.client.users.resolve('267065637183029248').tag} (267065637183029248)`); // Please don't change the "original bot made by"
 
 				message.channel.send(aboutEmbed);
 			});

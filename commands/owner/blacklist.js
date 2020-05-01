@@ -32,16 +32,16 @@ class blacklistCommand extends Command {
 		if (!blacklist) {
 			const body = {userID: args.userID};
 			userBlacklist.create(body);
-			return message.channel.send(`The following user have been blacklisted: ${this.client.users.resolve(args.userID).username}#${this.client.users.resolve(args.userID).discriminator} (${args.userID})`);
+			return message.channel.send(`The following user have been blacklisted: ${this.client.users.resolve(args.userID).tag} (${args.userID})`);
 		} else {
 			message.channel.send('This user is already blacklisted, do you want to unblacklist him? y/n');
-			const filter = m =>  m.content && m.author.id == message.author.id;
+			const filter = m =>  m.content && m.author.id === message.author.id;
 			message.channel.awaitMessages(filter, {time: 5000 * 1000, max: 1, errors: ['time'] })
 				.then(messages => {
 					let messageContent = messages.map(messages => messages.content);
-					if (messageContent == 'y' || messageContent == 'yes') {
+					if (messageContent === 'y' || messageContent === 'yes') {
 						userBlacklist.destroy({where: {userID:args.userID}});
-						return message.channel.send(`The following user have been unblacklisted: ${this.client.users.resolve(args.userID).username}#${this.client.users.resolve(args.userID).discriminator} (${args.userID})`);
+						return message.channel.send(`The following user have been unblacklisted: ${this.client.users.resolve(args.userID).tag} (${args.userID})`);
 					}
 				})
 				.catch(err => {
