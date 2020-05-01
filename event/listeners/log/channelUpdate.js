@@ -13,10 +13,17 @@ class channelUpdateListener extends Listener {
 		const logStats = await LogStats.findOne({where: {guild: newChannel.guild.id}});
 
 		if (logStats) {
+			const fetchedLogs = await newChannel.guild.fetchAuditLogs({
+				limit: 1,
+				type: 'CHANNEL_CREATE',
+			});
+
+			const updateLog = fetchedLogs.entries.first();
+
 			const channel = this.client.channels.resolve(await logStats.get('channel'));
 			let Embed = this.client.util.embed()
 				.setColor('NAVY')
-				.setTitle(`${newChannel.type} channel updated!`)
+				.setDescription(`**${newChannel} channel updated!**`)
 				.setTimestamp();
 
 			if (oldChannel.name !== newChannel.name) {
@@ -38,6 +45,10 @@ class channelUpdateListener extends Listener {
 				Embed.addField('Previous channel slowmode', `${oldChannel.rateLimitPerUser} seconds`, true)
 					.addField('New channel slowmode', `${newChannel.rateLimitPerUser} seconds`, true);
 			}
+
+			if (!updateLog) return channel.send(Embed);
+
+			Embed.setDescription(`**${newChannel} channel updated by ${updateLog.executor}**`);
 
 			channel.send(Embed);
 		}
