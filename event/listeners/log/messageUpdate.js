@@ -16,7 +16,7 @@ class messageUpdateListener extends Listener {
 			let Embed = this.client.util.embed()
 				.setColor('NAVY')
 				.setAuthor(`${newMessage.author.username}#${newMessage.author.discriminator}`, newMessage.author.displayAvatarURL())
-				.setTitle(`${newMessage.author.username} modified their message in ${newMessage.channel.name}`)
+				.setDescription(`**${newMessage.author} modified their message in ${newMessage.channel}**`)
 				.addField('Previously', oldMessage, true)
 				.addField('Currently', newMessage, true)
 				.setFooter(`Author ID: ${newMessage.author.id}, Message ID: ${newMessage.id}`)

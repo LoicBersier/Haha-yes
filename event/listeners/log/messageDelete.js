@@ -16,8 +16,8 @@ class messageDeleteListener extends Listener {
 			let Embed = this.client.util.embed()
 				.setColor('NAVY')
 				.setAuthor(`${message.author.username}#${message.author.discriminator}`)
-				.setTitle(`${message.author.username} deleted their message in ${message.channel.name}`)
-				.setDescription(message)
+				.setDescription(`**${message.author} deleted their message in ${message.channel}**`)
+				.addField('Message deleted', message)
 				.setFooter(`Author ID: ${message.author.id}`)
 				.setTimestamp();
 
