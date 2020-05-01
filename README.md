@@ -82,6 +82,6 @@ This project is licensed under the **GNU Affero General Public License v3.0** Li
 * [1computer1](https://github.com/1Computer1/) for discord-akairo & the help command from [hoshi](https://github.com/1Computer1/hoshi)
 * [Rantionary](https://github.com/RantLang/Rantionary) for there dictionnary.
 * Tina the Cyclops girl#0064 for inspiring me for making this bot
-* [Jetbrains](https://www.jetbrains.com/?from=Hahayesdiscordbot) for their IDE 
+* [Jetbrains](https://www.jetbrains.com/?from=Hahayesdiscordbot) for providing their IDE free of charges! 
 
 <img src="https://its.gamingti.me/XT8F.svg" width=20%></img>
