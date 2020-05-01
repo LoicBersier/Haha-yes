@@ -20,26 +20,22 @@ class channelUpdateListener extends Listener {
 				.setTimestamp();
 
 			if (oldChannel.name !== newChannel.name) {
-				Embed.addField('​', '​')
-					.addField('Previous channel', oldChannel.name, true)
+				Embed.addField('Previous channel', oldChannel.name, true)
 					.addField('New channel', newChannel.name, true);
 			}
 
 			if (oldChannel.topic !== newChannel.topic) {
-				Embed.addField('​', '​')
-					.addField('Previous channel topic', oldChannel.topic, true)
+				Embed.addField('Previous channel topic', oldChannel.topic, true)
 					.addField('New channel topic', newChannel.topic, true);
 			}
 
 			if (oldChannel.nsfw !== newChannel.nsfw) {
-				Embed.addField('​', '​')
-					.addField('Previous channel nsfw', oldChannel.nsfw, true)
+				Embed.addField('Previous channel nsfw', oldChannel.nsfw, true)
 					.addField('New channel nsfw', newChannel.nsfw, true);
 			}
 
 			if (oldChannel.rateLimitPerUser !== newChannel.rateLimitPerUser) {
-				Embed.addField('​', '​')
-					.addField('Previous channel slowmode', `${oldChannel.rateLimitPerUser} seconds`, true)
+				Embed.addField('Previous channel slowmode', `${oldChannel.rateLimitPerUser} seconds`, true)
 					.addField('New channel slowmode', `${newChannel.rateLimitPerUser} seconds`, true);
 			}
 
