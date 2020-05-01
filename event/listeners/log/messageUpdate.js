@@ -11,7 +11,7 @@ class messageUpdateListener extends Listener {
 
 	async exec(oldMessage, newMessage) {
 		const logStats = await LogStats.findOne({where: {guild: newMessage.guild.id}});
-		if (logStats) {
+		if (logStats && oldMessage.content !== newMessage.content) {
 			const channel = this.client.channels.resolve(await logStats.get('channel'));
 			let Embed = this.client.util.embed()
 				.setColor('NAVY')
