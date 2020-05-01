@@ -20,8 +20,11 @@ class errorListener extends Listener {
 			.setTitle('Shit happened!')
 			.addField('Command', command.id, true)
 			.addField('Error', message, true)
-			.addField('Message', error, true);
+			.addField('Message', error, true)
+			.addField('Author', `${message.author.tag} (${message.author.id})`);
+
 		channel.send(errorEmbed);
+
 		//Get current date
 		let today = new Date();
 		let dd = today.getDate();
