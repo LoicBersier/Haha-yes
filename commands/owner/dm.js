@@ -10,11 +10,14 @@ class dmCommand extends Command {
 			args: [
 				{
 					id: 'user',
-					type: 'user'
+					type: 'string'
 				},
 				{
 					id: 'text',
 					type: 'string',
+					prompt: {
+						start: 'What do you want to send to that user?',
+					},
 					match: 'rest'
 				}
 			],
@@ -38,7 +41,8 @@ class dmCommand extends Command {
 		const uuid = uuidv4();
 		feedbackID[uuid] = args.text;
 
-		let user = args.user;
+		let user = this.client.users.resolve(args.user);
+		if (!user) return message.channel.send('Not a valid ID');
 		let text = args.text;
 
 		const Embed = this.client.util.embed()
@@ -49,7 +53,7 @@ class dmCommand extends Command {
 
 		let Attachment = (message.attachments).array();
 		if (Attachment[0]) {
-			this.client.users.resolve(user.id).send(Embed, {files: [Attachment[0].url]})
+			this.client.users.resolve(user).send(Embed, {files: [Attachment[0].url]})
 				.then(() => {
 					return message.channel.send(`DM sent to ${user.username}`);
 				})
@@ -58,7 +62,7 @@ class dmCommand extends Command {
 				});
 		}
 		else {
-			this.client.users.resolve(user.id).send(Embed)
+			this.client.users.resolve(user).send(Embed)
 				.then(() => {
 					return message.channel.send(`DM sent to ${user.tag}`);
 				})
