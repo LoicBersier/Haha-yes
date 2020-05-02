@@ -11,7 +11,7 @@ class messageDeleteListener extends Listener {
 
 	async exec(message) {
 		const logStats = await LogStats.findOne({where: {guild: message.guild.id}});
-		if (logStats) {
+		if (logStats && !message.author.bot) {
 			const fetchedLogs = await message.guild.fetchAuditLogs({
 				limit: 1,
 				type: 'MESSAGE_DELETE',
