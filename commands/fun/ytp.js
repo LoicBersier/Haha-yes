@@ -3,6 +3,8 @@ const YTPGenerator = require('ytpplus-node');
 const os = require('os');
 const fs = require('fs');
 const youtubedl = require('youtube-dl');
+const MAX_CLIPS = 20;
+
 
 class ytpCommand extends Command {
 	constructor() {
@@ -100,8 +102,6 @@ class ytpCommand extends Command {
 	}
 
 	async exec(message, args) {
-		let MAX_CLIPS = 20;
-
 		if (args.pool) {
 			let mp4 = [];
 			fs.readdirSync('./asset/ytp/userVid/').forEach(file => {
@@ -123,7 +123,7 @@ class ytpCommand extends Command {
 			}
 			
 			if (url) {
-				return youtubedl.exec(url, ['--no-playlist','--max-filesize', '50m', '--format=mp4', '-o', `./asset/ytp/userVid/${message.id}.mp4`], {}, function(err, output) {
+				return youtubedl.exec(url, ['--rm-cache-dir', '--no-playlist', '--max-filesize', '50m', '--format=mp4', '-o', `./asset/ytp/userVid/${message.id}.mp4`], {}, function(err, output) {
 					console.log(output);
 					if (err) {
 						console.error(err);

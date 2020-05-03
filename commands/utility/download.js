@@ -69,10 +69,10 @@ class DownloadCommand extends Command {
 
 			if (fs.existsSync(`${os.tmpdir()}/${fileName}`)) {
 				fs.unlink(`${os.tmpdir()}/${fileName}`, (err) => {
-					if (err);
+					if (err) console.error(err);
 				});
 			}
-			return youtubedl.exec(link, ['-o', `${os.tmpdir()}/${fileName}`], {}, async function(err) {
+			return youtubedl.exec(link, ['--rm-cache-dir', '-o', `${os.tmpdir()}/${fileName}`], {}, async function(err) {
 				if (err) {
 					console.error(err);
 					loadingmsg.delete();
@@ -84,7 +84,7 @@ class DownloadCommand extends Command {
 				if (fs.existsSync(`${os.tmpdir()}/${fileName}`)) {
 					ext = await filetype.fromFile(`${os.tmpdir()}/${fileName}`);
 					ext = ext.ext; // This look stupid but hey, it work
-					if (ext == '3gp') ext = 'mp4'; // Change 3gp file extension to mp4 so discord show the video ( and to stop people from complaining )
+					if (ext === '3gp') ext = 'mp4'; // Change 3gp file extension to mp4 so discord show the video ( and to stop people from complaining )
 					fs.renameSync(`${os.tmpdir()}/${fileName}`, `${os.tmpdir()}/${fileName}.${ext}`);
 				} else if (fs.existsSync(`${os.tmpdir()}/${fileName}.mkv`)) { // If it can't find the video assume it got merged and end with mkv
 					fs.renameSync(`${os.tmpdir()}/${fileName}.mkv`, `${os.tmpdir()}/${fileName}.mp4`); // Discord play mkv just fine but it need to end with mp4
@@ -125,7 +125,7 @@ class DownloadCommand extends Command {
 
 					// Every 5 seconds update the compress message with the %
 					let editmsg = setInterval(() => {
-						compressEmbed.setDescription(`Ready in ${eta == '' ? 'soon enough' : eta}. ${percentComplete}% complete.`);
+						compressEmbed.setDescription(`Ready in ${eta === '' ? 'soon enough' : eta}. ${percentComplete}% complete.`);
 						compressmsg.edit(compressEmbed);
 					}, 5000);
 
