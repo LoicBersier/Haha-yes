@@ -13,6 +13,8 @@ class commandStartedListener extends Listener {
 	}
 
 	async exec(message, command) {
+		console.time(command.id);
+
 		//This is for april fools
 		let today = new Date(), lastUpdate;
 		
@@ -27,7 +29,7 @@ class commandStartedListener extends Listener {
 		} 
 		let curDate = dd + '.' + mm;
 		//Only execute when its april first
-		if (curDate == '01.04' && !serverID.includes(message.guild.id)) {
+		if (curDate === '01.04' && !serverID.includes(message.guild.id)) {
 			let count = Math.random() * 100;
 			if (count < 10) {
 				serverID.push(message.guild.id);
@@ -49,7 +51,7 @@ class commandStartedListener extends Listener {
 		}
 
 		if (dailyStats) {
-			if (command.category.id == 'owner') return; // Don't count owner command
+			if (command.category.id === 'owner') return; // Don't count owner command
 			let obj = {
 				guild: message.guild.id,
 				command: command.id
