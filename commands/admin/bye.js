@@ -56,7 +56,7 @@ class byeCommand extends Command {
 			message.channel.awaitMessages(filter, {time: 5000, max: 1, errors: ['time'] })
 				.then(async messages => {
 					let messageContent = messages.map(messages => messages.content);
-					if (messageContent == 'y' || messageContent == 'yes') {
+					if (messageContent[0] === 'y' || messageContent[0] === 'yes') {
 						const body = {guildID: message.guild.id, channelID: message.channel.id, message: args.message};
 						await leaveChannel.update(body, {where: {guildID: message.guild.id}});
 						return message.channel.send(`The leave message have been set with ${args.message}`);

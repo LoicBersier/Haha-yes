@@ -39,7 +39,7 @@ class serverBlacklistCommand extends Command {
 			message.channel.awaitMessages(filter, {time: 5000 * 1000, max: 1, errors: ['time'] })
 				.then(messages => {
 					let messageContent = messages.map(messages => messages.content);
-					if (messageContent == 'y' || messageContent == 'yes') {
+					if (messageContent[0] === 'y' || messageContent[0] === 'yes') {
 						guildBlacklist.destroy({where: {guildID:args.guildID}});
 						return message.channel.send(`The guild with the following id have been unblacklisted: ${args.guildID}`);
 					}

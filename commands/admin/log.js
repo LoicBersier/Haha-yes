@@ -30,7 +30,7 @@ class logCommand extends Command {
 			message.channel.awaitMessages(filter, {time: 5000, max: 1, errors: ['time'] })
 				.then(async messages => {
 					let messageContent = messages.map(messages => messages.content.toLowerCase());
-					if (messageContent == 'y' || messageContent == 'yes') {
+					if (messageContent[0] === 'y' || messageContent[0] === 'yes') {
 						await LogStats.destroy({where: {guild: message.guild.id}});
 						return message.channel.send('Log channel has been disabled!');
 					} else {
