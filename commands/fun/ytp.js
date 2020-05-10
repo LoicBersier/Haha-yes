@@ -84,6 +84,11 @@ class ytpCommand extends Command {
 					flag: ['--squidward']
 				},
 				{
+					id: 'how',
+					match: 'flag',
+					flag: ['--how']
+				},
+				{
 					id: 'debug',
 					match: 'flag',
 					flag: ['--debug']
@@ -191,7 +196,7 @@ class ytpCommand extends Command {
 			temp: os.tmpdir(),
 			sourceList: asset,
 			intro: args.force ? './asset/ytp/intro.mp4' : null,
-			outro: './asset/ytp/outro.mp4', // Need an outro or it won't work
+			outro: './asset/ytp/outro.mp4',
 			OUTPUT_FILE: `${os.tmpdir()}/${message.id}_YTP.mp4`,
 			MAX_CLIPS: MAX_CLIPS,
 			transitions: true,
@@ -207,7 +212,8 @@ class ytpCommand extends Command {
 				effect_SpeedUp: !args.speedUp,
 				effect_SlowDown: !args.slowDown,
 				effect_Dance: !args.dance,
-				effect_Squidward: !args.squidward
+				effect_Squidward: !args.squidward,
+				effect_How: !args.how
 			}
 		};
 	
