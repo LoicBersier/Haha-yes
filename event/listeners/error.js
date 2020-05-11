@@ -11,17 +11,17 @@ class errorListener extends Listener {
 		});
 	}
 
-	async exec(message, error, command) {
-		console.log(message);
-		console.error(`Error happenend on the command: ${command.id}\n${message}\nOn the message: ${error}`);
+	async exec(error, message, command) {
+		console.error(`Error happenend on the command: ${command.id}\n${error}\nOn the message: ${message}`);
 		const channel = this.client.channels.resolve(errorChannel);
 		const errorEmbed = this.client.util.embed()
 			.setColor('RED')
 			.setTitle('Shit happened!')
 			.addField('Command', command.id, true)
-			.addField('Error', message, true)
-			.addField('Message', error, true)
-			.addField('Author', `${message.author.tag} (${message.author.id})`);
+			.addField('Error', error, true)
+			.addField('Message', message, true);
+
+		if (message.author) errorEmbed.addField('Author', `${message.author.tag} (${message.author.id})`);
 
 		channel.send(errorEmbed);
 
@@ -47,7 +47,7 @@ class errorListener extends Listener {
 				console.error(err);
 			}
 			//Create txt with the current time
-			fs.writeFile(`./error/${today}/${currentTime}.txt`, `Error happenend on the command: ${command.id}\n${message}\nOn the message: ${error}`, function (err) {
+			fs.writeFile(`./error/${today}/${currentTime}.txt`, `Error happenend on the command: ${command.id}\n${error}\nOn the message: ${message}`, function (err) {
 				if (err) {
 					console.error(err);
 				}
