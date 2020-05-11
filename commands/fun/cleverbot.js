@@ -1,5 +1,6 @@
 const { Command } = require('discord-akairo');
 const cleverbot = require('cleverbot-free');
+let conversation = {};
 
 class CleverBotCommand extends Command {
 	constructor() {
@@ -19,16 +20,32 @@ class CleverBotCommand extends Command {
 			],
 			description: {
 				content: 'Talk to cleverbot!',
-				usage: '',
-				examples: ['']
+				usage: '[message]',
+				examples: ['Hello']
 			}
 		});
 	}
 
 	async exec(message, args) {
-		cleverbot(args.message).then(response => {
-			return message.channel.send(response);
-		});
+		let loadingmsg = await message.channel.send('Processing <a:loadingmin:527579785212329984>');
+		if (!conversation[message.guild.id]) conversation[message.guild.id] = [];
+
+
+		if (!conversation[0]) {
+			cleverbot(args.message).then(response => {
+				conversation[message.guild.id].push(args.message);
+				conversation[message.guild.id].push(response);
+				return message.channel.send(response);
+			});
+		} else {
+			cleverbot(args.message, conversation[message.guild.id]).then(response => {
+				conversation[message.guild.id].push(args.message);
+				conversation[message.guild.id].push(response);
+				return message.channel.send(response);
+			});
+		}
+		console.log(conversation);
+		loadingmsg.delete();
 	}
 }
 module.exports = CleverBotCommand;
