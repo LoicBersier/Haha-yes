@@ -3,6 +3,10 @@ const YTPGenerator = require('ytpplus-node');
 const os = require('os');
 const fs = require('fs');
 const youtubedl = require('youtube-dl');
+const md5File = require('md5-file');
+const ytpHash = require('../../models').ytpHash;
+
+
 const MAX_CLIPS = 20;
 
 
@@ -128,7 +132,7 @@ class ytpCommand extends Command {
 			}
 			
 			if (url) {
-				return youtubedl.exec(url, ['--rm-cache-dir', '--no-playlist', '--max-filesize', '50m', '--format=mp4', '-o', `./asset/ytp/userVid/${message.id}.mp4`], {}, function(err, output) {
+				return youtubedl.exec(url, ['--rm-cache-dir', '--no-playlist', '--max-filesize', '50m', '--format=mp4', '-o', `./asset/ytp/userVid/${message.id}.mp4`], {}, async function(err, output) {
 					console.log(output);
 					if (err) {
 						console.error(err);
@@ -140,7 +144,19 @@ class ytpCommand extends Command {
 								loadingmsg.delete();
 								return message.channel.send(output[2]);
 							}
-						} 
+						}
+
+						const hash = md5File.sync(`./asset/ytp/userVid/${message.id}.mp4`);
+						const ytphash = await ytpHash.findOne({where: {hash: hash}});
+
+						if (ytphash) {
+							fs.unlinkSync(`./asset/ytp/userVid/${message.id}.mp4`);
+							return message.reply('This video is a duplicate... Not adding.');
+						} else {
+							const body = {hash: hash, link: args.link, messageID: message.id};
+							await ytpHash.create(body);
+						}
+
 
 						let mp4 = [];
 						fs.readdirSync('./asset/ytp/userVid/').forEach(file => {
@@ -219,6 +235,10 @@ class ytpCommand extends Command {
 	
 		new YTPGenerator().configurateAndGo(options)
 			.then(() => {
+				md5File(`${os.tmpdir()}/${message.id}_YTP.mp4`).then(async hash => {
+					const body = {hash: hash, link: 'null', messageID: message.id};
+					await ytpHash.create(body);
+				});
 				loadingmsg.delete();
 				return message.reply('Here is your YTP! Remember, it might contain nsfw!', {files: [`${os.tmpdir()}/${message.id}_YTP.mp4`]})
 					.catch(err => {
