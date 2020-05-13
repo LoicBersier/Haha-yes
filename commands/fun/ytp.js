@@ -130,7 +130,7 @@ class ytpCommand extends Command {
 			if (Attachment[0] && !args.link) {
 				url = Attachment[0].url;
 			}
-			
+
 			if (url) {
 				return youtubedl.exec(url, ['--rm-cache-dir', '--no-playlist', '--max-filesize', '50m', '--format=mp4', '-o', `./asset/ytp/userVid/${message.id}.mp4`], {}, async function(err, output) {
 					console.log(output);
@@ -151,6 +151,7 @@ class ytpCommand extends Command {
 
 						if (ytphash) {
 							fs.unlinkSync(`./asset/ytp/userVid/${message.id}.mp4`);
+							loadingmsg.delete();
 							return message.reply('This video is a duplicate... Not adding.');
 						} else {
 							const body = {hash: hash, link: args.link, messageID: message.id};
@@ -173,7 +174,7 @@ class ytpCommand extends Command {
 				loadingmsg.delete();
 				return message.channel.send('You need a valid video link!');
 			}
-		} 
+		}
 
 
 		if (!message.channel.nsfw && !args.force) return message.channel.send(`Please execute this command in an NSFW channel ( Content might not be NSFW but since the video are user submitted better safe than sorry ) OR do \`\`${this.client.commandHandler.prefix[0]}ytp --force\`\` to make the command work outside of nsfw channel BE AWARE THAT IT WON'T CHANGE THE FINAL RESULT SO NSFW CAN STILL HAPPEN`);
@@ -202,7 +203,7 @@ class ytpCommand extends Command {
 		let loadingmsg = await message.channel.send(`Processing, this can take a **long** time, i'll ping you when i finished <a:loadingmin:527579785212329984>\nSome info: There is currently ${mp4.length} videos, you can add yours by doing \`\`${this.client.commandHandler.prefix[0]}ytp --add (link or attachment)\`\``);
 
 
-		let options = {  
+		let options = {
 			debug: args.debug,
 			MAX_STREAM_DURATION: args.link ? args.link : Math.floor((Math.random() * 3) + 1), // Random duration of video clip
 			sources: './asset/ytp/sources/',
@@ -217,7 +218,7 @@ class ytpCommand extends Command {
 			MAX_CLIPS: MAX_CLIPS,
 			transitions: true,
 			showFileNames: true,
-			effects: {  
+			effects: {
 				effect_RandomSound: !args.randomSound,
 				effect_RandomSoundMute: !args.randomSoundMute,
 				effect_Reverse: !args.reverse,
@@ -232,7 +233,7 @@ class ytpCommand extends Command {
 				effect_How: !args.how
 			}
 		};
-	
+
 		new YTPGenerator().configurateAndGo(options)
 			.then(() => {
 				md5File(`${os.tmpdir()}/${message.id}_YTP.mp4`).then(async hash => {
