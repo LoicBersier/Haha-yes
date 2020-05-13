@@ -23,6 +23,7 @@
     "handbrake-js": "^3.0.8",
     "jimp": "^0.10.3",
     "libsodium-wrappers": "^0.7.6",
+    "md5-file": "^5.0.0",
     "meta-extractor": "^1.5.2",
     "mkdirp": "^0.5.5",
     "mysql2": "^1.7.0",
