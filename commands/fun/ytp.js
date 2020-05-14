@@ -137,7 +137,7 @@ class ytpCommand extends Command {
 					if (err) {
 						console.error(err.toString());
 						loadingmsg.delete();
-						if (err.toString().includes('HTTP Error 429')) {
+						if (err.toString().includes('HTTP Error 429') || err.toString().includes('HTTP Error 403')) {
 							return message.channel.send('An error has occured, I can\'t download from the link you provided because the website has blocked the bot. Please try again later or upload that video as mp4 on another website.');
 						} else {
 							return message.channel.send('An error has occured, I can\'t download from the link you provided. Is it an mp4?');
