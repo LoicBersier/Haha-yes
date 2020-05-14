@@ -103,7 +103,7 @@ class DownloadCommand extends Command {
 					const options = {
 						input: `${os.tmpdir()}/${fileName}.${ext}`,
 						output: `${os.tmpdir()}/${fileName}compressed.${ext}`,
-						preset: 'General/Gmail Small 10 Minutes 288p30'
+						preset: 'Web/Discord Tiny 5 Minutes 240p30'
 					};
 	
 					let handbrake = hbjs.spawn(options);
