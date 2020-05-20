@@ -74,10 +74,13 @@ class DownloadCommand extends Command {
 			}
 			return youtubedl.exec(link, ['--rm-cache-dir', '-o', `${os.tmpdir()}/${fileName}`], {}, async function(err) {
 				if (err) {
-					console.error(err);
+					console.error(err.toString());
 					loadingmsg.delete();
-					return message.channel.send('An error has occured, I can\'t download from the link you provided.');
-				}
+					if (err.toString().includes('HTTP Error 429') || err.toString().includes('HTTP Error 403')) {
+						return message.channel.send('An error has occured, I can\'t download from the link you provided because the website has blocked the bot. Please try again later.');
+					} else {
+						return message.channel.send('An error has occured, I can\'t download from the link you provided.');
+					}				}
 
 				let ext = 'mp4';
 
@@ -103,7 +106,7 @@ class DownloadCommand extends Command {
 					const options = {
 						input: `${os.tmpdir()}/${fileName}.${ext}`,
 						output: `${os.tmpdir()}/${fileName}compressed.${ext}`,
-						preset: 'General/Gmail Small 10 Minutes 288p30'
+						preset: 'Web/Discord Tiny 5 Minutes 240p30'
 					};
 	
 					let handbrake = hbjs.spawn(options);
