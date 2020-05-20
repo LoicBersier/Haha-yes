@@ -250,7 +250,11 @@ class ytpCommand extends Command {
 			.catch(err => {
 				console.error(err);
 				loadingmsg.delete();
-				return message.reply('Oh no! An error has occured!');
+				return message.reply({files: [Math.random() < 0.5 ? './asset/ytp/error1.mp4' : './asset/ytp/error2.mp4']})
+					.catch(err => { // In case it can't send the vid for some reason
+						console.error(err);
+						return message.channel.send('Oh no, an error has occured! please try again.');
+					});
 			});
 	}
 }
