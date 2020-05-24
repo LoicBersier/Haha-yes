@@ -214,7 +214,7 @@ class ytpCommand extends Command {
 		let options = {
 			debug: args.debug,
 			MIN_STREAM_DURATION: args.link ? Math.floor(args.link) : null,
-			MAX_STREAM_DURATION: args.max ? args.max : Math.floor(args.link * 1.5),
+			MAX_STREAM_DURATION: args.link && args.max ? args.max : Math.floor((Math.random() * 3) + 1), // Random duration of video clip
 			sources: './asset/ytp/sources/',
 			sounds: './asset/ytp/sounds/',
 			music: './asset/ytp/music/',
