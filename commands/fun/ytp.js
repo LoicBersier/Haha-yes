@@ -100,12 +100,16 @@ class ytpCommand extends Command {
 				{
 					id: 'link',
 					type: 'string'
+				},
+				{
+					id: 'max',
+					type: 'string'
 				}
 			],
 			description: {
 				content: 'Generate random ytp | --add with a link or attachment to add a video to the pool, only .mp4 work | --pool to see how many vid there is currently in the pool | --force to make the command work outside of nsfw channel BE AWARE THAT IT WON\'T CHANGE THE FINAL RESULT SO NSFW CAN STILL HAPPEN',
-				usage: '',
-				examples: ['']
+				usage: '(OPTIONAL) | [Minimum length of clip] [Max length of clip]',
+				examples: ['5 10']
 			}
 		});
 	}
@@ -209,7 +213,8 @@ class ytpCommand extends Command {
 
 		let options = {
 			debug: args.debug,
-			MAX_STREAM_DURATION: args.link ? args.link : Math.floor((Math.random() * 3) + 1), // Random duration of video clip
+			MIN_STREAM_DURATION: args.link ? Math.floor(args.link) : null,
+			MAX_STREAM_DURATION: args.max ? args.max : Math.floor(args.link * 1.5),
 			sources: './asset/ytp/sources/',
 			sounds: './asset/ytp/sounds/',
 			music: './asset/ytp/music/',
