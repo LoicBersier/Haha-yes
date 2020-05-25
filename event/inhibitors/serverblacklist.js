@@ -4,7 +4,8 @@ const guildBlacklist = require('../../models').guildBlacklist;
 class serverblacklistInhibitor extends Inhibitor {
 	constructor() {
 		super('serverblacklist', {
-			reason: 'serverblacklist'
+			reason: 'serverblacklist',
+			type: 'all'
 		});
 	}
 
