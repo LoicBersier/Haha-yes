@@ -1,6 +1,6 @@
 const { Listener } = require('discord-akairo');
 const { dailyStats } = require('../../config.json');
-let serverID = require('../../json/serverID.json'); 
+let serverID = require('../../json/serverID.json');
 let report = [];
 let time = new Date();
 
@@ -17,16 +17,16 @@ class commandStartedListener extends Listener {
 
 		//This is for april fools
 		let today = new Date(), lastUpdate;
-		
+
 		let dd = today.getDate();
 		let mm = today.getMonth() + 1; //January is 0!
 
 		if (dd < 10) {
 			dd = '0' + dd;
-		} 
+		}
 		if (mm < 10) {
 			mm = '0' + mm;
-		} 
+		}
 		let curDate = dd + '.' + mm;
 		//Only execute when its april first
 		if (curDate === '01.04' && !serverID.includes(message.guild.id)) {
@@ -56,18 +56,18 @@ class commandStartedListener extends Listener {
 				guild: message.guild.id,
 				command: command.id
 			};
-			
+
 			report.push(obj);
-	
+
 			let uniqueGuild = [];
 			let commands = {};
 			let executedCommands = 0;
-	
+
 			report.forEach(e => {
 				if (!uniqueGuild.includes(e.guild)) {
 					uniqueGuild.push(e.guild);
 				}
-	
+
 				if (!commands[e.command]) {
 					commands[e.command] = 1;
 				} else {
@@ -75,31 +75,31 @@ class commandStartedListener extends Listener {
 				}
 
 				executedCommands++;
-				
+
 			});
-	
+
 			if ( !lastUpdate || ( today.getTime() - lastUpdate.getTime() ) > 30000 ) {
 				// Set the last time we checked, and then check if the date has changed.
 				lastUpdate = today;
 				if ( time.getDate() !== today.getDate() ) {
 				// If the date has changed, set the date to the new date, and refresh stuff.
 					time = today;
-	
+
 					let arr = Object.values(commands);
 					let max = Math.max(...arr);
 					let min = Math.min(...arr);
-	
+
 					let Embed = this.client.util.embed()
 						.setColor('GREEN')
 						.setTitle('Daily usage report!')
 						.addField('Number of unique guild', uniqueGuild.length)
-						.addField('Number of command exectued', executedCommands, true)
+						.addField('Number of command executed', executedCommands, true)
 						.addField('Most used command', `${getKeyByValue(commands, max)} (${max} times)`, true )
 						.addField('Least used command', `${getKeyByValue(commands, min)} (${min} times)`, true)
 						.setFooter(`Bot usage as of ${today}`);
-	
-	
-	
+
+
+
 					const channel = this.client.channels.resolve(dailyStats);
 					channel.send(Embed);
 
