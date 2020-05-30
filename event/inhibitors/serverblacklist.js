@@ -5,7 +5,6 @@ class serverblacklistInhibitor extends Inhibitor {
 	constructor() {
 		super('serverblacklist', {
 			reason: 'serverblacklist',
-			type: 'all'
 		});
 	}
 
