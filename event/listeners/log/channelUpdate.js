@@ -15,7 +15,7 @@ class channelUpdateListener extends Listener {
 		if (logStats) {
 			const fetchedLogs = await newChannel.guild.fetchAuditLogs({
 				limit: 1,
-				type: 'CHANNEL_CREATE',
+				type: 'CHANNEL_UPDATE',
 			});
 
 			const updateLog = fetchedLogs.entries.first();
