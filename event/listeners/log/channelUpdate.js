@@ -11,7 +11,7 @@ class channelUpdateListener extends Listener {
 
 	async exec(oldChannel, newChannel) {
 		const logStats = await LogStats.findOne({where: {guild: newChannel.guild.id}});
-
+		if (oldChannel === newChannel) return;
 		if (logStats) {
 			const fetchedLogs = await newChannel.guild.fetchAuditLogs({
 				limit: 1,

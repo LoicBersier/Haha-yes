@@ -12,8 +12,9 @@ class roleUpdateListener extends Listener {
 		});
 	}
 
-	async exec(role) {
-		const guild = role.guild;
+	async exec(oldRole, newRole) {
+		if (oldRole === newRole) return;
+		const guild = oldRole.guild;
 		const logStats = await LogStats.findOne({where: {guild: guild.id}});
 		if (logStats) {
 			const fetchedLogs = await guild.fetchAuditLogs({
@@ -27,12 +28,12 @@ class roleUpdateListener extends Listener {
 			let Embed = this.client.util.embed()
 				.setColor('NAVY')
 				.setTitle('Role updated')
-				.setDescription(`${role.name} got updated!`)
+				.setDescription(`${oldRole.name} got updated!`)
 				.setTimestamp();
 
 			if (!creationLog) return channel.send(Embed);
 
-			Embed.setDescription(`${role.name} got updated by ${creationLog.executor}`);
+			Embed.setDescription(`${oldRole.name} got updated by ${creationLog.executor}`);
 
 			channel.send(Embed);
 		}
