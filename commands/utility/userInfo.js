@@ -38,17 +38,8 @@ class userInfoCommand extends Command {
 			.setTimestamp();
 
 
-
-		if (member) {
-			// Show since when this user have been boosting the current guild
-			if (member.premiumSince) Embed.addField('Boosting this guild since', member.premiumSince, true);
-			// Show guild nickname
-			if (member.nickname) Embed.addField('Nickname', member.nickname, true);
-
-		}
-
 		Embed.addField('​', '​');
-		
+
 		// Show user status
 		if (user.presence.activities[0]) {
 			Embed.addField('Presence', user.presence.activities[0], true);
@@ -57,7 +48,7 @@ class userInfoCommand extends Command {
 		}
 		// Is the user a bot?
 		if (user.bot) Embed.addField('Is a bot?', '✅', true);
-		
+
 		// Show user locale ( i have no idea what it is ) https://discord.js.org/#/docs/main/master/class/User?scrollTo=locale
 		if (user.locale) Embed.addField('Locale settings', user.locale, true);
 
@@ -68,7 +59,16 @@ class userInfoCommand extends Command {
 			if (user.presence.clientStatus.desktop) Embed.addField('Using discord on', '💻 ' + user.presence.clientStatus.desktop, true);
 			if (user.presence.clientStatus.web) Embed.addField('Using discord on', '☁️ ' + user.presence.clientStatus.web, true);
 		}
-		
+
+		if (member) {
+			// Show since when this user have been boosting the current guild
+			if (member.premiumSince) Embed.addField('Boosting this guild since', member.premiumSince, true);
+			// Show guild nickname
+			if (member.nickname) Embed.addField('Nickname', member.nickname, true);
+			// Show member roles
+			if (member.roles) Embed.addField('Roles', `${member.roles.cache.array().join(', ')}`);
+		}
+
 		return message.channel.send({ embed: Embed });
 	}
 }

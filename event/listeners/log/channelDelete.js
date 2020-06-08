@@ -22,13 +22,13 @@ class channelDeleteListener extends Listener {
 			const channel = this.client.channels.resolve(await logStats.get('channel'));
 			let Embed = this.client.util.embed()
 				.setColor('NAVY')
-				.setTitle('Channel created!')
-				.setDescription(`${GuildChannel.type} channel ${GuildChannel} got deleted!`)
+				.setTitle('Channel deleted!')
+				.setDescription(`${GuildChannel.type} channel ${GuildChannel.name} got deleted!`)
 				.setTimestamp();
 
 			if (!deletionLog) return  channel.send(Embed);
 
-			Embed.setDescription(`${GuildChannel.type} channel ${GuildChannel} got deleted by ${deletionLog.executor}`);
+			Embed.setDescription(`${GuildChannel.type} channel ${GuildChannel.name} got deleted by ${deletionLog.executor}`);
 
 			channel.send(Embed);
 		}
