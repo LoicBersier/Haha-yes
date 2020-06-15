@@ -9,7 +9,7 @@ class dosentexistCommand extends Command {
 			category: 'fun',
 			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
 			description: {
-				content: 'Send images from thispersondoesnotexist.com!,
+				content: 'Send images from thispersondoesnotexist.com!',
 				usage: '',
 				examples: ['']
 			}
