@@ -30,7 +30,7 @@ class samCommand extends Command {
 
 	async exec(message, args) {
 		args.samMessage = rand.random(args.samMessage, message);
-		let pitch = '';
+		let pitch;
 		if (args.samMessage.includes('[pitch:')) {
 			pitch = args.samMessage.split(/(\[pitch:.*?])/);
 			for (let i = 0, l = pitch.length; i < l; i++) {
@@ -48,7 +48,7 @@ class samCommand extends Command {
 			pitch = 100;
 		}
 
-		let speed = '';
+		let speed;
 		if (args.samMessage.includes('[speed:')) {
 			speed = args.samMessage.split(/(\[speed:.*?])/);
 			for (let i = 0, l = speed.length; i < l; i++) {
@@ -76,11 +76,16 @@ class samCommand extends Command {
 			headers: {
 				'Content-Type': 'audio/mpeg',
 			},
-		}).then((result) => {
-			const outputFilename = `${os.tmpdir}/${message.id}_sam.wav`;
-			fs.writeFileSync(outputFilename, result.data);
-			return message.channel.send({files: [outputFilename]});
-		});
+		})
+			.catch((err) => {
+				console.error(err);
+				return message.channel.send(`Uh oh, an error has occured! please try again later.\n${err}`);
+			})
+			.then((result) => {
+				const outputFilename = `${os.tmpdir}/${message.id}_sam.wav`;
+				fs.writeFileSync(outputFilename, result.data);
+				return message.channel.send({files: [outputFilename]});
+			});
 
 	}
 }

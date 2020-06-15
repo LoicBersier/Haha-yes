@@ -30,7 +30,7 @@ class samvcCommand extends Command {
 
 	async exec(message, args) {
 		args.samMessage = rand.random(args.samMessage, message);
-		let pitch = '';
+		let pitch;
 		if (args.samMessage.includes('[pitch:')) {
 			pitch = args.samMessage.split(/(\[pitch:.*?])/);
 			for (let i = 0, l = pitch.length; i < l; i++) {
@@ -48,7 +48,7 @@ class samvcCommand extends Command {
 			pitch = 100;
 		}
 
-		let speed = '';
+		let speed;
 		if (args.samMessage.includes('[speed:')) {
 			speed = args.samMessage.split(/(\[speed:.*?])/);
 			for (let i = 0, l = speed.length; i < l; i++) {
@@ -76,25 +76,31 @@ class samvcCommand extends Command {
 			headers: {
 				'Content-Type': 'audio/mpeg',
 			},
-		}).then(async (result) => {
-			const outputFilename = `${os.tmpdir}/${message.id}_sam.wav`;
+		})
+			.catch((err) => {
+				console.error(err);
+				return message.channel.send(`Uh oh, an error has occured! please try again later.\n${err}`);
+			})
 
-			fs.writeFile(outputFilename, result.data, async function(err) {
-				if (err) console.error(err);
-				const voiceChannel = message.member.voice.channel;
-				if (!voiceChannel) return message.channel.send('Please enter a voice channel first.');
-				try {
-					const connection = await voiceChannel.join();
-					const dispatcher = connection.play(outputFilename);
-					dispatcher.once('finish', () => voiceChannel.leave());
-					dispatcher.once('error', () => voiceChannel.leave());
-					return null;
-				} catch (err) {
-					voiceChannel.leave();
-					return message.reply(`Oh no, an error occurred: \`${err.message}\`.`);
-				}
+			.then(async (result) => {
+				const outputFilename = `${os.tmpdir}/${message.id}_sam.wav`;
+
+				fs.writeFile(outputFilename, result.data, async function(err) {
+					if (err) console.error(err);
+					const voiceChannel = message.member.voice.channel;
+					if (!voiceChannel) return message.channel.send('Please enter a voice channel first.');
+					try {
+						const connection = await voiceChannel.join();
+						const dispatcher = connection.play(outputFilename);
+						dispatcher.once('finish', () => voiceChannel.leave());
+						dispatcher.once('error', () => voiceChannel.leave());
+						return null;
+					} catch (err) {
+						voiceChannel.leave();
+						return message.reply(`Oh no, an error occurred: \`${err.message}\`.`);
+					}
+				});
 			});
-		});
 	}
 }
 
