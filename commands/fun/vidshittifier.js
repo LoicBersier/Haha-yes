@@ -43,7 +43,7 @@ class vidshittifierCommand extends Command {
 		let compression;
 		let audioCompression;
 
-		if (args.compression == 1) {
+		if (args.compression === 1) {
 			compression = '50k';
 			audioCompression = '100k';
 		} else {
@@ -88,7 +88,7 @@ class vidshittifierCommand extends Command {
 						.catch(err => {
 							console.error(err);
 							loadingmsg.delete();
-							return message.channel.send('Oh no! an error just occured! We don't know what causes this error yet, so let us know!);
+							return message.channel.send('Oh no! an error just occured! We don\'t know what causes this error yet, so let us know!');
 						});
 				});
 		}
