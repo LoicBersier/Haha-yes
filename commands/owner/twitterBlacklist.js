@@ -18,6 +18,7 @@ class TwitterBlacklistCommand extends Command {
 				},
 				{
 					id: 'reason',
+					match: 'rest',
 					type: 'string',
 					default: 'no reasons provided',
 					prompt: {
