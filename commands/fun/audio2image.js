@@ -23,7 +23,7 @@ class audio2imageCommand extends Command {
 				}
 			],
 			description: {
-				content: 'Transform audio file into image. --size (a number) to get a bigger image NOTE: bigger image might fail ',
+				content: 'Transform an audio file into an image.Use --size (a number) to get a bigger image! (NOTE: bigger image might fail, so be careful!)',
 				usage: '[link to audio] [--size anumber]',
 				examples: ['https://cdn.discordapp.com/attachments/532987690145021982/682654351772221480/jeff.wav (optional) --size 1920x1080']
 			}
@@ -67,7 +67,7 @@ class audio2imageCommand extends Command {
 								.output(`${os.tmpdir()}/a2i${message.id}.png`)
 								.on('error', (err, stdout, stderr) => {
 									console.error(`${err}\n${stdout}\n${stderr}`);
-									return message.channel.send('Uh oh, an error has occured! The image size is most likely bigger than the content!');
+									return message.channel.send('Uh oh, an error has occured! The image size is most likely bigger than the content! Try again!');
 								})	
 								.on('end', () => {
 									console.log('finished');
@@ -76,7 +76,7 @@ class audio2imageCommand extends Command {
 									let fileSize = (file.size / 1000000.0).toFixed(2);
 									return message.channel.send(`Image is ${fileSize} MB for ${args.video_size} resolution`, {files: [`${os.tmpdir()}/a2i${message.id}.png`]})
 										.catch(() => {
-											return message.channel.send(`End result is too big to fit on discord! File is ${fileSize} MB`);										});
+											return message.channel.send(`End result is too big to fit on discord! File is ${fileSize} MB! Unless it's GB or even TB, in which case that is a huge image!`);										});
 								})
 								.run();
 						})

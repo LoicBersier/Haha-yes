@@ -16,13 +16,13 @@ class FourchanCommand extends Command {
 					id: 'board',
 					type: 'string',
 					prompt: {
-						start: 'which board do you want to browse?',
+						start: 'Which board do you want to browse?',
 					},
 					match: 'rest'
 				}
 			],
 			description: {
-				content: 'Send random images from a 4chan board of your choosing',
+				content: 'Send random images from a 4chan board of your choosing!',
 				usage: '[board]',
 				examples: ['vg']
 			}
@@ -30,7 +30,7 @@ class FourchanCommand extends Command {
 	}
 
 	async exec(message, args) {
-		if (boards.getType(args.board) === boards.NSFW && !message.channel.nsfw) return message.channel.send('Sorry, this board only work in nsfw channel!');
+		if (boards.getType(args.board) === boards.NSFW && !message.channel.nsfw) return message.channel.send('Sorry, this board only works in nsfw channels!');
 
 		if (!args.board) return;
 		args.board = args.board.replace(/\//g, '');
@@ -42,7 +42,7 @@ class FourchanCommand extends Command {
 			return response.json();
 		}).then((response) => { 
 			if (!response.threads)
-				return message.channel.send('Not a valid board');
+				return message.channel.send('Not a valid board! Try again!');
 
 			i = Math.floor((Math.random() * response.threads.length) + 1);
 
@@ -88,9 +88,9 @@ class FourchanCommand extends Command {
 			}
 		})
 			.catch((err) => {
-				if (err.type == 'invalid-json') return message.channel.send('Could not find the board');
+				if (err.type == 'invalid-json') return message.channel.send('Could not find the board! Try again!');
 				console.error(err);
-				return message.channel.send('Uh-oh, an error has occured and i don\'t know why!');
+				return message.channel.send('Uh-oh, an error has occured! Try again! If this keeps happening, tell the developers!');
 			});
 	}
 }

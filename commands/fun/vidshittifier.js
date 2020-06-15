@@ -21,7 +21,7 @@ class vidshittifierCommand extends Command {
 				}
 			],
 			description: {
-				content: 'Make your vid shit quality.',
+				content: 'Compress your videos and lower their quality!',
 				usage: '[link to video] [compression ( 1, 2 or 3)]',
 				examples: ['']
 			}
@@ -60,13 +60,13 @@ class vidshittifierCommand extends Command {
 				if (err) {
 					console.error(err);
 					loadingmsg.delete();
-					return message.channel.send('An error has occured, I can\'t download from the link you provided.');
+					return message.channel.send('An error has occured, I can\'t download from the link you provided. Try again!');
 				} else {
 					shittifie();
 				}
 			});
 		} else {
-			return message.channel.send('You need a valid video link!');
+			return message.channel.send('You need a valid video link! Try again!');
 		}
 
 		function shittifie() {
@@ -82,13 +82,13 @@ class vidshittifierCommand extends Command {
 								.catch(err => {
 									console.error(err);
 									loadingmsg.delete();
-									return message.channel.send('On no! an error just occured! perhaps the file is too big?');
+									return message.channel.send('On no! an error just occured! Maybe the file is too big?');
 								});
 						})
 						.catch(err => {
 							console.error(err);
 							loadingmsg.delete();
-							return message.channel.send('On no! an error just occured! Im gonna be honest with you, i don\'t know what caused it yet! but worry not! my owner will look into it soon!');
+							return message.channel.send('Oh no! an error just occured! We don't know what causes this error yet, so let us know!);
 						});
 				});
 		}

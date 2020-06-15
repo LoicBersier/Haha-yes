@@ -27,7 +27,7 @@ class CleverBotCommand extends Command {
 	}
 
 	async exec(message, args) {
-		let loadingmsg = await message.channel.send('Processing <a:loadingmin:527579785212329984>');
+		let loadingmsg = await message.channel.send('Processing! <a:loadingmin:527579785212329984>');
 		if (!conversation[message.guild.id]) conversation[message.guild.id] = [];
 
 
