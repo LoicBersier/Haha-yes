@@ -4,7 +4,7 @@ const donator = require('../../models').donator;
 class donatorCommand extends Command {
 	constructor() {
 		super('donator', {
-			aliases: ['donator'],
+			aliases: ['donator', 'donators'],
 			category: 'utility',
 			clientPermissions: ['SEND_MESSAGES'],
 			description: {
