@@ -208,7 +208,7 @@ class ytpCommand extends Command {
 			}
 		}
 
-		let loadingmsg = await message.channel.send(`Processing, this can take a **long** time, i'll ping you when i finished <a:loadingmin:527579785212329984>\nSome info: There is currently ${mp4.length} videos, you can add yours by doing \`\`${this.client.commandHandler.prefix[0]}ytp --add (link or attachment)\`\``);
+		let loadingmsg = await message.channel.send(`Processing, this can take a ***long*** time, i'll ping you when i finished <a:loadingmin:527579785212329984>\nSome info: There are currently ${mp4.length} videos, you can add yours by doing \`\`${this.client.commandHandler.prefix[0]}ytp --add (link or attachment). Thanks for contributing!\`\``);
 
 
 		let options = {
@@ -250,7 +250,7 @@ class ytpCommand extends Command {
 					await ytpHash.create(body);
 				});
 				loadingmsg.delete();
-				return message.reply('Here is your YTP! Remember, it might contain nsfw!', {files: [`${os.tmpdir()}/${message.id}_YTP.mp4`]})
+				return message.reply('Here is your YTP! Remember, it might contain nsfw, so be careful!', {files: [`${os.tmpdir()}/${message.id}_YTP.mp4`]})
 					.catch(err => {
 						console.error(err);
 						return message.channel.send('Whoops, look like the vid might be too big for discord, my bad, please try again');
@@ -260,9 +260,9 @@ class ytpCommand extends Command {
 				console.error(err);
 				loadingmsg.delete();
 				return message.reply({files: [Math.random() < 0.5 ? './asset/ytp/error1.mp4' : './asset/ytp/error2.mp4']})
-					.catch(err => { // In case it can't send the vid for some reason
+					.catch(err => { // In case it can't send the video for some reason
 						console.error(err);
-						return message.channel.send('Oh no, an error has occured! please try again.');
+						return message.channel.send('Oh no, an error has occured! please try again. If this happens alot, you should report this to the developers.');
 					});
 			});
 	}

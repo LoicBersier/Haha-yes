@@ -17,7 +17,7 @@ class asciifyCommand extends Command {
 			cooldown: 600000,
 			ratelimit: 2,
 			description: {
-				content: 'Transform your image into ascii (ATTENTION, SPAM!)',
+				content: 'Transform your image into ASCII! (This can be a bit spammy, so be careful!)',
 				usage: '[image in attachment]',
 				examples: ['image in attachment']
 			}
