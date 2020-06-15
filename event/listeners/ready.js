@@ -43,21 +43,21 @@ class ReadyListener extends Listener {
 		async function setStatus(client) {
 			let owner = client.users.resolve(client.ownerID);
 			let random = Math.floor((Math.random() * 3));
-			if (random == 0) { // Random "Watching" status taken from json
+			if (random === 0) { // Random "Watching" status taken from json
 				console.log('Status type: \x1b[32mWatching\x1b[0m');
 				
 				let status = watch[Math.floor((Math.random() * watch.length))];
 				status = status.replace('${prefix}', prefix[0]);
 						
 				client.user.setActivity(`${status} | My prefix is: ${prefix[0]} `, { type: 'WATCHING' });
-			} else if (random == 1) { // Random "Playing" status taken from json
+			} else if (random === 1) { // Random "Playing" status taken from json
 				console.log('Status type: \x1b[32mPlaying\x1b[0m');
 				
 				let status = game[Math.floor((Math.random() * game.length))];
 				status = status.replace('${prefix}', prefix[0]);
 						
 				client.user.setActivity(`${status} | My prefix is: ${prefix[0]}`, { type: 'PLAYING' });
-			} else if (random == 2 && owner.presence.activities != null) { // Bot owner status
+			} else if (random === 2 && owner.presence.activities != null) { // Bot owner status
 				console.log('Status type: \x1b[32mCopying owner status\x1b[0m');
 				// Get elapsed time from when the activity started		
 				let diffMins = 0;
@@ -66,22 +66,6 @@ class ReadyListener extends Listener {
 					diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000);					
 				}
 				client.user.setActivity(`${owner.presence.activities[0].name}\nfor ${diffMins} minutes | My prefix is: ${prefix[0]}`, owner.presence.activities[0]);
-			} else { // Random user statuss
-				console.log('Status type: \x1b[32mCopying random user status\x1b[0m');
-				let randomuser = client.users.random();
-				// If the random user have no activity or is a bot pick a new user
-				while (randomuser.presence.activities[0] == null || randomuser.presence.activities[0].type == 'CUSTOM_STATUS' ||  randomuser.bot) {
-					randomuser = client.users.random();
-				}			
-
-				// Get elapsed time from when the activity started		
-				let diffMins = 0;
-				if (randomuser.presence.activities[0].timestamps) {
-					let diffMs = (new Date() - randomuser.presence.activities[0].timestamps.start);
-					diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000);
-				}
-
-				client.user.setActivity(`${randomuser.username} is ${randomuser.presence.activities[0].type.toLowerCase()} ${randomuser.presence.activities[0].name}\nfor ${diffMins} minutes | My prefix is: ${prefix[0]}`, { type: randomuser.presence.activities[0].type, url: randomuser.presence.activities[0].url, name: randomuser.presence.activities[0].name });	
 			}
 		}
 
