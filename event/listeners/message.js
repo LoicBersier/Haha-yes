@@ -27,9 +27,11 @@ class messageListener extends Listener {
 
 		if (message.partial) {
 			await message.fetch()
-				.catch(() => {
-					return;
+				.catch(err => {
+					return console.error(err);
 				});
+		} else {
+			return;
 		}
 
 		if (message.author.bot) return;

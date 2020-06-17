@@ -13,9 +13,11 @@ class messageReactionRemoveListener extends Listener {
 	async exec(reaction) {
 		if (reaction.message.partial) {
 			await reaction.message.fetch()
-				.catch(() => {
-					return;
+				.catch(err => {
+					return console.error(err);
 				});
+		} else {
+			return;
 		}
 
 		let starboardChannel, shameboardChannel;
