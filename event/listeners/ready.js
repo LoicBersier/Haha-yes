@@ -61,10 +61,13 @@ class ReadyListener extends Listener {
 				console.log('Status type: \x1b[32mCopying owner status\x1b[0m');
 				// Get elapsed time from when the activity started		
 				let diffMins = 0;
-				if (owner.presence.activities[0].timestamps) {
-					let diffMs = (new Date() - owner.presence.activities[0].timestamps.start);
-					diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000);					
+				if (owner.presence.activities[0])  {
+					if (owner.presence.activities[0].timestamps) {
+						let diffMs = (new Date() - owner.presence.activities[0].timestamps.start);
+						diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000);
+					}
 				}
+
 				client.user.setActivity(`${owner.presence.activities[0].name}\nfor ${diffMins} minutes | My prefix is: ${prefix[0]}`, owner.presence.activities[0]);
 			}
 		}
