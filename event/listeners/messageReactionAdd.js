@@ -12,59 +12,59 @@ class MessageReactionAddListener extends Listener {
 	}
 
 	async exec(reaction) {
-		let starboardChannel, shameboardChannel;
-		let reactionCount = reaction.count;
-
 		if (reaction.message.partial) {
 			await reaction.message.fetch()
 				.catch(err => {
 					return console.error(err);
 				});
-		} else {
-			// If one of the reaction is the author of the message remove 1 to the reaction count
-			reaction.users.cache.forEach(user => {
-				if (reaction.message.author == user) reactionCount--;
-			});
+		}
 
-			//	Starboard
-			if (fs.existsSync(`./board/star${reaction.message.guild.id}.json`)) {
-				starboardChannel = require(`../../board/star${reaction.message.guild.id}.json`);
-				let staremote = starboardChannel.emote;
-				let starcount = starboardChannel.count;
-				delete require.cache[require.resolve(`../../board/star${reaction.message.guild.id}.json`)]; // Delete the boardChannel cache so it can reload it next time
+		let starboardChannel, shameboardChannel;
+		let reactionCount = reaction.count;
 
-				// Get name of the custom emoji
-				if (reaction.message.guild.emojis.resolve(staremote.replace(/\D/g,''))) {
-					staremote = reaction.message.guild.emojis.resolve(staremote.replace(/\D/g,''));
-				}
+		// If one of the reaction is the author of the message remove 1 to the reaction count
+		reaction.users.cache.forEach(user => {
+			if (reaction.message.author == user) reactionCount--;
+		});
 
-				if (reaction.emoji == staremote || reaction.emoji.name == staremote) {
-					if (messageID[reaction.message.id] && reactionCount > starcount) {
-						return editEmbed('starboard', staremote, messageID[reaction.message.id], this.client);
-					} else if (reactionCount == starcount) {
-						return sendEmbed('starboard', staremote, this.client);
-					}
-				}
+		//	Starboard
+		if (fs.existsSync(`./board/star${reaction.message.guild.id}.json`)) {
+			starboardChannel = require(`../../board/star${reaction.message.guild.id}.json`);
+			let staremote = starboardChannel.emote;
+			let starcount = starboardChannel.count;
+			delete require.cache[require.resolve(`../../board/star${reaction.message.guild.id}.json`)]; // Delete the boardChannel cache so it can reload it next time
+
+			// Get name of the custom emoji
+			if (reaction.message.guild.emojis.resolve(staremote.replace(/\D/g,''))) {
+				staremote = reaction.message.guild.emojis.resolve(staremote.replace(/\D/g,''));
 			}
 
-			//Shameboard
-			if (fs.existsSync(`./board/shame${reaction.message.guild.id}.json`)) {
-				shameboardChannel = require(`../../board/shame${reaction.message.guild.id}.json`);
-				let shameemote = shameboardChannel.emote;
-				let shamecount = shameboardChannel.count;
-				delete require.cache[require.resolve(`../../board/shame${reaction.message.guild.id}.json`)]; // Delete the boardChannel cache so it can reload it next time
-
-				// Get name of the custom emoji
-				if (reaction.message.guild.emojis.resolve(shameemote.replace(/\D/g,''))) {
-					shameemote = reaction.message.guild.emojis.resolve(shameemote.replace(/\D/g,''));
+			if (reaction.emoji == staremote || reaction.emoji.name == staremote) {
+				if (messageID[reaction.message.id] && reactionCount > starcount) {
+					return editEmbed('starboard', staremote, messageID[reaction.message.id], this.client);
+				} else if (reactionCount == starcount) {
+					return sendEmbed('starboard', staremote, this.client);
 				}
+			}
+		}
 
-				if (reaction.emoji == shameemote || reaction.emoji.name == shameemote) {
-					if (messageID[reaction.message.id] && reactionCount > shamecount) {
-						return editEmbed('shameboard', shameemote, messageID[reaction.message.id], this.client);
-					} else if (reactionCount == shamecount) {
-						return sendEmbed('shameboard', shameemote, this.client);
-					}
+		//Shameboard
+		if (fs.existsSync(`./board/shame${reaction.message.guild.id}.json`)) {
+			shameboardChannel = require(`../../board/shame${reaction.message.guild.id}.json`);
+			let shameemote = shameboardChannel.emote;
+			let shamecount = shameboardChannel.count;
+			delete require.cache[require.resolve(`../../board/shame${reaction.message.guild.id}.json`)]; // Delete the boardChannel cache so it can reload it next time
+
+			// Get name of the custom emoji
+			if (reaction.message.guild.emojis.resolve(shameemote.replace(/\D/g,''))) {
+				shameemote = reaction.message.guild.emojis.resolve(shameemote.replace(/\D/g,''));
+			}
+
+			if (reaction.emoji == shameemote || reaction.emoji.name == shameemote) {
+				if (messageID[reaction.message.id] && reactionCount > shamecount) {
+					return editEmbed('shameboard', shameemote, messageID[reaction.message.id], this.client);
+				} else if (reactionCount == shamecount) {
+					return sendEmbed('shameboard', shameemote, this.client);
 				}
 			}
 		}
