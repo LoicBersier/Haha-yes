@@ -66,9 +66,9 @@ class ReadyListener extends Listener {
 						let diffMs = (new Date() - owner.presence.activities[0].timestamps.start);
 						diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000);
 					}
-				}
 
-				client.user.setActivity(`${owner.presence.activities[0].name}\nfor ${diffMins} minutes | My prefix is: ${prefix[0]}`, owner.presence.activities[0]);
+					client.user.setActivity(`${owner.presence.activities[0].name}\nfor ${diffMins} minutes | My prefix is: ${prefix[0]}`, owner.presence.activities[0]);
+				}
 			}
 		}
 
