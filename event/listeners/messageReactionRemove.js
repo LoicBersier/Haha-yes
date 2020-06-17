@@ -11,67 +11,65 @@ class messageReactionRemoveListener extends Listener {
 	}
 
 	async exec(reaction) {
+		let starboardChannel, shameboardChannel;
+		let reactionCount = reaction.count;
+
 		if (reaction.message.partial) {
 			await reaction.message.fetch()
 				.catch(err => {
 					return console.error(err);
 				});
 		} else {
-			return;
-		}
+			// If one of the reaction removed is the author of the message add 1 to the reaction count
+			reaction.users.cache.forEach(user => {
+				if (reaction.message.author == user) reactionCount++;
+			});
 
-		let starboardChannel, shameboardChannel;
-		let reactionCount = reaction.count;
+			//	Starboard
+			if (fs.existsSync(`./board/star${reaction.message.guild.id}.json`)) {
+				starboardChannel = require(`../../board/star${reaction.message.guild.id}.json`);
+				let staremote = starboardChannel.emote;
+				let starcount = starboardChannel.count;
+				delete require.cache[require.resolve(`../../board/star${reaction.message.guild.id}.json`)]; // Delete the boardChannel cache so it can reload it next time
 
-		// If one of the reaction removed is the author of the message add 1 to the reaction count
-		reaction.users.cache.forEach(user => {
-			if (reaction.message.author == user) reactionCount++;
-		});
+				// Get name of the custom emoji
+				if (reaction.message.guild.emojis.resolve(staremote.replace(/\D/g,''))) {
+					staremote = reaction.message.guild.emojis.resolve(staremote.replace(/\D/g,''));
+				}
 
-		//	Starboard
-		if (fs.existsSync(`./board/star${reaction.message.guild.id}.json`)) {
-			starboardChannel = require(`../../board/star${reaction.message.guild.id}.json`);
-			let staremote = starboardChannel.emote;
-			let starcount = starboardChannel.count;
-			delete require.cache[require.resolve(`../../board/star${reaction.message.guild.id}.json`)]; // Delete the boardChannel cache so it can reload it next time
+				if (messageID[reaction.message.id] && (reaction.emoji == staremote || reaction.emoji.name == staremote) && reactionCount < starcount) {
+					let channel = this.client.channels.resolve(starboardChannel.starboard);
+					let message = await channel.messages.resolve(messageID[reaction.message.id]);
+					delete messageID[reaction.message.id];
+					// If it didn't find any message don't do anything
+					if (!message) return;
 
-			// Get name of the custom emoji
-			if (reaction.message.guild.emojis.resolve(staremote.replace(/\D/g,''))) {
-				staremote = reaction.message.guild.emojis.resolve(staremote.replace(/\D/g,''));
+					message.delete();
+				} else if ((reaction.emoji == staremote || reaction.emoji.name == staremote) && reactionCount >= starcount) {
+					return editEmbed('starboard', staremote, messageID[reaction.message.id], this.client);
+				}
 			}
 
-			if (messageID[reaction.message.id] && (reaction.emoji == staremote || reaction.emoji.name == staremote) && reactionCount < starcount) {
-				let channel = this.client.channels.resolve(starboardChannel.starboard);
-				let message = await channel.messages.resolve(messageID[reaction.message.id]);
-				delete messageID[reaction.message.id];
-				// If it didn't find any message don't do anything
-				if (!message) return;
+			//Shameboard
+			if (fs.existsSync(`./board/shame${reaction.message.guild.id}.json`)) {
+				shameboardChannel = require(`../../board/shame${reaction.message.guild.id}.json`);
+				let shameemote = shameboardChannel.emote;
+				let shamecount = shameboardChannel.count;
+				delete require.cache[require.resolve(`../../board/shame${reaction.message.guild.id}.json`)]; // Delete the boardChannel cache so it can reload it next time
 
-				message.delete();
-			} else if ((reaction.emoji == staremote || reaction.emoji.name == staremote) && reactionCount >= starcount) {
-				return editEmbed('starboard', staremote, messageID[reaction.message.id], this.client);
-			}
-		}
+				// Get name of the custom emoji
+				if (reaction.message.guild.emojis.resolve(shameemote.replace(/\D/g,''))) {
+					shameemote = reaction.message.guild.emojis.resolve(shameemote.replace(/\D/g,''));
+				}
 
-		//Shameboard
-		if (fs.existsSync(`./board/shame${reaction.message.guild.id}.json`)) {
-			shameboardChannel = require(`../../board/shame${reaction.message.guild.id}.json`);
-			let shameemote = shameboardChannel.emote;
-			let shamecount = shameboardChannel.count;
-			delete require.cache[require.resolve(`../../board/shame${reaction.message.guild.id}.json`)]; // Delete the boardChannel cache so it can reload it next time
-
-			// Get name of the custom emoji
-			if (reaction.message.guild.emojis.resolve(shameemote.replace(/\D/g,''))) {
-				shameemote = reaction.message.guild.emojis.resolve(shameemote.replace(/\D/g,''));
-			}
-
-			if (messageID[reaction.message.id] && (reaction.emoji == shameemote || reaction.emoji.name == shameemote) && reactionCount < shamecount) {
-				let channel = this.client.channels.resolve(shameboardChannel.shameboard);
-				let message = await channel.messages.resolve(messageID[reaction.message.id]);
-				delete messageID[reaction.message.id];
-				message.delete();
-			} else if ((reaction.emoji == shameemote || reaction.emoji.name == shameemote) && reactionCount >= shamecount) {
-				return editEmbed('shameboard', shameemote, messageID[reaction.message.id], this.client);
+				if (messageID[reaction.message.id] && (reaction.emoji == shameemote || reaction.emoji.name == shameemote) && reactionCount < shamecount) {
+					let channel = this.client.channels.resolve(shameboardChannel.shameboard);
+					let message = await channel.messages.resolve(messageID[reaction.message.id]);
+					delete messageID[reaction.message.id];
+					message.delete();
+				} else if ((reaction.emoji == shameemote || reaction.emoji.name == shameemote) && reactionCount >= shamecount) {
+					return editEmbed('shameboard', shameemote, messageID[reaction.message.id], this.client);
+				}
 			}
 		}
 
@@ -90,7 +88,7 @@ class messageReactionRemoveListener extends Listener {
 
 			// If the original embed description is empty make this embed empty ( and not undefined )
 			let description = message.embeds[0].description;
-			if (!message.embeds[0].description || message.embeds[0].description == undefined) 
+			if (!message.embeds[0].description || message.embeds[0].description == undefined)
 				description = '';
 
 			let Embed = client.util.embed()
