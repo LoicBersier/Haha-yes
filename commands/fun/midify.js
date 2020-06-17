@@ -1,10 +1,8 @@
 const { Command } = require('discord-akairo');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
-const youtubedl = require('youtube-dl');
+const downloader = require('../../utils/download');
 const os = require('os');
-const filetype = require('file-type');
-const fs = require('fs');
 const ffmpeg = require('fluent-ffmpeg');
 
 
@@ -61,39 +59,25 @@ class midifyCommand extends Command {
 		let loadingmsg = await message.channel.send('Processing (this can take some time) <a:loadingmin:527579785212329984>');
 
 		if (url) {
-			return youtubedl.exec(url, ['-o', input], {}, async function(err) {
-				
-				if (err) {
-					console.error(err);
+			downloader(url, null, input)
+				.catch((err) => {
 					loadingmsg.delete();
-					return message.channel.send('An error has occured, I can\'t download from the link you provided.');
-				} 
-				let ext = 'mp4';
-
-				if (fs.existsSync(input)) {
-					ext = await filetype.fromFile(input);
-					ext = ext.ext; // This look stupid but hey, it work
-					if (ext == '3gp') ext = 'mp4'; // Change 3gp file extension to mp4 so discord show the video ( and to stop people from complaining )
-					fs.renameSync(input, `${input}.${ext}`);
-				} else if (fs.existsSync(`${input}.mkv`)) { // If it can't find the video assume it got merged and end with mkv
-					fs.renameSync(`${input}.mkv`, `${input}.mp4`); // Discord play mkv just fine but it need to end with mp4
-				}
-
-				input = `${os.tmpdir()}/${message.id}.${ext}`;
-
-				// Convert to wav
-				ffmpeg()
-					.input(input)
-					.output(input2)
-					.on('end', () => {
-						midify();
-					})
-					.on('error', (err, stdout, stderr) => {
-						console.error(`${err}\n${stdout}\n${stderr}`);
-						return message.channel.send('Oh no! an error has occured during the conversion, are you sure it is a valid file?');
-					})
-					.run();
-			});
+					return message.channel.send(err, { code: true });
+				})
+				.then(output => {
+					// Convert to wav
+					ffmpeg()
+						.input(output)
+						.output(input2)
+						.on('end', () => {
+							midify();
+						})
+						.on('error', (err, stdout, stderr) => {
+							console.error(`${err}\n${stdout}\n${stderr}`);
+							return message.channel.send('Oh no! an error has occured during the conversion, are you sure it is a valid file?');
+						})
+						.run();
+				});
 		} else {
 			return message.channel.send('You need a valid video link!');
 		}

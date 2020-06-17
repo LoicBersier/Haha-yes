@@ -1,7 +1,7 @@
 const { Command } = require('discord-akairo');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
-const youtubedl = require('youtube-dl');
+const downloader = require('../../utils/download');
 const os = require('os');
 
 class vidshittifierCommand extends Command {
@@ -56,15 +56,14 @@ class vidshittifierCommand extends Command {
 		let loadingmsg = await message.channel.send('Processing <a:loadingmin:527579785212329984>');
 
 		if (url) {
-			return youtubedl.exec(url, ['--format=mp4', '-o', input], {}, function(err) {
-				if (err) {
-					console.error(err);
+			downloader(args.link, null, input)
+				.catch((err) => {
 					loadingmsg.delete();
-					return message.channel.send('An error has occured, I can\'t download from the link you provided. Try again!');
-				} else {
+					return message.channel.send(err, { code: true });
+				})
+				.then(() => {
 					shittifie();
-				}
-			});
+				});
 		} else {
 			return message.channel.send('You need a valid video link! Try again!');
 		}

@@ -2,7 +2,7 @@ const { Command } = require('discord-akairo');
 const YTPGenerator = require('ytpplus-node');
 const os = require('os');
 const fs = require('fs');
-const youtubedl = require('youtube-dl');
+const downloader = require('../../utils/download');
 const md5File = require('md5-file');
 const ytpHash = require('../../models').ytpHash;
 
@@ -136,29 +136,17 @@ class ytpCommand extends Command {
 			}
 
 			if (url) {
-				return youtubedl.exec(url, ['--rm-cache-dir', '--no-playlist', '--max-filesize', '50m', '--format=mp4', '-o', `./asset/ytp/userVid/${message.id}.mp4`], {}, async function(err, output) {
-					console.log(output);
-					if (err) {
-						console.error(err.toString());
+				return downloader(url, ['--format=mp4'], `./asset/ytp/userVid/${message.id}.mp4`)
+					.catch((err) => {
 						loadingmsg.delete();
-						if (err.toString().includes('HTTP Error 429') || err.toString().includes('HTTP Error 403')) {
-							return message.channel.send('An error has occured, I can\'t download from the link you provided because the website has blocked the bot. Please try again later or upload that video as mp4 on another website.');
-						} else {
-							return message.channel.send('An error has occured, I can\'t download from the link you provided. Is it an mp4?');
-						}
-					} else {
-						if (output[2]) {
-							if (output[2].includes('File is larger than max-filesize')) {
-								loadingmsg.delete();
-								return message.channel.send(output[2]);
-							}
-						}
-
-						const hash = md5File.sync(`./asset/ytp/userVid/${message.id}.mp4`);
+						return message.channel.send(err, { code: true });
+					})
+					.then(async output => {
+						const hash = md5File.sync(output);
 						const ytphash = await ytpHash.findOne({where: {hash: hash}});
 
 						if (ytphash) {
-							fs.unlinkSync(`./asset/ytp/userVid/${message.id}.mp4`);
+							fs.unlinkSync(output);
 							loadingmsg.delete();
 							return message.reply('This video is a duplicate... Not adding.');
 						} else {
@@ -175,9 +163,9 @@ class ytpCommand extends Command {
 						});
 
 						loadingmsg.delete();
-						return message.reply(`Video sucessfully added to the pool! There is now ${mp4.length} videos`);
-					}
-				});
+						return message.reply(`Video successfully added to the pool! There is now ${mp4.length} videos`);
+
+					});
 			} else {
 				loadingmsg.delete();
 				return message.channel.send('You need a valid video link!');
