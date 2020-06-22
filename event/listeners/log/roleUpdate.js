@@ -13,7 +13,7 @@ class roleUpdateListener extends Listener {
 	}
 
 	async exec(oldRole, newRole) {
-		if (oldRole === newRole) return;
+		if (oldRole === newRole || oldRole.rawPosition !== newRole.rawPosition) return;
 		const guild = oldRole.guild;
 		const logStats = await LogStats.findOne({where: {guild: guild.id}});
 		if (logStats) {
