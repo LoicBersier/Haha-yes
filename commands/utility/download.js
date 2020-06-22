@@ -7,8 +7,8 @@ const fs = require('fs');
 
 class DownloadCommand extends Command {
 	constructor() {
-		super('download2', {
-			aliases: ['download2', 'dl2'],
+		super('download', {
+			aliases: ['download', 'dl'],
 			category: 'utility',
 			clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS', 'ATTACH_FILES'],
 			args: [
