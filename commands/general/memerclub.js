@@ -39,7 +39,7 @@ class memerclubCommand extends Command {
                 return response.json();
             }).then((response) => {
                 console.log(response);
-                message.channel.send(`Go check your epic post!\nhttps://memerclub.gaminigti.me/post/${response.uuid}`)
+                message.channel.send(`Go check your epic post!\nhttps://memerclub.gamingti.me/post/${response.uuid}`)
             });
     }
 }
