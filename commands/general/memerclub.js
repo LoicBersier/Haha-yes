@@ -16,7 +16,7 @@ class memerclubCommand extends Command {
 				}
 			],
 			description: {
-				content: 'Post whatever you like on https://memerclub.gamingti.me! ( no rules, go wild )',
+				content: 'Post whatever you like on https://memerclub.gamingti.me ! ( no rules, go wild )',
 				usage: '',
 				examples: ['']
 			}
