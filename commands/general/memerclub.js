@@ -12,6 +12,7 @@ class memerclubCommand extends Command {
 				{
 					id: 'text',
 					type: 'string',
+					default: '',
 					match: 'rest'
 				}
 			],
