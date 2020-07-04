@@ -248,7 +248,7 @@ class messageListener extends Listener {
 			*/
 			const quotationstat = await quotationStat.findOne({where: {serverID: message.guild.id, stat: 'enable'}});
 
-			if (quotationstat && message.content.includes('discordapp.com/channels/')) {
+			if (quotationstat && (message.content.includes('discordapp.com/channels/') || message.content.includes('discord.com/channels/'))) {
 				let url = message.content.split('/');
 				let guildID = url[4];
 				let channelID = url[5];
