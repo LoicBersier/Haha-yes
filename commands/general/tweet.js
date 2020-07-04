@@ -53,7 +53,7 @@ class tweetCommand extends Command {
 		
 
 		if (args.text)
-			if (args.text.includes('discord.gg')) return message.channel.send('No discord invite allowed.');
+			if (args.text.includes('discord.gg') || args.text.includes('discord.com/invite/')) return message.channel.send('No discord invite allowed.');
 		
 		
 		const client = this.client;

@@ -7,6 +7,7 @@ class logCommand extends Command {
 			aliases: ['log', 'logging'],
 			category: 'admin',
 			userPermissions: ['MANAGE_MESSAGES'],
+			clientPermissions: ['MANAGE_GUILD'],
 			channel: 'guild',
 			description: {
 				content: 'Setup logging in current channel (W.I.P)',
