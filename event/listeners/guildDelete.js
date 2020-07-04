@@ -33,7 +33,7 @@ class guildCreateListener extends Listener {
 
 		if (blacklist) {
 			guild.leave();
-			kickEmbed.setFooter(kickEmbed.footer + ' | Left this guild because owner is blacklisted!');
+			kickEmbed.setFooter(kickEmbed.footer.text + ' | Left this guild because owner is blacklisted!');
 		}
 
 		channel.send({ embed: kickEmbed });
