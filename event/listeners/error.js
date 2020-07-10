@@ -12,7 +12,7 @@ class errorListener extends Listener {
 	}
 
 	async exec(error, message, command) {
-		console.error(`Error happenend on the command: ${command.id}\n${error}\nOn the message: ${message}`);
+		console.error(`Error happened on the command: ${command.id}\n${error}\nOn the message: ${message}`);
 		const channel = this.client.channels.resolve(errorChannel);
 		const errorEmbed = this.client.util.embed()
 			.setColor('RED')
@@ -22,6 +22,7 @@ class errorListener extends Listener {
 			.addField('Message', message, true);
 
 		if (message.author) errorEmbed.addField('Author', `${message.author.tag} (${message.author.id})`);
+		if (message.guild) errorEmbed.addField('Guild', `${message.guild.name} (${message.guild.id})`);
 
 		channel.send(errorEmbed);
 
