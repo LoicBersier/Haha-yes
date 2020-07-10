@@ -35,7 +35,12 @@ class vid2gifCommand extends Command {
 	}
 
 	async exec(message, args) {
+		let Attachment = (message.attachments).array();
 		let vid = args.vid;
+		// Get attachment link
+		if (Attachment[0] && !args.vid) {
+			vid = Attachment[0].url;
+		}
 
 		let loadingmsg = await message.channel.send('Processing <a:loadingmin:527579785212329984>');
 
