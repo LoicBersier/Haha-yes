@@ -25,6 +25,8 @@ exports.random = function (text, message) {
 				text = text.replace(/\[memberRand\]/, message.guild.members.cache.random().user.username);
 			}
 		}
+
+		text = text.replace(/\[dice\]/, Math.floor((Math.random() * 6) + 1));
 		text = text.replace(/\[number\]/, Math.floor((Math.random() * 9) + 1));
 		text = text.replace(/\[kick\]/, ' ');
 		text = text.replace(/\[ban\]/, ' ');
