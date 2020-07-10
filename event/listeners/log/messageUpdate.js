@@ -10,6 +10,13 @@ class messageUpdateListener extends Listener {
 	}
 
 	async exec(oldMessage, newMessage) {
+		if (oldMessage.partial) {
+			await oldMessage.fetch()
+				.catch(err => {
+					return console.error(err);
+				});
+		}
+
 		const logStats = await LogStats.findOne({where: {guild: newMessage.guild.id}});
 		if (logStats && oldMessage.content !== newMessage.content && !oldMessage.author.bot) {
 			const channel = this.client.channels.resolve(await logStats.get('channel'));

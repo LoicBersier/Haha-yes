@@ -10,6 +10,13 @@ class messageDeleteListener extends Listener {
 	}
 
 	async exec(message) {
+		if (message.partial) {
+			await message.fetch()
+				.catch(err => {
+					return console.error(err);
+				});
+		}
+
 		const logStats = await LogStats.findOne({where: {guild: message.guild.id}});
 		if (logStats && !message.author.bot) {
 			const fetchedLogs = await message.guild.fetchAuditLogs({
