@@ -60,11 +60,11 @@ class midifyCommand extends Command {
 
 		if (url) {
 			downloader(url, null, input)
-				.catch((err) => {
+				.on('error', (err) => {
 					loadingmsg.delete();
 					return message.channel.send(err, { code: true });
 				})
-				.then(output => {
+				.on('end', output => {
 					// Convert to wav
 					ffmpeg()
 						.input(output)

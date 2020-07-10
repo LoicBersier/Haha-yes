@@ -57,11 +57,11 @@ class vidshittifierCommand extends Command {
 
 		if (url) {
 			downloader(args.link, null, input)
-				.catch((err) => {
+				.on('error', (err) => {
 					loadingmsg.delete();
 					return message.channel.send(err, { code: true });
 				})
-				.then(() => {
+				.on('end', () => {
 					shittifie();
 				});
 		} else {

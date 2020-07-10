@@ -137,11 +137,11 @@ class ytpCommand extends Command {
 
 			if (url) {
 				return downloader(url, ['--format=mp4'], `./asset/ytp/userVid/${message.id}.mp4`)
-					.catch((err) => {
+					.on('error', (err) => {
 						loadingmsg.delete();
 						return message.channel.send(err, { code: true });
 					})
-					.then(async output => {
+					.on('end', async output => {
 						const hash = md5File.sync(output);
 						const ytphash = await ytpHash.findOne({where: {hash: hash}});
 
