@@ -94,6 +94,7 @@ class commandStartedListener extends Listener {
 						.setTitle('Daily usage report!')
 						.addField('Number of unique guild', uniqueGuild.length)
 						.addField('Number of command executed', executedCommands, true)
+						.addField('Last used command', command.id, true)
 						.addField('Most used command', `${getKeyByValue(commands, max)} (${max} times)`, true )
 						.addField('Least used command', `${getKeyByValue(commands, min)} (${min} times)`, true)
 						.setFooter(`Bot usage as of ${today}`);
