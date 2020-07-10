@@ -56,10 +56,10 @@ class DownloadCommand extends Command {
 
 
 		downloader(args.link, null, `${os.tmpdir()}/${filename}.mp4`)
-			.catch((err) => {
+			.on('error	', async err => {
 				return message.channel.send(err, { code: true });
 			})
-			.then(async (output) => {
+			.on('end', async output => {
 				loadingmsg.delete();
 				let file = fs.statSync(output);
 				let fileSize = file.size / 1000000.0;

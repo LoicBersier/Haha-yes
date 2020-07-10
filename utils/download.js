@@ -1,26 +1,28 @@
 const fs = require('fs');
+const events = require('events');
 const youtubedl = require('youtube-dl');
 
 module.exports = function (url, option, output) {
-	return new Promise(function(resolve, reject) {
-		if (!url) reject('Require a url!');
-		if (!output) reject('Require an output parameter! (If you see this message please send a feedback to the dev about it.)');
+	let eventEmitter = new events.EventEmitter();
 
-		if (option != null) option.push('--rm-cache-dir');
-		else option = ['--rm-cache-dir'];
+	if (!url) eventEmitter.emit('error', 'Require an url!');
+	if (!output) eventEmitter.emit('error', 'Require an output parameter! (If you see this message please send a feedback to the dev about it.)\'');
 
-		const video = youtubedl(url, option);
+	if (option != null) option.push('--rm-cache-dir');
+	else option = ['--rm-cache-dir'];
 
-		video.on('error', function error(err) {
-			console.log(err.toString());
-			reject(err.toString());
-		});
+	const video = youtubedl(url, option);
 
-		video.pipe(fs.createWriteStream(output));
-
-		video.on('end', function() {
-			resolve(output);
-		});
+	video.on('error', function error(err) {
+		console.log(err.toString());
+		eventEmitter.emit('error', err.toString());
 	});
+
+	video.pipe(fs.createWriteStream(output));
+
+	video.on('end', function() {
+		eventEmitter.emit('end', output);
+	});
+	return eventEmitter;
 };
 
