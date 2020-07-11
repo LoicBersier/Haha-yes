@@ -123,6 +123,31 @@ class ReadyListener extends Listener {
 
 		console.log('===========[ READY ]===========');
 
+		let logFunc = console.log;
+		console.log = function(){
+			if (process.argv.includes('--debug')) {
+				const date = new Date;
+				const hours = `${date.getHours()}`.padStart(2, '0');
+				const minutes = `${date.getMinutes()}`.padStart(2, '0');
+				const seconds = `${date.getSeconds()}`.padStart(2, '0');
+				logFunc.apply(console, [`[${hours}:${minutes}:${seconds}] [LOG] `].concat([].slice.call(arguments)));
+			}
+		};
+
+		if (process.argv.includes('--debug'))
+			console.log('Logging enabled');
+
+
+
+		let errorFunc = console.error;
+		console.error = function(){
+			const date = new Date;
+			const hours = `${date.getHours()}`.padStart(2, '0');
+			const minutes = `${date.getMinutes()}`.padStart(2, '0');
+			const seconds = `${date.getSeconds()}`.padStart(2, '0');
+			errorFunc.apply(console, [`[${hours}:${minutes}:${seconds}] [ERROR] `].concat([].slice.call(arguments)));
+		};
+
 	}
 }
 
