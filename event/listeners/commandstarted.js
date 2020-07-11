@@ -13,8 +13,6 @@ class commandStartedListener extends Listener {
 	}
 
 	async exec(message, command) {
-		console.time(command.id);
-
 		//This is for april fools
 		let today = new Date(), lastUpdate;
 
