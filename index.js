@@ -4,8 +4,6 @@ if (!fs.existsSync('./config.json')) {
 }
 const { AkairoClient, CommandHandler, InhibitorHandler, ListenerHandler } = require('discord-akairo');
 const { token, prefix, ownerID } = require('./config.json');
-require('console-stamp')(console, '[HH:MM:ss]');
-
 
 class hahaYesClient extends AkairoClient {
 	constructor() {
