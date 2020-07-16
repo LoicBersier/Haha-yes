@@ -1,4 +1,7 @@
 const { Command } = require('discord-akairo');
+const attachment = require('../../utils/attachment');
+const os = require('os');
+const fs = require('fs');
 const asciify = require('asciify-image');
 
 let options = {
@@ -14,6 +17,12 @@ class asciifyCommand extends Command {
 			aliases: ['asciify'],
 			category: 'fun',
 			clientPermissions: ['SEND_MESSAGES'],
+			args: [
+				{
+					id: 'link',
+					type: 'url',
+				}
+			],
 			cooldown: 600000,
 			ratelimit: 2,
 			description: {
@@ -24,14 +33,25 @@ class asciifyCommand extends Command {
 		});
 	}
 
-	async exec(message) {
-		let Attachment = (message.attachments).array();
+	async exec(message, args) {
+		let url;
 
+		if (args.link)
+			url = args.link.href;
+		else
+			url = await attachment(message);
 
-		return asciify(Attachment[0].url, options, function (err, asciified) {
+		return asciify(url, options, function (err, asciified) {
 			if (err) throw err;   
 			// Print to console
-			return message.channel.send(asciified,  { split: true, code: true });
+			fs.writeFile(`${os.tmpdir()}/${message.id}ascii.txt`, asciified, function (err) {
+				if (err) {
+					console.log(err);
+				}
+
+				return message.channel.send({files: [`${os.tmpdir()}/${message.id}ascii.txt`]});
+			});
+			//return message.channel.send(asciified,  { split: true, code: true });
 		});
 	}
 }

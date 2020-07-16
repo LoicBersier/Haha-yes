@@ -1,4 +1,5 @@
 const { Command } = require('discord-akairo');
+const attachment = require('../../utils/attachment');
 const ffmpeg = require('fluent-ffmpeg');
 const fetch = require('node-fetch');
 const fs = require('fs');
@@ -19,7 +20,7 @@ class audio2imageCommand extends Command {
 				},
 				{
 					id: 'link',
-					type: 'string',
+					type: 'url',
 				}
 			],
 			description: {
@@ -31,12 +32,12 @@ class audio2imageCommand extends Command {
 	}
 
 	async exec(message, args) {
-		let Attachment = (message.attachments).array();
-		let url = args.link;
-		// Get attachment link
-		if (Attachment[0] && !args.link) {
-			url = Attachment[0].url;
-		}
+		let url;
+
+		if (args.link)
+			url = args.link.href;
+		else
+			url = await attachment(message);
 
 		let loadingmsg = await message.channel.send('Processing <a:loadingmin:527579785212329984>');
 

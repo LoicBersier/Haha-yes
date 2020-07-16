@@ -1,4 +1,5 @@
 const { Command } = require('discord-akairo');
+const attachment = require('../../utils/attachment');
 const jimp = require('jimp');
 const os = require('os');
 
@@ -11,7 +12,8 @@ class rotateCommand extends Command {
 			args: [
 				{
 					id: 'link',
-					type: 'string',
+					type: 'url',
+					unordered: true
 				},
 				{
 					id: 'rotate',
@@ -19,7 +21,8 @@ class rotateCommand extends Command {
 					prompt: {
 						start: 'Please enter the number of degrees you want to rotate.',
 						retry: 'This doesn\'t look like a number to me, please try again.'
-					}
+					},
+					unordered: true
 				}
 			],
 			description: {
@@ -34,12 +37,12 @@ class rotateCommand extends Command {
 		let output = `${os.tmpdir()}/rotated${message.id}.jpg`;
 
 
-		let Attachment = (message.attachments).array();
-		let url = args.link;
-		// Get attachment link
-		if (Attachment[0] && !args.link) {
-			url = Attachment[0].url;
-		}
+		let url;
+		if (args.link)
+			url = args.link.href;
+		else
+			url = await attachment(message);
+
 
 		if (!url) {
 			return message.channel.send('You need an image to use this command!');

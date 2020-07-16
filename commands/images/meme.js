@@ -1,4 +1,5 @@
 const { Command } = require('discord-akairo');
+const attachment = require('../../utils/attachment');
 const gm = require('gm').subClass({imageMagick: true});
 const os = require('os');
 const fetch = require('node-fetch');
@@ -13,10 +14,7 @@ class memeCommand extends Command {
 			args: [
 				{
 					id: 'link',
-					prompt: {
-						start: 'Please input a link to use, say `cancel` to stop the command'
-					},
-					type: 'string',
+					type: 'url',
 				},
 				{
 					id: 'message',
@@ -43,13 +41,17 @@ class memeCommand extends Command {
 	async exec(message, args) {
 		let options = args.message.trim().split('|');
 
+		let url;
+
+		if (args.link)
+			url = args.link.href;
+		else
+			url = await attachment(message);
+
 		if (options[0] == undefined)
 			options[0] = '';
 		else if (options[1] == undefined)
 			options[1] = '';
-
-		let url = args.link;
-
 
 		if (!url) {
 			return message.channel.send('You need an image to use this command!');

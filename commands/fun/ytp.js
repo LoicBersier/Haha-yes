@@ -2,6 +2,7 @@ const { Command } = require('discord-akairo');
 const YTPGenerator = require('ytpplus-node');
 const os = require('os');
 const fs = require('fs');
+const attachment = require('../../utils/attachment');
 const downloader = require('../../utils/download');
 const md5File = require('md5-file');
 const ytpHash = require('../../models').ytpHash;
@@ -99,11 +100,18 @@ class ytpCommand extends Command {
 				},
 				{
 					id: 'link',
-					type: 'string'
+					type: 'url',
+					prompt: {
+						start: 'Please send the URL of which video you want to download. Say `cancel` to stop the command',
+						retry: 'Please send a valid URL of the video you want to download. Say `cancel` to stop the command',
+						optional: true,
+					},
+					unordered: true
 				},
 				{
 					id: 'max',
-					type: 'string'
+					type: 'string',
+					unordered: true
 				}
 			],
 			description: {
@@ -128,12 +136,12 @@ class ytpCommand extends Command {
 
 		if (args.add) {
 			let loadingmsg = await message.channel.send('Downloading <a:loadingmin:527579785212329984>');
-			let Attachment = (message.attachments).array();
-			let url = args.link;
-			// Get attachment link
-			if (Attachment[0] && !args.link) {
-				url = Attachment[0].url;
-			}
+			let url;
+
+			if (args.link)
+				url = args.link.href;
+			else
+				url = await attachment(message);
 
 			if (url) {
 				return downloader(url, ['--format=mp4'], `./asset/ytp/userVid/${message.id}.mp4`)

@@ -1,4 +1,5 @@
 const { Command } = require('discord-akairo');
+const attachment = require('../../utils/attachment');
 const jimp = require('jimp');
 const os = require('os');
 
@@ -11,11 +12,13 @@ class gaussianCommand extends Command {
 			args: [
 				{
 					id: 'link',
-					type: 'string',
+					type: 'url',
+					unordered: true
 				},
 				{
 					id: 'radius',
 					type: 'integer',
+					unordered: true
 				}
 			],
 			description: {
@@ -31,13 +34,12 @@ class gaussianCommand extends Command {
 
 		if (!args.radius) args.radius = 10;
 
+		let url;
 
-		let Attachment = (message.attachments).array();
-		let url = args.link;
-		// Get attachment link
-		if (Attachment[0] && !args.link) {
-			url = Attachment[0].url;
-		}
+		if (args.link)
+			url = args.link.href;
+		else
+			url = await attachment(message);
 
 		if (!url) {
 			return message.channel.send('You need an image to use this command!');

@@ -1,4 +1,5 @@
 const { Command } = require('discord-akairo');
+const attachment = require('../../utils/attachment');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 const downloader = require('../../utils/download');
@@ -15,7 +16,7 @@ class midifyCommand extends Command {
 			args: [
 				{
 					id: 'link',
-					type: 'string',
+					type: 'url',
 					match: 'rest'
 				},
 				{
@@ -43,12 +44,12 @@ class midifyCommand extends Command {
 	}
 
 	async exec(message, args) {
-		let Attachment = (message.attachments).array();
-		let url = args.link;
-		// Get attachment link
-		if (Attachment[0] && !args.link) {
-			url = Attachment[0].url;
-		}
+		let url;
+
+		if (args.link)
+			url = args.link.href;
+		else
+			url = await attachment(message);
 
 		let input = `${os.tmpdir()}/${message.id}`;
 		let input2 = `${os.tmpdir()}/${message.id}.wav`;

@@ -1,4 +1,5 @@
 const { Command } = require('discord-akairo');
+const attachment = require('../../utils/attachment');
 const jimp = require('jimp');
 const os = require('os');
 
@@ -11,7 +12,7 @@ class autocropCommand extends Command {
 			args: [
 				{
 					id: 'link',
-					type: 'string',
+					type: 'url',
 				}
 			],
 			description: {
@@ -24,18 +25,12 @@ class autocropCommand extends Command {
 
 	async exec(message, args) {
 		let output = `${os.tmpdir()}/cropped${message.id}.jpg`;
+		let url;
 
-
-		let Attachment = (message.attachments).array();
-		let url = args.link;
-		// Get attachment link
-		if (Attachment[0] && !args.link) {
-			url = Attachment[0].url;
-		}
-
-		if (!url) {
-			return message.channel.send('You need an image to use this command!');
-		}
+		if (args.link)
+			url = args.link.href;
+		else
+			url = await attachment(message);
 
 		let loadingmsg = await message.channel.send('Processing <a:loadingmin:527579785212329984>');
 

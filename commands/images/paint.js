@@ -1,4 +1,5 @@
 const { Command } = require('discord-akairo');
+const attachment = require('../../utils/attachment');
 const { createCanvas, loadImage } = require('canvas');
 const superagent = require('superagent');
 
@@ -19,14 +20,14 @@ class paintCommand extends Command {
 	}
 
 	async exec(message, args) {
-		let Attachment = (message.attachments).array();
 		let image = args.image;
-		if (!Attachment[0] && !image)
-			image = message.author.displayAvatarURL().replace('webp', 'png');
-		else if(Attachment[0] && Attachment[0].url.endsWith('gif'))
-			return message.channel.send('Gif dosent work, sorry');
+		if (!image)
+			image = await attachment(message);
 		else if (!image)
-			image = Attachment[0].url;
+			image = message.author.displayAvatarURL().replace('webp', 'png');
+		else if(image.endsWith('gif'))
+			return message.channel.send('Gif dosent work, sorry');
+
 		
 		message.channel.send('Processing <a:loadingmin:527579785212329984>')
 			.then(loadingmsg => loadingmsg.delete(1000));
