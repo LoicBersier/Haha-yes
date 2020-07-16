@@ -1,9 +1,8 @@
 const { Command } = require('discord-akairo');
-const fs = require('fs');
 const os = require('os');
-const util = require('util');
-const exec = util.promisify(require('child_process').exec);
-const superagent = require('superagent');
+const ffmpeg = require('fluent-ffmpeg');
+const attachment = require('../../utils/attachment');
+const downloader = require('../../utils/download');
 
 class gif2vidCommand extends Command {
 	constructor() {
@@ -26,49 +25,45 @@ class gif2vidCommand extends Command {
 	}
 
 	async exec(message, args) {
+		let vid;
 
+		if (args.vid)
+			vid = args.vid.href;
+		else
+			vid = await attachment(message);
 
-		let Attachment = (message.attachments).array();
-		let vid = args.vid;
-		// Get attachment link
-		if (Attachment[0] && !args.vid) {
-			vid = Attachment[0].url;
-		}
+		if (!vid.endsWith('gif')) return message.channel.send('Please use a gif.');
 
 		let loadingmsg = await message.channel.send('Processing <a:loadingmin:527579785212329984>');
 
-		if (!vid) {
-			loadingmsg.delete();
-			return message.channel.send('I need a gif to do that!');
-		} else if (vid) {
-
-			const { body: buffer } = await superagent.get(vid).catch(() => {
+		downloader(vid, null, `${os.tmpdir()}/${message.id}g2v`)
+			.on('error', async err => {
 				loadingmsg.delete();
-				return message.channel.send('An error as occured, please try again');
+				return message.channel.send(err, { code: true });
+			})
+			.on('end', async output => {
+				let ffmpegCommand = ffmpeg(output);
+
+				ffmpegCommand.videoFilters('scale=trunc(iw/2)*2:trunc(ih/2)*2');
+				ffmpegCommand.fps(args.fps ? args.fps : 15);
+				ffmpegCommand.output(`${os.tmpdir()}/${message.id}g2v.mp4`);
+				ffmpegCommand.outputOptions('-pix_fmt yuv420p');
+				ffmpegCommand.run();
+				ffmpegCommand.on('error', (err, stdout, stderr) => {
+					loadingmsg.delete();
+					console.error(`${err}\n${stdout}\n${stderr}`);
+					return message.channel.send('Uh oh, an error has occurred!' + err);
+				});
+				ffmpegCommand.on('end', () => {
+					loadingmsg.delete();
+					message.delete();
+					return message.channel.send({files: [`${os.tmpdir()}/${message.id}g2v.mp4`]})
+						.catch(err => {
+							console.error(err);
+							return message.channel.send(`${err.name}: ${err.message} ${err.message === 'Request entity too large' ? 'The file size is too big' : ''}`);
+						});
+				});
 			});
-
-
-			fs.writeFile(`${os.tmpdir()}/${message.id}g2v.gif`, buffer, () => {
-				exec(`ffmpeg -i ${os.tmpdir()}/${message.id}g2v.gif -movflags faststart -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" ${os.tmpdir()}/${message.id}g2v.mp4 -hide_banner`)
-					.then(() => {
-						loadingmsg.delete();
-						message.delete();
-						return message.channel.send({files: [`${os.tmpdir()}/${message.id}g2v.mp4`]})
-							.catch(err => {
-								console.error(err);
-								loadingmsg.delete();
-								return message.channel.send('Could not send the file! Perhaps the file is too big?');
-							});
-					})
-					.catch(err => {
-						console.error(err);
-						loadingmsg.delete();
-						return message.channel.send('There was an error during conversion!');
-					});
-			});
-
-		}
-
 	}
 }
 
