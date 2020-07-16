@@ -15,6 +15,7 @@ class shameboardCommand extends Command {
 					prompt: {
 						start: 'What emote should be used to enter the shameboard?',
 					},
+					unordered: true
 				},
 				{
 					id: 'count',
@@ -23,7 +24,8 @@ class shameboardCommand extends Command {
 						optional: true
 					},
 					type: 'integer',
-					default: '4'
+					default: '4',
+					unordered: true
 				},
 				{
 					id: 'remove',
