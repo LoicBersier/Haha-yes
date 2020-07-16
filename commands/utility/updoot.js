@@ -20,9 +20,9 @@ class UpdootCommand extends Command {
 			.setColor(message.member ? message.member.displayHexColor : 'NAVY')
 			.setTitle('Vote for my bot')
 			.setAuthor(message.author.username)
-			.setDescription('You can vote for my bot if you think the bot is awesome!')
-			.addField('Discordbot.org', 'https://discordbots.org/bot/377563711927484418/vote')
-			.addField('Discordbotlist.com', 'https://discordbotlist.com/bots/377563711927484418/upvote')
+			.setDescription('You can vote for my bot if you think it is awesome!')
+			.addField('top.gg (Previously Discordbot.org)', 'https://top.gg/bot/377563711927484418/vote')
+			.addField('Discordbotlist.com', 'https://discordbotlist.com/bots/haha-yes/upvote')
 			.setTimestamp()
 			.setFooter('Thanks for the updoots', this.client.user.avatarURL);
 		
