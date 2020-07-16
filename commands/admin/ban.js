@@ -55,13 +55,13 @@ class BanCommand extends Command {
 
 			return user.ban({reason: `Banned by : ${message.author.username} for the following reasons : ${reasons}`})
 				.then(() => message.reply(`${user.user.username} was succesfully banned with the following reasons "${reasons}".`))
-				//.catch(() => message.reply('Uh oh, an error has occured! can the bot ban this user?'));
+				//.catch(() => message.reply('Uh oh, an error has occurred! can the bot ban this user?'));
 				.catch(err => console.error(err));
 
 		} else {
 			message.guild.members.ban(user, {reason: `Banned by : ${message.author.username} for the following reasons : ${reasons}`})
 				.then(() => message.reply(`user ID ${args.user} was succesfully hackbanned with the following reasons "${reasons}".`))
-				//.catch(() => message.reply('Uh oh, an error has occured! can the bot ban this user?'));
+				//.catch(() => message.reply('Uh oh, an error has occurred! can the bot ban this user?'));
 				.catch(err => console.error(err));
 		}
 	}

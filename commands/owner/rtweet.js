@@ -39,7 +39,7 @@ class rtweetCommand extends Command {
 			return message.channel.send('Tweet have been deleted!');
 		} catch(err) {
 			console.error(err);
-			return message.channel.send('Oh no, an error has occured :(');
+			return message.channel.send('Oh no, an error has occurred :(');
 		}
 
 	}

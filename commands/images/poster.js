@@ -93,7 +93,7 @@ class posterCommand extends Command {
 					img.format(function(err, format) {
 						if (err) {
 							console.error(err);
-							return message.channel.send('An error has occured, is it an image?');
+							return message.channel.send('An error has occurred, is it an image?');
 						}
 						let output1 = `${os.tmpdir()}/poster${message.author.id}.${format.toLowerCase()}`;
 						let output2 = `${os.tmpdir()}/poster${message.id}.${format.toLowerCase()}`;
@@ -127,7 +127,7 @@ class posterCommand extends Command {
 								.write(output1, function(err) {									
 									if (err) {
 										console.error(err);
-										return message.channel.send('An error just occured! is it a static image?');
+										return message.channel.send('An error just occurred! is it a static image?');
 									}
 									// Chop the top part of the image
 									let img2 = gm(output1);
@@ -136,7 +136,7 @@ class posterCommand extends Command {
 											loadingmsg.delete();
 											if (err) {
 												console.error(err);
-												return message.channel.send('An error just occured! is it a static image?');
+												return message.channel.send('An error just occurred! is it a static image?');
 											}
 											message.delete();
 											return message.channel.send(`Made by ${message.author.username}`,{files: [output2]})

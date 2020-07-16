@@ -56,7 +56,7 @@ class audio2imageCommand extends Command {
 						.output(`${os.tmpdir()}/${message.id}1.sw`)
 						.on('error', (err, stdout, stderr) => {
 							console.error(`${err}\n${stdout}\n${stderr}`);
-							return message.channel.send('Uh oh, an error has occured!');
+							return message.channel.send('Uh oh, an error has occurred!');
 						})						
 						.on('end', () => {
 							ffmpeg()
@@ -68,7 +68,7 @@ class audio2imageCommand extends Command {
 								.output(`${os.tmpdir()}/a2i${message.id}.png`)
 								.on('error', (err, stdout, stderr) => {
 									console.error(`${err}\n${stdout}\n${stderr}`);
-									return message.channel.send('Uh oh, an error has occured! The image size is most likely bigger than the content! Try again!');
+									return message.channel.send('Uh oh, an error has occurred! The image size is most likely bigger than the content! Try again!');
 								})	
 								.on('end', () => {
 									console.log('finished');

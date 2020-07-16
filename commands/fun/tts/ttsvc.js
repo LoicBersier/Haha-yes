@@ -55,7 +55,7 @@ class TtsvcCommand extends Command {
 			fs.writeFile(output, response.audioContent, 'binary', async err => {
 				if (err) {
 					console.error('ERROR:', err);
-					message.channel.send('An error has occured, the message is probably too long');
+					message.channel.send('An error has occurred, the message is probably too long');
 					
 					return;
 				}

@@ -52,7 +52,7 @@ class image2audioCommand extends Command {
 						.output(`${os.tmpdir()}/${message.id}1.png`)
 						.on('error', (err, stdout, stderr) => {
 							console.error(`${err}\n${stdout}\n${stderr}`);
-							return message.channel.send('Uh oh, an error has occured!');
+							return message.channel.send('Uh oh, an error has occurred!');
 						})							
 						.on('end', () => {
 							ffmpeg()
@@ -63,7 +63,7 @@ class image2audioCommand extends Command {
 								.output(`${os.tmpdir()}/i2a_${message.id}.${args.wav ? 'wav' : 'mp3'}`)
 								.on('error', (err, stdout, stderr) => {
 									console.error(`${err}\n${stdout}\n${stderr}`);
-									return message.channel.send('Uh oh, an error has occured!');
+									return message.channel.send('Uh oh, an error has occurred!');
 								})									
 								.on('end', () => {
 									console.log('finished');

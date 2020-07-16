@@ -111,7 +111,7 @@ class tweetCommand extends Command {
 									if (err) {
 										console.log('OH NO AN ERROR!!!!!!!');
 										console.error(err);
-										return message.channel.send('OH NO!!! AN ERROR HAS OCCURED!!! please hold on while i find what\'s causing this issue! ');
+										return message.channel.send('OH NO!!! AN ERROR HAS occurred!!! please hold on while i find what\'s causing this issue! ');
 									} else {
 										Tweet(data);
 									}
@@ -126,7 +126,7 @@ class tweetCommand extends Command {
 			}
 		} catch(err) {
 			console.error(err);
-			return message.channel.send('Oh no, an error has occured :(');
+			return message.channel.send('Oh no, an error has occurred :(');
 		}
 
 		function Tweet(data) {
@@ -153,7 +153,7 @@ class tweetCommand extends Command {
 					if (err.code == 326) return message.channel.send(err.message); // To protect our users from spam and other malicious activity, this account is temporarily locked.
 					console.error('OH NO!!!!');
 					console.error(err);
-					return message.channel.send('OH NO!!! AN ERROR HAS OCCURED!!! please hold on while i find what\'s causing this issue! ');
+					return message.channel.send('OH NO!!! AN ERROR HAS occurred!!! please hold on while i find what\'s causing this issue! ');
 				} 
 	
 				const tweetid = response.id_str;

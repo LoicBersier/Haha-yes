@@ -52,7 +52,7 @@ class jpegifyCommand extends Command {
 			})
 			.catch(error => {
 				console.error(error);
-				return message.channel.send('Oh no, an error just occured! Maybe the format of your image don\'t work?');
+				return message.channel.send('Oh no, an error just occurred! Maybe the format of your image don\'t work?');
 			});
 
 

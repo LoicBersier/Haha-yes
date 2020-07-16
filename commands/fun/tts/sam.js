@@ -79,7 +79,7 @@ class samCommand extends Command {
 		})
 			.catch((err) => {
 				console.error(err);
-				return message.channel.send(`Uh oh, an error has occured! please try again later.\n${err}`);
+				return message.channel.send(`Uh oh, an error has occurred! please try again later.\n${err}`);
 			})
 			.then((result) => {
 				const outputFilename = `${os.tmpdir}/${message.id}_sam.wav`;

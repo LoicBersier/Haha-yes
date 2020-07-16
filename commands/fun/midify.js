@@ -75,7 +75,7 @@ class midifyCommand extends Command {
 						})
 						.on('error', (err, stdout, stderr) => {
 							console.error(`${err}\n${stdout}\n${stderr}`);
-							return message.channel.send('Oh no! an error has occured during the conversion, are you sure it is a valid file?');
+							return message.channel.send('Oh no! an error has occurred during the conversion, are you sure it is a valid file?');
 						})
 						.run();
 				});
@@ -94,7 +94,7 @@ class midifyCommand extends Command {
 							.catch(err => {
 								console.error(err);
 								loadingmsg.delete();
-								return message.channel.send('On no! an error just occured! perhaps the file is too big?');
+								return message.channel.send('On no! an error just occurred! perhaps the file is too big?');
 							});
 					}
 
@@ -114,17 +114,17 @@ class midifyCommand extends Command {
 								.catch(err => {
 									console.error(err);
 									loadingmsg.delete();
-									return message.channel.send('On no! an error just occured! perhaps the file is too big?');
+									return message.channel.send('On no! an error just occurred! perhaps the file is too big?');
 								});
 						})
 						.catch(err => {
 							console.error(err);
-							return message.channel.send('Oh no! an error has occured during the conversion, are you sure it is a valid file?');
+							return message.channel.send('Oh no! an error has occurred during the conversion, are you sure it is a valid file?');
 						});
 				})
 				.catch(err => {
 					console.error(err);
-					return message.channel.send('Oh no! an error has occured during the conversion, are you sure it is a valid file?');
+					return message.channel.send('Oh no! an error has occurred during the conversion, are you sure it is a valid file?');
 				});
 		}
 	}

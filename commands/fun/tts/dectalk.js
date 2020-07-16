@@ -38,7 +38,7 @@ class dectalkCommand extends Command {
 			exec(`cd .\\dectalk && .\\say.exe -w ${output} "${decMessage}"`)
 				.catch(err => {
 					console.error(err);
-					return message.channel.send('Oh no! an error has occured!');
+					return message.channel.send('Oh no! an error has occurred!');
 				})
 				.then(() => {
 					return message.channel.send({files: [output]});
@@ -50,7 +50,7 @@ class dectalkCommand extends Command {
 				.catch(err => {
 					loadingmsg.delete();
 					console.error(err);
-					return message.channel.send('Oh no! an error has occured!');
+					return message.channel.send('Oh no! an error has occurred!');
 				})
 				.then(() => {
 					loadingmsg.delete();

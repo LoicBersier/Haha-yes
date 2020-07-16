@@ -22,7 +22,7 @@ class ImgurCommand extends Command {
 			return response.json();
 		}).then((response) => {
 			if (response.success == 'false')
-				return message.channel.send('An error has occured');
+				return message.channel.send('An error has occurred');
 
 			const i = Math.floor((Math.random() * response.data.length));
 

@@ -90,7 +90,7 @@ class FourchanCommand extends Command {
 			.catch((err) => {
 				if (err.type == 'invalid-json') return message.channel.send('Could not find the board! Try again!');
 				console.error(err);
-				return message.channel.send('Uh-oh, an error has occured! Try again! If this keeps happening, tell the developers!');
+				return message.channel.send('Uh-oh, an error has occurred! Try again! If this keeps happening, tell the developers!');
 			});
 	}
 }

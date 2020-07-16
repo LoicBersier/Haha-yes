@@ -64,7 +64,7 @@ class rotateCommand extends Command {
 			})
 			.catch(error => {
 				console.error(error);
-				return message.channel.send('Oh no, an error just occured! Maybe the format of your image don\'t work?');
+				return message.channel.send('Oh no, an error just vidshittyfiered! Maybe the format of your image don\'t work?');
 			});
 
 

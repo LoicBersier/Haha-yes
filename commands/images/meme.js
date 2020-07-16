@@ -80,7 +80,7 @@ class memeCommand extends Command {
 					img.format(function(err, format) {
 						if (err) {
 							console.error(err);
-							return message.channel.send('An error has occured, is it an image?');
+							return message.channel.send('An error has occurred, is it an image?');
 						}
 						let output = `${os.tmpdir()}/meme${message.id}.${format.toLowerCase()}`;
 
@@ -101,7 +101,7 @@ class memeCommand extends Command {
 								.drawText(0, BOTTOM_POS, BOTTOM_TEXT, TEXT_POS)
 								.write(output, function(err) {
 									loadingmsg.delete();
-									if (err) return message.channel.send('An error just occured! is it a static image?');
+									if (err) return message.channel.send('An error just occurred! is it a static image?');
 									message.delete();
 									return message.channel.send(`Made by ${message.author.username}`,{files: [output]})
 										.catch(() => {
