@@ -30,22 +30,26 @@ class CleverBotCommand extends Command {
 		let loadingmsg = await message.channel.send('Processing! <a:loadingmin:527579785212329984>');
 		if (!conversation[message.guild.id]) conversation[message.guild.id] = [];
 
-
 		if (!conversation[0]) {
 			cleverbot(args.message).then(response => {
 				conversation[message.guild.id].push(args.message);
 				conversation[message.guild.id].push(response);
-				return message.channel.send(response);
+				return message.channel.send(response)
+					.then(() => {
+						loadingmsg.delete();
+					});
 			});
 		} else {
 			cleverbot(args.message, conversation[message.guild.id]).then(response => {
 				conversation[message.guild.id].push(args.message);
 				conversation[message.guild.id].push(response);
-				return message.channel.send(response);
+				return message.channel.send(response)
+					.then(() => {
+						loadingmsg.delete();
+					});
 			});
 		}
 		console.log(conversation);
-		loadingmsg.delete();
 	}
 }
 module.exports = CleverBotCommand;
