@@ -4,7 +4,6 @@ const compress = require('../../utils/compress');
 const os = require('os');
 const fs = require('fs');
 
-
 class DownloadCommand extends Command {
 	constructor() {
 		super('download', {
@@ -14,10 +13,11 @@ class DownloadCommand extends Command {
 			args: [
 				{
 					id: 'link',
-					type: 'string',
+					type: 'url',
 					prompt: {
-						start: 'Send the link of which video you want to download',
-					}
+						start: 'Please send the URL of which video you want to download. Say `cancel` to stop the command',
+						retry: 'Please send a valid URL of the video you want to download. Say `cancel` to stop the command'
+					},
 				},
 				{
 					id: 'caption',
@@ -55,16 +55,16 @@ class DownloadCommand extends Command {
 
 
 
-		downloader(args.link, null, `${os.tmpdir()}/${filename}.mp4`)
-			.on('error	', async err => {
+		downloader(args.link.href, null, `${os.tmpdir()}/${filename}.mp4`)
+			.on('error', async err => {
 				return message.channel.send(err, { code: true });
 			})
 			.on('end', async output => {
-				loadingmsg.delete();
 				let file = fs.statSync(output);
 				let fileSize = file.size / 1000000.0;
 
 				if (fileSize > 8) {
+					loadingmsg.delete();
 					let compressEmbed = this.client.util.embed()
 						.setColor(message.member ? message.member.displayHexColor : 'NAVY')
 						.setTitle('This one will need compression!')
@@ -97,7 +97,6 @@ class DownloadCommand extends Command {
 
 					handbrake.on('end', (output) => {
 						clearInterval(editmsg);
-						compressmsg.delete();
 						file = fs.statSync(output);
 						fileSize = file.size / 1000000.0;
 
@@ -105,10 +104,12 @@ class DownloadCommand extends Command {
 
 						return message.channel.send({embed: Embed, files: [output]})
 							.catch(err => {
+								compressmsg.delete();
 								console.error(err);
-								return message.channel.send('File too big');
+								return message.channel.send(`${err.name}: ${err.message} ${err.message === 'Request entity too large' ? 'The file size is too big' : ''}`);
 							})
 							.then(() => {
+								compressmsg.delete();
 								// Delete file after it has been sent
 								fs.unlinkSync(output);
 								message.delete();
@@ -117,10 +118,12 @@ class DownloadCommand extends Command {
 				} else {
 					return message.channel.send({embed: Embed, files: [output]})
 						.catch(err => {
+							loadingmsg.delete();
 							console.error(err);
-							return message.channel.send('File too big');
+							return message.channel.send(`${err.name}: ${err.message} ${err.message === 'Request entity too large' ? 'The file size is too big' : ''}`);
 						})
 						.then(() => {
+							loadingmsg.delete();
 							// Delete file after it has been sent
 							fs.unlinkSync(output);
 							message.delete();
