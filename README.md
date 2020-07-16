@@ -14,14 +14,14 @@ You need to install the following
 * https://github.com/Automattic/node-canvas
 * sequelize-cli (``npm install -g sequelize-cli``)
 * mysql
-* ffmpeg (Optional but recommanded: for all command that require to interact with voice chat and [vid2gif.js](commands/utility/vid2gif.js), [vidshittifier.js](commands/fun/vidshittifier.js) and [ytp.js](commands/fun/ytp.js))
+* ffmpeg (Optional but recommanded: for all command that require to interact with voice chat and [vid2gif.js](commands/utility/vid2gif.js), [vidshittyfier.js](commands/fun/vidshittyfier.js) and [ytp.js](commands/fun/ytp.js))
 * handbrake-cli (Optional but recommanded: for [download.js](commands/utility/download.js))
 * apngasm (Optional: for [nolight.js](commands/images/nolight))
 * [Google credentials](https://cloud.google.com/docs/authentication/getting-started) (Optional: for [tts.js](commands/fun/tts/tts.js) and [ttsvc.js](commands/fun/tts/ttsvc.js), without that it will spam error on startup but not important)
 * Wine (Optional: required for linux/mac for [dectalk.js](commands/fun/tts/dectalk.js) and [dectalkvc.js](commands/fun/tts/dectalkvc.js))
 * xvfb (Optional: for wine if using headless server)
-* waon (Optional: use to convert sound files to midi for [midify.js](commands/fun/midify.js))
-* timidity (Optional: use to convert the midi files back to mp3 for [midify.js](commands/fun/midify.js))
+* waon (Optional: used to convert sound files to midi for [midify.js](commands/fun/midify.js))
+* timidity (Optional: used to convert the midi files back to mp3 for [midify.js](commands/fun/midify.js))
 
 ### Installing
 ```
@@ -40,14 +40,11 @@ To run the bot either use pm2
 npm install -g pm2
 pm2 start index.js --name(insert name)
 ```
-or node
-```
-node index.js
-```
+or with node ``node index.js``
+
 If on linux you can also do
-```
-nohup node index.js &
-```
+
+``nohup node index.js &``
 
 To use [ytp.js](commands/fun/ytp.js)
 1. Download the folder 'sounds', 'music', 'resources', 'sources' from [YTPPlus](https://github.com/philosophofee/YTPPlus)
@@ -70,7 +67,6 @@ To use dectalk on linux you will need
 ## Donation link
 
 [![Paypal](https://www.paypalobjects.com/en_US/CH/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/paypalme2/supositware/)
-[![Patreon](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/bePatron?u=15330358)
 
 ## License
 
