@@ -38,8 +38,13 @@ class InviteCommand extends Command {
 			if (args.here) {
 				message.channel.send(invMessage);
 			} else {
-				message.channel.send('Check your dm');
-				return message.author.send(invMessage);
+				return message.author.send(invMessage)
+					.catch(() => {
+						return message.channel.send('I could not dm you! Do you have dm enabled or haven\'t blocked me?');
+					})
+					.then(() => {
+						return message.channel.send('Check your dm');
+					});
 			}
 		}
 	}
