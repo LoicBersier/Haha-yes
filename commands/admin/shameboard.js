@@ -14,7 +14,9 @@ class shameboardCommand extends Command {
 					type: 'string',
 					prompt: {
 						start: 'What emote should be used to enter the shameboard?',
+						optional: true
 					},
+					default: '👎',
 					unordered: true
 				},
 				{

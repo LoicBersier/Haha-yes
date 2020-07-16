@@ -14,8 +14,9 @@ class StarBoardCommand extends Command {
 					type: 'string',
 					prompt: {
 						start: 'What emote should be used to enter the shameboard?',
+						optional: true
 					},
-					unordered: true
+					default: '👍',
 				},
 				{
 					id: 'count',
@@ -25,7 +26,6 @@ class StarBoardCommand extends Command {
 						optional: true
 					},
 					default: '4',
-					unordered: true
 				},
 				{
 					id: 'remove',
