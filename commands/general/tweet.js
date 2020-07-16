@@ -31,6 +31,13 @@ class tweetCommand extends Command {
 	}
 
 	async exec(message, args) {
+		if (args.text) {
+			// Very simple link detection
+			if (args.text.includes('http') && !args.text.includes('twitter.com')) return message.channel.send('You may not tweet links outside of twitter.com');
+			// Do not allow discord invites
+			if (args.text.includes('discord.gg') || args.text.includes('discord.com/invite/')) return message.channel.send('No discord invite allowed.');
+		}
+
 		let Attachment = (message.attachments).array();
 		if (!Attachment[0] && !args.text) return message.channel.send('You need to input something for me to tweet!');
 
@@ -49,12 +56,7 @@ class tweetCommand extends Command {
 		// If account is younger than 6 months old don't accept attachment
 		if (Attachment[0] && message.author.createdAt > date.setMonth(date.getMonth() - 6)) {
 			return message.channel.send('Your account need to be 6 months or older to be able to send attachment!');
-		} 
-		
-
-		if (args.text)
-			if (args.text.includes('discord.gg') || args.text.includes('discord.com/invite/')) return message.channel.send('No discord invite allowed.');
-		
+		}
 		
 		const client = this.client;
 
