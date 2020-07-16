@@ -12,7 +12,7 @@ class spbCommand extends Command {
 			args: [
 				{
 					id: 'link',
-					type: 'string',
+					type: 'url',
 					prompt: {
 						start: 'Need a shitpostbot5000 template link!',
 					}
@@ -27,11 +27,11 @@ class spbCommand extends Command {
 	}
 
 	async exec(message, args) {
-		if (!args.link || !args.link.includes('shitpostbot.com/template/')) {
+		if (!args.link || !args.link.href.includes('shitpostbot.com/template/')) {
 			return message.channel.send('Need a Shitpostbot 5000 template link!\nYou can find them here! <https://www.shitpostbot.com/gallery/templates>');
 		}
 
-		let link = args.link.replace('template', 'preview');
+		let link = args.link.href.replace('template', 'preview');
 
 		fetch(link)
 			.then(res => {
