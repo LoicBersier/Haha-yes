@@ -1,6 +1,6 @@
 const hbjs = require('handbrake-js');
 const events = require('events');
-
+// Compress submitted video
 module.exports = function(input, output) {
 	let eventEmitter = new events.EventEmitter();
 

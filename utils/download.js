@@ -1,7 +1,7 @@
 const fs = require('fs');
 const events = require('events');
 const youtubedl = require('youtube-dl');
-
+// Download submitted video
 module.exports = function (url, option, output) {
 	let eventEmitter = new events.EventEmitter();
 
@@ -23,6 +23,7 @@ module.exports = function (url, option, output) {
 	video.on('end', function() {
 		eventEmitter.emit('end', output);
 	});
+
 	return eventEmitter;
 };
 
