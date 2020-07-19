@@ -186,18 +186,18 @@ class ytpCommand extends Command {
 		// Read userVid folder and select random vid and only take .mp4
 		let mp4 = [];
 		let asset = [];
-		let files = fs.readdirSync('./asset/ytp/userVid/');
 		// Count number of total vid
-		files.forEach(file => {
+		fs.readdirSync('./asset/ytp/userVid/').forEach(file => {
 			if (file.endsWith('mp4')) {
 				mp4.push(file);
 			}
 		});
+
 		// Select random vid depending on the amount of MAX_CLIPS
 		for (let i = 0; i < MAX_CLIPS; i++) {
-			let random = Math.floor(Math.random() * files.length);
-			let vid = `./asset/ytp/userVid/${files[random]}`;
-			if (files[random].endsWith('mp4')) {
+			let random = Math.floor(Math.random() * mp4.length);
+			let vid = `./asset/ytp/userVid/${mp4[random]}`;
+			if (mp4[random].endsWith('mp4')) {
 				if (!asset.includes(vid)) {
 					asset.push(vid);
 				}
