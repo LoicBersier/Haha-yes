@@ -1,8 +1,11 @@
 exports.random = function (text, message) {
-	//	  Generate a random number
-	function randNumber(file) {
-		let Rand = Math.floor((Math.random() * file.length));
-		return Rand;
+	// Find a value in an array of objects in Javascript - https://stackoverflow.com/a/12462387
+	function search(nameKey, myArray){
+		for (let i=0; i < myArray.length; i++) {
+			if (new RegExp(myArray[i].name).test(nameKey)) {
+				return myArray[i];
+			}
+		}
 	}
 
 	const fs = require('fs');
@@ -12,28 +15,55 @@ exports.random = function (text, message) {
 		const dictionary = require(`./dictionary/${file}`);
 		const re = new RegExp('\\[' + file + '\\]');
 		do {
-			text = text.replace(re, dictionary[randNumber(dictionary)]);
+			text = text.replace(re, dictionary[Math.floor((Math.random() * dictionary.length))]);
 		} while(text.includes(`[${file}]`));
 		return text;
 	});
 
-	do {
-		if (message) {
-			if (message.member) {
-				text = text.replace(/\[author\]/, message.author.username);
-				text = text.replace(/\[member\]/g, message.guild.members.cache.random().user.username);
-				text = text.replace(/\[memberRand\]/, message.guild.members.cache.random().user.username);
-			}
+	let variables = [
+		{
+			name: /\[author\]/,
+			value: message ? message.author.username : ''
+		},
+		{
+			name: /\[member\]/,
+			value: message ? message.guild.members.cache.random().user.username : ''
+		},
+		{
+			name: /\[memberRand\]/,
+			value: (() => message ? message.guild.members.cache.random().user.username : '')
+		},
+		{
+			name: /\[dice\d*\]/,
+			value: (() => Math.floor((Math.random() * text.match(/\[dice\d*\]/g)[0].replace(/\D/g, '')) + 1))
+		},
+		{
+			name: /\[number\]/,
+			value: (() => Math.floor((Math.random() * 9) + 1))
+		},
+		{
+			name: /\[kick\]/,
+			value: ''
+		},
+		{
+			name: /\[ban\]/,
+			value: ''
+		},
+		{
+			name: /\[delete\]/,
+			value: ''
+		},
+		{
+			name: /\[n\]/,
+			value: '\n'
 		}
+	];
 
-		text = text.replace(/\[dice\]/, Math.floor((Math.random() * 6) + 1));
-		text = text.replace(/\[number\]/, Math.floor((Math.random() * 9) + 1));
-		text = text.replace(/\[kick\]/, ' ');
-		text = text.replace(/\[ban\]/, ' ');
-		text = text.replace(/\[delete\]/, ' ');
-		text = text.replace(/\{n\}/, '\n');
-		//	  Verify if it replaced everything
-	} while( text.includes('[member]') || text.includes('[memberRand]') || text.includes('[number]') || text.includes('[author]') || text.includes('[kick]') || text.includes('[ban]') || text.includes('{n}' || text.includes('[delete]')));
+	let matches = text.matchAll(/\[.*?\]\s?/g);
+
+	for (const match of matches)
+		if (search(match[0].trim(), variables))
+			text = text.replace(match[0].trim(), search(match[0].trim(), variables).value);
 
 	return text;
 };
