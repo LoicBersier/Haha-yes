@@ -69,7 +69,7 @@ class cursesCommand extends Command {
 				}
 
 				fs.writeFileSync(`${os.tmpdir()}/cursed${message.id}${ext}`, Buffer.from(endResult, 'hex'));
-				return message.channel.send({files: [`${os.tmpdir()}/cursed${message.id}${ext}`]})
+				return message.channel.send(`Cursed by ${message.author}`, {files: [`${os.tmpdir()}/cursed${message.id}${ext}`]})
 					.catch(err => {
 						console.error(err);
 						return message.channel.send('Video is too big! try again with something smaller');

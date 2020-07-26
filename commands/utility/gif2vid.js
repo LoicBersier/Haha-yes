@@ -57,7 +57,7 @@ class gif2vidCommand extends Command {
 				ffmpegCommand.on('end', () => {
 					loadingmsg.delete();
 					message.delete();
-					return message.channel.send({files: [`${os.tmpdir()}/${message.id}g2v.mp4`]})
+					return message.channel.send(`Converted by ${message.author}`, {files: [`${os.tmpdir()}/${message.id}g2v.mp4`]})
 						.catch(err => {
 							console.error(err);
 							return message.channel.send(`${err.name}: ${err.message} ${err.message === 'Request entity too large' ? 'The file size is too big' : ''}`);
