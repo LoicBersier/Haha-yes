@@ -13,7 +13,7 @@ class vid2gifCommand extends Command {
 			args: [
 				{
 					id: 'vid',
-					type: 'string'
+					type: 'url'
 				},
 				{
 					id: 'fps',

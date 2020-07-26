@@ -27,11 +27,11 @@ exports.random = function (text, message) {
 		},
 		{
 			name: /\[member\]/,
-			value: message ? message.guild.members.cache.random().user.username : ''
+			value: message.guild ? message.guild.members.cache.random().user.username : ''
 		},
 		{
 			name: /\[memberRand\]/,
-			value: (() => message ? message.guild.members.cache.random().user.username : '')
+			value: (() => message.guild ? message.guild.members.cache.random().user.username : '')
 		},
 		{
 			name: /\[dice\d*\]/,
