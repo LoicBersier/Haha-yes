@@ -33,8 +33,8 @@ class vidshittyfierCommand extends Command {
 
 	async exec(message, args) {
 		let vid;
-		if (args.vid)
-			vid = args.vid.href;
+		if (args.link)
+			vid = args.link.href;
 		else
 			vid = await attachment(message);
 
