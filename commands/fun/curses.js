@@ -17,6 +17,11 @@ class cursesCommand extends Command {
 					id: 'link',
 					type: 'url',
 				},
+				{
+					id: 'webm',
+					match: 'flag',
+					flag: ['--webm']
+				},
 			],
 			description: {
 				content: 'Mess with video length. webm = expanding length and mp4 = very long length',
@@ -38,9 +43,11 @@ class cursesCommand extends Command {
 			link = await attachment(message);
 
 		let ext = path.extname(link.toLowerCase());
-		if (ext !== '.webm' || ext !== '.mp4') {
+		if (ext !== '.webm' || ext !== '.mp4')
 			ext = '.mp4';
-		}
+
+
+		if (args.webm) ext = '.webm';
 
 		let loadingmsg = await message.channel.send('Processing <a:loadingmin:527579785212329984>');
 		downloader(link, null, `${os.tmpdir()}/${message.id}${ext}`)
