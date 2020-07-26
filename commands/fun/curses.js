@@ -50,7 +50,7 @@ class cursesCommand extends Command {
 		if (args.webm) ext = '.webm';
 
 		let loadingmsg = await message.channel.send('Processing <a:loadingmin:527579785212329984>');
-		downloader(link, null, `${os.tmpdir()}/${message.id}${ext}`)
+		downloader(link, [`--format=${ext.replace('.', '')}`], `${os.tmpdir()}/${message.id}${ext}`)
 			.on('error', async err => {
 				loadingmsg.delete();
 				console.error(err);
@@ -76,6 +76,7 @@ class cursesCommand extends Command {
 				}
 
 				fs.writeFileSync(`${os.tmpdir()}/cursed${message.id}${ext}`, Buffer.from(endResult, 'hex'));
+				message.delete();
 				return message.channel.send(`Cursed by ${message.author}`, {files: [`${os.tmpdir()}/cursed${message.id}${ext}`]})
 					.catch(err => {
 						console.error(err);
