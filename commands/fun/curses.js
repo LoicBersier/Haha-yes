@@ -9,7 +9,7 @@ const downloader = require('../../utils/download');
 class cursesCommand extends Command {
 	constructor() {
 		super('curses', {
-			aliases: ['curses'],
+			aliases: ['curses', 'curse'],
 			category: 'fun',
 			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
 			args: [
@@ -43,12 +43,13 @@ class cursesCommand extends Command {
 			link = await attachment(message);
 
 		let ext = path.extname(link.toLowerCase());
-		if (ext !== '.webm' || ext !== '.mp4')
+		console.log(ext);
+		if (ext !== '.webm' && ext !== '.mp4')
 			ext = '.mp4';
 
 
 		if (args.webm) ext = '.webm';
-
+		
 		let loadingmsg = await message.channel.send('Processing <a:loadingmin:527579785212329984>');
 		downloader(link, [`--format=${ext.replace('.', '')}`], `${os.tmpdir()}/${message.id}${ext}`)
 			.on('error', async err => {
@@ -60,14 +61,14 @@ class cursesCommand extends Command {
 				let file = fs.readFileSync(output).toString('hex');
 				
 				let searchHex = '6d766864';
-				let replaceHex = '0000017FFFFFFF';
+				let replaceHex = '0000180FFFFFF7F';
 				let skipByte = 34;
 
 				let endResult;
 
 				if (ext === '.webm') {
 					searchHex = '2ad7b1';
-					replaceHex = '00000000';
+					replaceHex = '42FFB060';
 					skipByte = 8;
 
 					endResult = replaceAt(file, file.indexOf(searchHex) + file.substring(file.indexOf(searchHex)).indexOf('4489') + skipByte, replaceHex);
