@@ -158,6 +158,15 @@ class ytpCommand extends Command {
 							loadingmsg.delete();
 							return message.reply('This video is a duplicate... Not adding.');
 						} else {
+							let file = fs.statSync(output);
+							let fileSize = file.size / 1000000.0;
+
+							if (fileSize > 50) {
+								fs.unlinkSync(output);
+								loadingmsg.delete();
+								return message.reply('Video too big.. Not adding.');
+							}
+
 							const body = {hash: hash, link: args.link, messageID: message.id};
 							await ytpHash.create(body);
 						}
