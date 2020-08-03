@@ -26,8 +26,8 @@ class aboutCommand extends Command {
 		
 		if (Donator[0]) {
 			for (let i = 0; i < Donator.length; i++) {
-				if (this.client.users.resolve(Donator[i].get('userID')) !== null)
-					description += `**${this.client.users.resolve(Donator[i].get('userID')).tag} (${Donator[i].get('userID')}) | ${Donator[i].get('comment')}**\n`;
+				if (this.client.users.resolve(Donator[i].get('userID').toString()) !== null)
+					description += `**${this.client.users.resolve(Donator[i].get('userID').toString()).tag} (${Donator[i].get('userID')}) | ${Donator[i].get('comment')}**\n`;
 				else
 					description += `**A user of discord (${Donator[i].get('userID')}) | ${Donator[i].get('comment')} (This user no longer share a server with the bot)**\n`;
 			}
