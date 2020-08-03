@@ -9,13 +9,18 @@ const downloader = require('../../utils/download');
 class cursesCommand extends Command {
 	constructor() {
 		super('curses', {
-			aliases: ['curses'],
+			aliases: ['curses', 'curse'],
 			category: 'fun',
 			clientPermissions: ['SEND_MESSAGES', 'ATTACH_FILES'],
 			args: [
 				{
 					id: 'link',
 					type: 'url',
+				},
+				{
+					id: 'webm',
+					match: 'flag',
+					flag: ['--webm']
 				},
 			],
 			description: {
@@ -38,12 +43,15 @@ class cursesCommand extends Command {
 			link = await attachment(message);
 
 		let ext = path.extname(link.toLowerCase());
-		if (ext !== '.webm' || ext !== '.mp4') {
+		console.log(ext);
+		if (ext !== '.webm' && ext !== '.mp4')
 			ext = '.mp4';
-		}
 
+
+		if (args.webm) ext = '.webm';
+		
 		let loadingmsg = await message.channel.send('Processing <a:loadingmin:527579785212329984>');
-		downloader(link, null, `${os.tmpdir()}/${message.id}${ext}`)
+		downloader(link, [`--format=${ext.replace('.', '')}`], `${os.tmpdir()}/${message.id}${ext}`)
 			.on('error', async err => {
 				loadingmsg.delete();
 				console.error(err);
@@ -53,14 +61,14 @@ class cursesCommand extends Command {
 				let file = fs.readFileSync(output).toString('hex');
 				
 				let searchHex = '6d766864';
-				let replaceHex = '0000017FFFFFFF';
+				let replaceHex = '0000180FFFFFF7F';
 				let skipByte = 34;
 
 				let endResult;
 
 				if (ext === '.webm') {
 					searchHex = '2ad7b1';
-					replaceHex = '00000000';
+					replaceHex = '42FFB060';
 					skipByte = 8;
 
 					endResult = replaceAt(file, file.indexOf(searchHex) + file.substring(file.indexOf(searchHex)).indexOf('4489') + skipByte, replaceHex);
@@ -69,7 +77,8 @@ class cursesCommand extends Command {
 				}
 
 				fs.writeFileSync(`${os.tmpdir()}/cursed${message.id}${ext}`, Buffer.from(endResult, 'hex'));
-				return message.channel.send({files: [`${os.tmpdir()}/cursed${message.id}${ext}`]})
+				message.delete();
+				return message.channel.send(`Cursed by ${message.author}`, {files: [`${os.tmpdir()}/cursed${message.id}${ext}`]})
 					.catch(err => {
 						console.error(err);
 						return message.channel.send('Video is too big! try again with something smaller');

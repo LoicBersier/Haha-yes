@@ -85,7 +85,7 @@ class vidshittyfierCommand extends Command {
 					ffmpegCommand.on('end', () => {
 						loadingmsg.delete();
 						message.delete();
-						return message.channel.send({files: [output2]})
+						return message.channel.send(`Shittyfied by ${message.author}`, {files: [output2]})
 							.catch(err => {
 								console.error(err);
 								return message.channel.send(`${err.name}: ${err.message} ${err.message === 'Request entity too large' ? 'The file size is too big' : ''}`);

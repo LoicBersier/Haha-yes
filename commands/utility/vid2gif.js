@@ -63,7 +63,7 @@ class vid2gifCommand extends Command {
 				ffmpegCommand.on('end', () => {
 					loadingmsg.delete();
 					message.delete();
-					return message.channel.send({files: [`${os.tmpdir()}/${message.id}v2g.gif`]})
+					return message.channel.send(`Converted by ${message.author}`, {files: [`${os.tmpdir()}/${message.id}v2g.gif`]})
 						.catch(err => {
 							console.error(err);
 							return message.channel.send(`${err.name}: ${err.message} ${err.message === 'Request entity too large' ? 'The file size is too big' : ''}`);
