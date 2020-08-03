@@ -20,6 +20,11 @@ class addDonatorCommand extends Command {
 					id: 'userComment',
 					type: 'string',
 					match: 'rest'
+				},
+				{
+					id: 'remove',
+					match: 'flag',
+					flag: ['--remove']
 				}
 			],
 			channel: 'guild',
@@ -32,13 +37,23 @@ class addDonatorCommand extends Command {
 	}
 
 	async exec(message, args) {
+		const Donator = await donator.findOne({where: {userID: args.id}});
+
+		if (args.remove) {
+			if (Donator) {
+				Donator.destroy({where: {userID: args.id}});
+				return message.channel.send('successfully removed the following id from the donators: ' + args.id);
+			} else {
+				return message.channel.send('Did not find the id, is he a donator?');
+			}
+		}
+
 		let userComment = '';
 		if (args.userComment) {
 			userComment = args.userComment;
 		} else if (!args.userComment) {
 			userComment = '';
 		}
-		const Donator = await donator.findOne({where: {userID: args.id}});
 
 		if (!Donator) {
 			const body = {userID: args.id, comment: userComment};
