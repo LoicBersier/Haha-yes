@@ -22,7 +22,11 @@ class donatorCommand extends Command {
 
 		if (Donator[0]) {
 			for (let i = 0; i < Donator.length; i++) {
-				donatorMessage += `**${this.client.users.resolve(Donator[i].get('userID')).tag} (${Donator[i].get('userID')}) | ${Donator[i].get('comment')}**\n`;
+				if (this.client.users.resolve(Donator[i].get('userID')) !== null)
+					donatorMessage += `**${this.client.users.resolve(Donator[i].get('userID')).tag} (${Donator[i].get('userID')}) | ${Donator[i].get('comment')}**\n`;
+				else
+					donatorMessage += `**A user of discord (${Donator[i].get('userID')}) | ${Donator[i].get('comment')} (This user no longer share a server with the bot)**\n`;
+
 			}
 		} else {
 			donatorMessage += 'No one :(';

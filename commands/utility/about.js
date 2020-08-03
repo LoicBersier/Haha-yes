@@ -17,6 +17,8 @@ class aboutCommand extends Command {
 		});
 	}
 
+
+
 	async exec(message) {
 		const Donator = await donator.findAll({order: ['id']});
 
@@ -24,7 +26,10 @@ class aboutCommand extends Command {
 		
 		if (Donator[0]) {
 			for (let i = 0; i < Donator.length; i++) {
-				description += `**${this.client.users.resolve(Donator[i].get('userID')).tag} (${Donator[i].get('userID')}) | ${Donator[i].get('comment')}**\n`;
+				if (this.client.users.resolve(Donator[i].get('userID')) !== null)
+					description += `**${this.client.users.resolve(Donator[i].get('userID')).tag} (${Donator[i].get('userID')}) | ${Donator[i].get('comment')}**\n`;
+				else
+					description += `**A user of discord (${Donator[i].get('userID')}) | ${Donator[i].get('comment')} (This user no longer share a server with the bot)**\n`;
 			}
 		} else {
 			description += 'No one :(\n';
@@ -44,7 +49,7 @@ class aboutCommand extends Command {
 					.addField('Gitlab', 'https://gitlab.com/LoicBersier/DiscordBot', true)
 					.addField('Github', 'https://github.com/loicbersier/Haha-yes', true)
 					.setThumbnail('https://its.gamingti.me/ZiRe.png')
-					.setFooter(`Original bot made by ${this.client.users.resolve('267065637183029248').tag} (267065637183029248)`); // Please don't change the "original bot made by"
+					.setFooter(`Original bot made by ${this.client.users.resolve('267065637183029248').tag} (267065637183029248)`); // Please this line
 
 				message.channel.send(aboutEmbed);
 			});
