@@ -42,6 +42,8 @@ class cursesCommand extends Command {
 		else
 			link = await attachment(message);
 
+		if (!link) return message.channel.send('Please specify the URL of the video you want to curse.');
+
 		let ext = path.extname(link.toLowerCase());
 		console.log(ext);
 		if (ext !== '.webm' && ext !== '.mp4')
