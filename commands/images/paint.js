@@ -29,19 +29,19 @@ class paintCommand extends Command {
 			return message.channel.send('Gif dosent work, sorry');
 
 		
-		message.channel.send('Processing <a:loadingmin:527579785212329984>')
-			.then(loadingmsg => loadingmsg.delete(1000));
+		let loadingmsg = await message.channel.send('Processing <a:loadingmin:527579785212329984>')
 
 		const canvas = createCanvas(488, 400);
 		const ctx = canvas.getContext('2d');
 		const background = await loadImage(image).catch(() => {
-			return message.channel.send('An error as occurred, please try again');
+			return message.channel.send('An error as occurred, please try again. Did you load a correct image?');
 		});
 		ctx.drawImage(background, 65, 30, 405, 280);
 		const { body: buffer } = await superagent.get('https://cdn.discordapp.com/attachments/488483518742134794/542633779601342476/260293545019212.png');
 		const bg = await loadImage(buffer);
 		ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
 
+		loadingmsg.delete();
 		message.channel.send({files: [canvas.toBuffer()]}).catch(() => {
 			message.channel.send('an error as occurred. Check the bot/channel permissions');
 		});
