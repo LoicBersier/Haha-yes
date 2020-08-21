@@ -174,6 +174,7 @@ class tweetCommand extends Command {
 					.setDescription(args.text)
 					.addField('Link', `https://twitter.com/i/status/${tweetid}`, true)
 					.addField('Tweet ID', tweetid, true)
+					.addField('Messsage ID', message.id, true)
 					.addField('Author', `${message.author.username} (${message.author.id})`, true)
 					.setTimestamp();
 
