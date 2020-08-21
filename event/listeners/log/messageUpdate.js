@@ -17,6 +17,8 @@ class messageUpdateListener extends Listener {
 				});
 		}
 
+		if (!oldMessage.guild) return;
+
 		const logStats = await LogStats.findOne({where: {guild: newMessage.guild.id}});
 		if (logStats && oldMessage.content !== newMessage.content && !oldMessage.author.bot) {
 			const channel = this.client.channels.resolve(await logStats.get('channel'));

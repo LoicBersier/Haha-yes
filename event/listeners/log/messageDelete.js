@@ -17,6 +17,8 @@ class messageDeleteListener extends Listener {
 				});
 		}
 
+		if (!message.guild) return;
+
 		const logStats = await LogStats.findOne({where: {guild: message.guild.id}});
 		if (logStats && !message.author.bot) {
 			const fetchedLogs = await message.guild.fetchAuditLogs({
