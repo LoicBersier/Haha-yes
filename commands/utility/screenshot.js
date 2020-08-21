@@ -12,7 +12,7 @@ class screenshotCommand extends Command {
 			args: [
 				{
 					id: 'url',
-					type: 'url',
+					type: 'string',
 					prompt: {
 						start: 'Please send a link of which website you want to take a screenshot of.',
 						retry: 'This does not look like an url, please try again.'
@@ -33,8 +33,9 @@ class screenshotCommand extends Command {
 	}
 
 	async exec(message, args) {
-		let url = args.url.href;
-		if (url.includes('config.json')) return message.channel.send('I don\'t think so');
+		let url = args.url;
+		if (!url.includes('http')) url = `http://${url}`;
+		if (url.includes('config.json') || url.includes('file://')) return message.channel.send('I don\'t think so');
 		let Embed = this.client.util.embed()
 			.setColor(message.member ? message.member.displayHexColor : 'NAVY')
 			.setTitle(url);
