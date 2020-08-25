@@ -57,7 +57,7 @@ class DownloadCommand extends Command {
 			let i = 0;
 			proxy.forEach(proxy => {
 				i++;
-				proxys.push(`[${i}] ${ proxy.hidden ? '[IP HIDDEN]' : proxy.ip.substring(0, proxy.ip.length - 5)} - ${proxy.country}`);
+				proxys.push(`[${i}] ${ proxy.hideip ? '[IP HIDDEN]' : proxy.ip.substring(0, proxy.ip.length - 5)} - ${proxy.country}`);
 			});
 
 			const Embed = this.client.util.embed()
