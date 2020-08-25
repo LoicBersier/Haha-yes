@@ -45,7 +45,7 @@ class DownloadCommand extends Command {
 			description: {
 				content: 'Download videos from different website from the link you provided, use `-s` to make the vid a spoiler, `--proxy #` to select a proxy, `--listproxy` to see a list of proxy',
 				usage: '[link] [caption]',
-				examples: ['https://www.youtube.com/watch?v=6n3pFFPSlW4 Look at this funny gnome', 'https://www.youtube.com/watch?v=6n3pFFPSlW4 --proxy 1']
+				examples: ['https://www.youtube.com/watch?v=6n3pFFPSlW4 Look at this funny gnome', 'https://www.youtube.com/watch?v=6n3pFFPSlW4 --proxy 1', '--listproxy']
 			}
 		});
 	}
