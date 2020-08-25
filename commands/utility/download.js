@@ -79,9 +79,6 @@ class DownloadCommand extends Command {
 			if (!proxy[args.proxy]) args.proxy = 0;
 		}
 
-		console.log(args.proxy);
-		console.log(proxy[args.proxy].ip);
-
 		if (args.spoiler) {
 			filename = `SPOILER_${message.id}_video`;
 		}
