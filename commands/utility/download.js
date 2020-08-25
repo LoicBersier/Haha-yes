@@ -79,6 +79,9 @@ class DownloadCommand extends Command {
 			if (!proxy[args.proxy]) args.proxy = 0;
 		}
 
+		console.log(args.proxy);
+		console.log(proxy[args.proxy].ip);
+
 		if (args.spoiler) {
 			filename = `SPOILER_${message.id}_video`;
 		}
@@ -89,7 +92,7 @@ class DownloadCommand extends Command {
 			.setDescription(args.caption ? args.caption : '')
 			.setFooter(`You can get the original video by clicking on the "downloaded by ${message.author.username}" message!`);
 
-		downloader(args.link.href, args.proxy ? ['--proxy', proxy[args.proxy].ip] : null, `${os.tmpdir()}/${filename}.mp4`)
+		downloader(args.link.href, args.proxy != null ? ['--proxy', proxy[args.proxy].ip] : null, `${os.tmpdir()}/${filename}.mp4`)
 			.on('error', async err => {
 				if (err.includes('HTTP Error 429: Too Many Requests')) return message.channel.send('`HTTP Error 429: Too Many Requests.`\nThe website you tried to download from probably has the bot blocked, you can try again with the `--proxy` option and hope it work.');
 				return message.channel.send(err, { code: true });
