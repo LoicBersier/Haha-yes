@@ -1,6 +1,7 @@
 const { Command } = require('discord-akairo');
 const downloader = require('../../utils/download');
 const compress = require('../../utils/compress');
+const { proxy } = require('../../config.json');
 const os = require('os');
 const fs = require('fs');
 
@@ -28,6 +29,11 @@ class DownloadCommand extends Command {
 					id: 'spoiler',
 					match: 'flag',
 					flag: ['--spoil', '--spoiler', '-s']
+				},
+				{
+					id: 'proxy',
+					match: 'flag',
+					flag: ['--proxy']
 				}
 			],
 			description: {
@@ -52,11 +58,9 @@ class DownloadCommand extends Command {
 			.setDescription(args.caption ? args.caption : '')
 			.setFooter(`You can get the original video by clicking on the "downloaded by ${message.author.username}" message!`);
 
-
-
-
-		downloader(args.link.href, null, `${os.tmpdir()}/${filename}.mp4`)
+		downloader(args.link.href, args.proxy ? ['--proxy', proxy] : null, `${os.tmpdir()}/${filename}.mp4`)
 			.on('error', async err => {
+				if (err.includes('HTTP Error 429: Too Many Requests')) return message.channel.send('`HTTP Error 429: Too Many Requests.`\nThe website you tried to download from probably has the bot blocked, you can try again with the `--proxy` option and hope it work.');
 				return message.channel.send(err, { code: true });
 			})
 			.on('end', async output => {
