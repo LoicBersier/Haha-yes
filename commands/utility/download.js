@@ -17,7 +17,8 @@ class DownloadCommand extends Command {
 					type: 'url',
 					prompt: {
 						start: 'Please send the URL of which video you want to download. Say `cancel` to stop the command',
-						retry: 'Please send a valid URL of the video you want to download. Say `cancel` to stop the command'
+						retry: 'Please send a valid URL of the video you want to download. Say `cancel` to stop the command',
+						optional: true
 					},
 				},
 				{
@@ -32,21 +33,51 @@ class DownloadCommand extends Command {
 				},
 				{
 					id: 'proxy',
+					match: 'option',
+					flag: ['--proxy'],
+				},
+				{
+					id: 'listproxy',
 					match: 'flag',
-					flag: ['--proxy']
+					flag: ['--listproxy', '--proxylist']
 				}
 			],
 			description: {
-				content: 'Download videos from different website from the link you provided, use "-s" to make the vid a spoiler',
+				content: 'Download videos from different website from the link you provided, use `-s` to make the vid a spoiler, `--proxy #` to select a proxy, `--listproxy` to see a list of proxy',
 				usage: '[link] [caption]',
-				examples: ['https://www.youtube.com/watch?v=6n3pFFPSlW4 Look at this funny gnome']
+				examples: ['https://www.youtube.com/watch?v=6n3pFFPSlW4 Look at this funny gnome', 'https://www.youtube.com/watch?v=6n3pFFPSlW4 --proxy 1']
 			}
 		});
 	}
 
 	async exec(message, args) {
+		if (!args.link) return message.channel.send('Please try again with a valid URL.');
+		
+		if (args.listproxy) {
+			let proxys = [];
+
+			let i = 0;
+			proxy.forEach(proxy => {
+				i++;
+				proxys.push(`[${i}] ${ proxy.hidden ? '[IP HIDDEN]' : proxy.ip.substring(0, proxy.ip.length - 5)} - ${proxy.country}`);
+			});
+
+			const Embed = this.client.util.embed()
+				.setColor(message.member ? message.member.displayHexColor : 'NAVY')
+				.setTitle('List of available proxy')
+				.setDescription(proxys.join('\n'))
+				.setFooter('You can help me get more proxy by either donating to me or providing a proxy for me');
+
+			return message.channel.send(Embed);
+		}
+
 		let loadingmsg = await message.channel.send('Downloading <a:loadingmin:527579785212329984>');
 		let filename = `${message.id}_video`;
+
+		if (args.proxy) {
+			args.proxy = args.proxy -1;
+			if (!proxy[args.proxy]) args.proxy = 0;
+		}
 
 		if (args.spoiler) {
 			filename = `SPOILER_${message.id}_video`;
@@ -58,7 +89,7 @@ class DownloadCommand extends Command {
 			.setDescription(args.caption ? args.caption : '')
 			.setFooter(`You can get the original video by clicking on the "downloaded by ${message.author.username}" message!`);
 
-		downloader(args.link.href, args.proxy ? ['--proxy', proxy] : null, `${os.tmpdir()}/${filename}.mp4`)
+		downloader(args.link.href, args.proxy ? ['--proxy', proxy[args.proxy].ip] : null, `${os.tmpdir()}/${filename}.mp4`)
 			.on('error', async err => {
 				if (err.includes('HTTP Error 429: Too Many Requests')) return message.channel.send('`HTTP Error 429: Too Many Requests.`\nThe website you tried to download from probably has the bot blocked, you can try again with the `--proxy` option and hope it work.');
 				return message.channel.send(err, { code: true });
