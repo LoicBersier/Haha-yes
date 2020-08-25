@@ -18,6 +18,16 @@
 	"twiConsumerSecret": "Twitter consumer key secret", //optional | for the twitter command
 	"twiToken": "Twitter token", //optional | for the twitter command
 	"twiTokenSecret": "Twitter token secret", //optional | for the twitter command
-	"proxy": "ip:port" //optional | Used for youtube-dl
+    "proxy": [ //Optional | Used for youtube-dl
+        {
+            "ip": "IP:PORT",
+            "country": "Country goes here",
+            "hideip": true //Optional | Set to true to hide the ip from the --listproxy options
+        },
+        {
+            "ip": "IP:PORT",
+            "country": "Country goes here"
+        }
+    ]
 
 } 
