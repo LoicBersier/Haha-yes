@@ -1,4 +1,5 @@
 const { Command } = require('discord-akairo');
+const { proxy } = require('../../config.json');
 const YTPGenerator = require('ytpplus-node');
 const os = require('os');
 const fs = require('fs');
@@ -112,12 +113,22 @@ class ytpCommand extends Command {
 					id: 'max',
 					type: 'string',
 					unordered: true
+				},
+				{
+					id: 'proxy',
+					match: 'option',
+					flag: ['--proxy'],
+				},
+				{
+					id: 'listproxy',
+					match: 'flag',
+					flag: ['--listproxy', '--proxylist']
 				}
 			],
 			description: {
-				content: 'Generate random ytp | --add with a link or attachment to add a video to the pool, only .mp4 work | --pool to see how many vid there is currently in the pool | --force to make the command work outside of nsfw channel BE AWARE THAT IT WON\'T CHANGE THE FINAL RESULT SO NSFW CAN STILL HAPPEN',
+				content: 'Generate random ytp | --add with a link or attachment to add a video to the pool, only .mp4 work | --pool to see how many vid there is currently in the pool | --force to make the command work outside of nsfw channel BE AWARE THAT IT WON\'T CHANGE THE FINAL RESULT SO NSFW CAN STILL HAPPEN\n`--proxy #` to select a proxy, `--listproxy` to see a list of proxy',
 				usage: '(OPTIONAL) | [Minimum length of clip] [Max length of clip]',
-				examples: ['5 10']
+				examples: ['5 10', '--add https://www.youtube.com/watch?v=6n3pFFPSlW4', '--add https://www.youtube.com/watch?v=6n3pFFPSlW4 --proxy 1', '--listproxy']
 			}
 		});
 	}
@@ -134,7 +145,30 @@ class ytpCommand extends Command {
 			return message.channel.send(`There is currently ${mp4.length} videos, you can add yours by doing \`\`${this.client.commandHandler.prefix[0]}ytp --add (link or attachment)\`\``);
 		}
 
+		if (args.listproxy) {
+			let proxys = [];
+
+			let i = 0;
+			proxy.forEach(proxy => {
+				i++;
+				proxys.push(`[${i}] ${ proxy.hideip ? '[IP HIDDEN]' : proxy.ip.substring(0, proxy.ip.length - 5)} - ${proxy.country}`);
+			});
+
+			const Embed = this.client.util.embed()
+				.setColor(message.member ? message.member.displayHexColor : 'NAVY')
+				.setTitle('List of available proxy')
+				.setDescription(proxys.join('\n'))
+				.setFooter('You can help me get more proxy by either donating to me or providing a proxy for me');
+
+			return message.channel.send(Embed);
+		}
+
 		if (args.add) {
+			if (args.proxy) {
+				args.proxy = args.proxy -1;
+				if (!proxy[args.proxy]) args.proxy = 0;
+			}
+
 			let loadingmsg = await message.channel.send('Downloading <a:loadingmin:527579785212329984>');
 			let url;
 
@@ -144,7 +178,7 @@ class ytpCommand extends Command {
 				url = await attachment(message);
 
 			if (url) {
-				return downloader(url, ['--format=mp4'], `./asset/ytp/userVid/${message.id}.mp4`)
+				return downloader(url, ['--format=mp4', '--proxy', proxy[args.proxy]], `./asset/ytp/userVid/${message.id}.mp4`)
 					.on('error', (err) => {
 						loadingmsg.delete();
 						return message.channel.send(err, { code: true });
