@@ -17,5 +17,7 @@
 	"twiConsumer": "Twitter consumer key", //optional | for the twitter command
 	"twiConsumerSecret": "Twitter consumer key secret", //optional | for the twitter command
 	"twiToken": "Twitter token", //optional | for the twitter command
-	"twiTokenSecret": "Twitter token secret" //optional | for the twitter command
+	"twiTokenSecret": "Twitter token secret", //optional | for the twitter command
+	"proxy": "ip:port" //optional | Used for youtube-dl
+
 } 
