@@ -51,8 +51,6 @@ class DownloadCommand extends Command {
 	}
 
 	async exec(message, args) {
-		if (!args.link) return message.channel.send('Please try again with a valid URL.');
-		
 		if (args.listproxy) {
 			let proxys = [];
 
@@ -70,6 +68,8 @@ class DownloadCommand extends Command {
 
 			return message.channel.send(Embed);
 		}
+
+		if (!args.link) return message.channel.send('Please try again with a valid URL.');
 
 		let loadingmsg = await message.channel.send('Downloading <a:loadingmin:527579785212329984>');
 		let filename = `${message.id}_video`;
