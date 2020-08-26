@@ -178,7 +178,14 @@ class ytpCommand extends Command {
 				url = await attachment(message);
 
 			if (url) {
-				return downloader(url, ['--format=mp4', '--proxy', proxy[args.proxy].ip], `./asset/ytp/userVid/${message.id}.mp4`)
+				let options = ['--format=mp4'];
+
+				if (args.proxy) {
+					options.push('--proxy');
+					options.push(proxy[args.proxy].ip);
+				}
+
+				return downloader(url, options, `./asset/ytp/userVid/${message.id}.mp4`)
 					.on('error', (err) => {
 						loadingmsg.delete();
 						return message.channel.send(err, { code: true });
@@ -201,7 +208,7 @@ class ytpCommand extends Command {
 								return message.reply('Video too big.. Not adding.');
 							}
 
-							const body = {hash: hash, link: url, messageID: message.id};
+							const body = {hash: hash, link: args.link, messageID: message.id};
 							await ytpHash.create(body);
 						}
 
