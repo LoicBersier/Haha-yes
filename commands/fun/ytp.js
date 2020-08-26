@@ -178,7 +178,7 @@ class ytpCommand extends Command {
 				url = await attachment(message);
 
 			if (url) {
-				return downloader(url, ['--format=mp4', '--proxy', proxy[args.proxy]], `./asset/ytp/userVid/${message.id}.mp4`)
+				return downloader(url, ['--format=mp4', '--proxy', proxy[args.proxy].ip], `./asset/ytp/userVid/${message.id}.mp4`)
 					.on('error', (err) => {
 						loadingmsg.delete();
 						return message.channel.send(err, { code: true });
