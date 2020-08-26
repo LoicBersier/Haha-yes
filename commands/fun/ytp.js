@@ -208,7 +208,7 @@ class ytpCommand extends Command {
 								return message.reply('Video too big.. Not adding.');
 							}
 
-							const body = {hash: hash, link: args.link, messageID: message.id};
+							const body = {hash: hash, link: url, messageID: message.id};
 							await ytpHash.create(body);
 						}
 
