@@ -46,8 +46,13 @@ class translateCommand extends Command {
 		}).then((response) => {
 			if (response.code == '502')
 				return message.channel.send(`${response.message}, you probably didn't input the correct language code, you can check them here! https://tech.yandex.com/translate/doc/dg/concepts/api-overview-docpage/`);
-			else if (response.code != '200')
+			else if (response.code == '408')
+				return message.channel.send(response.message);
+			else if (response.code != '200') {
+				console.error(response);
 				return message.channel.send('An error has occurred');
+			}
+
 			let description = response.text[0];
 			let lang = response.detected.lang;
 
