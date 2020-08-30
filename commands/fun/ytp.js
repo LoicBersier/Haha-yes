@@ -188,6 +188,7 @@ class ytpCommand extends Command {
 				return downloader(url, options, `./asset/ytp/userVid/${message.id}.mp4`)
 					.on('error', (err) => {
 						loadingmsg.delete();
+						if (err.includes('HTTP Error 429: Too Many Requests')) return message.channel.send('`HTTP Error 429: Too Many Requests.`\nThe website you tried to download from probably has the bot blocked, you can try again with the `--proxy` option and hope it work.');
 						return message.channel.send(err, { code: true });
 					})
 					.on('end', async output => {
