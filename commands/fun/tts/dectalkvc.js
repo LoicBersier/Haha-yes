@@ -43,7 +43,7 @@ class dectalkvcCommand extends Command {
 					if (!voiceChannel) return message.channel.send('Please enter a voice channel first.');
 					try {
 						const connection = await voiceChannel.join();
-						const dispatcher = connection.play(`${message.id}_dectalk.wav`);
+						const dispatcher = connection.play(`./dectalk/${message.id}_dectalk.wav`);
 						dispatcher.once('finish', () => voiceChannel.leave());
 						dispatcher.once('error', () => voiceChannel.leave());
 						return null;
@@ -68,7 +68,7 @@ class dectalkvcCommand extends Command {
 					try {
 						loadingmsg.delete();
 						const connection = await voiceChannel.join();
-						const dispatcher = connection.play(`${message.id}_dectalk.wav`);
+						const dispatcher = connection.play(`./dectalk/${message.id}_dectalk.wav`);
 						dispatcher.once('finish', () => voiceChannel.leave());
 						dispatcher.once('error', () => voiceChannel.leave());
 						return null;

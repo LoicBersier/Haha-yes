@@ -39,7 +39,7 @@ class dectalkCommand extends Command {
 					return message.channel.send('Oh no! an error has occurred!');
 				})
 				.then(() => {
-					return message.channel.send({files: [`${message.id}_dectalk.wav`]});
+					return message.channel.send({files: [`./dectalk/${message.id}_dectalk.wav`]});
 				});
 		} else if (process.platform == 'linux' || process.platform == 'darwin') {
 			let loadingmsg = await message.channel.send('Processing ( this can take some time ) <a:loadingmin:527579785212329984>');
@@ -52,7 +52,7 @@ class dectalkCommand extends Command {
 				})
 				.then(() => {
 					loadingmsg.delete();
-					return message.channel.send({files: [`${message.id}_dectalk.wav`]});
+					return message.channel.send({files: [`./dectalk/${message.id}_dectalk.wav`]});
 				});
 		}
 	}
