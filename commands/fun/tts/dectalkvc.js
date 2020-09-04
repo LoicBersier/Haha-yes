@@ -1,6 +1,5 @@
 const { Command } = require('discord-akairo');
 const { execFile } = require('child_process');
-const os = require('os');
 const rand = require('../../../rand.js');
 
 class dectalkvcCommand extends Command {
@@ -29,7 +28,7 @@ class dectalkvcCommand extends Command {
 
 	async exec(message, args) {
 		args.decMessage = rand.random(args.decMessage, message);
-		let output = `${os.tmpdir()}/${message.id}_dectalk.wav`;
+		let output = `${message.id}_dectalk.wav`;
 		let decMessage = '[:phoneme on] ' + args.decMessage;
 		let loadingmsg = await message.channel.send('Processing ( this can take some time ) <a:loadingmin:527579785212329984>');
 
@@ -44,7 +43,7 @@ class dectalkvcCommand extends Command {
 				}
 
 				loadingmsg.delete();
-				playinVC(output);
+				playinVC(`./dectalk/${output}`);
 			});
 			
 		} else if (process.platform === 'linux' || process.platform === 'darwin') {
@@ -58,7 +57,7 @@ class dectalkvcCommand extends Command {
 				}
 
 				loadingmsg.delete();
-				playinVC(output);
+				playinVC(`./dectalk/${output}`);
 			});
 		}
 

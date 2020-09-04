@@ -1,6 +1,5 @@
 const { Command } = require('discord-akairo');
 const { execFile } = require('child_process');
-const os = require('os');
 const rand = require('../../../rand.js');
 
 class dectalkCommand extends Command {
@@ -29,36 +28,30 @@ class dectalkCommand extends Command {
 
 	async exec(message, args) {
 		args.decMessage = rand.random(args.decMessage, message);
-		let output = `${os.tmpdir()}/${message.id}_dectalk.wav`;
+		let output = `${message.id}_dectalk.wav`;
 		let decMessage = '[:phoneme on]' + args.decMessage;
 		let loadingmsg = await message.channel.send('Processing ( this can take some time ) <a:loadingmin:527579785212329984>');
 
 		if (process.platform === 'win32') {
 			execFile('say.exe', ['-w', output, `${decMessage}`], {cwd: './dectalk/'}, (error, stdout, stderr) => {
-				if (error) {
-					loadingmsg.delete();
-					console.error(stdout);
-					console.error(stderr);
-					console.error(error);
-					return message.channel.send('Oh no! an error has occurred!');
-				}
-
-				loadingmsg.delete();
-				return message.channel.send({files: [output]});
+				sendMessage(output, error, stdout, stderr);
 			});
 		} else if (process.platform === 'linux' || process.platform === 'darwin') {
 			execFile('wine', ['say.exe', '-w', output, `${decMessage}`], {cwd: './dectalk/'}, (error, stdout, stderr) => {
-				if (error) {
-					loadingmsg.delete();
-					console.error(stdout);
-					console.error(stderr);
-					console.error(error);
-					return message.channel.send('Oh no! an error has occurred!');
-				}
-
-				loadingmsg.delete();
-				return message.channel.send({files: [output]});
+				sendMessage(`./dectalk/${output}`, error, stdout, stderr);
 			});
+		}
+
+		async function sendMessage(file, error, stdout, stderr) {
+			console.error(stdout);
+			loadingmsg.delete();
+			if (error) {
+				console.error(stderr);
+				console.error(error);
+				return message.channel.send('Oh no! an error has occurred!');
+			}
+
+			return message.channel.send({files: [file]});
 		}
 	}
 }
