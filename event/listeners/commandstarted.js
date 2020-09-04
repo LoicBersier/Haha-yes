@@ -51,9 +51,10 @@ class commandStartedListener extends Listener {
 		if (dailyStats) {
 			if (command.category.id === 'owner') return; // Don't count owner command
 			let obj = {
-				guild: message.guild.id,
 				command: command.id
 			};
+
+			if (message.guild) obj.guild = 	message.guild.id;
 
 			report.push(obj);
 

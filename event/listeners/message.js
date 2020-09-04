@@ -41,8 +41,12 @@ class messageListener extends Listener {
 		*/
 
 		// Banned words
-		const bannedWords = await BannedWords.findAll({where: {word: Sequelize.where(Sequelize.fn('LOCATE', Sequelize.col('word'), message.content.replace(/\u200B/g, '').replace(/[\u0250-\ue007]/g, '')), Sequelize.Op.ne, 0), serverID: message.guild.id}});
-		const whitelistWord = await WhitelistWord.findAll({where: {word: Sequelize.where(Sequelize.fn('LOCATE', Sequelize.col('word'), message.content.replace(/\u200B/g, '').replace(/[\u0250-\ue007]/g, '')), Sequelize.Op.ne, 0), serverID: message.guild.id}});
+		let bannedWords;
+		let whitelistWord;
+		if (message.guild) {
+			bannedWords = await BannedWords.findAll({where: {word: Sequelize.where(Sequelize.fn('LOCATE', Sequelize.col('word'), message.content.replace(/\u200B/g, '').replace(/[\u0250-\ue007]/g, '')), Sequelize.Op.ne, 0), serverID: message.guild.id}});
+			whitelistWord = await WhitelistWord.findAll({where: {word: Sequelize.where(Sequelize.fn('LOCATE', Sequelize.col('word'), message.content.replace(/\u200B/g, '').replace(/[\u0250-\ue007]/g, '')), Sequelize.Op.ne, 0), serverID: message.guild.id}});
+		}
 
 		if (whitelistWord[0]) {
 			return; // If word is whitelisted just return
