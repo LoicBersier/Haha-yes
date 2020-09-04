@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
-const util = require('util');
-const exec = util.promisify(require('child_process').exec);
+const { execFile } = require('child_process');
+const os = require('os');
 const rand = require('../../../rand.js');
 
 class dectalkCommand extends Command {
@@ -29,31 +29,36 @@ class dectalkCommand extends Command {
 
 	async exec(message, args) {
 		args.decMessage = rand.random(args.decMessage, message);
-		args.decMessage = args.decMessage.replace('\n', ' ');
-		let decMessage = '[:phoneme on] ' + args.decMessage.replace(/(["'$`\\])/g,'\\$1');
+		let output = `${os.tmpdir()}/${message.id}_dectalk.wav`;
+		let decMessage = '[:phoneme on]' + args.decMessage;
+		let loadingmsg = await message.channel.send('Processing ( this can take some time ) <a:loadingmin:527579785212329984>');
 
-		if (process.platform == 'win32') {
-			exec(`cd .\\dectalk && .\\say.exe -w ${message.id}_dectalk.wav "${decMessage}"`)
-				.catch(err => {
-					console.error(err);
+		if (process.platform === 'win32') {
+			execFile('say.exe', ['-w', output, `${decMessage}`], {cwd: './dectalk/'}, (error, stdout, stderr) => {
+				if (error) {
+					loadingmsg.delete();
+					console.error(stdout);
+					console.error(stderr);
+					console.error(error);
 					return message.channel.send('Oh no! an error has occurred!');
-				})
-				.then(() => {
-					return message.channel.send({files: [`./dectalk/${message.id}_dectalk.wav`]});
-				});
-		} else if (process.platform == 'linux' || process.platform == 'darwin') {
-			let loadingmsg = await message.channel.send('Processing ( this can take some time ) <a:loadingmin:527579785212329984>');
+				}
 
-			exec(`cd dectalk && DISPLAY=:0.0 wine say.exe -w ${message.id}_dectalk.wav "${decMessage}"`)
-				.catch(err => {
+				loadingmsg.delete();
+				return message.channel.send({files: [output]});
+			});
+		} else if (process.platform === 'linux' || process.platform === 'darwin') {
+			execFile('wine', ['say.exe', '-w', output, `${decMessage}`], {cwd: './dectalk/'}, (error, stdout, stderr) => {
+				if (error) {
 					loadingmsg.delete();
-					console.error(err);
+					console.error(stdout);
+					console.error(stderr);
+					console.error(error);
 					return message.channel.send('Oh no! an error has occurred!');
-				})
-				.then(() => {
-					loadingmsg.delete();
-					return message.channel.send({files: [`./dectalk/${message.id}_dectalk.wav`]});
-				});
+				}
+
+				loadingmsg.delete();
+				return message.channel.send({files: [output]});
+			});
 		}
 	}
 }

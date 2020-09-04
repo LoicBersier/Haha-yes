@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
-const util = require('util');
-const exec = util.promisify(require('child_process').exec);
+const { execFile } = require('child_process');
+const os = require('os');
 const rand = require('../../../rand.js');
 
 class dectalkvcCommand extends Command {
@@ -29,58 +29,53 @@ class dectalkvcCommand extends Command {
 
 	async exec(message, args) {
 		args.decMessage = rand.random(args.decMessage, message);
-		args.decMessage = args.decMessage.replace('\n', ' ');
-		let decMessage = '[:phoneme on] ' + args.decMessage.replace(/(["'$`\\])/g,'\\$1');
+		let output = `${os.tmpdir()}/${message.id}_dectalk.wav`;
+		let decMessage = '[:phoneme on] ' + args.decMessage;
+		let loadingmsg = await message.channel.send('Processing ( this can take some time ) <a:loadingmin:527579785212329984>');
 
-		if (process.platform == 'win32') {
-			exec(`cd .\\dectalk && .\\say.exe -w ${message.id}_dectalk.wav "${decMessage}"`)
-				.catch(err => {
-					console.error(err);
-					return message.channel.send('Oh no! an error has occurred!');
-				})
-				.then(async () => {
-					const voiceChannel = message.member.voice.channel;
-					if (!voiceChannel) return message.channel.send('Please enter a voice channel first.');
-					try {
-						const connection = await voiceChannel.join();
-						const dispatcher = connection.play(`./dectalk/${message.id}_dectalk.wav`);
-						dispatcher.once('finish', () => voiceChannel.leave());
-						dispatcher.once('error', () => voiceChannel.leave());
-						return null;
-					} catch (err) {
-						voiceChannel.leave();
-						return message.reply(`Oh no, an error occurred: \`${err.message}\`.`);
-					}
-				});
-			
-		} else if (process.platform == 'linux' || process.platform == 'darwin') {
-			let loadingmsg = await message.channel.send('Processing ( this can take some time ) <a:loadingmin:527579785212329984>');
-
-			exec(`cd dectalk && DISPLAY=:0.0 wine say.exe -w ${message.id}_dectalk.wav "${decMessage}"`)
-				.catch(err => {
+		if (process.platform === 'win32') {
+			execFile('say.exe', ['-w', output, `${decMessage}`], {cwd: './dectalk/'}, async (error, stdout, stderr) => {
+				if (error) {
 					loadingmsg.delete();
-					console.error(err);
+					console.error(stdout);
+					console.error(stderr);
+					console.error(error);
 					return message.channel.send('Oh no! an error has occurred!');
-				})
-				.then(async () => {
-					const voiceChannel = message.member.voice.channel;
-					if (!voiceChannel) return message.channel.send('Please enter a voice channel first.');
-					try {
-						loadingmsg.delete();
-						const connection = await voiceChannel.join();
-						const dispatcher = connection.play(`./dectalk/${message.id}_dectalk.wav`);
-						dispatcher.once('finish', () => voiceChannel.leave());
-						dispatcher.once('error', () => voiceChannel.leave());
-						return null;
-					} catch (err) {
-						voiceChannel.leave();
-						loadingmsg.delete();
-						return message.reply(`Oh no, an error occurred: \`${err.message}\`.`);
-					}
-				});
+				}
+
+				loadingmsg.delete();
+				playinVC(output);
+			});
+			
+		} else if (process.platform === 'linux' || process.platform === 'darwin') {
+			execFile('wine', ['say.exe', '-w', output, `${decMessage}`], {cwd: './dectalk/'}, async (error, stdout, stderr) => {
+				if (error) {
+					loadingmsg.delete();
+					console.error(stdout);
+					console.error(stderr);
+					console.error(error);
+					return message.channel.send('Oh no! an error has occurred!');
+				}
+
+				loadingmsg.delete();
+				playinVC(output);
+			});
 		}
 
-
+		async function playinVC(file) {
+			const voiceChannel = message.member.voice.channel;
+			if (!voiceChannel) return message.channel.send('Please enter a voice channel first.');
+			try {
+				const connection = await voiceChannel.join();
+				const dispatcher = connection.play(file);
+				dispatcher.once('finish', () => voiceChannel.leave());
+				dispatcher.once('error', () => voiceChannel.leave());
+				return null;
+			} catch (err) {
+				voiceChannel.leave();
+				return message.reply(`Oh no, an error occurred: \`${err.message}\`.`);
+			}
+		}
 	}
 }
 
