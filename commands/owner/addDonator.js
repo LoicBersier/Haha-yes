@@ -65,7 +65,7 @@ class addDonatorCommand extends Command {
 			message.channel.awaitMessages(filter, {time: 5000 * 1000, max: 1, errors: ['time'] })
 				.then(messages => {
 					let messageContent = messages.map(messages => messages.content);
-					if (messageContent === 'y' || messageContent === 'yes') {
+					if (messageContent[0] === 'y' || messageContent[0] === 'yes') {
 						const body = {comment: userComment};
 						donator.update(body, {where: {userID: args.id}});
 						console.log(userComment);
@@ -76,7 +76,8 @@ class addDonatorCommand extends Command {
 						}
 					}
 				})
-				.catch(() => {
+				.catch(err => {
+					console.error(err);
 					return message.channel.send('Took too long to answer. didin\'t update anything.');
 				});
 		}
