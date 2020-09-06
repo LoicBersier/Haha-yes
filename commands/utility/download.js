@@ -43,7 +43,7 @@ class DownloadCommand extends Command {
 				}
 			],
 			description: {
-				content: 'Download videos from different website from the link you provided, use `-s` to make the vid a spoiler, `--proxy #` to select a proxy, `--listproxy` to see a list of proxy',
+				content: 'Download videos from different website from the link you provided\n`-s` to make the video as a spoiler\n`--proxy #` to select a proxy\n`--listproxy` to see a list of proxy',
 				usage: '[link] [caption]',
 				examples: ['https://www.youtube.com/watch?v=6n3pFFPSlW4 Look at this funny gnome', 'https://www.youtube.com/watch?v=6n3pFFPSlW4 --proxy 1', '--listproxy']
 			}
@@ -91,7 +91,7 @@ class DownloadCommand extends Command {
 
 		downloader(args.link.href, args.proxy != null ? ['--proxy', proxy[args.proxy].ip] : null, `${os.tmpdir()}/${filename}.mp4`)
 			.on('error', async err => {
-				if (err.includes('HTTP Error 429: Too Many Requests')) return message.channel.send('`HTTP Error 429: Too Many Requests.`\nThe website you tried to download from probably has the bot blocked, you can try again with the `--proxy` option and hope it work.');
+				if (err.includes('HTTP Error 429: Too Many Requests')) return message.channel.send('`HTTP Error 429: Too Many Requests.`\nThe website you tried to download from probably has the bot blocked, you can try again with the `--proxy #` option ( can see the list of proxy with --listproxy ) and hope it work.');
 				return message.channel.send(err, { code: true });
 			})
 			.on('end', async output => {
