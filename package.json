@@ -27,7 +27,7 @@
     "meta-extractor": "^1.5.2",
     "mkdirp": "^0.5.5",
     "mysql2": "^1.7.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "node-opus": "^0.3.3",
     "safe-regex": "^2.1.1",
     "sequelize": "^5.22.3",
