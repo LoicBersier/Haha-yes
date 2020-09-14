@@ -198,7 +198,7 @@ class ytpCommand extends Command {
 							if (!proxy[args.proxy]) return message.channel.send('`HTTP Error 429: Too Many Requests.`\nThe website you tried to download from probably has the bot blocked along with its proxy');
 
 							loadingmsg.delete();
-							return this.client.commandHandler.runCommand(message, this.client.commandHandler.findCommand('download'), args);
+							return this.client.commandHandler.runCommand(message, this.client.commandHandler.findCommand('ytp'), args);
 						}
 
 						if (err.includes('Error: status code 403')) return message.channel.send('`HTTP Error 403: Forbidden.`\nThe video you tried to download is not publicly available therefor the bot can\'t download it.');
