@@ -164,7 +164,7 @@ class ytpCommand extends Command {
 		}
 
 		if (args.add) {
-			if (args.proxy) {
+			if (args.proxy && !args.proxyAuto) { // args.proxyAuto is only provided when the command is run after a error 429
 				args.proxy = args.proxy -1;
 				if (!proxy[args.proxy]) args.proxy = 0;
 			}
@@ -187,9 +187,24 @@ class ytpCommand extends Command {
 
 				return downloader(url, options, `./asset/ytp/userVid/${message.id}.mp4`)
 					.on('error', (err) => {
-						loadingmsg.delete();
-						if (err.includes('HTTP Error 429: Too Many Requests')) return message.channel.send('`HTTP Error 429: Too Many Requests.`\nThe website you tried to download from probably has the bot blocked, you can try again with the `--proxy #` option ( can see the list of proxy with --listproxy ) and hope it work.');
+						if (err.includes('HTTP Error 429: Too Many Requests')) {
+							if (args.proxy != null) {
+								args.proxy = args.proxy + 1;
+							} else {
+								args.proxy = 0;
+								args.proxyAuto = true;
+							}
+
+							if (!proxy[args.proxy]) return message.channel.send('`HTTP Error 429: Too Many Requests.`\nThe website you tried to download from probably has the bot blocked along with its proxy');
+
+							loadingmsg.delete();
+							return this.client.commandHandler.runCommand(message, this.client.commandHandler.findCommand('download'), args);
+						}
+
+						if (err.includes('Error: status code 403')) return message.channel.send('`HTTP Error 403: Forbidden.`\nThe video you tried to download is not publicly available therefor the bot can\'t download it.');
+
 						return message.channel.send(err, { code: true });
+
 					})
 					.on('end', async output => {
 						const hash = md5File.sync(output);

@@ -51,6 +51,7 @@ class DownloadCommand extends Command {
 	}
 
 	async exec(message, args) {
+		console.log(args.proxy);
 		if (args.listproxy) {
 			let proxys = [];
 
@@ -74,8 +75,8 @@ class DownloadCommand extends Command {
 		let loadingmsg = await message.channel.send('Downloading <a:loadingmin:527579785212329984>');
 		let filename = `${message.id}_video`;
 
-		if (args.proxy) {
-			args.proxy = args.proxy -1;
+		if (args.proxy && !args.proxyAuto) { // args.proxyAuto is only provided when the command is run after a error 429
+			args.proxy = args.proxy - 1;
 			if (!proxy[args.proxy]) args.proxy = 0;
 		}
 
@@ -91,7 +92,22 @@ class DownloadCommand extends Command {
 
 		downloader(args.link.href, args.proxy != null ? ['--proxy', proxy[args.proxy].ip] : null, `${os.tmpdir()}/${filename}.mp4`)
 			.on('error', async err => {
-				if (err.includes('HTTP Error 429: Too Many Requests')) return message.channel.send('`HTTP Error 429: Too Many Requests.`\nThe website you tried to download from probably has the bot blocked, you can try again with the `--proxy #` option ( can see the list of proxy with --listproxy ) and hope it work.');
+				if (err.includes('HTTP Error 429: Too Many Requests')) {
+					if (args.proxy != null) {
+						args.proxy = args.proxy + 1;
+					} else {
+						args.proxy = 0;
+						args.proxyAuto = true;
+					}
+
+					if (!proxy[args.proxy]) return message.channel.send('`HTTP Error 429: Too Many Requests.`\nThe website you tried to download from probably has the bot blocked along with its proxy');
+
+					loadingmsg.delete();
+					return this.client.commandHandler.runCommand(message, this.client.commandHandler.findCommand('download'), args);
+				}
+
+				if (err.includes('Error: status code 403')) return message.channel.send('`HTTP Error 403: Forbidden.`\nThe video you tried to download is not publicly available therefor the bot can\'t download it.');
+
 				return message.channel.send(err, { code: true });
 			})
 			.on('end', async output => {
