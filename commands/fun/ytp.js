@@ -321,11 +321,20 @@ class ytpCommand extends Command {
 			.catch(err => {
 				console.error(err);
 				loadingmsg.delete();
-				return message.reply({files: [Math.random() < 0.5 ? './asset/ytp/error1.mp4' : './asset/ytp/error2.mp4']})
-					.catch(err => { // In case it can't send the video for some reason
-						console.error(err);
-						return message.channel.send('Oh no, an error has occurred! please try again. If this happens alot, you should report this to the developers.');
-					});
+				if (!args.retry)
+					args.retry = 0;
+				else
+					args.retry += 1;
+
+				if (args.retry === 3) {
+					return message.reply({files: [Math.random() < 0.5 ? './asset/ytp/error1.mp4' : './asset/ytp/error2.mp4']})
+						.catch(err => { // In case it can't send the video for some reason
+							console.error(err);
+							return message.channel.send('Oh no, an error has occurred! please try again. If this happens alot, you should report this to the developers.');
+						});
+				}
+
+				return this.client.commandHandler.runCommand(message, this.client.commandHandler.findCommand('ytp'), args);
 			});
 	}
 }
