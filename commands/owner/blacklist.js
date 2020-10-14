@@ -1,10 +1,10 @@
 const { Command } = require('discord-akairo');
 const userBlacklist = require('../../models').userBlacklist;
 
-class blacklistCommand extends Command {
+class userBlacklistCommand extends Command {
 	constructor() {
-		super('blacklist', {
-			aliases: ['blacklist'],
+		super('userBlacklist', {
+			aliases: ['userblacklist'],
 			category: 'owner',
 			ownerOnly: 'true',
 			userPermissions: ['MANAGE_MESSAGES'],
@@ -54,4 +54,4 @@ class blacklistCommand extends Command {
 	}
 }
 
-module.exports = blacklistCommand;
+module.exports = userBlacklistCommand;
