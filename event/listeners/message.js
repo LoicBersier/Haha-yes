@@ -43,9 +43,10 @@ class messageListener extends Listener {
 		// Banned words
 		let bannedWords = [];
 		let whitelistWord = [];
-		if (message.guild) {
+
+		if (message.guild) { // I forgot how the FUCK it work, that's what i get for not commenting my code
 			bannedWords = await BannedWords.findAll({where: {word: Sequelize.where(Sequelize.fn('LOCATE', Sequelize.col('word'), message.content.replace(/\u200B/g, '').replace(/[\u0250-\ue007]/g, '')), Sequelize.Op.ne, 0), serverID: message.guild.id}});
-			whitelistWord = await WhitelistWord.findAll({where: {word: Sequelize.where(Sequelize.fn('LOCATE', Sequelize.col('word'), message.content.replace(/\u200B/g, '').replace(/[\u0250-\ue007]/g, '')), Sequelize.Op.ne, 0), serverID: message.guild.id}});
+			whitelistWord = await WhitelistWord.findAll({where: {word: message.content.replace(/\u200B/g, '').replace(/[\u0250-\ue007]/g), serverID: message.guild.id}});
 		}
 
 		if (whitelistWord[0]) {
