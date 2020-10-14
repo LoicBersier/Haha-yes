@@ -49,7 +49,7 @@ class whitelistWordCommand extends Command {
 				whitelistWord.destroy({where: {word: args.word.toLowerCase(), serverID: message.guild.id}});
 				return message.channel.send(`The word ${args.word.toLowerCase()} is no longer whitelisted`);
 			} else {
-				return message.channel.send('There was no word to whiteliste');
+				return message.channel.send('There was no word to unwhitelist');
 			}
 		}
 
