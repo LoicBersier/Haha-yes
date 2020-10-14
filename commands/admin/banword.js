@@ -5,7 +5,7 @@ const BannedWords = require('../../models').bannedWords;
 class BannedWordsCommand extends Command {
 	constructor() {
 		super('BannedWords', {
-			aliases: ['bannedword', 'banword', 'unbanword', 'censor', 'uncensor'],
+			aliases: ['bannedword', 'banword', 'unbanword', 'censor', 'uncensor', 'blacklistword', 'blacklist', 'unblacklist'],
 			category: 'admin',
 			userPermissions: ['MANAGE_MESSAGES'],
 			clientPermissions: ['MANAGE_MESSAGES', 'SEND_MESSAGES'],
@@ -42,7 +42,7 @@ class BannedWordsCommand extends Command {
 		args.word = args.word.replace(/[\u0250-\ue007]/g, '');
 		const bannedWords = await BannedWords.findOne({where: {word: args.word.toLowerCase(), serverID: message.guild.id}});
 
-		if (message.util.parsed.alias == 'unbanword' || args.remove) {
+		if (message.util.parsed.alias == 'unbanword' || message.util.parsed.alias == 'uncensor' || message.util.parsed.alias == 'unblacklist' || args.remove || args.removeall) {
 			if (args.removeall) {
 				BannedWords.destroy({where: {serverID: message.guild.id}});
 				return message.channel.send('The banned words have been reset.');
