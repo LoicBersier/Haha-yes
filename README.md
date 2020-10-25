@@ -25,7 +25,7 @@ You need to install the following
 
 ### Installing
 ```
-git clone https://gitlab.com/loicbersier/discordbot
+git clone https://git.namejeff.xyz/Supositware/Haha-Yes
 cd discordbot
 npm install
 

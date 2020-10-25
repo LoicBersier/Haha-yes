@@ -51,11 +51,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/LoicBersier/DiscordBot.git"
+    "url": "git+https://git.namejeff.xyz/Supositware/Haha-Yes.git"
   },
   "bugs": {
-    "url": "https://gitlab.com/LoicBersier/DiscordBot/issues"
+    "url": "https://git.namejeff.xyz/Supositware/Haha-Yes/issues"
   },
-  "homepage": "https://gitlab.com/LoicBersier/DiscordBot#readme",
+  "homepage": "https://git.namejeff.xyz/Supositware/Haha-Yes#readme",
   "description": "The haha yes discord bot."
 }
