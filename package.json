@@ -4,11 +4,11 @@
   "main": "index.js",
   "dependencies": {
     "4chan-boards": "^2.0.1",
-    "@discordjs/opus": "^0.3.2",
+    "@discordjs/opus": "^0.3.3",
     "@google-cloud/text-to-speech": "^2.3.0",
     "asciify-image": "^0.1.6",
     "axios": "^0.19.2",
-    "bufferutil": "^4.0.1",
+    "bufferutil": "^4.0.2",
     "canvas": "^2.6.0",
     "capture-website": "^0.8.2",
     "cheerio": "^1.0.0-rc.3",
@@ -27,7 +27,7 @@
     "meta-extractor": "^1.5.2",
     "mkdirp": "^0.5.5",
     "mysql2": "^1.7.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "node-opus": "^0.3.3",
     "safe-regex": "^2.1.1",
     "sequelize": "^5.22.3",
@@ -35,7 +35,7 @@
     "superagent": "^4.1.0",
     "turndown": "^5.0.3",
     "twit": "^2.2.11",
-    "utf-8-validate": "^5.0.2",
+    "utf-8-validate": "^5.0.3",
     "youtube-dl": "^1.13.1",
     "ytdl-core": "^0.29.7",
     "ytpplus-node": "git+https://git@github.com/loicbersier/ytpplus-node.git",
@@ -44,10 +44,10 @@
   "devDependencies": {
     "eslint": "^5.16.0",
     "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1"
+    "eslint-plugin-standard": "^4.0.2"
   },
   "repository": {
     "type": "git",
