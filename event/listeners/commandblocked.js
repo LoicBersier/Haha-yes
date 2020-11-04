@@ -38,7 +38,7 @@ class CommandBlockedListener extends Listener {
 			break;
 		case 'serverblacklist': 
 			Embed.setTitle('Server blacklisted.');
-			Embed.setDescription(`This server have been blacklisted... to appeal contact ${this.client.users.resolve(this.client.ownerID).tag}, and now i will yeet out of here`);
+			Embed.setDescription(`This server have been blacklisted... to appeal contact ${this.client.users.resolveID(this.client.ownerID).tag}, and now i will yeet out of here`);
 			message.channel.send(Embed);
 			message.guild.leave();
 			break;
