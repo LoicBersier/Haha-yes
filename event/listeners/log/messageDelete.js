@@ -10,13 +10,6 @@ class messageDeleteListener extends Listener {
 	}
 
 	async exec(message) {
-		if (message.partial) {
-			await message.fetch()
-				.catch(err => {
-					return console.error(err);
-				});
-		}
-
 		if (!message.guild) return;
 
 		if (!message.author) return;
