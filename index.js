@@ -19,7 +19,6 @@ class hahaYesClient extends AkairoClient {
 		}, {
 			partials: ['MESSAGE', 'REACTION'],
 			disableMentions: 'everyone',
-			fetchAllMembers: true,
 		});
 
 		this.commandHandler = new CommandHandler(this, {
