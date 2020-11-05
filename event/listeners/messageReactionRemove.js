@@ -92,7 +92,7 @@ class messageReactionRemoveListener extends Listener {
 				description = '';
 
 			let Embed = client.util.embed()
-				.setColor(reaction.message.member.displayHexColor)
+				.setColor(reaction.message.member ? reaction.message.member.displayHexColor : 'NAVY')
 				.setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL())
 				.addField('Jump to', `[message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`, true)
 				.addField('Channel', reaction.message.channel, true)
