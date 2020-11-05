@@ -23,7 +23,7 @@ class ReadyListener extends Listener {
 		let channelSize = this.client.channels.cache.size;
 		let profilePicture = this.client.user.displayAvatarURL();
 		let clientID = this.client.user.id;
-		let author = this.client.users.resolveID(ownerID).tag;
+		let author = this.client.users.resolve(ownerID).tag;
 
 
 		//  Send stats to the console
