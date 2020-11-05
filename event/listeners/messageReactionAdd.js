@@ -1,6 +1,6 @@
 const { Listener } = require('discord-akairo');
 const fs = require('fs');
-let messageID = require('../../json/messageID.json'); // Save messages that ented starboard so we can edit/remove the embed
+let messageID = require('../../json/messageID.json'); // Save messages that entered starboard so we can edit/remove the embed
 
 
 class MessageReactionAddListener extends Listener {
@@ -12,6 +12,13 @@ class MessageReactionAddListener extends Listener {
 	}
 
 	async exec(reaction) {
+		if (reaction.partial) {
+			await reaction.fetch()
+				.catch(err => {
+					return console.error(err);
+				});
+		}
+
 		if (reaction.message.partial) {
 			await reaction.message.fetch()
 				.catch(err => {
