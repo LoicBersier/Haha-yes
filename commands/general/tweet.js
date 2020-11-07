@@ -33,7 +33,7 @@ class tweetCommand extends Command {
 	async exec(message, args) {
 		if (args.text) {
 			// Very simple link detection
-			if (args.text.includes('http') && !args.text.includes('twitter.com')) return message.channel.send('You may not tweet links outside of twitter.com');
+			if (new RegExp('([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?(/.*)?').test(args.text) && !args.text.includes('twitter.com')) return message.channel.send('You may not tweet links outside of twitter.com');
 			// Do not allow discord invites
 			if (args.text.includes('discord.gg') || args.text.includes('discord.com/invite/')) return message.channel.send('No discord invite allowed.');
 		}
