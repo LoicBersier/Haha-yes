@@ -46,9 +46,9 @@ class aboutCommand extends Command {
 					.setDescription(description)
 					.addField('Current commit', out.stdout)
 					.addField('Current owner: ', `${this.client.users.resolve(this.client.ownerID).tag} (${this.client.ownerID})`)
+					.addField('Gitea (Main)', 'https://git.namejeff.xyz/Supositware/Haha-Yes', true)
 					.addField('Gitlab (Mirror)', 'https://gitlab.com/LoicBersier/DiscordBot', true)
 					.addField('Github (Mirror)', 'https://github.com/loicbersier/Haha-yes', true)
-					.addField('Gitea', 'https://git.namejeff.xyz/Supositware/Haha-Yes', true)
 					.setThumbnail('https://its.gamingti.me/ZiRe.png')
 					.setFooter(`Original bot made by ${this.client.users.resolve('267065637183029248').tag} (267065637183029248)`); // Please this line
 
