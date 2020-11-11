@@ -19,8 +19,8 @@
     "file-type": "^14.6.2",
     "fluent-ffmpeg": "^2.1.2",
     "gm": "^1.23.1",
-    "grpc": "^1.24.3",
-    "handbrake-js": "^5.0.0",
+    "grpc": "^1.24.4",
+    "handbrake-js": "^5.0.2",
     "jimp": "^0.10.3",
     "libsodium-wrappers": "^0.7.6",
     "md5-file": "^5.0.0",
@@ -47,7 +47,7 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.2"
+    "eslint-plugin-standard": "^4.1.0"
   },
   "repository": {
     "type": "git",
