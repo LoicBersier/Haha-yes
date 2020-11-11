@@ -3,7 +3,11 @@ if (!fs.existsSync('./config.json')) {
 	throw new Error('I could not find config.json, are you sure you have it?');
 }
 const { AkairoClient, CommandHandler, InhibitorHandler, ListenerHandler } = require('discord-akairo');
+const { Intents } = require('discord.js');
 const { token, prefix, ownerID } = require('./config.json');
+
+let intents = new Intents(Intents.ALL);
+intents.remove('GUILD_PRESENCES');
 
 class hahaYesClient extends AkairoClient {
 	constructor() {
@@ -17,8 +21,10 @@ class hahaYesClient extends AkairoClient {
 				} 
 			}
 		}, {
-			partials: ['MESSAGE', 'REACTION'],
+			partials: ['MESSAGE'],
 			disableMentions: 'everyone',
+			ws: { intents: intents },
+			fetchAllMembers: true
 		});
 
 		this.commandHandler = new CommandHandler(this, {
