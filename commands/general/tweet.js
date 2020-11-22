@@ -46,7 +46,7 @@ class tweetCommand extends Command {
 		const blacklist = await TwitterBlacklist.findOne({where: {userID:message.author.id}});
 
 		if (blacklist) {
-			return message.channel.send(`You have been blacklisted for the following reasons: \`\`${blacklist.get('reason')}\`\` be less naughty less time.`);
+			return message.channel.send(`You have been blacklisted for the following reasons: \`\`${blacklist.get('reason')}\`\` be less naughty next time.`);
 		}
 		// Don't let account new account use this command to prevent spam
 		if (message.author.createdAt > date.setDate(date.getDate() - 7)) {
