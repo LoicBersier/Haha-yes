@@ -16,6 +16,7 @@ class ReadyListener extends Listener {
 	}
 
 	async exec() {
+		console.log(this.client.users.cache.size);
 		let commandSize = this.client.commandHandler.modules.size;
 		let clientTag = this.client.user.tag;
 		let guildSize = this.client.guilds.cache.size;
@@ -23,7 +24,7 @@ class ReadyListener extends Listener {
 		let channelSize = this.client.channels.cache.size;
 		let profilePicture = this.client.user.displayAvatarURL();
 		let clientID = this.client.user.id;
-		let author = this.client.users.resolve(ownerID).tag;
+		//let author = this.client.users.resolve(ownerID).tag;
 
 
 		//  Send stats to the console
@@ -57,7 +58,7 @@ class ReadyListener extends Listener {
 				status = status.replace('${prefix}', prefix[0]);
 						
 				client.user.setActivity(`${status} | My prefix is: ${prefix[0]}`, { type: 'PLAYING' });
-			} else if (random === 2 && owner.presence.activities != null) { // Bot owner status
+			} /* else if (random === 2 && owner.presence.activities != null) { // Bot owner status
 				console.log('Status type: \x1b[32mCopying owner status\x1b[0m');
 				// Get elapsed time from when the activity started		
 				let diffMins = 0;
@@ -69,7 +70,7 @@ class ReadyListener extends Listener {
 
 					client.user.setActivity(`${owner.presence.activities[0].name}\nfor ${diffMins} minutes | My prefix is: ${prefix[0]}`, owner.presence.activities[0]);
 				}
-			}
+			} */
 		}
 
 
@@ -80,6 +81,7 @@ class ReadyListener extends Listener {
 		}
 
 		// Expose stats
+		/*
 		if (exposeStats) {
 			const port = 3000;
 
@@ -120,6 +122,7 @@ class ReadyListener extends Listener {
 			});
 			console.log(`Exposing stats on port ${port}`);
 		}
+		*/
 
 		console.log('===========[ READY ]===========');
 
