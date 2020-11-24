@@ -26,6 +26,8 @@ class MessageReactionAddListener extends Listener {
 				});
 		}
 
+		await reaction.message.guild.members.fetch();
+
 		let starboardChannel, shameboardChannel;
 		let reactionCount = reaction.count;
 

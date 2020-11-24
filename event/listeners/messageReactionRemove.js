@@ -11,12 +11,21 @@ class messageReactionRemoveListener extends Listener {
 	}
 
 	async exec(reaction) {
+		if (reaction.partial) {
+			await reaction.fetch()
+				.catch(err => {
+					return console.error(err);
+				});
+		}
+
 		if (reaction.message.partial) {
 			await reaction.message.fetch()
 				.catch(err => {
 					return console.error(err);
 				});
 		}
+
+		await reaction.message.guild.members.fetch();
 
 		let starboardChannel, shameboardChannel;
 		let reactionCount = reaction.count;

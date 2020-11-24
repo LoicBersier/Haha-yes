@@ -32,6 +32,8 @@ class messageListener extends Listener {
 				});
 		}
 
+		await message.guild.members.fetch();
+
 		if (message.author.bot) return;
 
 		/*	Banned words section
