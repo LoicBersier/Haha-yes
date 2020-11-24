@@ -46,7 +46,7 @@ class tweetCommand extends Command {
 		const blacklist = await TwitterBlacklist.findOne({where: {userID:message.author.id}});
 
 		if (blacklist) {
-			return message.channel.send(`You have been blacklisted for the following reasons: \`\`${blacklist.get('reason')}\`\` be less naughty next time.`);
+			return message.channel.send(`You have been blacklisted for the following reasons: \`${blacklist.get('reason')}\` be less naughty next time.`);
 		}
 		// Don't let account new account use this command to prevent spam
 		if (message.author.createdAt > date.setDate(date.getDate() - 7)) {
@@ -157,28 +157,27 @@ class tweetCommand extends Command {
 				} 
 	
 				const tweetid = response.id_str;
-				const publicEmbed = client.util.embed()
-					.setAuthor('Some user of discord said...')
-					.setDescription(text)
-					.addField('Link', `https://twitter.com/i/status/${tweetid}`)
-					.setTimestamp();
-				
-				if (Attachment[0]) publicEmbed.setImage(Attachment[0].url);
 
 				// Im too lazy for now to make an entry in config.json
 				let channel = client.channels.resolve('597964498921455637');
-				channel.send({embed: publicEmbed});
+				channel.send(`https://twitter.com/i/status/${tweetid}`);
 	
 				const Embed = client.util.embed()
 					.setAuthor(message.author.username, message.author.displayAvatarURL())
 					.setDescription(args.text)
 					.addField('Link', `https://twitter.com/i/status/${tweetid}`, true)
 					.addField('Tweet ID', tweetid, true)
+					.addField('Channel ID', message.channel.id, true)
 					.addField('Messsage ID', message.id, true)
 					.addField('Author', `${message.author.username} (${message.author.id})`, true)
 					.setTimestamp();
 
-				if (message.guild) Embed.addField('Guild', `${message.guild.name} (${message.guild.id})`, true);
+				if (message.guild) {
+					Embed.addField('Guild', `${message.guild.name} (${message.guild.id})`, true);
+					Embed.addField('Message link', `https://discord.com/channels/${message.guild.id}/${message.channel.id}/${message.id}`);
+				} else {
+					Embed.addField('Message link', `https://discord.com/channels/@me/${message.channel.id}/${message.id}`);
+				}
 
 				if (Attachment[0]) Embed.setImage(Attachment[0].url);
 				
