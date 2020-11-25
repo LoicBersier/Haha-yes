@@ -11,6 +11,8 @@ class guildCreateListener extends Listener {
 	}
 
 	async exec(guild) {
+		await guild.members.fetch();
+
 		console.log(`${guild.name}\n${guild.memberCount} users\nOwner: ${guild.owner.user.username}\nOwner ID: ${guild.owner}`);
 		const channel = this.client.channels.resolve(statsChannel);
 		let botCount = guild.members.cache.filter(member => member.user.bot).size;
