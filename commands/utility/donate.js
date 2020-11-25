@@ -18,7 +18,7 @@ class donateCommand extends Command {
 		const Embed = this.client.util.embed()
 			.setColor(message.member ? message.member.displayHexColor : 'NAVY')
 			.setTitle('Donation link')
-			.setDescription('If you decide to donate, please use the feedback command to let the owner know about it so he can put you in the about and donator command\n[Paypal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KEMESDXL8Q5YY&source=url)\n[Brave referal program](https://brave.com/hah459)\nTip me with Brave BAT token on [my website](https://namejeff.xyz/)');
+			.setDescription('If you decide to donate, please use the feedback command to let the owner know about it so he can put you in the about and donator command\n[Paypal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KEMESDXL8Q5YY&source=url)');
 
 		return message.channel.send(Embed);
 	}
