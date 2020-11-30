@@ -157,15 +157,17 @@ class tweetCommand extends Command {
 				} 
 	
 				const tweetid = response.id_str;
+				const FunnyWords = ['oppaGangnamStyle', '69', '420', 'cum', 'funnyMan', 'GUCCISmartToilet', 'TwitterForClowns', 'fart', 'mcDotnamejeffDotxyz', 'ok', 'hi', 'howAreYou', 'WhatsNinePlusTen', '21'];
+				const TweetLink = `https://twitter.com/${FunnyWords[Math.floor((Math.random() * FunnyWords.length))]}/status/${tweetid}`;
 
 				// Im too lazy for now to make an entry in config.json
 				let channel = client.channels.resolve('597964498921455637');
-				channel.send(`https://twitter.com/i/status/${tweetid}`);
+				channel.send(TweetLink);
 	
 				const Embed = client.util.embed()
 					.setAuthor(message.author.username, message.author.displayAvatarURL())
 					.setDescription(args.text)
-					.addField('Link', `https://twitter.com/i/status/${tweetid}`, true)
+					.addField('Link', TweetLink, true)
 					.addField('Tweet ID', tweetid, true)
 					.addField('Channel ID', message.channel.id, true)
 					.addField('Messsage ID', message.id, true)
@@ -183,7 +185,7 @@ class tweetCommand extends Command {
 				
 				channel = client.channels.resolve(twiChannel);
 				channel.send({embed: Embed});
-				return message.channel.send(`Go see ur epic tweet https://twitter.com/i/status/${tweetid}`);
+				return message.channel.send(`Go see ur epic tweet ${TweetLink}`);
 			});
 		}
 
