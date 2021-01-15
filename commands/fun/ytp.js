@@ -7,7 +7,7 @@ const attachment = require('../../utils/attachment');
 const downloader = require('../../utils/download');
 const md5File = require('md5-file');
 const ytpHash = require('../../models').ytpHash;
-
+const { ytpChannel } = require('../../config.json');
 
 const MAX_CLIPS = 20;
 
@@ -224,7 +224,7 @@ class ytpCommand extends Command {
 								return message.reply('Video too big.. Not adding.');
 							}
 
-							const body = {hash: hash, link: url, messageID: message.id};
+							const body = {hash: hash, messageID: message.id};
 							await ytpHash.create(body);
 						}
 
@@ -236,8 +236,38 @@ class ytpCommand extends Command {
 							}
 						});
 
+						// (Hopefully) limit video to 2k
+						if (mp4.length > 2000) {
+							let file = mp4.sort((a, b) => {
+								let time1 = fs.statSync(`./asset/ytp/userVid/${b}`).ctime;
+								let time2 = fs.statSync(`./asset/ytp/userVid/${a}`).ctime;
+								if (time1 < time2) return 1;
+								if (time1 > time2) return -1;
+								return 0;
+							}).slice(0,1);
+							console.log(file);
+							fs.unlinkSync(`./asset/ytp/userVid/${file[0]}`);
+						}
+
 						loadingmsg.delete();
-						return message.reply(`Video successfully added to the pool! There is now ${mp4.length} videos`);
+						message.reply(`Video successfully added to the pool! There is now ${mp4.length} videos`);
+
+						const Embed = this.client.util.embed()
+							.setAuthor(message.author.username, message.author.displayAvatarURL())
+							.addField('Channel ID', message.channel.id, true)
+							.addField('Messsage ID', message.id, true)
+							.addField('Author', `${message.author.username} (${message.author.id})`, true)
+							.setTimestamp();
+
+						if (message.guild) {
+							Embed.addField('Guild', `${message.guild.name} (${message.guild.id})`, true);
+							Embed.addField('Message link', `https://discord.com/channels/${message.guild.id}/${message.channel.id}/${message.id}`);
+						} else {
+							Embed.addField('Message link', `https://discord.com/channels/@me/${message.channel.id}/${message.id}`);
+						}
+
+						let channel = this.client.channels.resolve(ytpChannel);
+						return channel.send(url, {embed: Embed});
 
 					});
 			} else {
@@ -308,7 +338,7 @@ class ytpCommand extends Command {
 		new YTPGenerator().configurateAndGo(options)
 			.then(() => {
 				md5File(`${os.tmpdir()}/${message.id}_YTP.mp4`).then(async hash => {
-					const body = {hash: hash, link: 'null', messageID: message.id};
+					const body = {hash: hash, messageID: message.id};
 					await ytpHash.create(body);
 				});
 				loadingmsg.delete();
