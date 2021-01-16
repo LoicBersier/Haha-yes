@@ -127,7 +127,7 @@ class ytpCommand extends Command {
 				}
 			],
 			description: {
-				content: 'Generate random ytp\n--add with a link or attachment to add a video to the pool, only .mp4 work\n--pool to see how many vid there is currently in the pool\n--force to make the command work outside of nsfw channel BE AWARE THAT IT WON\'T CHANGE THE FINAL RESULT SO NSFW CAN STILL HAPPEN\n`--proxy #` to select a proxy, `--listproxy` to see a list of proxy',
+				content: 'Generate random ytp\n--add with a link or attachment to add a video to the pool, only .mp4 work **(Everything submitted here is logged and can get you blacklisted if you post lots of repeated content, post porn/gore, post TOS breaking content)**\n--pool to see how many vid there is currently in the pool\n--force to make the command work outside of nsfw channel BE AWARE THAT IT WON\'T CHANGE THE FINAL RESULT SO NSFW CAN STILL HAPPEN\n`--proxy #` to select a proxy, `--listproxy` to see a list of proxy',
 				usage: '(OPTIONAL) | [Minimum length of clip] [Max length of clip]',
 				examples: ['5 10', '--add https://www.youtube.com/watch?v=6n3pFFPSlW4', '--add https://www.youtube.com/watch?v=6n3pFFPSlW4 --proxy 1', '--listproxy']
 			}
