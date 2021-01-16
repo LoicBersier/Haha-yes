@@ -4,7 +4,7 @@ const ytpblacklist = require('../../models').ytpblacklist;
 class ytpblacklistCommand extends Command {
 	constructor() {
 		super('ytpblacklist', {
-			aliases: ['YTPBlacklist', 'ytpblacklist', 'yblacklist'],
+			aliases: ['ytpblacklist', 'yblacklist'],
 			category: 'owner',
 			ownerOnly: 'true',
 			userPermissions: ['MANAGE_MESSAGES'],
