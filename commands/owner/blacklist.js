@@ -4,7 +4,7 @@ const userBlacklist = require('../../models').userBlacklist;
 class userBlacklistCommand extends Command {
 	constructor() {
 		super('userBlacklist', {
-			aliases: ['userblacklist'],
+			aliases: ['userblacklist', 'ublacklist'],
 			category: 'owner',
 			ownerOnly: 'true',
 			userPermissions: ['MANAGE_MESSAGES'],
@@ -32,7 +32,7 @@ class userBlacklistCommand extends Command {
 		if (!blacklist) {
 			const body = {userID: args.userID};
 			userBlacklist.create(body);
-			return message.channel.send(`The following ID have been blacklisted: ${args.userID}`);
+			return message.channel.send(`The following ID have been blacklisted globally: ${args.userID}`);
 		} else {
 			message.channel.send('This user is already blacklisted, do you want to unblacklist him? y/n');
 			const filter = m =>  m.content && m.author.id === message.author.id;
@@ -43,7 +43,7 @@ class userBlacklistCommand extends Command {
 					console.log(messageContent);
 					if (messageContent[0] === 'y' || messageContent[0] === 'yes') {
 						userBlacklist.destroy({where: {userID:args.userID}});
-						return message.channel.send(`The following ID have been unblacklisted: ${args.userID}`);
+						return message.channel.send(`The following ID have been unblacklisted globally: ${args.userID}`);
 					}
 				})
 				.catch(err => {
