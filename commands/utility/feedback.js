@@ -51,6 +51,11 @@ class FeedbackCommand extends Command {
 		}
 
 		const channel = this.client.channels.resolve(feedbackChannel);
+
+		let Attachment = (message.attachments).array();
+		if (Attachment[0])
+			Embed.setImage(Attachment[0].url);
+
 		channel.send({embed: Embed});
 
 		message.channel.send('Your feedback has been sent!');
