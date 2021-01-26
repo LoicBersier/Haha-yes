@@ -18,6 +18,10 @@
 	"twiConsumerSecret": "Twitter consumer key secret", //optional | for the twitter command
 	"twiToken": "Twitter token", //optional | for the twitter command
 	"twiTokenSecret": "Twitter token secret", //optional | for the twitter command
+	"donations": [ //optional | Donations link to appear in the donation command, markdown can be used in here
+            "ETH adresse: 0x0bc758F572a7D9689e3507C1dd12451Ae4521252",
+            "BTC adresse: bc1q28gdt7hzlml0grmvvextpxeekz5fss7tm5lfsp"
+    ],
     "proxy": [ //Optional | Used for youtube-dl
         {
             "ip": "IP:PORT",

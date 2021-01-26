@@ -1,4 +1,5 @@
 const { Command } = require('discord-akairo');
+const { donations } = require('../../config.json');
 
 class donateCommand extends Command {
 	constructor() {
@@ -15,10 +16,18 @@ class donateCommand extends Command {
 	}
 
 	async exec(message) {
+		if (donations === undefined) return message.channel.send('No donations has been setup on that bot.');
+
+		let desc = 'If you decide to donate, please use the feedback command to let the owner know about it so he can put you in the about and donator command.';
+
+		donations.forEach(m => {
+			desc += `\n${m}`;
+		});
+
 		const Embed = this.client.util.embed()
 			.setColor(message.member ? message.member.displayHexColor : 'NAVY')
 			.setTitle('Donation link')
-			.setDescription('If you decide to donate, please use the feedback command to let the owner know about it so he can put you in the about and donator command\n[Paypal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KEMESDXL8Q5YY&source=url)\nYou can give [BAT token](https://namejeff.xyz) on my website');
+			.setDescription(desc);
 
 		return message.channel.send(Embed);
 	}
