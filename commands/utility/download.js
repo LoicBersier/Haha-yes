@@ -68,13 +68,15 @@ class DownloadCommand extends Command {
 
 
 		if (Hapi) {
-			Embed.setFooter(`Using Hapi | ${Embed.footer.text}`);
-			compressEmbed.setFooter(`Using Hapi | ${compressEmbed.footer.text}`);
+			let error = false;
 
 			const params = new URLSearchParams();
 			params.append('url', args.link.href);
 			fetch(`${Hapi}/download`, {method: 'POST', body: params})
 				.then(async res => {
+					Embed.setFooter(`Using Hapi | ${Embed.footer.text}`);
+					compressEmbed.setFooter(`Using Hapi | ${compressEmbed.footer.text}`);
+
 					if (res.headers.get('content-type') == 'application/json; charset=utf-8') {
 						let json = await res.json();
 						let compressmsg = await message.channel.send(compressEmbed);
@@ -134,15 +136,19 @@ class DownloadCommand extends Command {
 							message.channel.send({embed: Embed, files: [`${os.tmpdir()}/${message.id}.mp4`]});
 						});
 					}
+
 					message.delete();
 					loadingmsg.delete();
 					return;
 				})
 				.catch(e => {
 					console.error(e);
-					return message.channel.send('Hapi server returned an error.');
+					error = true;
+					message.channel.send('Hapi server returned an error or is unreachable. Trying standalone download.');
 				});
-			return;
+
+			if (!error)
+				return;
 		}
 
 		if (args.listproxy) {
