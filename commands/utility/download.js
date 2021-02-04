@@ -1,9 +1,10 @@
 const { Command } = require('discord-akairo');
 const downloader = require('../../utils/download');
 const compress = require('../../utils/compress');
-const { proxy } = require('../../config.json');
+const { proxy, Hapi } = require('../../config.json');
 const os = require('os');
 const fs = require('fs');
+const fetch = require('node-fetch');
 
 class DownloadCommand extends Command {
 	constructor() {
@@ -71,8 +72,6 @@ class DownloadCommand extends Command {
 		}
 
 		if (!args.link) return message.channel.send('Please try again with a valid URL.');
-
-		let loadingmsg = await message.channel.send('Downloading <a:loadingmin:527579785212329984>');
 		let filename = `${message.id}_video`;
 
 		if (args.proxy && !args.proxyAuto) { // args.proxyAuto is only provided when the command is run after a error 429
@@ -83,12 +82,6 @@ class DownloadCommand extends Command {
 		if (args.spoiler) {
 			filename = `SPOILER_${message.id}_video`;
 		}
-
-		const Embed = this.client.util.embed()
-			.setColor(message.member ? message.member.displayHexColor : 'NAVY')
-			.setAuthor(`Downloaded by ${message.author.username}`, message.author.displayAvatarURL(), args.link)
-			.setDescription(args.caption ? args.caption : '')
-			.setFooter(`You can get the original video by clicking on the "downloaded by ${message.author.username}" message!`);
 
 		downloader(args.link.href, args.proxy != null ? ['--proxy', proxy[args.proxy].ip] : null, `${os.tmpdir()}/${filename}.mp4`)
 			.on('error', async err => {
@@ -116,11 +109,6 @@ class DownloadCommand extends Command {
 
 				if (fileSize > 8) {
 					loadingmsg.delete();
-					let compressEmbed = this.client.util.embed()
-						.setColor(message.member ? message.member.displayHexColor : 'NAVY')
-						.setTitle('This one will need compression!')
-						.setDescription('Starting compression now!')
-						.setFooter('Want it to go faster? Donate to the dev with the donate command, so i can get a better server and do it faster!');
 
 					let compressmsg = await message.channel.send(compressEmbed);
 
