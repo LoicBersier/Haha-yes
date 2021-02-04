@@ -52,7 +52,99 @@ class DownloadCommand extends Command {
 	}
 
 	async exec(message, args) {
-		console.log(args.proxy);
+		let Embed = this.client.util.embed()
+			.setColor(message.member ? message.member.displayHexColor : 'NAVY')
+			.setAuthor(`Downloaded by ${message.author.username}`, message.author.displayAvatarURL(), args.link)
+			.setDescription(args.caption ? args.caption : '')
+			.setFooter(`You can get the original video by clicking on the "downloaded by ${message.author.username}" message!`);
+
+		let compressEmbed = this.client.util.embed()
+			.setColor(message.member ? message.member.displayHexColor : 'NAVY')
+			.setTitle('This one will need compression!')
+			.setDescription('Starting compression now!')
+			.setFooter('Want it to go faster? Donate to the dev with the donate command, so i can get a better server and do it faster!');
+
+		let loadingmsg = await message.channel.send('Downloading <a:loadingmin:527579785212329984>');
+
+
+		if (Hapi) {
+			Embed.setFooter(`Using Hapi | ${Embed.footer.text}`);
+			compressEmbed.setFooter(`Using Hapi | ${compressEmbed.footer.text}`);
+
+			const params = new URLSearchParams();
+			params.append('url', args.link.href);
+			fetch(`${Hapi}/download`, {method: 'POST', body: params})
+				.then(async res => {
+					if (res.headers.get('content-type') == 'application/json; charset=utf-8') {
+						let json = await res.json();
+						let compressmsg = await message.channel.send(compressEmbed);
+
+						console.log(json);
+
+						let editmsg = setInterval(() => {
+							console.log('a');
+							fetch(json.status)
+								.then(res => res.json())
+								.then(json => {
+									console.log(json);
+									compressEmbed.setDescription(`Ready in ${json.eta === '' ? 'soon enough' : json.eta}. ${json.percent}% complete.`);
+									compressmsg.edit(compressEmbed);
+								})
+								.catch (e=>  {
+									console.error(e);
+									clearInterval(editmsg);
+									return message.channel.send('Hapi server returned an error.');
+								});
+						}, 5000);
+
+
+						let retry = 0;
+						let interval = setInterval(() => {
+							fetch(`${json.final}`)
+								.then(res => {
+									if (res.status == 200) {
+										clearInterval(editmsg);
+										clearInterval(interval);
+										const dest = fs.createWriteStream(`${os.tmpdir()}/${message.id}compressed.mp4`);
+										res.body.pipe(dest);
+										dest.on('finish', () => {
+											compressmsg.delete();
+											message.channel.send({
+												embed: Embed,
+												files: [`${os.tmpdir()}/${message.id}compressed.mp4`]
+											});
+										});
+									} else {
+										retry++;
+										if (retry >= 5)
+											return;
+									}
+									console.log(`try #${retry} status ${res.status}`);
+								})
+								.catch (e=>  {
+									console.error(e);
+									clearInterval(interval);
+									return message.channel.send('Hapi server returned an error.');
+								});
+						}, 5000);
+					} else {
+						const dest = fs.createWriteStream(`${os.tmpdir()}/${message.id}.mp4`);
+						res.body.pipe(dest);
+						dest.on('finish', () => {
+							message.channel.send({embed: Embed, files: [`${os.tmpdir()}/${message.id}.mp4`]});
+						});
+					}
+					message.delete();
+					loadingmsg.delete();
+					return;
+				})
+				.catch(e => {
+					console.error(e);
+					return message.channel.send('Hapi server returned an error.');
+				});
+			return;
+		}
+
 		if (args.listproxy) {
 			let proxys = [];
 
