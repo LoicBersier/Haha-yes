@@ -34,7 +34,7 @@ class InviteCommand extends Command {
 				return message.channel.send('Sorry, the user you mentioned is not a bot!');
 			}
 		} else {
-			let invMessage = `You can add me from here: https://discordapp.com/oauth2/authorize?client_id=${this.client.user.id}&scope=bot&scope=applications.commands&permissions=0\nYou can also join my support server over here: ${supportServer} come and say hi :)`;
+			let invMessage = `You can add me from here: https://discord.com/oauth2/authorize?client_id=${this.client.user.id}&scope=bot&permissions=0\nYou can also join my support server over here: ${supportServer} come and say hi :)`;
 			if (args.here) {
 				message.channel.send(invMessage);
 			} else {
