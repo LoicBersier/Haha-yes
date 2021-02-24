@@ -6,6 +6,7 @@ const fs = require('fs');
 const rand = require('../../rand.js');
 const TwitterBlacklist = require('../../models').TwitterBlacklist;
 const { twiConsumer, twiConsumerSecret, twiToken, twiTokenSecret, twiChannel } = require('../../config.json');
+const wordToCensor = require('../../json/censor.json');
 
 class tweetCommand extends Command {
 	constructor() {
@@ -31,13 +32,6 @@ class tweetCommand extends Command {
 	}
 
 	async exec(message, args) {
-		if (args.text) {
-			// Very simple link detection
-			if (new RegExp('([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?(/.*)?').test(args.text) && !args.text.includes('twitter.com')) return message.channel.send('You may not tweet links outside of twitter.com');
-			// Do not allow discord invites
-			if (args.text.includes('discord.gg') || args.text.includes('discord.com/invite/')) return message.channel.send('No discord invite allowed.');
-		}
-
 		let Attachment = (message.attachments).array();
 		if (!Attachment[0] && !args.text) return message.channel.send('You need to input something for me to tweet!');
 
@@ -48,14 +42,28 @@ class tweetCommand extends Command {
 		if (blacklist) {
 			return message.channel.send(`You have been blacklisted for the following reasons: \`${blacklist.get('reason')}\` be less naughty next time.`);
 		}
-		// Don't let account new account use this command to prevent spam
-		if (message.author.createdAt > date.setDate(date.getDate() - 7)) {
+		// If account is less than 6 months old don't accept the tweet ( alt prevention )
+		if (message.author.createdAt > date.setMonth(date.getMonth() - 6)) {
 			return message.channel.send('Your account is too new to be able to use this command!');
 		}
 
-		// If account is younger than 6 months old don't accept attachment
-		if (Attachment[0] && message.author.createdAt > date.setMonth(date.getMonth() - 6)) {
+		// If account is less than 1 year old don't accept attachment
+		if (Attachment[0] && message.author.createdAt > date.setMonth(date.getMonth() - 12)) {
 			return message.channel.send('Your account need to be 6 months or older to be able to send attachment!');
+		}
+
+		if (args.text) {
+			// Detect banned word (Blacklist the user directly)
+			if (wordToCensor.includes(args.text)) {
+				const body = {userID: message.author.id, reason: 'Automatic ban from banned word.'};
+				TwitterBlacklist.create(body);
+				return message.channel.send('Sike, you just posted cringe! Enjoy the blacklist :)');
+			}
+
+			// Very simple link detection
+			if (new RegExp('([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?(/.*)?').test(args.text) && !args.text.includes('twitter.com')) return message.channel.send('You may not tweet links outside of twitter.com');
+			// Do not allow discord invites
+			if (args.text.includes('discord.gg') || args.text.includes('discord.com/invite/')) return message.channel.send('No discord invite allowed.');
 		}
 		
 		const client = this.client;
