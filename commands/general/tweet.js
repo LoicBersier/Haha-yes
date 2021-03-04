@@ -48,8 +48,8 @@ class tweetCommand extends Command {
 		}
 
 		// If account is less than 1 year old don't accept attachment
-		if (Attachment[0] && message.author.createdAt > date.setMonth(date.getMonth() - 12)) {
-			return message.channel.send('Your account need to be 6 months or older to be able to send attachment!');
+		if (Attachment[0] && message.author.createdAt > date.setFullYear(date.getFullYear() - 1 )) {
+			return message.channel.send('Your account need to be 1 year or older to be able to send attachment!');
 		}
 
 		if (args.text) {
