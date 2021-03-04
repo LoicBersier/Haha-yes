@@ -114,7 +114,11 @@ class DownloadCommand extends Command {
 											message.channel.send({
 												embed: Embed,
 												files: [`${os.tmpdir()}/${message.id}compressed.mp4`]
-											});
+											})
+												.catch(err => {
+													console.error(err);
+													return message.channel.send(`${err.name}: ${err.message} ${err.message === 'Request entity too large' ? 'The file size is too big' : ''}`);
+												});
 										});
 									} else {
 										retry++;
