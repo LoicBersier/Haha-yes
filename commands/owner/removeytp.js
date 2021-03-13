@@ -14,14 +14,14 @@ class removeytpCommand extends Command {
 			clientPermissions: ['SEND_MESSAGES'],
 			args: [
 				{
-					id: 'filePath',
-					type: 'string'
+					id: 'messageID',
+					type: 'number'
 				}
 			],
 			description: {
 				content: 'Delete a ytp',
-				usage: '[file path]',
-				examples: ['./asset/ytp/userVid/something.mp4']
+				usage: '[message id]',
+				examples: ['some message id']
 			}
 		});
 	}
@@ -34,7 +34,7 @@ class removeytpCommand extends Command {
 			await ytpHash.destroy({where: {hash: hash}});
 		}
 
-		fs.unlinkSync(args.filePath);
+		fs.unlinkSync(`./asset/ytp/userVid/${args.messageID}.mp4`);
 		return message.channel.send('Successfully removed the video.');
 	}
 }
