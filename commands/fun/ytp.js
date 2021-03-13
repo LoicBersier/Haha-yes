@@ -8,7 +8,7 @@ const downloader = require('../../utils/download');
 const md5File = require('md5-file');
 const ytpHash = require('../../models').ytpHash;
 const { ytpChannel } = require('../../config.json');
-const ytpblacklist = require('../../models').ytpblacklist;
+//const ytpblacklist = require('../../models').ytpblacklist;
 
 const MAX_CLIPS = 20;
 
@@ -165,11 +165,13 @@ class ytpCommand extends Command {
 		}
 
 		if (args.add) {
+			/*
 			const blacklist = await ytpblacklist.findOne({where: {userID:message.author.id}});
 
 			if (blacklist) {
 				return message.channel.send(`You have been blacklisted for the following reasons: \`${blacklist.get('reason')}\` be less naughty next time.`);
 			}
+			 */
 
 			if (args.proxy && !args.proxyAuto) { // args.proxyAuto is only provided when the command is run after a error 429
 				args.proxy = args.proxy -1;

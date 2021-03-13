@@ -4,7 +4,8 @@ const fetch = require('node-fetch');
 const os = require('os');
 const fs = require('fs');
 const rand = require('../../rand.js');
-const TwitterBlacklist = require('../../models').TwitterBlacklist;
+//const TwitterBlacklist = require('../../models').TwitterBlacklist;
+const Blacklists = require('../../models').Blacklists;
 const { twiConsumer, twiConsumerSecret, twiToken, twiTokenSecret, twiChannel } = require('../../config.json');
 const wordToCensor = require('../../json/censor.json');
 
@@ -37,11 +38,13 @@ class tweetCommand extends Command {
 
 		let date = new Date();
 		// see if user is not banned
+		/*
 		const blacklist = await TwitterBlacklist.findOne({where: {userID:message.author.id}});
 
 		if (blacklist) {
 			return message.channel.send(`You have been blacklisted for the following reasons: \`${blacklist.get('reason')}\` be less naughty next time.`);
 		}
+		 */
 		// If account is less than 6 months old don't accept the tweet ( alt prevention )
 		if (message.author.createdAt > date.setMonth(date.getMonth() - 6)) {
 			return message.channel.send('Your account is too new to be able to use this command!');
@@ -55,8 +58,12 @@ class tweetCommand extends Command {
 		if (args.text) {
 			// Detect banned word (Blacklist the user directly)
 			if (wordToCensor.includes(args.text)) {
-				const body = {userID: message.author.id, reason: 'Automatic ban from banned word.'};
+				const body = {type:'tweet', uid: message.author.id, reason: 'Automatic ban from banned word.'};
+				Blacklists.create(body);
+				/*
+				const body = {userID: message.author.id, reason: };
 				TwitterBlacklist.create(body);
+				 */
 				return message.channel.send('Sike, you just posted cringe! Enjoy the blacklist :)');
 			}
 

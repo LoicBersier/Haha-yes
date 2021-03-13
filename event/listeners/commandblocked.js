@@ -1,4 +1,5 @@
 const { Listener } = require('discord-akairo');
+const Blacklists = require('../../models').Blacklists;
 
 class CommandBlockedListener extends Listener {
 	constructor() {
@@ -9,6 +10,7 @@ class CommandBlockedListener extends Listener {
 	}
 
 	async exec(message, command, reason) {
+		const blacklist = await Blacklists.findOne({where: {type:command.id, uid:message.author.id}});
 		console.log(`${message.author.username} was blocked from using ${command.id} because of ${reason}!`);
 		let ownerMessage;
 		let blacklistMessage;
@@ -45,6 +47,11 @@ class CommandBlockedListener extends Listener {
 		case 'commandblock':
 			Embed.setTitle('Command blocked.');
 			Embed.setDescription('The admins of this server blocked this command.');
+			message.channel.send(Embed);
+			break;
+		case 'commandblacklist':
+			Embed.setTitle('Command blocked.');
+			Embed.setDescription(`You've been blocked from this command for the following reason: \`${blacklist.reason}\``);
 			message.channel.send(Embed);
 			break;
 		}

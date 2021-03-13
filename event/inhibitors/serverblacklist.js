@@ -1,5 +1,5 @@
 const { Inhibitor } = require('discord-akairo');
-const guildBlacklist = require('../../models').guildBlacklist;
+const Blacklists = require('../../models').Blacklists;
 
 class serverblacklistInhibitor extends Inhibitor {
 	constructor() {
@@ -10,7 +10,8 @@ class serverblacklistInhibitor extends Inhibitor {
 
 	async exec(message) {
 		if (message.channel.type == 'dm') return;
-		const blacklist = await guildBlacklist.findOne({where: {guildID:message.guild.id}});
+
+		const blacklist = await Blacklists.findOne({where: {type:'guild', uid:message.guild.id}});
 
 		if (blacklist) return true;
 

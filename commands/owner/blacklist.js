@@ -1,5 +1,6 @@
 const { Command } = require('discord-akairo');
 const userBlacklist = require('../../models').userBlacklist;
+const Blacklists = require('../../models').Blacklists;
 
 class userBlacklistCommand extends Command {
 	constructor() {
@@ -10,11 +11,24 @@ class userBlacklistCommand extends Command {
 			userPermissions: ['MANAGE_MESSAGES'],
 			args: [
 				{
+					id: 'command',
+					type: 'string',
+					prompt: {
+						start: 'Which command do you want to get a user blacklisted from?'
+					}
+				},
+				{
 					id: 'userID',
 					type: 'string',
 					prompt: {
 						start: 'Who do you want to blacklist?',
 					}
+				},
+				{
+					id: 'reason',
+					type: 'string',
+					match: 'rest',
+					default: 'No reason specified.'
 				}
 			],
 			channel: 'guild',
@@ -27,12 +41,13 @@ class userBlacklistCommand extends Command {
 	}
 
 	async exec(message, args) {
-		const blacklist = await userBlacklist.findOne({where: {userID:args.userID}});
-		
+		const blacklist = await Blacklists.findOne({where: {type:args.command, uid:message.author.id}});
+
 		if (!blacklist) {
-			const body = {userID: args.userID};
-			userBlacklist.create(body);
-			return message.channel.send(`The following ID have been blacklisted globally: ${args.userID}`);
+			const body = {type:args.command, uid: args.userID, reason: args.reason};
+			Blacklists.create(body);
+			let user = this.client.users.resolve(args.userID);
+			return message.channel.send(`${user.tag} has been blacklisted from ${args.command} with the following reason ${args.reason}`);
 		} else {
 			message.channel.send('This user is already blacklisted, do you want to unblacklist him? y/n');
 			const filter = m =>  m.content && m.author.id === message.author.id;
@@ -42,8 +57,8 @@ class userBlacklistCommand extends Command {
 					let messageContent = messages.map(messages => messages.content);
 					console.log(messageContent);
 					if (messageContent[0] === 'y' || messageContent[0] === 'yes') {
-						userBlacklist.destroy({where: {userID:args.userID}});
-						return message.channel.send(`The following ID have been unblacklisted globally: ${args.userID}`);
+						Blacklists.destroy({where: {type:args.command, uid:args.userID}});
+						return message.channel.send(`The following ID have been unblacklisted from ${args.command}: ${args.userID}`);
 					}
 				})
 				.catch(err => {
