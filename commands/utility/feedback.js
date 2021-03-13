@@ -58,7 +58,7 @@ class FeedbackCommand extends Command {
 
 		channel.send({embed: Embed});
 
-		message.channel.send('Your feedback has been sent!');
+		message.channel.send('Your feedback has been sent! Don\'t forget to have dm open if you want to get an answer from the dev!');
 	}
 }
 
