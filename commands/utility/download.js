@@ -179,6 +179,8 @@ class DownloadCommand extends Command {
 
 					} else {
 						console.log('finished download');
+						loadingmsg.delete();
+						message.delete();
 						const dest = fs.createWriteStream(filePath);
 						res.body.pipe(dest);
 						dest.on('finish', () => {
