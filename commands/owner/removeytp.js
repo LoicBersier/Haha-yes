@@ -27,14 +27,15 @@ class removeytpCommand extends Command {
 	}
 
 	async exec(message, args) {
-		const hash = md5File.sync(args.filePath);
+		let filepath = `./asset/ytp/userVid/${args.messageID}.mp4`;
+		const hash = md5File.sync(filepath);
 		const ytphash = await ytpHash.findOne({where: {hash: hash}});
 
 		if (ytphash) {
 			await ytpHash.destroy({where: {hash: hash}});
 		}
 
-		fs.unlinkSync(`./asset/ytp/userVid/${args.messageID}.mp4`);
+		fs.unlinkSync(filepath);
 		return message.channel.send('Successfully removed the video.');
 	}
 }
