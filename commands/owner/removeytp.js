@@ -15,7 +15,7 @@ class removeytpCommand extends Command {
 			args: [
 				{
 					id: 'messageID',
-					type: 'number'
+					type: 'bigint'
 				}
 			],
 			description: {
