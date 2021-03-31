@@ -39,7 +39,7 @@ class commandStartedListener extends Listener {
 				let Embed = this.client.util.embed()
 					.setColor(message.member ? message.member.displayHexColor : 'NAVY')
 					.setTitle('Haha yes **gold**')
-					.setDescription('To further utilize this command, please visit https://namejeff.xyz/gold')
+					.setDescription('To further utilize this command, please visit https://gold.namejeff.xyz/')
 					.attachFiles(['./asset/img/gold.png'])
 					.setImage('attachment://gold.png')
 					.setFooter('This is an april fool\'s joke, no command will EVER be behind a paywall');
