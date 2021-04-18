@@ -45,8 +45,11 @@ class userBlacklistCommand extends Command {
 		if (!blacklist) {
 			const body = {type:args.command, uid: args.userID, reason: args.reason};
 			Blacklists.create(body);
-			let user = this.client.users.resolve(args.userID);
-			return message.channel.send(`${user.tag} has been blacklisted from ${args.command} with the following reason ${args.reason}`);
+			let user = args.userID;
+			if (args.command !== 'guild')
+				user = this.client.users.resolve(args.userID).tag;
+
+			return message.channel.send(`${user} has been blacklisted from ${args.command} with the following reason ${args.reason}`);
 		} else {
 			message.channel.send('This user is already blacklisted, do you want to unblacklist him? y/n');
 			const filter = m =>  m.content && m.author.id === message.author.id;
