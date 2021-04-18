@@ -53,6 +53,7 @@ class vid2gifCommand extends Command {
 
 				if (args.scale) ffmpegCommand.videoFilters('scale=iw/2:ih/2');
 				ffmpegCommand.fps(args.fps ? args.fps : 15);
+				ffmpegCommand.videoFilters('fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse');
 				ffmpegCommand.output(`${os.tmpdir()}/${message.id}v2g.gif`);
 				ffmpegCommand.run();
 				ffmpegCommand.on('error', (err, stdout, stderr) => {
