@@ -38,7 +38,7 @@ class AvatarCommand extends Command {
 				avatarEmbed.setDescription(`[png](${message.author.displayAvatarURL({ format: 'png', size: 2048 })}) | [jpeg](${message.author.displayAvatarURL({ format: 'jpg', size: 2048 })}) | [webp](${message.author.displayAvatarURL({ format: 'webp', size: 2048 })})`);
 				avatarEmbed.setImage(message.author.displayAvatarURL({ format: 'png', size: 2048 }));
 			}
-			return message.channel.send({embed: avatarEmbed});
+			return message.reply({embed: avatarEmbed});
 		} else {
 			let format = args.user.displayAvatarURL({ dynamic: true }).substr(args.user.displayAvatarURL({ dynamic: true }).length - 3);
 			console.log(format);
@@ -51,7 +51,7 @@ class AvatarCommand extends Command {
 				avatarEmbed.setDescription(`[png](${args.user.displayAvatarURL({ format: 'png', size: 2048 })}) | [jpeg](${args.user.displayAvatarURL({ format: 'jpg', size: 2048 })}) | [webp](${args.user.displayAvatarURL({ format: 'webp', size: 2048 })})`);
 				avatarEmbed.setImage(args.user.displayAvatarURL({ format: 'png', size: 2048 }));
 			}
-			return message.channel.send({embed: avatarEmbed});
+			return message.reply({embed: avatarEmbed});
 		}
 	}
 }

@@ -17,7 +17,7 @@ class explosmCommand extends Command {
 
 	async exec(message) {
 		extract({ uri: 'http://explosm.net/rcg' }, (err, res) => {
-			return message.channel.send({files: [res.ogImage]});
+			return message.reply({files: [res.ogImage]});
 		});
 	}
 			

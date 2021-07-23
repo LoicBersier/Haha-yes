@@ -27,14 +27,14 @@ class CleverBotCommand extends Command {
 	}
 
 	async exec(message, args) {
-		let loadingmsg = await message.channel.send('Processing! <a:loadingmin:527579785212329984>');
+		let loadingmsg = await message.reply('Processing! <a:loadingmin:527579785212329984>');
 		if (!conversation[message.guild.id]) conversation[message.guild.id] = [];
 
 		if (!conversation[0]) {
 			cleverbot(args.message).then(response => {
 				conversation[message.guild.id].push(args.message);
 				conversation[message.guild.id].push(response);
-				return message.channel.send(response)
+				return message.reply(response)
 					.then(() => {
 						loadingmsg.delete();
 					});
@@ -43,7 +43,7 @@ class CleverBotCommand extends Command {
 			cleverbot(args.message, conversation[message.guild.id]).then(response => {
 				conversation[message.guild.id].push(args.message);
 				conversation[message.guild.id].push(response);
-				return message.channel.send(response)
+				return message.reply(response)
 					.then(() => {
 						loadingmsg.delete();
 					});

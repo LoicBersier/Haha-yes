@@ -14,7 +14,7 @@ class sexCommand extends Command {
 	}
 
 	async exec(message) {
-		return message.channel.send('69\nHaha lol Le sex numbers xDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
+		return message.reply('69\nHaha lol Le sex numbers xDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
 	}
 }
 

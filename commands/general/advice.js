@@ -21,11 +21,11 @@ class AdviceCommand extends Command {
 		}).then((response) => {
 			const adviceEmbed = this.client.util.embed()
 				.setColor(message.member ? message.member.displayHexColor : 'NAVY')
-				.setTitle(response.slip.slip_id)
+				.setTitle(response.slip.id)
 				.setDescription(response.slip.advice);
   
   
-			message.channel.send(adviceEmbed);
+			message.reply(adviceEmbed);
 	
 		});
 	}

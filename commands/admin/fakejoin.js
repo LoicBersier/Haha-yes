@@ -33,7 +33,7 @@ class fakejoinCommand extends Command {
 			else
 				member = message.guild.members.resolve(message.author.id);
 		} else {
-			return message.channel.send('There is no join channel setup');
+			return message.reply('There is no join channel setup');
 		}
 
 		this.client.emit('guildMemberAdd', member);

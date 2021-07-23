@@ -21,6 +21,8 @@ class messageListener extends Listener {
 	}
 
 	async exec(message) {
+		if (message.author.bot) return;
+
 		const blacklist = await userBlacklist.findOne({where: {userID:message.author.id}});
 
 		if (blacklist) return;
@@ -34,7 +36,6 @@ class messageListener extends Listener {
 
 		await message.guild.members.fetch();
 
-		if (message.author.bot) return;
 
 		/*	Banned words section
 		*
@@ -87,7 +88,7 @@ class messageListener extends Listener {
 			if (message.guild) {
 				const autoresponseStat = await autoResponseStat.findOne({where: {serverID: message.guild.id, stat: 'enable'}});
 				if (autoresponseStat) {
-					// Infinit haha very yes
+					// Infinite haha very yes
 					if (message.content.toLowerCase().startsWith('haha very') && message.content.toLowerCase().endsWith('yes')) {
 						let yes = message.content.toLowerCase().replace('haha', '');
 						yes = yes.replace('yes', '');

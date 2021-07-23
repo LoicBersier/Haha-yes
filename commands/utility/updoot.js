@@ -26,7 +26,7 @@ class UpdootCommand extends Command {
 			.setTimestamp()
 			.setFooter('Thanks for the updoots', this.client.user.avatarURL);
 		
-		message.channel.send({ embed: upDoot });
+		message.reply({ embed: upDoot });
 	}
 }
 

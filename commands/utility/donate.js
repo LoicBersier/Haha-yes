@@ -16,7 +16,7 @@ class donateCommand extends Command {
 	}
 
 	async exec(message) {
-		if (donations === undefined) return message.channel.send('No donations has been setup on that bot.');
+		if (donations === undefined) return message.reply('No donations has been setup on that bot.');
 
 		let desc = 'If you decide to donate, please use the feedback command to let the owner know about it so he can put you in the about and donator command.';
 
@@ -29,7 +29,7 @@ class donateCommand extends Command {
 			.setTitle('Donation link')
 			.setDescription(desc);
 
-		return message.channel.send(Embed);
+		return message.reply(Embed);
 	}
 }
 

@@ -28,7 +28,7 @@ class spbCommand extends Command {
 
 	async exec(message, args) {
 		if (!args.link || !args.link.href.includes('shitpostbot.com/template/')) {
-			return message.channel.send('Need a Shitpostbot 5000 template link!\nYou can find them here! <https://www.shitpostbot.com/gallery/templates>');
+			return message.reply('Need a Shitpostbot 5000 template link!\nYou can find them here! <https://www.shitpostbot.com/gallery/templates>');
 		}
 
 		let link = args.link.href.replace('template', 'preview');
@@ -38,7 +38,7 @@ class spbCommand extends Command {
 				const dest = fs.createWriteStream(`${os.tmpdir()}/${message.id}.jpg`);
 				res.body.pipe(dest);
 				dest.on('finish', () => {
-					return message.channel.send({files: [`${os.tmpdir()}/${message.id}.jpg`]});
+					return message.reply({files: [`${os.tmpdir()}/${message.id}.jpg`]});
 				});
 			});
 	}

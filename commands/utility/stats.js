@@ -58,7 +58,7 @@ class StatsCommand extends Command {
 			.addField('Discord-Akairo version', akairoVersion, true)
 			.setTimestamp();
 			
-		return message.channel.send(statsEmbed);
+		return message.reply(statsEmbed);
 	}
 }
 

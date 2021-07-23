@@ -33,7 +33,7 @@ class fakeleaveCommand extends Command {
 			else
 				member = message.guild.members.resolve(message.author.id);
 		} else {
-			return message.channel.send('There is no leave channel setup');
+			return message.reply('There is no leave channel setup');
 		}
 
 		this.client.emit('guildMemberRemove', member);

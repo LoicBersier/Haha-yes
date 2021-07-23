@@ -22,7 +22,7 @@ class dosentexistCommand extends Command {
 				const dest = fs.createWriteStream('./asset/img/de.png');
 				res.body.pipe(dest);
 				dest.on('finish', () => {
-					return message.channel.send({files: ['./asset/img/de.png']});
+					return message.reply({files: ['./asset/img/de.png']});
 				});
 			});	}
 }

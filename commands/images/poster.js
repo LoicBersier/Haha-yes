@@ -1,4 +1,5 @@
 const { Command } = require('discord-akairo');
+const attachment = require('../../utils/attachment');
 const gm = require('gm').subClass({imageMagick: true});
 const os = require('os');
 const fetch = require('node-fetch');
@@ -60,22 +61,30 @@ class posterCommand extends Command {
 	async exec(message, args) {
 		let options = args.message.trim().split('|');
 
+		let url;
+
+		console.log(args.link);
+
+		if (args.link !== '^')
+			url = new URL(args.link);
+		else
+			url = await attachment(message);
+
+		console.log(url);
+
 		if (options[0] == undefined)
 			options[0] = '';
 		else if (options[1] == undefined)
 			options[1] = '';
 
-		let url = args.link;
-
-
 		if (!url) {
-			return message.channel.send('You need an image to use this command!');
+			return message.reply('You need an image to use this command!');
 		}
 
-		let loadingmsg = await message.channel.send('Processing <a:loadingmin:527579785212329984>');
+		let loadingmsg = await message.reply('Processing <a:loadingmin:527579785212329984>');
 
 		// Create new graphicsmagick instance
-		fetch(url)
+		fetch(url.href)
 			.then(res => {
 				const dest = fs.createWriteStream(`${os.tmpdir()}/${message.id}`);
 				res.body.pipe(dest);
@@ -93,7 +102,7 @@ class posterCommand extends Command {
 					img.format(function(err, format) {
 						if (err) {
 							console.error(err);
-							return message.channel.send('An error has occurred, is it an image?');
+							return message.reply('An error has occurred, is it an image?');
 						}
 						let output1 = `${os.tmpdir()}/poster${message.author.id}.${format.toLowerCase()}`;
 						let output2 = `${os.tmpdir()}/poster${message.id}.${format.toLowerCase()}`;
@@ -127,7 +136,7 @@ class posterCommand extends Command {
 								.write(output1, function(err) {									
 									if (err) {
 										console.error(err);
-										return message.channel.send('An error just occurred! is it a static image?');
+										return message.reply('An error just occurred! is it a static image?');
 									}
 									// Chop the top part of the image
 									let img2 = gm(output1);
@@ -136,7 +145,7 @@ class posterCommand extends Command {
 											loadingmsg.delete();
 											if (err) {
 												console.error(err);
-												return message.channel.send('An error just occurred! is it a static image?');
+												return message.reply('An error just occurred! is it a static image?');
 											}
 											message.delete();
 											return message.channel.send(`Made by ${message.author.username}`,{files: [output2]})
@@ -152,7 +161,7 @@ class posterCommand extends Command {
 			})
 			.catch((err) => {
 				console.error(err);
-				return message.channel.send(`Please input a correct link \`${err}\``);
+				return message.reply(`Please input a correct link \`${err}\``);
 			});
 	}
 }

@@ -47,7 +47,7 @@ class FeedbackCommand extends Command {
 		// Don't let new account use this command to prevent spam, if they have an UUID its fine to skip it
 		let date = new Date();
 		if (message.author.createdAt > date.setDate(date.getDate() - 7)) {
-			return message.channel.send('Your account is too new to be able to use this command!');
+			return message.reply('Your account is too new to be able to use this command!');
 		}
 
 		const channel = this.client.channels.resolve(feedbackChannel);
@@ -58,7 +58,7 @@ class FeedbackCommand extends Command {
 
 		channel.send({embed: Embed});
 
-		message.channel.send('Your feedback has been sent! Don\'t forget to have dm open if you want to get an answer from the dev!');
+		message.reply('Your feedback has been sent! Don\'t forget to have dm open if you want to get an answer from the dev!');
 	}
 }
 

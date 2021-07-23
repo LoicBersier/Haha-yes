@@ -36,7 +36,7 @@ class ServerCommand extends Command {
 		if (logStats) addEmbed.addField('Logging', 'On ✅');
 		else addEmbed.addField('Logging', 'Off ❌');
 
-		message.channel.send({ embed: addEmbed });
+		message.reply({ embed: addEmbed });
 	}
 }
 

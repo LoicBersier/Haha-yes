@@ -28,7 +28,7 @@ class userInfoCommand extends Command {
 			user = args.user;
 		}
 
-		let member = message.guild.member(user);
+		let member = await message.guild.members.fetch(user);
 		const Embed = this.client.util.embed()
 			.setColor(member ? member.displayHexColor : 'NAVY')
 			.setAuthor(`${user.tag} (${user.id})`, user.displayAvatarURL())
@@ -69,7 +69,7 @@ class userInfoCommand extends Command {
 			if (member.roles) Embed.addField('Roles', `${member.roles.cache.array().join(', ')}`);
 		}
 
-		return message.channel.send({ embed: Embed });
+		return message.reply({ embed: Embed });
 	}
 }
 

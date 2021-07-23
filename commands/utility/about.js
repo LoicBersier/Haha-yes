@@ -52,7 +52,7 @@ class aboutCommand extends Command {
 					.setThumbnail('https://its.gamingti.me/ZiRe.png')
 					.setFooter(`Original bot made by ${this.client.users.resolve('267065637183029248').tag} (267065637183029248)`); // Please this line
 
-				message.channel.send(aboutEmbed);
+				message.reply(aboutEmbed);
 			});
 	}
 }

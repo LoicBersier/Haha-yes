@@ -32,7 +32,7 @@ class donatorCommand extends Command {
 			donatorMessage += 'No one :(';
 		}
 
-		return message.channel.send(donatorMessage);
+		return message.reply(donatorMessage);
 	}
 }
 

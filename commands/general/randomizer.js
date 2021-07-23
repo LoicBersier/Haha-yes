@@ -27,7 +27,7 @@ class randomizerCommand extends Command {
 	async exec(message, args) {
 		let words = args.text.split(' ');
 
-		return message.channel.send(words[Math.floor((Math.random() * words.length))]);
+		return message.reply(words[Math.floor((Math.random() * words.length))]);
 	}
 }
 

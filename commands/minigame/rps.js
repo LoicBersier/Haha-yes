@@ -28,34 +28,34 @@ class rpsCommand extends Command {
 		switch (playerHand) {
 		case 'rock':
 			if (pcHand==1) {
-				message.channel.send('You both chose rock!');
+				message.reply('You both chose rock!');
 			} else if (pcHand==2) {
-				message.channel.send('The bot chose paper, you lose!');
+				message.reply('The bot chose paper, you lose!');
 			} else {
-				message.channel.send('The bot chose scissors, you win!');
+				message.reply('The bot chose scissors, you win!');
 			}
 			break;
 		case 'paper':
 			if (pcHand==1) {
-				message.channel.send('You both chose paper!');
+				message.reply('You both chose paper!');
 			} else if (pcHand==2) {
-				message.channel.send('The bot chose scissors, you lose!');
+				message.reply('The bot chose scissors, you lose!');
 			} else {
-				message.channel.send('The bot chose rock, you win!');
+				message.reply('The bot chose rock, you win!');
 			}
 			break;
 		case 'scissors':
 			if (pcHand==1) {
-				message.channel.send('You both chose scissors!');
+				message.reply('You both chose scissors!');
 			} else if (pcHand==2) {
-				message.channel.send('The bot chose rock, you lose!');
+				message.reply('The bot chose rock, you lose!');
 			} else {
-				message.channel.send('The bot chose paper, you win!');
+				message.reply('The bot chose paper, you win!');
 			}
 			break;
 		
 		default:
-			message.channel.send(`You entered ${playerHand} which is an incorrect choice.`);
+			message.reply(`You entered ${playerHand} which is an incorrect choice. Try again with rock, paper or scissors`);
 			break;
 		}
 

@@ -38,14 +38,14 @@ class RedditCommand extends Command {
 		}).then((response) => { 
 			console.log(response);
 			if (response.error == 404)
-				return message.channel.send('Not a valid subreddit');
+				return message.reply('Not a valid subreddit');
 
 			if (response.data.dist == 0)
-				return message.channel.send('Not a valid subreddit');
+				return message.reply('Not a valid subreddit');
 
 			let i = Math.floor((Math.random() * response.data.children.length));
 			if (response.data.children[i].data.over_18 == true && !message.channel.nsfw)
-				return message.channel.send('No nsfw');
+				return message.reply('No nsfw');
 			const redditEmbed = this.client.util.embed()
 				.setColor(message.member ? message.member.displayHexColor : 'NAVY')
 				.setTitle(response.data.children[i].data.title)
@@ -53,8 +53,8 @@ class RedditCommand extends Command {
 				.setURL('https://reddit.com' + response.data.children[i].data.permalink)
 				.setFooter(`/r/${response.data.children[i].data.subreddit} | ⬆ ${response.data.children[i].data.ups} 🗨 ${response.data.children[i].data.num_comments}`);
 				
-			message.channel.send(redditEmbed);
-			message.channel.send(response.data.children[i].data.url);
+			message.reply(redditEmbed);
+			message.reply(response.data.children[i].data.url);
 		});
 	}
 }

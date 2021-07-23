@@ -143,7 +143,7 @@ class ytpCommand extends Command {
 				}
 			});
 
-			return message.channel.send(`There is currently ${mp4.length} videos, you can add yours by doing \`\`${this.client.commandHandler.prefix[0]}ytp --add (link or attachment)\`\``);
+			return message.reply(`There is currently ${mp4.length} videos, you can add yours by doing \`\`${this.client.commandHandler.prefix[0]}ytp --add (link or attachment)\`\``);
 		}
 
 		if (args.listproxy) {
@@ -161,7 +161,7 @@ class ytpCommand extends Command {
 				.setDescription(proxys.join('\n'))
 				.setFooter('You can help me get more proxy by either donating to me or providing a proxy for me');
 
-			return message.channel.send(Embed);
+			return message.reply(Embed);
 		}
 
 		if (args.add) {
@@ -169,7 +169,7 @@ class ytpCommand extends Command {
 			const blacklist = await ytpblacklist.findOne({where: {userID:message.author.id}});
 
 			if (blacklist) {
-				return message.channel.send(`You have been blacklisted for the following reasons: \`${blacklist.get('reason')}\` be less naughty next time.`);
+				return message.reply(`You have been blacklisted for the following reasons: \`${blacklist.get('reason')}\` be less naughty next time.`);
 			}
 			 */
 
@@ -178,7 +178,7 @@ class ytpCommand extends Command {
 				if (!proxy[args.proxy]) args.proxy = 0;
 			}
 
-			let loadingmsg = await message.channel.send('Downloading <a:loadingmin:527579785212329984>');
+			let loadingmsg = await message.reply('Downloading <a:loadingmin:527579785212329984>');
 			let url;
 
 			if (args.link)
@@ -204,15 +204,15 @@ class ytpCommand extends Command {
 								args.proxyAuto = true;
 							}
 
-							if (!proxy[args.proxy]) return message.channel.send('`HTTP Error 429: Too Many Requests.`\nThe website you tried to download from probably has the bot blocked along with its proxy');
+							if (!proxy[args.proxy]) return message.reply('`HTTP Error 429: Too Many Requests.`\nThe website you tried to download from probably has the bot blocked along with its proxy');
 
 							loadingmsg.delete();
 							return this.client.commandHandler.runCommand(message, this.client.commandHandler.findCommand('ytp'), args);
 						}
 
-						if (err.includes('Error: status code 403')) return message.channel.send('`HTTP Error 403: Forbidden.`\nThe video you tried to download is not publicly available therefor the bot can\'t download it.');
+						if (err.includes('Error: status code 403')) return message.reply('`HTTP Error 403: Forbidden.`\nThe video you tried to download is not publicly available therefor the bot can\'t download it.');
 
-						return message.channel.send(err, { code: true });
+						return message.reply(err, { code: true });
 
 					})
 					.on('end', async output => {
@@ -280,12 +280,12 @@ class ytpCommand extends Command {
 					});
 			} else {
 				loadingmsg.delete();
-				return message.channel.send('You need a valid video link!');
+				return message.reply('You need a valid video link!');
 			}
 		}
 
 
-		if (!message.channel.nsfw && !args.force) return message.channel.send(`Please execute this command in an NSFW channel ( Content might not be NSFW but since the video are user submitted better safe than sorry ) OR do \`\`${this.client.commandHandler.prefix[0]}ytp --force\`\` to make the command work outside of nsfw channel BE AWARE THAT IT WON'T CHANGE THE FINAL RESULT SO NSFW CAN STILL HAPPEN`);
+		if (!message.channel.nsfw && !args.force) return message.reply(`Please execute this command in an NSFW channel ( Content might not be NSFW but since the video are user submitted better safe than sorry ) OR do \`\`${this.client.commandHandler.prefix[0]}ytp --force\`\` to make the command work outside of nsfw channel BE AWARE THAT IT WON'T CHANGE THE FINAL RESULT SO NSFW CAN STILL HAPPEN`);
 
 		// Read userVid folder and select random vid and only take .mp4
 		let mp4 = [];
@@ -308,7 +308,7 @@ class ytpCommand extends Command {
 			}
 		}
 
-		let loadingmsg = await message.channel.send(`Processing, this can take a ***long*** time, i'll ping you when i finished <a:loadingmin:527579785212329984>\nSome info: There are currently ${mp4.length} videos, you can add yours by doing \`\`${this.client.commandHandler.prefix[0]}ytp --add (link or attachment). Thanks for contributing!\`\``);
+		let loadingmsg = await message.reply(`Processing, this can take a ***long*** time, i'll ping you when i finished <a:loadingmin:527579785212329984>\nSome info: There are currently ${mp4.length} videos, you can add yours by doing \`\`${this.client.commandHandler.prefix[0]}ytp --add (link or attachment)\`\`\nLike ytp? Why not check out https://ytp.namejeff.xyz/`);
 
 
 		let options = {
@@ -353,7 +353,7 @@ class ytpCommand extends Command {
 				return message.reply('Here is your YTP! Remember, it might contain nsfw, so be careful!', {files: [`${os.tmpdir()}/${message.id}_YTP.mp4`]})
 					.catch(err => {
 						console.error(err);
-						return message.channel.send('Whoops, look like the vid might be too big for discord, my bad, please try again');
+						return message.reply('Whoops, look like the vid might be too big for discord, my bad, please try again');
 					});
 			})
 			.catch(err => {
@@ -368,7 +368,7 @@ class ytpCommand extends Command {
 					return message.reply({files: [Math.random() < 0.5 ? './asset/ytp/error1.mp4' : './asset/ytp/error2.mp4']})
 						.catch(err => { // In case it can't send the video for some reason
 							console.error(err);
-							return message.channel.send('Oh no, an error has occurred! please try again. If this happens alot, you should report this to the developers.');
+							return message.reply('Oh no, an error has occurred! please try again. If this happens alot, you should report this to the developers.');
 						});
 				}
 

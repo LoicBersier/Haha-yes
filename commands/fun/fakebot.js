@@ -69,11 +69,6 @@ class fakebotCommand extends Command {
 						else
 							webhook.send(args.message);
 
-						setTimeout(() => {
-							webhook.delete({
-								reason: `Fakebot/user command triggered by: ${message.author.username}`
-							});
-						}, 3000);
 					});
 			});
 	}

@@ -38,7 +38,7 @@ class serverIconCommand extends Command {
 				serverEmbed.setDescription(`[png](${message.guild.iconURL({ format: 'png', size: 2048 })}) | [jpeg](${message.guild.iconURL({ format: 'jpg', size: 2048 })}) | [webp](${message.guild.iconURL({ format: 'webp', size: 2048 })})`);
 				serverEmbed.setImage(message.guild.iconURL({ format: 'png', size: 2048 }));
 			}
-			return message.channel.send({embed: serverEmbed});
+			return message.reply({embed: serverEmbed});
 		} else {
 			let format = this.client.guilds.find(guild => guild.id == args.serverid).iconURL().substr(this.client.guilds.find(guild => guild.id == args.serverid).iconURL().length - 3);
 			if (format == 'gif') {
@@ -50,7 +50,7 @@ class serverIconCommand extends Command {
 				serverEmbed.setDescription(`[png](${this.client.guilds.find(guild => guild.id == args.serverid).iconURL({ format: 'png', size: 2048 })}) | [jpeg](${this.client.guilds.find(guild => guild.id == args.serverid).iconURL({ format: 'jpg', size: 2048 })}) | [webp](${this.client.guilds.find(guild => guild.id == args.serverid).iconURL({ format: 'webp', size: 2048 })})`);
 				serverEmbed.setImage(this.client.guilds.find(guild => guild.id == args.serverid).iconURL({ format: 'png', size: 2048 }));
 			}
-			return message.channel.send({embed: serverEmbed});
+			return message.reply({embed: serverEmbed});
 		}
 	}
 }

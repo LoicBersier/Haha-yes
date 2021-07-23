@@ -25,7 +25,7 @@ class wallpaperCommand extends Command {
 	async exec(message, args) {
 		let mkt = args.region;
 		if (!args.region) mkt = 'en-US';
-		if (!['zh-CN', 'en-US', 'ja-JP', 'en-AU', 'en-UK', 'de-DE', 'en-NZ', 'en-CA'].includes(mkt)) return message.channel.send('Please choose a valid region settings: zh-CN, en-US, ja-JP, en-AU, en-UK, de-DE, en-NZ, en-CA');
+		if (!['zh-CN', 'en-US', 'ja-JP', 'en-AU', 'en-UK', 'de-DE', 'en-NZ', 'en-CA'].includes(mkt)) return message.reply('Please choose a valid region settings: zh-CN, en-US, ja-JP, en-AU, en-UK, de-DE, en-NZ, en-CA');
 		fetch(`https://bing.biturl.top/?mkt=${mkt}`)
 			.then(res => {
 				return res.json();
@@ -38,7 +38,7 @@ class wallpaperCommand extends Command {
 					.setDescription(`[1366](https://bing.biturl.top/?resolution=1366&format=image&mkt=${mkt}) | [1920](https://bing.biturl.top/?resolution=1920&format=image&mkt=${mkt})`)
 					.setImage(res.url);
 
-				return message.channel.send(wallpaperEmbed);
+				return message.reply(wallpaperEmbed);
 			});
 	}
 }

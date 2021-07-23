@@ -30,8 +30,7 @@ class ClapCommand extends Command {
 		args.text = rand.random(args.text, message);
 		
 		let clap = args.text.replace(/ /g, ' 👏 ');
-		message.delete();
-		message.channel.send(`${clap} 👏`);
+		message.reply(`${clap} 👏`);
 	}
 }
 

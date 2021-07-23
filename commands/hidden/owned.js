@@ -28,9 +28,9 @@ class OwnedCommand extends Command {
 		if (args.member) {
 
 			if (args.member.id == this.client.user.id) {
-				return message.channel.send('You really thought you could own me?, pathetic...');
+				return message.reply('You really thought you could own me?, pathetic...');
 			} else if (args.member.id == this.client.ownerID) {
-				return message.channel.send('You really thought you could own him?, pathetic...');
+				return message.reply('You really thought you could own him?, pathetic...');
 			} else if (args.member.id == '286054184623538177' || args.member.id == '172112210863194113') {
 				owned = message.author;
 			}
@@ -41,9 +41,9 @@ class OwnedCommand extends Command {
 				return message.reply(ownedMessage);
 			}
 			
-			return message.channel.send(`${owned}, ${ownedMessage}`);
+			return message.send(`${owned}, ${ownedMessage}`);
 		} else {
-			return message.channel.send(ownedMessage);
+			return message.send(ownedMessage);
 		}
 	}
 }
