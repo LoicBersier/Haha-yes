@@ -53,6 +53,17 @@ class DownloadCommand extends Command {
 	}
 
 	async exec(message, args) {
+		if (args.link === null) {
+			let urlRE= new RegExp('([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?([^ ])+');
+			await message.channel.messages.fetch({ limit: 10 }).then(messages => {
+				messages.map(m => {
+					if (m.content.match(urlRE)) {
+						args.link = new URL(m.content.match(urlRE)[0]);
+					}
+				});
+			});
+		}
+
 		if (!args.link) return message.channel.send('Please try again with a valid URL.');
 
 		if (args.listproxy) {
