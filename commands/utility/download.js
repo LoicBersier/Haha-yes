@@ -115,7 +115,9 @@ class DownloadCommand extends Command {
 
 			const params = new URLSearchParams();
 			params.append('url', args.link.href);
-			params.append('proxy', proxy[args.proxy].ip);
+			if (proxy[args.proxy] !== undefined) {
+				params.append('proxy', proxy[args.proxy].ip);
+			}
 
 			fetch(`${Hapi}/download`, {method: 'POST', body: params})
 				.then(async res => {
