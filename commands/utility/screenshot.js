@@ -1,7 +1,7 @@
 const { Command } = require('discord-akairo');
-const captureWebsite = require('capture-website');
-const os = require('os');
-const fs = require('fs');
+const { Hapi } = require('../../config.json');
+const checkHapi = require('../../utils/checkHapi');
+const fetch = require('node-fetch');
 
 class screenshotCommand extends Command {
 	constructor() {
@@ -12,7 +12,7 @@ class screenshotCommand extends Command {
 			args: [
 				{
 					id: 'url',
-					type: 'string',
+					type: 'url',
 					prompt: {
 						start: 'Please send a link of which website you want to take a screenshot of.',
 						retry: 'This does not look like an url, please try again.'
@@ -33,15 +33,35 @@ class screenshotCommand extends Command {
 	}
 
 	async exec(message, args) {
-		let url = args.url;
-		if (!url.includes('http')) url = `http://${url}`;
-		if (url.includes('config.json') || url.includes('file://')) return message.channel.send('I don\'t think so');
+		if (args.url.href.includes('config.json') || args.url.href.includes('file://')) return message.channel.send('I don\'t think so');
+
 		let Embed = this.client.util.embed()
-			.setColor(message.member ? message.member.displayHexColor : 'NAVY')
-			.setTitle(url);
+			.setColor(message.member ? message.member.displayHexColor : 'NAVY');
 
 		let loadingmsg = await message.channel.send('Taking a screenshot <a:loadingmin:527579785212329984>');
-		
+		const isHapiOnline = await checkHapi();
+
+		if (isHapiOnline) {
+			const params = new URLSearchParams();
+			params.append('url', args.url.href);
+
+			fetch(`${Hapi}/screenshot`, {method: 'POST', body: params})
+				.then(async res => {
+					console.log(res);
+					console.log(`Status is: ${res.status}`);
+					if (res.status === 200) {
+						let json = await res.json();
+						Embed.setImage(json.image);
+						Embed.setTitle(json.url);
+						await message.reply(Embed);
+					}
+					await loadingmsg.delete();
+				});
+		} else {
+			return message.reply('Hapi server is not online, try again later!');
+		}
+
+		/*
 		await captureWebsite.file(url, `${os.tmpdir()}/${message.id}.jpg`, {
 			type: 'jpeg',
 			headers: {
@@ -63,6 +83,7 @@ class screenshotCommand extends Command {
 					return message.channel.send(Embed);
 				}
 			});
+		*/
 	}
 }
 module.exports = screenshotCommand;
