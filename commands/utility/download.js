@@ -115,13 +115,23 @@ class DownloadCommand extends Command {
 
 			const params = new URLSearchParams();
 			params.append('url', args.link.href);
+			params.append('proxy', proxy[args.proxy].ip);
 
 			fetch(`${Hapi}/download`, {method: 'POST', body: params})
 				.then(async res => {
 					console.log(`status is ${res.status}`);
 					if (res.status !== 200) {
 						console.log('Status is not 200. Abort');
-						return message.channel.send('An error has occurred.');
+
+						if (args.proxy != null) {
+							args.proxy = args.proxy + 1;
+						} else {
+							args.proxy = 0;
+							args.proxyAuto = true;
+						}
+
+						if (!proxy[args.proxy]) return message.channel.send('`HTTP Error 429: Too Many Requests.`\nThe website you tried to download from probably has the bot blocked along with its proxy');
+						return this.client.commandHandler.runCommand(message, this.client.commandHandler.findCommand('download'), args);
 					}
 
 					if (res.headers.get('content-type') === 'application/json; charset=utf-8') { // If we receive JSON it mean it started compressing the video
@@ -200,6 +210,7 @@ class DownloadCommand extends Command {
 					}
 				});
 		} else { // No Hapi server, let the bot download it
+			console.log('[Download] Hapi is not online.');
 			if (args.proxy && !args.proxyAuto) { // args.proxyAuto is only provided when the command is run after a error 429
 				args.proxy = args.proxy - 1;
 				if (!proxy[args.proxy]) args.proxy = 0;
