@@ -113,6 +113,11 @@ class DownloadCommand extends Command {
 			Embed.setFooter(`Using Hapi | ${Embed.footer.text}`);
 			compressEmbed.setFooter(`Using Hapi | ${compressEmbed.footer.text}`);
 
+			if (args.proxy && !args.proxyAuto) { // args.proxyAuto is only provided when the command is run after a error 429
+				args.proxy = args.proxy - 1;
+				if (!proxy[args.proxy]) args.proxy = 0;
+			}
+
 			const params = new URLSearchParams();
 			params.append('url', args.link.href);
 			if (proxy[args.proxy] !== undefined) {
