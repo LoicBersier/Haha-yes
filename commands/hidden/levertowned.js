@@ -3,7 +3,7 @@ const { Command } = require('discord-akairo');
 class levertownedCommand extends Command {
 	constructor() {
 		super('levertowned', {
-			aliases: ['levertowned', 'levertard', 'nooberton', 'leverfart'],
+			aliases: ['levertowned', 'nooberton', 'leverfart'],
 			category: 'hidden',
 			description: {
 				content: 'levertowned',
