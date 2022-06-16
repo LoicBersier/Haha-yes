@@ -13,6 +13,8 @@ You need to install the following
 
 * ffmpeg (Optional but very recommanded: for yt-dlp to merge video/audio formats)
 * yt-dlp ([a file can download it for you](prereq.js))
+* gifsicle (For [vid2gif](commands/vid2gif.js))
+* giski (For [vid2gif](commands/vid2gif.js))
 * Somewhere to upload files larger than 8 mb (I use a self hosted (XBackBone)[https://github.com/SergiX44/XBackBone/] with the upload.sh script made from it, you can use anything else just need to be located in bin/upload.sh)
 
 ### Installing
@@ -24,7 +26,7 @@ npm install
 ```
 
 To run the bot for the first time you need to execute [deploy-guild-commands.js](deploy-guild-commands.js) so the commands can be registered, don't forget to set your .env accordingly.
-``node deploy-commands.js``
+``node deploy-commands.cjs``
 
 then you can just run it normally.
 ``node index.js``
