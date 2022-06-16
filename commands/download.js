@@ -67,7 +67,7 @@ module.exports = {
 			await interaction.deleteReply();
 			await interaction.followUp({ content: 'Which quality do you want?', ephemeral: true, components: [row] });
 
-			interaction.client.on('interactionCreate', async (interactionMenu) => {
+			interaction.client.once('interactionCreate', async (interactionMenu) => {
 				if (!interactionMenu.isSelectMenu()) return;
 				if (interactionMenu.customId === 'downloadQuality') {
 					await interactionMenu.deferReply({ ephemeral: false });
@@ -120,6 +120,7 @@ async function download(url, interaction) {
 			await interaction.deleteReply();
 			await interaction.followUp({ content: 'Uh oh! An error has occured!', ephemeral: true });
 		});
+	return;
 }
 
 async function downloadVideo(url, output, format) {
