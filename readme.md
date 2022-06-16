@@ -22,15 +22,18 @@ git checkout slash
 npm install
 ```
 
-To run the bot either use pm2
+To run the bot for the first time you need to execute [deploy-commands.js](deploy-commands.js) so the commands can be registered, don't forget to set your .env accordingly.
+``node deploy-commands.js``
+
+then you can just run it normally.
+``node index.js``
+
+If you want to run the bot automatically you can use pm2
 ```
 npm install -g pm2
-pm2 start index.js --name(insert name)
+pm2 start index.js --name (insert name)
 ```
-or with node ``node index.js``
-
-If on linux you can also do
-
+If you are on linux and don't need automatic restart on crash you can just do
 ``nohup node index.js &``
 
 ## Built With
