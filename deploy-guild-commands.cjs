@@ -20,6 +20,23 @@ const commands = [
 			option.setName('advanced')
 				.setDescription('Choose the quality of the video.')
 				.setRequired(false)),
+
+
+	new SlashCommandBuilder()
+		.setName('reddit')
+		.setDescription('Send random images from the subreddit you choose')
+		.addStringOption(option =>
+			option.setName('subreddit')
+				.setDescription('The subreddit you wish to see')
+				.setRequired(true)),
+
+	new SlashCommandBuilder()
+		.setName('vid2gif')
+		.setDescription('Convert your video into a gif.')
+		.addStringOption(option =>
+			option.setName('url')
+				.setDescription('URL of the video you want to convert')
+				.setRequired(true)),
 ]
 	.map(command => command.toJSON());
 

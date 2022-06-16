@@ -1,10 +1,11 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed, MessageActionRow, MessageSelectMenu } = require('discord.js');
-const { exec } = require('node:child_process');
-const fs = require('node:fs');
-const os = require('node:os');
+import { SlashCommandBuilder } from '@discordjs/builders';
+import { MessageEmbed, MessageActionRow, MessageSelectMenu } from 'discord.js';
+import { exec } from 'node:child_process';
+import fs from 'node:fs';
+import os from 'node:os';
+import utils from '../utils/videos.js';
 
-module.exports = {
+export default {
 	data: new SlashCommandBuilder()
 		.setName('download')
 		.setDescription('Download a video.')
@@ -99,7 +100,7 @@ async function download(url, interaction) {
 		if (interaction.values[1]) format += '+' + interaction.values[1];
 	}
 
-	downloadVideo(url, interaction.id, format)
+	utils.downloadVideo(url, interaction.id, format)
 		.then(async () => {
 			const file = fs.readdirSync(os.tmpdir()).filter(fn => fn.startsWith(interaction.id));
 			const output = `${os.tmpdir()}/${file}`;
@@ -112,7 +113,7 @@ async function download(url, interaction) {
 				await interaction.followUp('Uh oh! The video you tried to download is too big!', { ephemeral: true });
 			}
 			else if (fileSize > 8) {
-				const fileURL = await upload(output)
+				const fileURL = await utils.upload(output)
 					.catch(err => {
 						console.error(err);
 					});
@@ -129,32 +130,4 @@ async function download(url, interaction) {
 			await interaction.followUp({ content: 'Uh oh! An error has occured!', ephemeral: true });
 		});
 	return;
-}
-
-async function downloadVideo(url, output, format) {
-	await new Promise((resolve, reject) => {
-		exec(`./bin/yt-dlp -f ${format} ${url} -o "${os.tmpdir()}/${output}.%(ext)s" --force-overwrites`, (err, stdout, stderr) => {
-			if (err) {
-				reject(stderr);
-			}
-			if (stderr) {
-				console.error(stderr);
-			}
-			resolve(stdout);
-		});
-	});
-}
-
-async function upload(file) {
-	return await new Promise((resolve, reject) => {
-		exec(`./bin/upload.sh ${file}`, (err, stdout, stderr) => {
-			if (err) {
-				reject(stderr);
-			}
-			if (stderr) {
-				console.error(stderr);
-			}
-			resolve(stdout);
-		});
-	});
 }

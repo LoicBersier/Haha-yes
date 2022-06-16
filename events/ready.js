@@ -1,9 +1,10 @@
-const { exec } = require('node:child_process');
-const https = require('node:https');
-require('dotenv').config();
+import { exec } from 'node:child_process';
+import https from 'node:https';
+import dotenv from 'dotenv'
+dotenv.config();
 const { uptimeURL, uptimeInterval } = process.env;
 
-module.exports = {
+export default {
 	name: 'ready',
 	once: true,
 	async execute(client) {
