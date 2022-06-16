@@ -85,7 +85,7 @@ async function download(url, interaction) {
 	const Embed = new MessageEmbed()
 		.setColor(interaction.member ? interaction.member.displayHexColor : 'NAVY')
 		.setAuthor(`Downloaded by ${interaction.member.displayName}`, interaction.member.displayAvatarURL(), url)
-		.setDescription(url);
+		.setFooter(`You can get the original video by clicking on the "Downloaded by ${interaction.member.displayName}" message!`);
 
 	if (interaction.customId === 'downloadQuality') {
 		format = interaction.values[0];
