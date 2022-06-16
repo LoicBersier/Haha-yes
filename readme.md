@@ -13,6 +13,7 @@ You need to install the following
 
 * ffmpeg (Optional but very recommanded: for yt-dlp to merge video/audio formats)
 * yt-dlp ([a file can download it for you](prereq.js))
+* Somewhere to upload files larger than 8 mb (I use a self hosted (XBackBone)[https://github.com/SergiX44/XBackBone/] with the upload.sh script made from it, you can use anything else just need to be located in bin/upload.sh)
 
 ### Installing
 ```
