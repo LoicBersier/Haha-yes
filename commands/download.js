@@ -61,6 +61,8 @@ module.exports = {
 					new MessageSelectMenu()
 						.setCustomId('downloadQuality')
 						.setPlaceholder('Nothing selected')
+						.setMinValues(1)
+						.setMaxValues(2)
 						.addOptions(options),
 				);
 
@@ -89,6 +91,7 @@ async function download(url, interaction) {
 
 	if (interaction.customId === 'downloadQuality') {
 		format = interaction.values[0];
+		if (interaction.values[1]) format += '+' + interaction.values[1];
 	}
 
 	downloadVideo(url, interaction.id, format)
