@@ -40,7 +40,7 @@ module.exports = {
 			qualitys.formats.forEach(f => {
 				options.push({
 					label: f.resolution,
-					description: f.format,
+					description: `${f.format} V: ${f.vcodec} A: ${f.acodec}`,
 					value: f.format_id,
 				});
 			});
