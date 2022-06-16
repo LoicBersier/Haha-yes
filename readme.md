@@ -23,7 +23,7 @@ git checkout slash
 npm install
 ```
 
-To run the bot for the first time you need to execute [deploy-commands.js](deploy-commands.js) so the commands can be registered, don't forget to set your .env accordingly.
+To run the bot for the first time you need to execute [deploy-guild-commands.js](deploy-guild-commands.js) so the commands can be registered, don't forget to set your .env accordingly.
 ``node deploy-commands.js``
 
 then you can just run it normally.
