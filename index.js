@@ -1,11 +1,9 @@
-// Require the necessary discord.js classes
 const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, Intents } = require('discord.js');
 require('dotenv').config();
 const { token } = process.env;
 
-// Create a new client instance
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 // Load commands from the commands folder
@@ -16,8 +14,6 @@ const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('
 for (const file of commandFiles) {
 	const filePath = path.join(commandsPath, file);
 	const command = require(filePath);
-	// Set a new item in the Collection
-	// With the key as the command name and the value as the exported module
 
 	client.commands.set(command.data.name, command);
 }
@@ -37,5 +33,4 @@ for (const file of eventFiles) {
 	}
 }
 
-// Login to Discord with your client's token
 client.login(token);
