@@ -21,6 +21,11 @@ module.exports = {
 		await interaction.deferReply({ ephemeral: false });
 		const url = interaction.options.getString('url');
 
+		const urlRE = new RegExp('([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?([^ ])+');
+		if (!url.match(urlRE)) {
+			return interaction.editReply({ content: '❌ This does not look like a valid URL!', ephemeral: true });
+		}
+
 		if (interaction.options.getBoolean('advanced')) {
 			let qualitys = await new Promise((resolve, reject) => {
 				exec(`./bin/yt-dlp ${url} --print "%()j"`, (err, stdout, stderr) => {
