@@ -1,4 +1,7 @@
 const { exec } = require('node:child_process');
+const https = require('node:https');
+require('dotenv').config();
+const { uptimeURL, uptimeInterval } = process.env;
 
 module.exports = {
 	name: 'ready',
@@ -15,6 +18,7 @@ module.exports = {
 				resolve(stdout);
 			});
 		});
+
 		const commandSize = client.commands.size;
 		const clientTag = client.user.tag;
 		const guildSize = client.guilds.cache.size;
@@ -26,7 +30,19 @@ module.exports = {
 		console.log(`Ready to serve in \x1b[33m${channelSize}\x1b[0m channels on \x1b[33m${guildSize}\x1b[0m servers.`);
 		console.log(`${client.readyAt}`);
 		console.log(`There is \x1b[33m${commandSize}\x1b[0m command loaded.`);
-		console.log(`Running yt-dlp \x1b[33m${ytdlpVersion}\x1b[0m`);
+		console.log(`Running yt-dlp \x1b[33m${ytdlpVersion.replace('\n', '')}\x1b[0m`);
 		console.log('===========[ READY ]===========');
+
+		if (uptimeURL != '') {
+			pingStatus(client, 'Starting up');
+
+			setInterval(() => {
+				pingStatus(client, 'OK');
+			}, uptimeInterval * 1000);
+		}
 	},
 };
+
+async function pingStatus(client, msg) {
+	https.get(`${uptimeURL}msg=${msg}&ping=${Math.round(client.ws.ping)}`);
+}
