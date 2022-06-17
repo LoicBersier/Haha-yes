@@ -37,6 +37,14 @@ const commands = [
 			option.setName('url')
 				.setDescription('URL of the video you want to convert')
 				.setRequired(true)),
+
+	new SlashCommandBuilder()
+		.setName('feedback')
+		.setDescription('Send a feedback to the developer.')
+		.addStringOption(option =>
+			option.setName('feedback')
+				.setDescription('The message you want to send me.')
+				.setRequired(true)),
 ]
 	.map(command => command.toJSON());
 
