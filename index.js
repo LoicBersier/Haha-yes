@@ -24,12 +24,12 @@ for (const file of commandFiles) {
 	client.commands.set(command.data.name, command);
 }
 
-// Load events from the events folder
-const eventsPath = path.join(__dirname, 'events');
-const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
+// Load client events from the events folder
+const clientEventsPath = path.join(__dirname, 'events/client');
+const clientEventFiles = fs.readdirSync(clientEventsPath).filter(file => file.endsWith('.js'));
 
-for (const file of eventFiles) {
-	const filePath = path.join(eventsPath, file);
+for (const file of clientEventFiles) {
+	const filePath = path.join(clientEventsPath, file);
 	let event = await import(filePath);
 	event = event.default;
 	if (event.once) {
@@ -37,6 +37,22 @@ for (const file of eventFiles) {
 	}
 	else {
 		client.on(event.name, (...args) => event.execute(...args));
+	}
+}
+
+// Load process events from the events folder
+const processEventsPath = path.join(__dirname, 'events/process');
+const processEventFiles = fs.readdirSync(processEventsPath).filter(file => file.endsWith('.js'));
+
+for (const file of processEventFiles) {
+	const filePath = path.join(processEventsPath, file);
+	let event = await import(filePath);
+	event = event.default;
+	if (event.once) {
+		process.once(event.name, (...args) => event.execute(...args));
+	}
+	else {
+		process.on(event.name, (...args) => event.execute(...args));
 	}
 }
 
