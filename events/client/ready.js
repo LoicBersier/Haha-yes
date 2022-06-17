@@ -1,6 +1,6 @@
 import { exec } from 'node:child_process';
 import https from 'node:https';
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 dotenv.config();
 const { uptimeURL, uptimeInterval } = process.env;
 

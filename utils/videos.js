@@ -4,7 +4,7 @@ import { exec } from 'node:child_process';
 export default {
 	downloadVideo,
 	upload,
-	ffmpeg
+	ffmpeg,
 };
 async function downloadVideo(url, output, format = 'bestvideo*+bestaudio/best') {
 	await new Promise((resolve, reject) => {

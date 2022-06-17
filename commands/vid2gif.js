@@ -25,9 +25,12 @@ export default {
 				const gifskiOutput = output.replace(path.extname(output), '.gif');
 				const gifsicleOutput = output.replace(path.extname(output), 'gifsicle.gif');
 
-				await utils.ffmpeg(`-i ${output} ${os.tmpdir()}/frame${interaction.id}%04d.png`); // Extract every frame for gifski
-				await gifski(gifskiOutput, `${os.tmpdir()}/frame${interaction.id}*`); // Make it look better
-				await gifsicle(gifskiOutput, gifsicleOutput); // Optimize it
+				// Extract every frame for gifski
+				await utils.ffmpeg(`-i ${output} ${os.tmpdir()}/frame${interaction.id}%04d.png`);
+				// Make it look better
+				await gifski(gifskiOutput, `${os.tmpdir()}/frame${interaction.id}*`);
+				// Optimize it
+				await gifsicle(gifskiOutput, gifsicleOutput);
 
 				const fileStat = fs.statSync(gifsicleOutput);
 				const fileSize = fileStat.size / 1000000.0;

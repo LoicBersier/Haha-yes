@@ -44,8 +44,8 @@ const rest = new REST({ version: '9' }).setToken(token);
 
 if (process.argv[2] === 'global') {
 	rest.put(Routes.applicationCommands(clientId), { body: commands })
-	.then(() => console.log('Successfully registered application commands globally.'))
-	.catch(console.error);
+		.then(() => console.log('Successfully registered application commands globally.'))
+		.catch(console.error);
 }
 
 rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: commands })
