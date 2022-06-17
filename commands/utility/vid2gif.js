@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
-import utils from '../utils/videos.js';
+import utils from '../../utils/videos.js';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -55,7 +55,7 @@ export default {
 
 async function gifski(output, input) {
 	return await new Promise((resolve, reject) => {
-		exec(`gifski -o ${output} ${input}`, (err, stdout, stderr) => {
+		exec(`gifski --quality 70 -o ${output} ${input}`, (err, stdout, stderr) => {
 			if (err) {
 				reject(stderr);
 			}
