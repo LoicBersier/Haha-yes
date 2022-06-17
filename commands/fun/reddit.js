@@ -32,7 +32,7 @@ export default {
 				.setTitle(response.data.children[i].data.title)
 				.setDescription(response.data.children[i].data.selftext)
 				.setURL('https://reddit.com' + response.data.children[i].data.permalink)
-				.setFooter(`/r/${response.data.children[i].data.subreddit} | ⬆ ${response.data.children[i].data.ups} 🗨 ${response.data.children[i].data.num_comments}`);
+				.setFooter({ text: `/r/${response.data.children[i].data.subreddit} | ⬆ ${response.data.children[i].data.ups} 🗨 ${response.data.children[i].data.num_comments}` });
 
 			interaction.editReply({ embeds: [redditEmbed] });
 			interaction.followUp(response.data.children[i].data.url);

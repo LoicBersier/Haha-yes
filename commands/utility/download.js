@@ -92,8 +92,8 @@ async function download(url, interaction) {
 	let format = 'bestvideo*+bestaudio/best';
 	const Embed = new MessageEmbed()
 		.setColor(interaction.member ? interaction.member.displayHexColor : 'NAVY')
-		.setAuthor(`Downloaded by ${interaction.member.displayName}`, interaction.member.displayAvatarURL(), url)
-		.setFooter(`You can get the original video by clicking on the "Downloaded by ${interaction.member.displayName}" message!`);
+		.setAuthor({ text: `Downloaded by ${interaction.member.displayName}`, iconURL: interaction.member.displayAvatarURL(), url: url })
+		.setFooter({ text: `You can get the original video by clicking on the "Downloaded by ${interaction.member.displayName}" message!` });
 
 	if (interaction.customId === 'downloadQuality') {
 		format = interaction.values[0];
