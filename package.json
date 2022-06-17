@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node .",
+    "deploy": "node deploy-commands.cjs",
+    "deployGlobally": "node deploy-commands.cjs global",
     "lint": "eslint .",
     "lintfix": "eslint . --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
