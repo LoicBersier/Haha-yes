@@ -1,15 +1,17 @@
 {
-  "name": "haha-yes-new",
-  "version": "1.0.0",
+  "name": "haha-yes",
+  "version": "4.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "type": "module",
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Supositware",
+  "homepage": "https://libtar.de",
+  "license": "AGPL",
   "dependencies": {
     "@discordjs/builders": "^0.13.0",
     "@discordjs/rest": "^0.4.1",
