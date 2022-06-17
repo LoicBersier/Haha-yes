@@ -1,7 +1,6 @@
 export default {
 	name: 'unhandledRejection',
-	once: true,
 	async execute(error) {
-		console.error('Unhandled promise rejection:', error);
+		return console.error(`\x1b[31mUncaught Promise Rejection: ${error}\x1b[37m`);
 	},
 };
