@@ -6,7 +6,7 @@ export default {
 
 		const command = client.commands.get(interaction.commandName);
 
-		console.log(`\x1b[33m${interaction.user.tag}\x1b[0m launched command \x1b[33m${interaction.commandName}\x1b[0m`);
+		console.log(`\x1b[33m${interaction.user.tag} (${interaction.user.id})\x1b[0m launched command \x1b[33m${interaction.commandName}\x1b[0m`);
 
 		if (!command) return;
 
