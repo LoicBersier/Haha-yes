@@ -45,6 +45,10 @@ const commands = [
 			option.setName('feedback')
 				.setDescription('The message you want to send me.')
 				.setRequired(true)),
+
+	new SlashCommandBuilder()
+		.setName('inspirobot')
+		.setDescription('Get an image from inspirobot'),
 ]
 	.map(command => command.toJSON());
 
