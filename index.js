@@ -9,16 +9,17 @@ const { token } = process.env;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+const client = new Client({ intents: [Intents.FLAGS.GUILDS], shards: 'auto' });
 
 // Load commands
 client.commands = new Collection();
 await loadCommandFromDir('fun');
 await loadCommandFromDir('utility');
+await loadCommandFromDir('owner');
 
 // Load events
-loadEventFromDir('client', client);
-loadEventFromDir('process', process);
+await loadEventFromDir('client', client);
+await loadEventFromDir('process', process);
 
 client.login(token);
 
