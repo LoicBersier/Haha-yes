@@ -5,10 +5,11 @@ export default {
 	downloadVideo,
 	upload,
 	ffmpeg,
+	stringIsAValidurl,
 };
-async function downloadVideo(url, output, format = 'bestvideo*+bestaudio/best') {
+async function downloadVideo(urlArg, output, format = 'bestvideo*+bestaudio/best') {
 	await new Promise((resolve, reject) => {
-		exec(`./bin/yt-dlp -f ${format} ${url} -o "${os.tmpdir()}/${output}.%(ext)s" --force-overwrites`, (err, stdout, stderr) => {
+		exec(`./bin/yt-dlp -f ${format} ${urlArg} -o "${os.tmpdir()}/${output}.%(ext)s" --force-overwrites`, (err, stdout, stderr) => {
 			if (err) {
 				reject(stderr);
 			}
@@ -46,4 +47,14 @@ async function ffmpeg(command) {
 			resolve(stdout);
 		});
 	});
+}
+
+async function stringIsAValidurl(s) {
+	try {
+		new URL(s);
+		return true;
+	}
+	catch (err) {
+		return false;
+	}
 }

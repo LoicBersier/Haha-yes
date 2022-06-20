@@ -11,7 +11,7 @@ export default {
 		.setDescription('Download a video.')
 		.addStringOption(option =>
 			option.setName('url')
-				.setDescription('URL of the video you want to download.')
+				.setDescription('url of the video you want to download.')
 				.setRequired(true))
 		.addBooleanOption(option =>
 			option.setName('advanced')
@@ -22,9 +22,9 @@ export default {
 		await interaction.deferReply({ ephemeral: false });
 		const url = interaction.options.getString('url');
 
-		const urlRE = new RegExp('([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?([^ ])+');
-		if (!url.match(urlRE)) {
-			return interaction.editReply({ content: '❌ This does not look like a valid URL!', ephemeral: true });
+		if (!await utils.stringIsAValidurl(url)) {
+			console.error(`Not a url!!! ${url}`);
+			return interaction.editReply({ content: '❌ This does not look like a valid url!', ephemeral: true });
 		}
 
 		if (interaction.options.getBoolean('advanced')) {
@@ -92,7 +92,7 @@ async function download(url, interaction) {
 	let format = 'bestvideo*+bestaudio/best';
 	const Embed = new MessageEmbed()
 		.setColor(interaction.member ? interaction.member.displayHexColor : 'NAVY')
-		.setAuthor({ name: `Downloaded by ${interaction.user.tag}`, iconURL: interaction.user.avatarURL(), url: url })
+		.setAuthor({ name: `Downloaded by ${interaction.user.tag}`, iconurl: interaction.user.avatarURL(), url: url })
 		.setFooter({ text: `You can get the original video by clicking on the "Downloaded by ${interaction.user.tag}" message!` });
 
 	if (interaction.customId === 'downloadQuality') {
@@ -113,12 +113,12 @@ async function download(url, interaction) {
 				await interaction.followUp('Uh oh! The video you tried to download is too big!', { ephemeral: true });
 			}
 			else if (fileSize > 8) {
-				const fileURL = await utils.upload(output)
+				const fileurl = await utils.upload(output)
 					.catch(err => {
 						console.error(err);
 					});
 				await interaction.editReply({ content: 'File was bigger than 8 mb. It has been uploaded to an external site.', embeds: [Embed], ephemeral: false });
-				await interaction.followUp({ content: fileURL, ephemeral: false });
+				await interaction.followUp({ content: fileurl, ephemeral: false });
 			}
 			else {
 				await interaction.editReply({ embeds: [Embed], files: [output], ephemeral: false });

@@ -18,6 +18,11 @@ export default {
 		await interaction.deferReply({ ephemeral: false });
 		const url = interaction.options.getString('url');
 
+		if (!await utils.stringIsAValidurl(url)) {
+			console.error(`Not a url!!! ${url}`);
+			return interaction.editReply({ content: '❌ This does not look like a valid url!', ephemeral: true });
+		}
+
 		utils.downloadVideo(url, interaction.id)
 			.then(async () => {
 				const file = fs.readdirSync(os.tmpdir()).filter(fn => fn.startsWith(interaction.id));
@@ -55,7 +60,7 @@ export default {
 
 async function gifski(output, input) {
 	return await new Promise((resolve, reject) => {
-		exec(`gifski -o ${output} ${input}`, (err, stdout, stderr) => {
+		exec(`gifski --quality 70 -o ${output} ${input}`, (err, stdout, stderr) => {
 			if (err) {
 				reject(stderr);
 			}
@@ -69,7 +74,7 @@ async function gifski(output, input) {
 
 async function gifsicle(input, output) {
 	return await new Promise((resolve, reject) => {
-		exec(`gifsicle --scale 0.5 -O3 -i ${input} -o ${output}`, (err, stdout, stderr) => {
+		exec(`gifsicle --colors 256 -i ${input} -o ${output}`, (err, stdout, stderr) => {
 			if (err) {
 				reject(stderr);
 			}
