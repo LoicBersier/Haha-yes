@@ -13,7 +13,7 @@ export default {
 				.setRequired(true)),
 	async execute(interaction) {
 		const Embed = new MessageEmbed()
-			.setAuthor({ name: `${interaction.user.tag} (${interaction.user.id})`, iconURL: interaction.member.displayAvatarURL() })
+			.setAuthor({ name: `${interaction.user.tag} (${interaction.user.id})`, iconURL: interaction.user.avatarURL() })
 			.setTimestamp();
 
 		if (interaction.guild) Embed.addField('Guild', `${interaction.guild.name} (${interaction.guild.id})`, true);
