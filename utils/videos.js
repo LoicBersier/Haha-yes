@@ -9,7 +9,7 @@ export default {
 };
 async function downloadVideo(urlArg, output, format = 'bestvideo*+bestaudio/best') {
 	await new Promise((resolve, reject) => {
-		exec(`./bin/yt-dlp -f ${format} ${urlArg} -o "${os.tmpdir()}/${output}.%(ext)s" --force-overwrites`, (err, stdout, stderr) => {
+		exec(`./bin/yt-dlp -f ${format} ${urlArg} -o "${os.tmpdir()}/${output}.%(ext)s" --force-overwrites --no-playlist`, (err, stdout, stderr) => {
 			if (err) {
 				reject(stderr);
 			}
