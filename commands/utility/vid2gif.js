@@ -55,7 +55,7 @@ export default {
 
 async function gifski(output, input) {
 	return await new Promise((resolve, reject) => {
-		exec(`gifski --quality 70 -o ${output} ${input}`, (err, stdout, stderr) => {
+		exec(`gifski -o ${output} ${input}`, (err, stdout, stderr) => {
 			if (err) {
 				reject(stderr);
 			}
