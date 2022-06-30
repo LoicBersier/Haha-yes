@@ -62,6 +62,11 @@ export default {
 				options.reverse();
 			}
 
+			if (options.length < 2) {
+				await interaction.deleteReply();
+				return interaction.followUp({ content: '❌ There is no other quality option for this video!', ephemeral: true });
+			}
+
 			const row = new MessageActionRow()
 				.addComponents(
 					new MessageSelectMenu()
