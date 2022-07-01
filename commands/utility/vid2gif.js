@@ -42,14 +42,14 @@ export default {
 
 				if (fileSize > 100) {
 					await interaction.deleteReply();
-					await interaction.followUp('Uh oh! The video once converted is too big!', { ephemeral: true });
+					await interaction.followUp('❌ Uh oh! The video once converted is too big!', { ephemeral: true });
 				}
 				else if (fileSize > 8) {
 					const fileURL = await utils.upload(gifsicleOutput)
 						.catch(err => {
 							console.error(err);
 						});
-					await interaction.editReply({ content: `File was bigger than 8 mb. It has been uploaded to an external site.\n${fileURL}`, ephemeral: false });
+					await interaction.editReply({ content: `ℹ️ File was bigger than 8 mb. It has been uploaded to an external site.\n${fileURL}`, ephemeral: false });
 				}
 				else {
 					await interaction.editReply({ files: [gifsicleOutput], ephemeral: false });

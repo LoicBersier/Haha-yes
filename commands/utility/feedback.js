@@ -22,7 +22,7 @@ export default {
 		// Don't let new account use this command to prevent spam
 		const date = new Date();
 		if (interaction.user.createdAt > date.setDate(date.getDate() - 7)) {
-			return interaction.reply({ content: 'Your account is too new to be able to use this command!', ephemeral: true });
+			return interaction.reply({ content: '❌ Your account is too new to be able to use this command!', ephemeral: true });
 		}
 
 		const channel = interaction.client.channels.resolve(feedbackChannelId);
