@@ -34,7 +34,7 @@ export default {
 				.setURL('https://reddit.com' + response.data.children[i].data.permalink)
 				.setFooter({ text: `/r/${response.data.children[i].data.subreddit} | ⬆ ${response.data.children[i].data.ups} 🗨 ${response.data.children[i].data.num_comments}` });
 
-			interaction.editReply({ embeds: [redditEmbed] });
+			interaction.followUp({ embeds: [redditEmbed] });
 			interaction.followUp(response.data.children[i].data.url);
 		});
 	},
