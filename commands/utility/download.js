@@ -29,7 +29,7 @@ export default {
 
 		if (interaction.options.getBoolean('advanced')) {
 			let qualitys = await new Promise((resolve, reject) => {
-				exec(`./bin/yt-dlp ${url} --print "%()j"`, (err, stdout, stderr) => {
+				exec(`./bin/yt-dlp "${url}" --print "%()j"`, (err, stdout, stderr) => {
 					if (err) {
 						reject(stderr);
 					}
@@ -45,11 +45,16 @@ export default {
 
 			qualitys.formats.forEach(f => {
 				options.push({
-					label: f.resolution,
+					label: f.resolution ? f.resolution : 'Unknown format',
 					description: `${f.format} V: ${f.vcodec} A: ${f.acodec}`,
 					value: f.format_id,
 				});
 			});
+
+			if (options.length < 2) {
+				await interaction.deleteReply();
+				return interaction.followUp({ content: '❌ There is no other quality option for this video!', ephemeral: true });
+			}
 
 			if (options.length > 25) {
 				// Reverse so the higher quality formats are first
@@ -60,11 +65,6 @@ export default {
 				}
 				// Reverse again so the lower quality appears first
 				options.reverse();
-			}
-
-			if (options.length < 2) {
-				await interaction.deleteReply();
-				return interaction.followUp({ content: '❌ There is no other quality option for this video!', ephemeral: true });
 			}
 
 			const row = new MessageActionRow()
