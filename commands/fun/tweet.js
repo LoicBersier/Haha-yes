@@ -25,6 +25,8 @@ export default {
 			option.setName('image')
 				.setDescription('Optional attachment (Image only.)')
 				.setRequired(false)),
+	ratelimit: 3,
+	cooldown: 3600,
 	async execute(interaction) {
         await interaction.deferReply({ ephemeral: false });
 		const client = interaction.client;

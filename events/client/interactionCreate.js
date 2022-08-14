@@ -1,4 +1,5 @@
 import db from '../../models/index.js';
+const ratelimit = {};
 export default {
 	name: 'interactionCreate',
 	async execute(interaction) {
@@ -14,13 +15,38 @@ export default {
 			return interaction.reply({ content: 'You are blacklisted.', ephemeral: true });
 		}
 
-		const command = client.commands.get(interaction.commandName);
+		const userTag = interaction.user.tag;
+		const userID = interaction.user.id;
+		const commandName = interaction.commandName;
 
-		console.log(`\x1b[33m${interaction.user.tag} (${interaction.user.id})\x1b[0m launched command \x1b[33m${interaction.commandName}\x1b[0m`);
+		const command = client.commands.get(commandName);
+		console.log(`\x1b[33m${userTag} (${userID})\x1b[0m launched command \x1b[33m${commandName}\x1b[0m`);
 
 		if (!command) return;
 
 		try {
+			const date = new Date();
+			if (ratelimit[userID]) {
+				if (ratelimit[userID].cooldown) {
+					if (commandName === ratelimit[userID].command && date > ratelimit[userID].cooldown) {
+						ratelimit[userID].limit = 0;
+						ratelimit[userID].cooldown = undefined;
+					}
+				}
+
+				if (commandName === ratelimit[userID].command && command.ratelimit === ratelimit[userID].limit) {
+					return await interaction.reply({ content: `You are being rate limited. You can try again in ${Math.floor((ratelimit[userID].cooldown - date) / 1000)} seconds.`, ephemeral: true });
+
+				}
+			}
+			if (command.ratelimit) {
+				ratelimit[userID] = { command: commandName, limit: ratelimit[userID] ? ratelimit[userID].limit + 1 : 1 };
+				if (command.ratelimit === ratelimit[userID].limit) {
+					date.setSeconds(date.getSeconds() + command.cooldown);
+
+					ratelimit[userID] = { command: commandName, limit: ratelimit[userID].limit, cooldown: date };
+				}
+			}
 			await command.execute(interaction);
 		}
 		catch (error) {
