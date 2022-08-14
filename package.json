@@ -22,9 +22,15 @@
     "discord-api-types": "^0.33.1",
     "discord.js": "^13.7.0",
     "dotenv": "^16.0.1",
-    "node-fetch": "^3.2.6"
+    "mariadb": "^3.0.1",
+    "mysql2": "^2.3.3",
+    "node-fetch": "^3.2.6",
+    "sequelize": "^6.21.3",
+    "twit": "^2.2.11"
   },
   "devDependencies": {
-    "eslint": "^8.16.0"
+    "@types/node": "^18.7.3",
+    "eslint": "^8.16.0",
+    "sequelize-cli": "^6.4.1"
   }
 }
