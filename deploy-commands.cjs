@@ -49,6 +49,18 @@ const commands = [
 	new SlashCommandBuilder()
 		.setName('inspirobot')
 		.setDescription('Get an image from inspirobot'),
+
+	new SlashCommandBuilder()
+		.setName('tweet')
+		.setDescription('Send tweet from Haha yes twitter account. Please do not use it for advertisement and keep it english')
+		.addStringOption(option =>
+			option.setName('content')
+				.setDescription('The content of the tweet you want to send me.')
+				.setRequired(false))
+		.addAttachmentOption(option =>
+			option.setName('image')
+				.setDescription('Optional attachment (Image only.)')
+				.setRequired(false)),
 ]
 	.map(command => command.toJSON());
 
@@ -57,6 +69,11 @@ const rest = new REST({ version: '9' }).setToken(token);
 if (process.argv[2] === 'global') {
 	rest.put(Routes.applicationCommands(clientId), { body: commands })
 		.then(() => console.log('Successfully registered application commands globally.'))
+		.catch(console.error);
+}
+else if (process.argv[2] === 'delete') {
+	rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: [] })
+		.then(() => console.log('Successfully deleted all guild commands.'))
 		.catch(console.error);
 }
 
