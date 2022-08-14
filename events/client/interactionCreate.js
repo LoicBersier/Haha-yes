@@ -1,8 +1,18 @@
+import db from '../../models/index.js';
 export default {
 	name: 'interactionCreate',
 	async execute(interaction) {
 		const client = interaction.client;
 		if (!interaction.isCommand()) return;
+
+		const globalBlacklist = await db.Blacklists.findOne({ where: { type:'global', uid:interaction.user.id } });
+		const commandBlacklist = await db.Blacklists.findOne({ where: { type:interaction.commandName, uid:interaction.user.id } });
+		if (globalBlacklist) {
+			return interaction.reply({ content: 'You are globally blacklisted.', ephemeral: true });
+		}
+		else if (commandBlacklist) {
+			return interaction.reply({ content: 'You are blacklisted.', ephemeral: true });
+		}
 
 		const command = client.commands.get(interaction.commandName);
 
