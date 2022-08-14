@@ -9,10 +9,10 @@ export default {
 		const globalBlacklist = await db.Blacklists.findOne({ where: { type:'global', uid:interaction.user.id } });
 		const commandBlacklist = await db.Blacklists.findOne({ where: { type:interaction.commandName, uid:interaction.user.id } });
 		if (globalBlacklist) {
-			return interaction.reply({ content: 'You are globally blacklisted.', ephemeral: true });
+			return interaction.reply({ content: `You are globally blacklisted for the following reason: \`${globalBlacklist.reason}\``, ephemeral: true });
 		}
 		else if (commandBlacklist) {
-			return interaction.reply({ content: 'You are blacklisted.', ephemeral: true });
+			return interaction.reply({ content: `You are blacklisted for the following reason: \`${commandBlacklist.reason}\``, ephemeral: true });
 		}
 
 		const userTag = interaction.user.tag;
