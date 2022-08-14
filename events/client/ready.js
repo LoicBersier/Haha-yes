@@ -1,8 +1,6 @@
 import { exec } from 'node:child_process';
-import https from 'node:https';
 import dotenv from 'dotenv';
 dotenv.config();
-const { uptimeURL, uptimeInterval } = process.env;
 
 export default {
 	name: 'ready',
@@ -33,17 +31,5 @@ export default {
 		console.log(`There is \x1b[33m${commandSize}\x1b[0m command loaded.`);
 		console.log(`Running yt-dlp \x1b[33m${ytdlpVersion.replace('\n', '')}\x1b[0m`);
 		console.log('===========[ READY ]===========');
-
-		if (uptimeURL != '') {
-			pingStatus(client, 'Starting up');
-
-			setInterval(() => {
-				pingStatus(client, 'OK');
-			}, uptimeInterval * 1000);
-		}
 	},
 };
-
-async function pingStatus(client, msg) {
-	https.get(`${uptimeURL}msg=${msg}&ping=${Math.round(client.ws.ping)}`);
-}
