@@ -6,7 +6,7 @@ import os from 'node:os';
 import fs from 'node:fs';
 
 import db from '../../models/index.js';
-import wordToCensor from '../../json/censor.json' assert {type: 'json'};;
+import wordToCensor from '../../json/censor.json' assert {type: 'json'};
 import dotenv from 'dotenv';
 dotenv.config();
 const { twiConsumer, twiConsumerSecret, twiToken, twiTokenSecret, twiChannel, twiLogChannel } = process.env;
@@ -28,21 +28,20 @@ export default {
 	ratelimit: 3,
 	cooldown: 3600,
 	async execute(interaction) {
-        await interaction.deferReply({ ephemeral: false });
-		const client = interaction.client;
+		await interaction.deferReply({ ephemeral: false });
 		let tweet = interaction.options.getString('content');
 		const attachment = interaction.options.getAttachment('image');
 		const date = new Date();
 		// If account is less than 6 months old don't accept the tweet ( alt prevention )
 		if (interaction.user.createdAt > date.setMonth(date.getMonth() - 6)) {
 			await interaction.editReply({ content: 'Your account is too new to be able to use this command!' });
-            return;
+			return;
 		}
 
 		// If account is less than 1 year old don't accept attachment
 		if (attachment && interaction.user.createdAt > date.setFullYear(date.getFullYear() - 1)) {
 			await interaction.editReply({ content: 'Your account need to be 1 year or older to be able to send attachment!' });
-            return;
+			return;
 		}
 
 		// remove zero width space
@@ -57,20 +56,20 @@ export default {
 				Blacklists.create(body);
 
 				await interaction.editReply({ content: 'Sike, you just posted cringe! Enjoy the blacklist :)' });
-                return;
+				return;
 			}
 
 			// Very simple link detection
 			if (new RegExp('([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?(/.*)?').test(tweet) && !tweet.includes('twitter.com')) {
-                await interaction.editReply({ content: 'You may not tweet links outside of twitter.com' });
-                return;
-            }
+				await interaction.editReply({ content: 'You may not tweet links outside of twitter.com' });
+				return;
+			}
 			// Do not allow discord invites
 			if (tweet.includes('discord.gg') || tweet.includes('discord.com/invite/')) {
-                await interaction.editReply({ content: 'No discord invite allowed.' });
-                return;
-		    }
-        }
+				await interaction.editReply({ content: 'No discord invite allowed.' });
+				return;
+			}
+		}
 
 		const T = new Twit({
 			consumer_key: twiConsumer,
@@ -114,7 +113,7 @@ export default {
 				}
 				else {
 					await interaction.editReply({ content: 'File type not supported, you can only send jpg/png/gif' });
-                    return;
+					return;
 				}
 			}
 			else {
@@ -124,7 +123,7 @@ export default {
 		catch (err) {
 			console.error(err);
 			await interaction.editReply({ content: 'Oh no, an error has occurred :(' });
-            return;
+			return;
 		}
 
 		function Tweet(data) {
@@ -167,10 +166,10 @@ export default {
 				let channel = interaction.client.channels.resolve(twiChannel);
 				channel.send(TweetLink);
 
-                const Embed = new MessageEmbed()
-                    .setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL() })
-                    .setDescription(tweet)
-                    .addField('Link', TweetLink, true)
+				const Embed = new MessageEmbed()
+					.setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL() })
+					.setDescription(tweet)
+					.addField('Link', TweetLink, true)
 					.addField('Tweet ID', tweetid, true)
 					.addField('Channel ID', interaction.channel.id, true)
 					.addField('Messsage ID', interaction.id, true)
@@ -187,8 +186,8 @@ export default {
 
 				if (attachment) Embed.setImage(attachment.url);
 
-                channel = interaction.client.channels.resolve(twiLogChannel);
-                channel.send({ embeds: [Embed] });
+				channel = interaction.client.channels.resolve(twiLogChannel);
+				channel.send({ embeds: [Embed] });
 				return interaction.editReply({ content: `Go see ur epic tweet ${TweetLink}` });
 			});
 		}
