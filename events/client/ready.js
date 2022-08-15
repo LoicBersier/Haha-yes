@@ -1,6 +1,7 @@
 import { exec } from 'node:child_process';
 import dotenv from 'dotenv';
 dotenv.config();
+const { statusChannel } = process.env;
 
 export default {
 	name: 'ready',
@@ -31,5 +32,11 @@ export default {
 		console.log(`There is \x1b[33m${commandSize}\x1b[0m command loaded.`);
 		console.log(`Running yt-dlp \x1b[33m${ytdlpVersion.replace('\n', '')}\x1b[0m`);
 		console.log('===========[ READY ]===========');
+
+		// If stats channel settings exist, send bot stats to it
+		if (statusChannel) {
+			const channel = client.channels.resolve(statusChannel);
+			channel.send(`Ready to serve in ${channelSize} channels on ${guildSize} servers.\nThere is ${commandSize} command loaded.\nRunning yt-dlp ${ytdlpVersion.replace('\n', '')}\n${client.readyAt}`);
+		}
 	},
 };
