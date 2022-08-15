@@ -15,6 +15,7 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS], shards: 'auto' });
 client.commands = new Collection();
 await loadCommandFromDir('fun');
 await loadCommandFromDir('utility');
+await loadCommandFromDir('admin');
 await loadCommandFromDir('owner');
 
 // Load events
@@ -45,10 +46,10 @@ async function loadEventFromDir(dir, listener) {
 		let event = await import(filePath);
 		event = event.default;
 		if (event.once) {
-			listener.once(event.name, (...args) => event.execute(...args));
+			listener.once(event.name, (...args) => event.execute(...args, client));
 		}
 		else {
-			listener.on(event.name, (...args) => event.execute(...args));
+			listener.on(event.name, (...args) => event.execute(...args, client));
 		}
 	}
 }
