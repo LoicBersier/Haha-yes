@@ -15,7 +15,7 @@ You need to install the following
 * yt-dlp ([a file can download it for you](prereq.js))
 * gifsicle (For [vid2gif](commands/vid2gif.js))
 * giski (For [vid2gif](commands/vid2gif.js))
-* Somewhere to upload files larger than 8 mb (I use a self hosted (XBackBone)[https://github.com/SergiX44/XBackBone/] with the upload.sh script made from it, you can use anything else just need to be located in bin/upload.sh)
+* Somewhere to upload files larger than 8 mb (I use a self hosted [XBackBone](https://github.com/SergiX44/XBackBone/) with the upload.sh script made from it, you can use anything else just need to be located in bin/upload.sh)
 
 ### Installing
 ```
