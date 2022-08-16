@@ -61,6 +61,14 @@ const commands = [
 			option.setName('image')
 				.setDescription('Optional attachment (Image only.)')
 				.setRequired(false)),
+
+	new SlashCommandBuilder()
+		.setName('4chan')
+		.setDescription('Send random images from a 4chan board of your choosing!')
+		.addStringOption(option =>
+			option.setName('board')
+				.setDescription('The board you wish to see')
+				.setRequired(true)),
 ]
 	.map(command => command.toJSON());
 

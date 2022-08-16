@@ -1,0 +1,392 @@
+{
+	"3": {
+		"nsfw": false,
+		"title": "3DCG",
+		"description": "\"/3/ - 3DCG\" is 4chan's board for 3D modeling and imagery."
+	},
+	"a": {
+		"nsfw": false,
+		"title": "Anime & Manga",
+		"description": "\"/a/ - Anime & Manga\" is 4chan's imageboard dedicated to the discussion of Japanese animation and manga."
+	},
+	"aco": {
+		"nsfw": true,
+		"title": "Adult Cartoons",
+		"description": "\"/aco/ - Adult Cartoons\" is 4chan's imageboard for posting western-styled adult cartoon artwork."
+	},
+	"adv": {
+		"nsfw": false,
+		"title": "Advice",
+		"description": "\"/adv/ - Advice\" is 4chan's board for giving and receiving advice."
+	},
+	"an": {
+		"nsfw": false,
+		"title": "Animals & Nature",
+		"description": "\"/an/ - Animals & Nature\" is 4chan's imageboard for posting pictures of animals, pets, and nature."
+	},
+	"b": {
+		"nsfw": true,
+		"title": "Random",
+		"description": "\"/b/ - Random\" is the birthplace of Anonymous, and where people go to discuss random topics and create memes on 4chan."
+	},
+	"bant": {
+		"nsfw": true,
+		"title": "International/Random",
+		"description": "\"/bant/ - International/Random\" is 4chan's international hanging out board, where you can have fun with Anonymous all over the world."
+	},
+	"biz": {
+		"nsfw": false,
+		"title": "Business & Finance",
+		"description": "\"/biz/ - Business & Finance\" is 4chan's imageboard for the discussion of business and finance, and cryptocurrencies such as Bitcoin and Dogecoin."
+	},
+	"c": {
+		"nsfw": false,
+		"title": "Anime/Cute",
+		"description": "\"/c/ - Anime/Cute\" is 4chan's imageboard for cute and moe anime images."
+	},
+	"cgl": {
+		"nsfw": false,
+		"title": "Cosplay & EGL",
+		"description": "\"/cgl/ - Cosplay & EGL\" is 4chan's imageboard for the discussion of cosplay, elegant gothic lolita (EGL), and anime conventions."
+	},
+	"ck": {
+		"nsfw": false,
+		"title": "Food & Cooking",
+		"description": "\"/ck/ - Food & Cooking\" is 4chan's imageboard for food pictures and cooking recipes."
+	},
+	"cm": {
+		"nsfw": false,
+		"title": "Cute/Male",
+		"description": "\"/cm/ - Cute/Male\" is 4chan's imageboard for posting pictures of cute anime males."
+	},
+	"co": {
+		"nsfw": false,
+		"title": "Comics & Cartoons",
+		"description": "\"/co/ - Comics & Cartoons\" is 4chan's imageboard dedicated to the discussion of Western cartoons and comics."
+	},
+	"d": {
+		"nsfw": true,
+		"title": "Hentai/Alternative",
+		"description": "\"/d/ - Hentai/Alternative\" is 4chan's imageboard for alternative hentai images."
+	},
+	"diy": {
+		"nsfw": false,
+		"title": "Do It Yourself",
+		"description": "\"/diy/ - Do It Yourself\" is 4chan's imageboard for DIY/do it yourself projects, home improvement, and makers."
+	},
+	"e": {
+		"nsfw": true,
+		"title": "Ecchi",
+		"description": "\"/e/ - Ecchi\" is 4chan's imageboard for suggestive (ecchi) hentai images."
+	},
+	"f": {
+		"nsfw": true,
+		"title": "Flash",
+		"description": "\"/f/ - Flash\" is 4chan's upload board for sharing Adobe Flash files (SWFs)."
+	},
+	"fa": {
+		"nsfw": false,
+		"title": "Fashion",
+		"description": "\"/fa/ - Fashion\" is 4chan's imageboard for images and discussion relating to fashion and apparel."
+	},
+	"fit": {
+		"nsfw": false,
+		"title": "Fitness",
+		"description": "\"/fit/ - Fitness\" is 4chan's imageboard for weightlifting, health, and fitness."
+	},
+	"g": {
+		"nsfw": false,
+		"title": "Technology",
+		"description": "\"/g/ - Technology\" is 4chan's imageboard for discussing computer hardware and software, programming, and general technology."
+	},
+	"gd": {
+		"nsfw": false,
+		"title": "Graphic Design",
+		"description": "\"/gd/ - Graphic Design\" is 4chan's imageboard for graphic design."
+	},
+	"gif": {
+		"nsfw": true,
+		"title": "Adult GIF",
+		"description": "\"/gif/ - Adult GIF\" is 4chan's imageboard dedicated to animated adult GIFs and WEBMs."
+	},
+	"h": {
+		"nsfw": true,
+		"title": "Hentai",
+		"description": "\"/h/ - Hentai\" is 4chan's imageboard for adult Japanese anime hentai images."
+	},
+	"hc": {
+		"nsfw": true,
+		"title": "Hardcore",
+		"description": "\"/hc/ - Hardcore\" is 4chan's imageboard for the posting of adult hardcore pornography."
+	},
+	"his": {
+		"nsfw": false,
+		"title": "History & Humanities",
+		"description": "\"/his/ - History & Humanities\" is 4chan's board for discussing and debating history."
+	},
+	"hm": {
+		"nsfw": true,
+		"title": "Handsome Men",
+		"description": "\"/hm/ - Handsome Men\" is 4chan's imageboard dedicated to sharing adult images of handsome men."
+	},
+	"hr": {
+		"nsfw": true,
+		"title": "High Resolution",
+		"description": "\"/hr/ - High Resolution\" is 4chan's imageboard for the sharing of high resolution images."
+	},
+	"i": {
+		"nsfw": true,
+		"title": "Oekaki",
+		"description": "\"/i/ - Oekaki\" is 4chan's oekaki board for drawing and sharing art."
+	},
+	"ic": {
+		"nsfw": true,
+		"title": "Artwork/Critique",
+		"description": "\"/ic/ - Artwork/Critique\" is 4chan's imageboard for the discussion and critique of art."
+	},
+	"int": {
+		"nsfw": false,
+		"title": "International",
+		"description": "\"/int/ - International\" is 4chan's international board, for the exchange of foreign language and culture."
+	},
+	"jp": {
+		"nsfw": false,
+		"title": "Otaku Culture",
+		"description": "\"/jp/ - Otaku Culture\" is 4chan's board for discussing Japanese otaku culture."
+	},
+	"k": {
+		"nsfw": false,
+		"title": "Weapons",
+		"description": "\"/k/ - Weapons\" is 4chan's imageboard for discussing all types of weaponry, from military tanks to guns and knives."
+	},
+	"lgbt": {
+		"nsfw": false,
+		"title": "LGBT",
+		"description": "\"/lgbt/ - LGBT\" is 4chan's imageboard for Lesbian-Gay-Bisexual-Transgender-Queer and sexuality discussion."
+	},
+	"lit": {
+		"nsfw": false,
+		"title": "Literature",
+		"description": "\"/lit/ - Literature\" is 4chan's board for the discussion of books, authors, and literature."
+	},
+	"m": {
+		"nsfw": false,
+		"title": "Mecha",
+		"description": "\"/m/ - Mecha\" is 4chan's imageboard for discussing Japanese mecha robots and anime, like Gundam and Macross."
+	},
+	"mlp": {
+		"nsfw": false,
+		"title": "Pony",
+		"description": "\"/mlp/ - Pony\" is 4chan's imageboard dedicated to the discussion of My Little Pony: Friendship is Magic."
+	},
+	"mu": {
+		"nsfw": false,
+		"title": "Music",
+		"description": "\"/mu/ - Music\" is 4chan's imageboard for discussing all types of music."
+	},
+	"n": {
+		"nsfw": false,
+		"title": "Transportation",
+		"description": "\"/n/ - Transportation\" is 4chan's imageboard for discussing modes of transportation like trains and bicycles."
+	},
+	"news": {
+		"nsfw": false,
+		"title": "Current News",
+		"description": "\"/news/ - Current News; is 4chan's board for current news."
+	},
+	"o": {
+		"nsfw": false,
+		"title": "Auto",
+		"description": "\"/o/ - Auto\" is 4chan's imageboard for discussing cars and motorcycles."
+	},
+	"out": {
+		"nsfw": false,
+		"title": "Outdoors",
+		"description": "\"/out/ - Outdoors\" is 4chan's imageboard for discussing survivalist skills and outdoor activities such as hiking."
+	},
+	"p": {
+		"nsfw": false,
+		"title": "Photography",
+		"description": "\"/p/ - Photography\" is 4chan's imageboard for sharing and critiquing photos."
+	},
+	"po": {
+		"nsfw": false,
+		"title": "Papercraft & Origami",
+		"description": "\"/po/ - Papercraft & Origami\" is 4chan's imageboard for posting papercraft and origami templates and instructions."
+	},
+	"pol": {
+		"nsfw": true,
+		"title": "Politically Incorrect",
+		"description": "\"/pol/ - Politically Incorrect\" is 4chan's board for discussing and debating politics and current events."
+	},
+	"pw": {
+		"nsfw": false,
+		"title": "Professional Wrestling",
+		"description": "\"/pw/ - Professional Wrestling\" is 4chan's imageboard for the discussion of professional wrestling."
+	},
+	"qa": {
+		"nsfw": false,
+		"title": "Question & Answer",
+		"description": "\"/qa/ - Question & Answer\" is 4chan's imageboard for question and answer threads."
+	},
+	"qst": {
+		"nsfw": false,
+		"title": "Quests",
+		"description": "\"/qst/ - Quests\" is 4chan's imageboard for grinding XP."
+	},
+	"r": {
+		"nsfw": true,
+		"title": "Adult Requests",
+		"description": "\"/r/ - Request\" is 4chan's imageboard dedicated to fulfilling all types of user requests."
+	},
+	"r9k": {
+		"nsfw": true,
+		"title": "ROBOT9001",
+		"description": "\"/r9k/ - ROBOT9001\" is a board for hanging out and posting greentext stories."
+	},
+	"s": {
+		"nsfw": true,
+		"title": "Sexy Beautiful Women",
+		"description": "\"/s/ - Sexy Beautiful Women\" is 4chan's imageboard dedicated to sharing images of softcore pornography."
+	},
+	"s4s": {
+		"nsfw": true,
+		"title": "Shit 4chan Says",
+		"description": "\"\\[s4s\\] - Shit 4chan Says\" is 4chan's imageboard for posting dank memes :^)"
+	},
+	"sci": {
+		"nsfw": false,
+		"title": "Science & Math",
+		"description": "\"/sci/ - Science & Math\" is 4chan's board for the discussion of science and math."
+	},
+	"soc": {
+		"nsfw": true,
+		"title": "Cams & Meetups",
+		"description": "\"/soc/ - Cams & Meetups\" is 4chan's board for camwhores and meetups."
+	},
+	"sp": {
+		"nsfw": false,
+		"title": "Sports",
+		"description": "\"/sp/ - Sports\" is 4chan's imageboard for sports discussion."
+	},
+	"t": {
+		"nsfw": true,
+		"title": "Torrents",
+		"description": "\"/t/ - Torrents\" is 4chan's imageboard for posting links and descriptions to torrents."
+	},
+	"tg": {
+		"nsfw": false,
+		"title": "Traditional Games",
+		"description": "\"/tg/ - Traditional Games\" is 4chan's imageboard for discussing traditional gaming, such as board games and tabletop RPGs."
+	},
+	"toy": {
+		"nsfw": false,
+		"title": "Toys",
+		"description": "\"/toy/ - Toys\" is 4chan's imageboard for talking about all kinds of toys!"
+	},
+	"trash": {
+		"nsfw": true,
+		"title": "Off-Topic",
+		"description": "\"/trash/ - Off-topic\" is 4chan's imageboard jail for off-topic threads."
+	},
+	"trv": {
+		"nsfw": false,
+		"title": "Travel",
+		"description": "\"/trv/ - Travel\" is 4chan's imageboard dedicated to travel and the countries of the world."
+	},
+	"tv": {
+		"nsfw": false,
+		"title": "Television & Film",
+		"description": "\"/tv/ - Television & Film\" is 4chan's imageboard dedicated to the discussion of television and film."
+	},
+	"u": {
+		"nsfw": true,
+		"title": "Yuri",
+		"description": "\"/u/ - Yuri\" is 4chan's imageboard for yuri hentai images."
+	},
+	"v": {
+		"nsfw": false,
+		"title": "Video Games",
+		"description": "\"/v/ - Video Games\" is 4chan's imageboard dedicated to the discussion of PC and console video games."
+	},
+	"vg": {
+		"nsfw": false,
+		"title": "Video Game Generals",
+		"description": "\"/vg/ - Video Game Generals\" is 4chan's imageboard dedicated to the discussion of PC and console video games."
+	},
+	"vip": {
+		"nsfw": false,
+		"title": "Very Important Posts",
+		"description": "\"/vip/ - Very Important Posts\" is 4chan's imageboard for Pass users."
+	},
+	"vm": {
+		"nsfw": false,
+		"title": "Video Games/Multiplayer",
+		"description": "\"/vmg/ - Video Games/Multiplayer\" is 4chan's imageboard dedicated to the discussion of multiplayer video games."
+	},
+	"vmg": {
+		"nsfw": false,
+		"title": "Video Games/Mobile",
+		"description": "\"/vmg/ - Video Games/Mobile\" is 4chan's imageboard dedicated to the discussion of video games on mobile devices."
+	},
+	"vp": {
+		"nsfw": false,
+		"title": "Pokémon",
+		"description": "\"/vp/ - Pokémon\" is 4chan's imageboard dedicated to discussing the Pokémon series of video games and shows."
+	},
+	"vr": {
+		"nsfw": false,
+		"title": "Retro Games",
+		"description": "\"/vr/ - Retro Games\" is 4chan's imageboard for discussing retro console video games and classic arcade games."
+	},
+	"vrpg": {
+		"nsfw": false,
+		"title": "Video Games/RPG",
+		"description": "\"/vrpg/ - Video Games/RPG\" is 4chan's imageboard dedicated to the discussion of role-playing video games."
+	},
+	"vst": {
+		"nsfw": false,
+		"title": "Video Games/Strategy",
+		"description": "\"/vst/ - Video Games/Strategy\" is 4chan's imageboard dedicated to the discussion of strategy video games."
+	},
+	"vt": {
+		"nsfw": false,
+		"title": "Virtual YouTubers",
+		"description": "\"/vt/ - Virtual YouTubers\" is 4chan's board for discussing virtual YouTubers (\"VTubers\")."
+	},
+	"w": {
+		"nsfw": false,
+		"title": "Anime/Wallpapers",
+		"description": "\"/w/ - Anime/Wallpapers\" is 4chan's imageboard for posting Japanese anime wallpapers."
+	},
+	"wg": {
+		"nsfw": true,
+		"title": "Wallpapers/General",
+		"description": "\"/wg/ - Wallpapers/General\" is 4chan's imageboard for posting general wallpapers."
+	},
+	"wsg": {
+		"nsfw": false,
+		"title": "Worksafe GIF",
+		"description": "\"/wsg/ - Worksafe GIF\" is 4chan's imageboard dedicated to sharing worksafe animated GIFs and WEBMs."
+	},
+	"wsr": {
+		"nsfw": false,
+		"title": "Worksafe Requests",
+		"description": "\"/wsr/ - Worksafe Requests\" is 4chan's imageboard dedicated to fulfilling non-NSFW requests."
+	},
+	"x": {
+		"nsfw": false,
+		"title": "Paranormal",
+		"description": "\"/x/ - Paranormal\" is 4chan's imageboard for the discussion of paranormal, spooky pictures and conspiracy theories."
+	},
+	"xs": {
+		"nsfw": false,
+		"title": "Extreme Sports",
+		"description": "\"/xs/ - Extreme Sports\" is 4chan's imageboard imageboard dedicated to the discussion of extreme sports."
+	},
+	"y": {
+		"nsfw": true,
+		"title": "Yaoi",
+		"description": "\"/y/ - Yaoi\" is 4chan's imageboard for posting adult yaoi hentai images."
+	}
+}
