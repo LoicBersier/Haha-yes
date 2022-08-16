@@ -18,7 +18,8 @@ export default {
 			if (random === 0) {
 				console.log('Status type: \x1b[32mWatching\x1b[0m');
 
-				const status = watch[Math.floor((Math.random() * watch.length))];
+				let status = watch[Math.floor((Math.random() * watch.length))];
+				status = status + ' | Now with slash commands!';
 				console.log(`Setting status to: ${status}`);
 				client.user.setActivity(status, { type: 'WATCHING' });
 			}
@@ -26,9 +27,11 @@ export default {
 			else if (random === 1) {
 				console.log('Status type: \x1b[32mPlaying\x1b[0m');
 
-				const status = game[Math.floor((Math.random() * game.length))];
+				let status = game[Math.floor((Math.random() * game.length))];
+				status = status + ' | Now with slash commands!';
+
 				console.log(`Setting status to: ${status}`);
-				client.user.setActivity(status, { type: 'PLAYING' });
+				client.user.setActivity(status + ' | Now with slash commands!', { type: 'PLAYING' });
 			}
 		}
 	},
