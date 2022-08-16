@@ -26,6 +26,7 @@
     "mysql2": "^2.3.3",
     "node-fetch": "^3.2.6",
     "sequelize": "^6.21.3",
+    "turndown": "^7.1.1",
     "twit": "^2.2.11"
   },
   "devDependencies": {
