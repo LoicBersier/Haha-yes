@@ -28,6 +28,10 @@ export default {
 	ratelimit: 3,
 	cooldown: 3600,
 	async execute(interaction) {
+		if (!interaction.options.getString('content') && !interaction.options.getAttachment('image')) {
+			return interaction.reply({ content: 'Uh oh! You are missing any content for me to tweet!', ephemeral: true });
+		}
+
 		await interaction.deferReply({ ephemeral: false });
 		let tweet = interaction.options.getString('content');
 		const attachment = interaction.options.getAttachment('image');
