@@ -1,5 +1,4 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
-import process from 'node:process';
 
 export default {
 	data: new SlashCommandBuilder()
