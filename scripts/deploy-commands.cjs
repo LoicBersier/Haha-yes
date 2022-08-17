@@ -69,6 +69,10 @@ const commands = [
 			option.setName('board')
 				.setDescription('The board you wish to see')
 				.setRequired(true)),
+
+	new SlashCommandBuilder()
+		.setName('donator')
+		.setDescription('All the people who donated for this bot <3'),
 ]
 	.map(command => command.toJSON());
 
