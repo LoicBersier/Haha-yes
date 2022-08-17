@@ -81,6 +81,10 @@ const commands = [
 	new SlashCommandBuilder()
 		.setName('about')
 		.setDescription('About me (The bot)'),
+
+	new SlashCommandBuilder()
+		.setName('stats')
+		.setDescription('Show some stats about the bot'),
 ]
 	.map(command => command.toJSON());
 
