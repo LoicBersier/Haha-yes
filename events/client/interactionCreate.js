@@ -1,5 +1,10 @@
 import db from '../../models/index.js';
 const ratelimit = {};
+
+import dotenv from 'dotenv';
+dotenv.config();
+const { ownerId } = process.env;
+
 export default {
 	name: 'interactionCreate',
 	async execute(interaction) {
@@ -20,9 +25,14 @@ export default {
 		const commandName = interaction.commandName;
 
 		const command = client.commands.get(commandName);
-		console.log(`\x1b[33m${userTag} (${userID})\x1b[0m launched command \x1b[33m${commandName}\x1b[0m`);
 
 		if (!command) return;
+
+		console.log(`\x1b[33m${userTag} (${userID})\x1b[0m launched command \x1b[33m${commandName}\x1b[0m`);
+
+		if (command.ownerOnly && interaction.user.id !== ownerId) {
+			return interaction.reply({ content: '❌ This command is reserved for the owner!', ephemeral: true });
+		}
 
 		try {
 			const date = new Date();
