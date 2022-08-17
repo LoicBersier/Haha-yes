@@ -85,6 +85,22 @@ const commands = [
 	new SlashCommandBuilder()
 		.setName('stats')
 		.setDescription('Show some stats about the bot'),
+
+	new SlashCommandBuilder()
+		.setName('fakeuser')
+		.setDescription('Fake a user with webhooks')
+		.addMentionableOption(option =>
+			option.setName('user')
+				.setDescription('Who do you want to fake?')
+				.setRequired(true))
+		.addStringOption(option =>
+			option.setName('message')
+				.setDescription('What message do you want me to send?')
+				.setRequired(true))
+		.addAttachmentOption(option =>
+			option.setName('image')
+				.setDescription('Optional attachment (Image only.)')
+				.setRequired(false)),
 ]
 	.map(command => command.toJSON());
 
