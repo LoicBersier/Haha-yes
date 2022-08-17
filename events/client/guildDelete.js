@@ -4,7 +4,7 @@ import { MessageEmbed } from 'discord.js';
 
 import dotenv from 'dotenv';
 dotenv.config();
-const { statusChannel } = process.env;
+const { statusChannel, NODE_ENV } = process.env;
 
 export default {
 	name: 'guildDelete',
@@ -17,7 +17,7 @@ export default {
 		const blacklist = await guildBlacklist.findOne({ where: { guildID:guild.id } });
 
 		// If stats channel settings exist, send bot stats to it
-		if (statusChannel) {
+		if (statusChannel && NODE_ENV !== 'development') {
 			const channel = client.channels.resolve(statusChannel);
 			const botCount = guild.members.cache.filter(member => member.user.bot).size;
 			console.log(guild.memberCount);
