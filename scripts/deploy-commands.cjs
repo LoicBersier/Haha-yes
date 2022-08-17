@@ -73,6 +73,14 @@ const commands = [
 	new SlashCommandBuilder()
 		.setName('donator')
 		.setDescription('All the people who donated for this bot <3'),
+
+	new SlashCommandBuilder()
+		.setName('donate')
+		.setDescription('Show donation link for the bot.'),
+
+	new SlashCommandBuilder()
+		.setName('about')
+		.setDescription('About me (The bot)'),
 ]
 	.map(command => command.toJSON());
 
