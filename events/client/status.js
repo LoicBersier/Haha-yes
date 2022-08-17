@@ -31,7 +31,7 @@ export default {
 				status = status + ' | Now with slash commands!';
 
 				console.log(`Setting status to: ${status}`);
-				client.user.setActivity(status + ' | Now with slash commands!', { type: 'PLAYING' });
+				client.user.setActivity(status, { type: 'PLAYING' });
 			}
 		}
 	},
