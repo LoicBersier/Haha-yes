@@ -101,6 +101,14 @@ const commands = [
 			option.setName('image')
 				.setDescription('Optional attachment (Image only.)')
 				.setRequired(false)),
+
+	new SlashCommandBuilder()
+		.setName('s')
+		.setDescription('What could this be 🤫')
+		.addStringOption(option =>
+			option.setName('something')
+				.setDescription('🤫')
+				.setRequired(true)),
 ]
 	.map(command => command.toJSON());
 
