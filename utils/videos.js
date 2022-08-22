@@ -6,6 +6,7 @@ export default {
 	upload,
 	ffmpeg,
 	stringIsAValidurl,
+	compressVideo,
 };
 async function downloadVideo(urlArg, output, format = 'bestvideo*+bestaudio/best') {
 	await new Promise((resolve, reject) => {
@@ -57,4 +58,18 @@ async function stringIsAValidurl(s) {
 	catch (err) {
 		return false;
 	}
+}
+
+async function compressVideo(input, output, preset) {
+	await new Promise((resolve, reject) => {
+		exec(`./bin/HandBrakeCLI -i '${input}' -Z '${preset}' -o '${os.tmpdir()}/${output}'`, (err, stdout, stderr) => {
+			if (err) {
+				reject(stderr);
+			}
+			if (stderr) {
+				console.error(stderr);
+			}
+			resolve(stdout);
+		});
+	});
 }

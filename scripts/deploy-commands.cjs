@@ -11,14 +11,18 @@ const commands = [
 
 	new SlashCommandBuilder()
 		.setName('download')
-		.setDescription('Download a video. (100 mb max)')
+		.setDescription('Download a video.')
 		.addStringOption(option =>
 			option.setName('url')
-				.setDescription('URL of the video you want to download.')
+				.setDescription('url of the video you want to download.')
 				.setRequired(true))
 		.addBooleanOption(option =>
 			option.setName('advanced')
 				.setDescription('Choose the quality of the video.')
+				.setRequired(false))
+		.addBooleanOption(option =>
+			option.setName('compress')
+				.setDescription('Compress the video?')
 				.setRequired(false)),
 
 

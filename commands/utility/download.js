@@ -14,8 +14,12 @@ export default {
 				.setDescription('url of the video you want to download.')
 				.setRequired(true))
 		.addBooleanOption(option =>
-			option.setName('advanced')
+			option.setName('format')
 				.setDescription('Choose the quality of the video.')
+				.setRequired(false))
+		.addBooleanOption(option =>
+			option.setName('compress')
+				.setDescription('Compress the video?')
 				.setRequired(false)),
 
 	async execute(interaction) {
@@ -27,7 +31,7 @@ export default {
 			return interaction.editReply({ content: '❌ This does not look like a valid url!', ephemeral: true });
 		}
 
-		if (interaction.options.getBoolean('advanced')) {
+		if (interaction.options.getBoolean('format')) {
 			let qualitys = await new Promise((resolve, reject) => {
 				exec(`./bin/yt-dlp "${url}" --print "%()j"`, (err, stdout, stderr) => {
 					if (err) {
@@ -84,7 +88,7 @@ export default {
 				if (!interactionMenu.isSelectMenu()) return;
 				if (interactionMenu.customId === 'downloadQuality') {
 					await interactionMenu.deferReply({ ephemeral: false });
-					download(url, interactionMenu);
+					download(url, interactionMenu, interaction);
 				}
 			});
 			return;
@@ -93,7 +97,7 @@ export default {
 	},
 };
 
-async function download(url, interaction) {
+async function download(url, interaction, originalInteraction) {
 	let format = 'bestvideo*+bestaudio/best';
 	const Embed = new MessageEmbed()
 		.setColor(interaction.member ? interaction.member.displayHexColor : 'NAVY')
@@ -112,6 +116,37 @@ async function download(url, interaction) {
 
 			const fileStat = fs.statSync(output);
 			const fileSize = fileStat.size / 1000000.0;
+			const compressInteraction = originalInteraction ? originalInteraction : interaction;
+			if (compressInteraction.options.getBoolean('compress')) {
+				const presets = [ 'Discord Tiny 5 Minutes 240p30', 'Discord Small 2 Minutes 360p30', 'Discord Nitro Small 10-20 Minutes 480p30', 'Discord Nitro Medium 5-10 Minutes 720p30', 'Discord Nitro Large 3-6 Minutes 1080p30' ];
+				const options = [];
+
+				presets.forEach(p => {
+					options.push({
+						label: p,
+						value: p,
+					});
+				});
+
+				const row = new MessageActionRow()
+					.addComponents(
+						new MessageSelectMenu()
+							.setCustomId('preset')
+							.setPlaceholder('Nothing selected')
+							.addOptions(options),
+					);
+
+				await interaction.deleteReply();
+				await interaction.followUp({ content: 'Which compression preset do you want?', ephemeral: true, components: [row] });
+				interaction.client.once('interactionCreate', async (interactionMenu) => {
+					if (!interactionMenu.isSelectMenu()) return;
+					if (interactionMenu.customId === 'preset') {
+						await interactionMenu.deferReply({ ephemeral: false });
+						compress(file, interactionMenu, Embed);
+					}
+				});
+				return;
+			}
 
 			if (fileSize > 100) {
 				await interaction.deleteReply();
@@ -135,4 +170,20 @@ async function download(url, interaction) {
 			await interaction.followUp({ content: 'Uh oh! An error has occured!', ephemeral: true });
 		});
 	return;
+}
+
+async function compress(input, interaction, embed) {
+	const output = `compressed${input}.mp4`;
+	utils.compressVideo(`${os.tmpdir()}/${input}`, output, interaction.values[0])
+		.then(async () => {
+			const fileStat = fs.statSync(`${os.tmpdir()}/${output}`);
+			const fileSize = fileStat.size / 1000000.0;
+
+			if (fileSize > 8) {
+				await interaction.editReply({ content: 'File was bigger than 8 mb. but due to the compression it is not being uploaded externally.', ephemeral: true });
+			}
+			else {
+				await interaction.editReply({ embeds: [embed], files: [`${os.tmpdir()}/${output}`], ephemeral: false });
+			}
+		});
 }
