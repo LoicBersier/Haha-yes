@@ -17,7 +17,7 @@ const commands = [
 				.setDescription('url of the video you want to download.')
 				.setRequired(true))
 		.addBooleanOption(option =>
-			option.setName('advanced')
+			option.setName('format')
 				.setDescription('Choose the quality of the video.')
 				.setRequired(false))
 		.addBooleanOption(option =>
