@@ -1,3 +1,4 @@
+import { Permissions } from 'discord.js';
 import db from '../../models/index.js';
 const ratelimit = {};
 
@@ -30,8 +31,24 @@ export default {
 
 		console.log(`\x1b[33m${userTag} (${userID})\x1b[0m launched command \x1b[33m${commandName}\x1b[0m`);
 
+		// Owner only check
 		if (command.ownerOnly && interaction.user.id !== ownerId) {
 			return interaction.reply({ content: '❌ This command is reserved for the owner!', ephemeral: true });
+		}
+
+		// Check if the bot has the needed permissions
+		if (command.clientPermissions) {
+			const clientMember = await interaction.guild.members.fetch(client.user.id);
+			if (!clientMember.permissions.has(command.clientPermissions)) {
+				return interaction.reply({ content: `❌ I am missing one of the following permission(s): \`${new Permissions(command.clientPermissions).toArray()}\``, ephemeral: true });
+			}
+		}
+
+		// Check if the user has the needed permissions
+		if (command.userPermissions) {
+			if (!interaction.member.permissions.has(command.userPermissions)) {
+				return interaction.reply({ content: `❌ You are missing one of the following permission(s): \`${new Permissions(command.userPermissions).toArray()}\``, ephemeral: true });
+			}
 		}
 
 		try {
