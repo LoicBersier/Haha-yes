@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
-
+import { Permissions } from 'discord.js';
 export default {
 	data: new SlashCommandBuilder()
 		.setName('fakeuser')
@@ -16,6 +16,7 @@ export default {
 			option.setName('image')
 				.setDescription('Optional attachment.')
 				.setRequired(false)),
+	clientPermissions: [ Permissions.FLAGS.MANAGE_WEBHOOKS ],
 	async execute(interaction) {
 		await interaction.deferReply({ ephemeral: true });
 		const attachment = interaction.options.getAttachment('image');
