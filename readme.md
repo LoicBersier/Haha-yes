@@ -12,9 +12,10 @@ You need to install the following
 
 
 * ffmpeg (Optional but very recommanded: for yt-dlp to merge video/audio formats)
-* yt-dlp ([a file can download it for you](prereq.js))
-* gifsicle (For [vid2gif](commands/vid2gif.js))
-* giski (For [vid2gif](commands/vid2gif.js))
+* yt-dlp ([a file can download it for you](prereq.cjs))
+* HandBrakeCLI (For [download](commands/utility/download.js))
+* gifsicle (For [vid2gif](commands/utility/vid2gif.js))
+* gifki (For [vid2gif](commands/utility/vid2gif.js))
 * Somewhere to upload files larger than 8 mb (I use a self hosted [XBackBone](https://github.com/SergiX44/XBackBone/) with the upload.sh script made from it, you can use anything else just need to be located in bin/upload.sh)
 
 ### Installing
@@ -25,8 +26,8 @@ git checkout slash
 npm install
 ```
 
-To run the bot for the first time you need to execute [deploy-guild-commands.js](deploy-guild-commands.js) so the commands can be registered, don't forget to set your .env accordingly.
-``node deploy-commands.cjs``
+To run the bot for the first time you need to execute [deploy-commands.js](scripts/deploy-commands.js) so the commands can be registered, don't forget to set your .env accordingly.
+``node scripts/deploy-commands.cjs``
 
 then you can just run it normally.
 ``node index.js``
@@ -43,6 +44,9 @@ If you are on linux and don't need automatic restart on crash you can just do
 
 * [Discord.JS](https://github.com/discordjs/discord.js)
 * [yt-dlp](https://github.com/yt-dlp/yt-dlp)
+* [HandBrakeCLI](https://github.com/HandBrake/HandBrake)
+* [gifsicle](https://github.com/kohler/gifsicle)
+* [gifski](https://github.com/ImageOptim/gifski)
 
 ## Authors
 
@@ -50,7 +54,7 @@ If you are on linux and don't need automatic restart on crash you can just do
 
 ## Donation link
 
-[![Paypal](https://www.paypalobjects.com/en_US/CH/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/paypalme2/supositware/)
+https://libtar.de/donate.html
 
 ## License
 
