@@ -15,5 +15,5 @@ labels:
 
 **Did someone already request that feature?**
 
-- [] Yes <!-- If you have to put yes you don't need to submit that feature request. -->
-- [] No
+- [ ] Yes <!-- If you have to put yes you don't need to submit that feature request. -->
+- [ ] No

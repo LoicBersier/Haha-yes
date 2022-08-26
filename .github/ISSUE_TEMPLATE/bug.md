@@ -15,8 +15,8 @@ labels:
 
 **Bot varient**
 <!-- Put a x between the brackets to signify the version you used. -->
-- [] Slash <!-- The current and latest version that use the slash commands. -->
-- [] Legacy <!-- The old version of the bot with the "haha" prefix. -->
+- [ ] Slash <!-- The current and latest version that use the slash commands. -->
+- [ ] Legacy <!-- The old version of the bot with the "haha" prefix. -->
 
 **Describe the issue**
 
