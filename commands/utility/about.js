@@ -48,6 +48,7 @@ export default {
 				.addField('Current maintainer: ', `${maintainer.tag} (${ownerId})`)
 				.addField('Gitea (Main)', 'https://git.namejeff.xyz/Supositware/Haha-Yes', true)
 				.addField('Github (Mirror)', 'https://github.com/Supositware/Haha-yes', true)
+				.addField('Privacy Policy', 'https://libtar.de/discordprivacy.txt')
 				.setFooter({ text: `Original bot made by ${owner.tag} (267065637183029248)` });
 
 			interaction.reply({ embeds: [aboutEmbed] });
