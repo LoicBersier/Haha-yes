@@ -3,13 +3,13 @@ By using the Discord bot haha yes#1616 you agree to the collection of the follow
 - Discord user ID (Needed for moderation purposes and making sure something you created can't be modified by someone else e.g: tags,ytp commands)
 - Server ID (Needed for moderation purposes and locking things created by commands to the server e.g: tags,starboards,auto react commands)
 - Channel ID (Used to send message for the starboards and quotation features)
-- Message ID (Used for quotation feature and as a unique file name for files operations. Note: Message ID by themselves can't be used to find the original message.)
+- Message/Interaction ID (Used for quotation feature and as a unique file name for files operations. Note: Message ID by themselves can't be used to find the original message.)
 
 Nothing is shared to anyone and is purely for the function of the bot.
 
 If you do not agree to the privacy policy you can opt out by doing /optout.
 If you wish to request the data or have it deleted please email me at sup@libtar.de or ask me with the /feedback command.
 
-The files created from the message ID by the commands are deleted periodically.
+The files created from the message/interaction ID by the commands are deleted periodically.
 
 The source code of the bot can be found at https://git.namejeff.xyz/Supositware/Haha-Yes
