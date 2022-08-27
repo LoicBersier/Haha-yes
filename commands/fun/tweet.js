@@ -42,6 +42,9 @@ export default {
 			return;
 		}
 
+		// Reset the current date so it checks correctly for the 1 year requirement.
+		date.setTime(Date.now());
+
 		// If account is less than 1 year old don't accept attachment
 		if (attachment && interaction.user.createdAt > date.setFullYear(date.getFullYear() - 1)) {
 			await interaction.editReply({ content: 'Your account need to be 1 year or older to be able to send attachment!' });
