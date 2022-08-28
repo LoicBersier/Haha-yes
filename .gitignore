@@ -2,3 +2,4 @@
 node_modules/
 bin/
 config/config.json
+json/board/
