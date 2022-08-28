@@ -1,6 +1,6 @@
 import db from '../../models/index.js';
 const guildBlacklist = db.guildBlacklist;
-import { MessageEmbed } from 'discord.js';
+import { EmbedBuilder } from 'discord.js';
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -21,16 +21,18 @@ export default {
 			const channel = client.channels.resolve(statusChannel);
 			const botCount = guild.members.cache.filter(member => member.user.bot).size;
 			console.log(guild.memberCount);
-			const kickEmbed = new MessageEmbed()
+			const kickEmbed = new EmbedBuilder()
 				.setColor('#FF0000')
 				.setTitle('Some mofo just removed me from there guild :(')
 				.setURL('https://www.youtube.com/watch?v=6n3pFFPSlW4')
 				.setThumbnail(guild.iconURL())
-				.addField('Guild', `${guild.name} (${guild.id})`)
-				.addField('Total number of members', guild.memberCount.toString(), true)
-				.addField('Number of users', (guild.memberCount - botCount).toString(), true)
-				.addField('Number of bots', botCount.toString(), true)
-				.addField('Owner', `${guildOwner.username} (${guild.ownerId})`, true)
+				.addFields(
+					{ name: 'Guild', value: `${guild.name} (${guild.id})` },
+					{ name: 'Total number of members', value: guild.memberCount.toString(), inline: true },
+					{ name: 'Number of users', value: (guild.memberCount - botCount).toString(), inline: true },
+					{ name: 'Number of bots', value: botCount.toString(), inline: true },
+					{ name: 'Owner', value: `${guildOwner.username} (${guild.ownerId})`, inline: true },
+				)
 				.setFooter({ text: `I'm now in ${client.guilds.cache.size} servers!` })
 				.setTimestamp();
 

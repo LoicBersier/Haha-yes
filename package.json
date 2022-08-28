@@ -17,14 +17,14 @@
   "homepage": "https://libtar.de",
   "license": "AGPL",
   "dependencies": {
-    "@discordjs/builders": "^0.13.0",
     "@discordjs/rest": "^0.4.1",
-    "discord-api-types": "^0.33.1",
-    "discord.js": "^13.7.0",
+    "discord-api-types": "^0.33.5",
+    "discord.js": "^14.3.0",
     "dotenv": "^16.0.1",
     "mariadb": "^3.0.1",
     "mysql2": "^2.3.3",
     "node-fetch": "^3.2.6",
+    "safe-regex": "github:davisjam/safe-regex",
     "sequelize": "^6.21.3",
     "turndown": "^7.1.1",
     "twit": "^2.2.11"

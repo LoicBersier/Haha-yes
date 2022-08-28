@@ -1,4 +1,4 @@
-import { Permissions } from 'discord.js';
+import { PermissionFlagsBits, InteractionType } from 'discord.js';
 import db from '../../models/index.js';
 const ratelimit = {};
 
@@ -10,7 +10,7 @@ export default {
 	name: 'interactionCreate',
 	async execute(interaction) {
 		const client = interaction.client;
-		if (!interaction.isCommand()) return;
+		if (interaction.type !== InteractionType.ApplicationCommand) return;
 
 		const globalBlacklist = await db.Blacklists.findOne({ where: { type:'global', uid:interaction.user.id } });
 		const commandBlacklist = await db.Blacklists.findOne({ where: { type:interaction.commandName, uid:interaction.user.id } });
@@ -40,14 +40,14 @@ export default {
 		if (command.clientPermissions) {
 			const clientMember = await interaction.guild.members.fetch(client.user.id);
 			if (!clientMember.permissions.has(command.clientPermissions)) {
-				return interaction.reply({ content: `❌ I am missing one of the following permission(s): \`${new Permissions(command.clientPermissions).toArray()}\``, ephemeral: true });
+				return interaction.reply({ content: `❌ I am missing one of the following permission(s): \`${new PermissionFlagsBits(command.clientPermissions).toArray()}\``, ephemeral: true });
 			}
 		}
 
 		// Check if the user has the needed permissions
 		if (command.userPermissions) {
 			if (!interaction.member.permissions.has(command.userPermissions)) {
-				return interaction.reply({ content: `❌ You are missing one of the following permission(s): \`${new Permissions(command.userPermissions).toArray()}\``, ephemeral: true });
+				return interaction.reply({ content: `❌ You are missing one of the following permission(s): \`${new PermissionFlagsBits(command.userPermissions).toArray()}\``, ephemeral: true });
 			}
 		}
 
@@ -74,7 +74,20 @@ export default {
 					ratelimit[userID] = { command: commandName, limit: ratelimit[userID].limit, cooldown: date };
 				}
 			}
-			await command.execute(interaction);
+
+			const args = [];
+			interaction.options.data.forEach(arg => {
+				console.log(arg);
+				if (arg.type === 'MENTIONABLE') {
+					return args.push(arg.member);
+				}
+				else if (arg.type === 'ATTACHMENT') {
+					return args.push(arg.attachment);
+				}
+				args.push(arg.value);
+			});
+
+			await command.execute(interaction, args, client);
 		}
 		catch (error) {
 			console.error(error);
