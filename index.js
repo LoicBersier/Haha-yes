@@ -1,15 +1,19 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { Client, Collection, Intents } from 'discord.js';
+import { Client, Collection, GatewayIntentBits, Partials } from 'discord.js';
 import dotenv from 'dotenv';
 dotenv.config();
-const { token } = process.env;
+const { token, NODE_ENV } = process.env;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const client = new Client({ intents: [Intents.FLAGS.GUILDS], shards: 'auto' });
+const client = new Client({
+	intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMessageReactions, GatewayIntentBits.GuildMembers],
+	partials: [Partials.Message, Partials.Reaction, Partials.Channel],
+	shards: 'auto',
+});
 
 // Load commands
 client.commands = new Collection();
@@ -20,7 +24,9 @@ await loadCommandFromDir('owner');
 
 // Load events
 await loadEventFromDir('client', client);
-await loadEventFromDir('process', process);
+if (NODE_ENV !== 'development') {
+	await loadEventFromDir('process', process);
+}
 
 client.login(token);
 
@@ -34,6 +40,7 @@ async function loadCommandFromDir(dir) {
 		command = command.default;
 
 		client.commands.set(command.data.name, command);
+		console.log(`Successfully loaded command \x1b[32m${command.category}/${command.data.name}\x1b[0m`);
 	}
 }
 
