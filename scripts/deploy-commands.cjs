@@ -113,6 +113,34 @@ const commands = [
 			option.setName('something')
 				.setDescription('🤫')
 				.setRequired(true)),
+
+	new SlashCommandBuilder()
+		.setName('die')
+		.setDescription('Kill the bot'),
+
+	new SlashCommandBuilder()
+		.setName('ublacklist')
+		.setDescription('Blacklist a user from the bot')
+		.addStringOption(option =>
+			option.setName('command')
+				.setDescription('Which command do you want to get a user blacklisted from?')
+				.setRequired(true))
+		.addStringOption(option =>
+			option.setName('userid')
+				.setDescription('Who do you want to blacklist?')
+				.setRequired(true))
+		.addStringOption(option =>
+			option.setName('reason')
+				.setDescription('The reason of the blacklist.')
+				.setRequired(false)),
+
+	new SlashCommandBuilder()
+		.setName('deletetweet')
+		.setDescription('Delete a tweet')
+		.addStringOption(option =>
+			option.setName('tweetid')
+				.setDescription('The id of the tweet you wish to delete.')
+				.setRequired(true)),
 ]
 	.map(command => command.toJSON());
 
