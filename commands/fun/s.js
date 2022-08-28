@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
+import { SlashCommandBuilder } from 'discord.js';
 
 export default {
 	data: new SlashCommandBuilder()
@@ -8,8 +8,9 @@ export default {
 			option.setName('something')
 				.setDescription('🤫')
 				.setRequired(true)),
-	async execute(interaction) {
-		const command = interaction.options.getString('something');
+	category: 'fun',
+	async execute(interaction, args) {
+		const command = args[0];
 
 		if (command === 'levertowned') {
 			interaction.reply('Hello buddy bro <:youngtroll:488559163832795136> <@434762632004894746>');

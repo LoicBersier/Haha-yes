@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
+import { SlashCommandBuilder } from 'discord.js';
 import db from '../../models/index.js';
 const donator = db.donator;
 
@@ -6,6 +6,7 @@ export default {
 	data: new SlashCommandBuilder()
 		.setName('donator')
 		.setDescription('All the people who donated for this bot <3'),
+	category: 'utility',
 	async execute(interaction) {
 		await interaction.deferReply();
 		const client = interaction.client;

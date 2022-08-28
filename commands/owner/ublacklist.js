@@ -1,5 +1,4 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
-import { MessageButton, MessageActionRow } from 'discord.js';
+import { ButtonStyle, SlashCommandBuilder, ButtonBuilder, ActionRowBuilder } from 'discord.js';
 import db from '../../models/index.js';
 const Blacklists = db.Blacklists;
 
@@ -19,6 +18,7 @@ export default {
 			option.setName('reason')
 				.setDescription('The reason of the blacklist.')
 				.setRequired(false)),
+	category: 'owner',
 	ownerOnly: true,
 	async execute(interaction) {
 		await interaction.deferReply({ ephemeral: true });
@@ -38,18 +38,18 @@ export default {
 			return interaction.editReply(`${user} has been blacklisted from ${command} with the following reason ${reason}`);
 		}
 		else {
-			const row = new MessageActionRow()
+			const row = new ActionRowBuilder()
 				.addComponents(
-					new MessageButton()
+					new ButtonBuilder()
 						.setCustomId('yes')
 						.setLabel('Yes')
-						.setStyle('PRIMARY'),
+						.setStyle(ButtonStyle.Primary),
 				)
 				.addComponents(
-					new MessageButton()
+					new ButtonBuilder()
 						.setCustomId('no')
 						.setLabel('No')
-						.setStyle('DANGER'),
+						.setStyle(ButtonStyle.Danger),
 				);
 
 			await interaction.editReply({ content: 'This user is already blacklisted, do you want to unblacklist him?', ephemeral: true, components: [row] });

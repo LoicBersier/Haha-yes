@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
+import { SlashCommandBuilder } from 'discord.js';
 import utils from '../../utils/videos.js';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -14,9 +14,10 @@ export default {
 			option.setName('url')
 				.setDescription('URL of the video you want to convert')
 				.setRequired(true)),
-	async execute(interaction) {
+	category: 'utility',
+	async execute(interaction, args) {
 		await interaction.deferReply({ ephemeral: false });
-		const url = interaction.options.getString('url');
+		const url = args[0];
 
 		if (!await utils.stringIsAValidurl(url)) {
 			console.error(`Not a url!!! ${url}`);

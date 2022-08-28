@@ -1,9 +1,10 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
+import { SlashCommandBuilder } from 'discord.js';
 
 export default {
 	data: new SlashCommandBuilder()
 		.setName('die')
 		.setDescription('Kill the bot'),
+	category: 'owner',
 	ownerOnly: true,
 	async execute(interaction) {
 		console.log('\x1b[31m\x1b[47m\x1b[5mSHUTING DOWN!!!!!\x1b[0m');

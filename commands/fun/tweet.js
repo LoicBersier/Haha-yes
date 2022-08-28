@@ -1,5 +1,5 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
-import { MessageEmbed } from 'discord.js';
+import { SlashCommandBuilder } from 'discord.js';
+import { EmbedBuilder } from 'discord.js';
 import Twit from 'twit';
 import fetch from 'node-fetch';
 import os from 'node:os';
@@ -25,16 +25,19 @@ export default {
 			option.setName('image')
 				.setDescription('Optional attachment (Image only.)')
 				.setRequired(false)),
+	category: 'fun',
 	ratelimit: 3,
 	cooldown: 3600,
-	async execute(interaction) {
-		if (!interaction.options.getString('content') && !interaction.options.getAttachment('image')) {
+	async execute(interaction, args, client) {
+		const content = args[0];
+		const attachment = args[1];
+
+		if (!content && !attachment) {
 			return interaction.reply({ content: 'Uh oh! You are missing any content for me to tweet!', ephemeral: true });
 		}
 
 		await interaction.deferReply({ ephemeral: false });
-		let tweet = interaction.options.getString('content');
-		const attachment = interaction.options.getAttachment('image');
+		let tweet = content;
 		const date = new Date();
 		// If account is less than 6 months old don't accept the tweet ( alt prevention )
 		if (interaction.user.createdAt > date.setMonth(date.getMonth() - 6)) {
@@ -170,30 +173,34 @@ export default {
 				const TweetLink = `https://twitter.com/${FunnyWords[Math.floor((Math.random() * FunnyWords.length))]}/status/${tweetid}`;
 
 				// Im too lazy for now to make an entry in config.json
-				let channel = interaction.client.channels.resolve(twiChannel);
+				let channel = client.channels.resolve(twiChannel);
 				channel.send(TweetLink);
 
-				const Embed = new MessageEmbed()
+				const Embed = new EmbedBuilder()
 					.setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL() })
 					.setDescription(tweet)
-					.addField('Link', TweetLink, true)
-					.addField('Tweet ID', tweetid, true)
-					.addField('Channel ID', interaction.channel.id, true)
-					.addField('Messsage ID', interaction.id, true)
-					.addField('Author', `${interaction.user.username} (${interaction.user.id})`, true)
+					.addFields(
+						{ name: 'Link', value: TweetLink, inline: true },
+						{ name: 'Tweet ID', value: tweetid, inline: true },
+						{ name: 'Channel ID', value: interaction.channel.id, inline: true },
+						{ name: 'Message ID', value: interaction.id, inline: true },
+						{ name: 'Author', value: `${interaction.user.username} (${interaction.user.id})`, inline: true },
+					)
 					.setTimestamp();
 
 				if (interaction.guild) {
-					Embed.addField('Guild', `${interaction.guild.name} (${interaction.guild.id})`, true);
-					Embed.addField('message link', `https://discord.com/channels/${interaction.guild.id}/${interaction.channel.id}/${interaction.id}`);
+					Embed.addFields(
+						{ name: 'Guild', value: `${interaction.guild.name} (${interaction.guild.id})`, inline: true },
+						{ name: 'message link', value: `https://discord.com/channels/${interaction.guild.id}/${interaction.channel.id}/${interaction.id}`, inline: true },
+					);
 				}
 				else {
-					Embed.addField('message link', `https://discord.com/channels/@me/${interaction.channel.id}/${interaction.id}`);
+					Embed.addFields({ name: 'message link', value: `https://discord.com/channels/@me/${interaction.channel.id}/${interaction.id}` });
 				}
 
 				if (attachment) Embed.setImage(attachment.url);
 
-				channel = interaction.client.channels.resolve(twiLogChannel);
+				channel = client.channels.resolve(twiLogChannel);
 				channel.send({ embeds: [Embed] });
 				return interaction.editReply({ content: `Go see ur epic tweet ${TweetLink}` });
 			});

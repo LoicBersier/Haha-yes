@@ -1,11 +1,12 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
-import { MessageEmbed, version } from 'discord.js';
+import { SlashCommandBuilder } from 'discord.js';
+import { EmbedBuilder, version } from 'discord.js';
 import os from 'node:os';
 
 export default {
 	data: new SlashCommandBuilder()
 		.setName('stats')
 		.setDescription('Show some stats about the bot'),
+	category: 'utility',
 	async execute(interaction) {
 		const client = interaction.client;
 		const uptime = process.uptime();
@@ -32,19 +33,21 @@ export default {
 			return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
 		};
 
-		const statsEmbed = new MessageEmbed()
+		const statsEmbed = new EmbedBuilder()
 			.setColor(interaction.member ? interaction.member.displayHexColor : 'NAVY')
 			.setTitle('Bot stats')
 			.setAuthor({ name: client.user.tag, iconURL: client.user.displayAvatarURL(), url: 'https://libtar.de' })
-			.addField('Servers', client.guilds.cache.size.toString(), true)
-			.addField('Channels', client.channels.cache.size.toString(), true)
-			.addField('Users', client.users.cache.size.toString(), true)
-			.addField('Ram usage', `${bytesToSize(process.memoryUsage().heapUsed)}/${bytesToSize(os.totalmem)}`, true)
-			.addField('CPU', `${os.cpus()[0].model} (${os.cpus().length} core)`, true)
-			.addField('OS', `${os.platform()} ${os.release()}`, true)
-			.addField('Nodejs version', process.version, true)
-			.addField('Discord.js version', version, true)
-			.addField('Uptime', dateString, true)
+			.addFields(
+				{ name: 'Servers', value: client.guilds.cache.size.toString(), inline: true },
+				{ name: 'Channels', value: client.channels.cache.size.toString(), inline: true },
+				{ name: 'Users', value: client.users.cache.size.toString(), inline: true },
+				{ name: 'Ram usage', value: `${bytesToSize(process.memoryUsage().heapUsed)}/${bytesToSize(os.totalmem)}`, inline: true },
+				{ name: 'CPU', value: `${os.cpus()[0].model} (${os.cpus().length} core)`, inline: true },
+				{ name: 'OS', value: `${os.platform()} ${os.release()}`, inline: true },
+				{ name: 'Nodejs version', value: process.version, inline: true },
+				{ name: 'Discord.js version', value: version, inline: true },
+				{ name: 'Uptime', value: dateString, inline: true },
+			)
 			.setTimestamp();
 
 		return interaction.reply({ embeds: [statsEmbed] });

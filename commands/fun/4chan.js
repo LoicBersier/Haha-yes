@@ -1,5 +1,5 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
-import { MessageEmbed } from 'discord.js';
+import { SlashCommandBuilder } from 'discord.js';
+import { EmbedBuilder } from 'discord.js';
 import TurndownService from 'turndown';
 const turndown = new TurndownService();
 import fetch from 'node-fetch';
@@ -14,8 +14,9 @@ export default {
 			option.setName('board')
 				.setDescription('The board you wish to see')
 				.setRequired(true)),
-	async execute(interaction) {
-		let board = interaction.options.getString('board');
+	category: 'fun',
+	async execute(interaction, args) {
+		let board = args[0];
 
 		if (fourChan[board] == undefined) {
 			return interaction.reply({ content: 'Uh oh! The board you are looking for does not exist? You think this is a mistake? Please send a feedback telling me so!', ephemeral: true });
@@ -65,7 +66,7 @@ export default {
 				title = 'No title';
 			}
 
-			const FourchanEmbed = new MessageEmbed()
+			const FourchanEmbed = new EmbedBuilder()
 				.setColor(interaction.member ? interaction.member.displayHexColor : 'NAVY')
 				.setTitle(turndown.turndown(title))
 				.setDescription(turndown.turndown(description))

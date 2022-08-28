@@ -1,5 +1,5 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
-import { MessageEmbed } from 'discord.js';
+import { SlashCommandBuilder } from 'discord.js';
+import { EmbedBuilder } from 'discord.js';
 import fetch from 'node-fetch';
 
 export default {
@@ -10,10 +10,11 @@ export default {
 			option.setName('subreddit')
 				.setDescription('The subreddit you wish to see')
 				.setRequired(true)),
-	async execute(interaction) {
+	category: 'fun',
+	async execute(interaction, args) {
 		await interaction.deferReply({ ephemeral: false });
-
-		fetch('https://www.reddit.com/r/' + interaction.options.getString('subreddit') + '.json?limit=100').then((response) => {
+		const subreddit = args[0];
+		fetch('https://www.reddit.com/r/' + subreddit + '.json?limit=100').then((response) => {
 			return response.json();
 		}).then((response) => {
 			if (response.error == 404) {
@@ -27,7 +28,7 @@ export default {
 			if (response.data.children[i].data.over_18 == true && !interaction.channel.nsfw) {
 				return interaction.editReply('No nsfw');
 			}
-			const redditEmbed = new MessageEmbed()
+			const redditEmbed = new EmbedBuilder()
 				.setColor(interaction.member ? interaction.member.displayHexColor : 'NAVY')
 				.setTitle(response.data.children[i].data.title)
 				.setDescription(response.data.children[i].data.selftext)

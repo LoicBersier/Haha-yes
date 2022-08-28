@@ -1,9 +1,11 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
-import { MessageEmbed, MessageActionRow, MessageSelectMenu } from 'discord.js';
+import { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, SelectMenuBuilder } from 'discord.js';
 import { exec } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
 import utils from '../../utils/videos.js';
+
+let client;
+let cleanUp;
 
 export default {
 	data: new SlashCommandBuilder()
@@ -21,17 +23,29 @@ export default {
 			option.setName('compress')
 				.setDescription('Compress the video?')
 				.setRequired(false)),
+	category: 'utility',
 
-	async execute(interaction) {
+	async execute(interaction, args, c) {
+		client = c;
+		const url = args[0];
+		const format = args[1];
+		interaction.doCompress = args[2];
+		if (interaction.cleanUp) {
+			cleanUp = interaction.cleanUp;
+		}
+
 		await interaction.deferReply({ ephemeral: false });
-		const url = interaction.options.getString('url');
+
+		if (interaction.isMessage) {
+			interaction.delete();
+		}
 
 		if (!await utils.stringIsAValidurl(url)) {
 			console.error(`Not a url!!! ${url}`);
 			return interaction.editReply({ content: '❌ This does not look like a valid url!', ephemeral: true });
 		}
 
-		if (interaction.options.getBoolean('format')) {
+		if (format) {
 			let qualitys = await new Promise((resolve, reject) => {
 				exec(`./bin/yt-dlp "${url}" --print "%()j"`, (err, stdout, stderr) => {
 					if (err) {
@@ -71,9 +85,9 @@ export default {
 				options.reverse();
 			}
 
-			const row = new MessageActionRow()
+			const row = new ActionRowBuilder()
 				.addComponents(
-					new MessageSelectMenu()
+					new SelectMenuBuilder()
 						.setCustomId('downloadQuality')
 						.setPlaceholder('Nothing selected')
 						.setMinValues(1)
@@ -84,7 +98,7 @@ export default {
 			await interaction.deleteReply();
 			await interaction.followUp({ content: 'Which quality do you want?', ephemeral: true, components: [row] });
 
-			interaction.client.once('interactionCreate', async (interactionMenu) => {
+			client.once('interactionCreate', async (interactionMenu) => {
 				if (!interactionMenu.isSelectMenu()) return;
 				if (interactionMenu.customId === 'downloadQuality') {
 					await interactionMenu.deferReply({ ephemeral: false });
@@ -99,7 +113,7 @@ export default {
 
 async function download(url, interaction, originalInteraction) {
 	let format = 'bestvideo*+bestaudio/best';
-	const Embed = new MessageEmbed()
+	const Embed = new EmbedBuilder()
 		.setColor(interaction.member ? interaction.member.displayHexColor : 'NAVY')
 		.setAuthor({ name: `Downloaded by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL(), url: url })
 		.setFooter({ text: `You can get the original video by clicking on the "Downloaded by ${interaction.user.tag}" message!` });
@@ -117,7 +131,7 @@ async function download(url, interaction, originalInteraction) {
 			const fileStat = fs.statSync(output);
 			const fileSize = fileStat.size / 1000000.0;
 			const compressInteraction = originalInteraction ? originalInteraction : interaction;
-			if (compressInteraction.options.getBoolean('compress')) {
+			if (compressInteraction.doCompress) {
 				const presets = [ 'Discord Tiny 5 Minutes 240p30', 'Discord Small 2 Minutes 360p30', 'Discord Nitro Small 10-20 Minutes 480p30', 'Discord Nitro Medium 5-10 Minutes 720p30', 'Discord Nitro Large 3-6 Minutes 1080p30' ];
 				const options = [];
 
@@ -128,9 +142,9 @@ async function download(url, interaction, originalInteraction) {
 					});
 				});
 
-				const row = new MessageActionRow()
+				const row = new ActionRowBuilder()
 					.addComponents(
-						new MessageSelectMenu()
+						new SelectMenuBuilder()
 							.setCustomId('preset')
 							.setPlaceholder('Nothing selected')
 							.addOptions(options),
@@ -138,11 +152,12 @@ async function download(url, interaction, originalInteraction) {
 
 				await interaction.deleteReply();
 				await interaction.followUp({ content: 'Which compression preset do you want?', ephemeral: true, components: [row] });
-				interaction.client.once('interactionCreate', async (interactionMenu) => {
+				client.once('interactionCreate', async (interactionMenu) => {
 					if (!interactionMenu.isSelectMenu()) return;
 					if (interactionMenu.customId === 'preset') {
 						await interactionMenu.deferReply({ ephemeral: false });
 						compress(file, interactionMenu, Embed);
+						cleanUp();
 					}
 				});
 				return;
@@ -163,6 +178,7 @@ async function download(url, interaction, originalInteraction) {
 			else {
 				await interaction.editReply({ embeds: [Embed], files: [output], ephemeral: false });
 			}
+			cleanUp();
 		})
 		.catch(async err => {
 			console.error(err);

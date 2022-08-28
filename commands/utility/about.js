@@ -1,5 +1,5 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
-import { MessageEmbed } from 'discord.js';
+import { SlashCommandBuilder } from 'discord.js';
+import { EmbedBuilder } from 'discord.js';
 import { exec } from 'node:child_process';
 import db from '../../models/index.js';
 const donator = db.donator;
@@ -12,6 +12,7 @@ export default {
 	data: new SlashCommandBuilder()
 		.setName('about')
 		.setDescription('About me (The bot)'),
+	category: 'utility',
 	async execute(interaction) {
 		const Donator = await donator.findAll({ order: ['id'] });
 		const client = interaction.client;
@@ -39,16 +40,19 @@ export default {
 		// description += '\nThanks to Jetbrains for providing their IDE!';
 
 		exec('git rev-parse --short HEAD', (err, stdout) => {
-			const aboutEmbed = new MessageEmbed()
+			const aboutEmbed = new EmbedBuilder()
 				.setColor(interaction.member ? interaction.member.displayHexColor : 'NAVY')
 				.setAuthor({ name: client.user.tag, iconURL: client.user.displayAvatarURL(), url: 'https://libtar.de' })
 				.setTitle('About me')
 				.setDescription(description)
-				.addField('Current commit', stdout)
-				.addField('Current maintainer: ', `${maintainer.tag} (${ownerId})`)
-				.addField('Gitea (Main)', 'https://git.namejeff.xyz/Supositware/Haha-Yes', true)
-				.addField('Github (Mirror)', 'https://github.com/Supositware/Haha-yes', true)
-				.addField('Privacy Policy', 'https://libtar.de/discordprivacy.txt')
+				.addFields(
+					{ name: 'Current commit', value: stdout },
+					{ name: 'Current maintainer', value: `${maintainer.tag} (${ownerId})` },
+					{ name: 'Gitea (Main)', value: 'https://git.namejeff.xyz/Supositware/Haha-Yes', inline: true },
+					{ name: 'Github (Mirror)', value: 'https://github.com/Supositware/Haha-yes', inline: true },
+					{ name: 'Privacy Policy', value: 'https://libtar.de/discordprivacy.txt' },
+
+				)
 				.setFooter({ text: `Original bot made by ${owner.tag} (267065637183029248)` });
 
 			interaction.reply({ embeds: [aboutEmbed] });

@@ -1,5 +1,5 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
-import { MessageEmbed } from 'discord.js';
+import { SlashCommandBuilder } from 'discord.js';
+import { EmbedBuilder } from 'discord.js';
 
 const { feedbackChannelId } = process.env;
 
@@ -11,13 +11,14 @@ export default {
 			option.setName('feedback')
 				.setDescription('The message you want to send me.')
 				.setRequired(true)),
-	async execute(interaction) {
-		const Embed = new MessageEmbed()
+	category: 'utility',
+	async execute(interaction, args) {
+		const Embed = new EmbedBuilder()
 			.setAuthor({ name: `${interaction.user.tag} (${interaction.user.id})`, iconURL: interaction.user.avatarURL() })
 			.setTimestamp();
 
-		if (interaction.guild) Embed.addField('Guild', `${interaction.guild.name} (${interaction.guild.id})`, true);
-		Embed.addField('Feedback', interaction.options.getString('feedback'));
+		if (interaction.guild) Embed.addFields({ name: 'Guild', value: `${interaction.guild.name} (${interaction.guild.id})`, inline: true });
+		Embed.addFields({ name: 'Feedback', value: args[0], inline: true });
 
 		// Don't let new account use this command to prevent spam
 		const date = new Date();

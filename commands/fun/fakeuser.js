@@ -1,5 +1,5 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
-import { Permissions } from 'discord.js';
+import { SlashCommandBuilder } from 'discord.js';
+import { PermissionFlagsBits } from 'discord.js';
 export default {
 	data: new SlashCommandBuilder()
 		.setName('fakeuser')
@@ -16,12 +16,14 @@ export default {
 			option.setName('image')
 				.setDescription('Optional attachment.')
 				.setRequired(false)),
-	clientPermissions: [ Permissions.FLAGS.MANAGE_WEBHOOKS ],
-	async execute(interaction) {
+	category: 'fun',
+	clientPermissions: [ PermissionFlagsBits.ManageWebhooks ],
+	async execute(interaction, args) {
 		await interaction.deferReply({ ephemeral: true });
-		const attachment = interaction.options.getAttachment('image');
-		const message = interaction.options.getString('message');
-		const member = interaction.options.getMentionable('user');
+		const member = args[0];
+		const message = args[1];
+		const attachment = args[2];
+
 
 		const webhook = await interaction.channel.createWebhook(member.user.username, {
 			avatar: member.user.displayAvatarURL(),

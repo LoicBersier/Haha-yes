@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
+import { SlashCommandBuilder } from 'discord.js';
 import Twit from 'twit';
 
 import dotenv from 'dotenv';
@@ -13,6 +13,7 @@ export default {
 			option.setName('tweetid')
 				.setDescription('The id of the tweet you wish to delete.')
 				.setRequired(true)),
+	category: 'owner',
 	ownerOnly: true,
 	async execute(interaction) {
 		await interaction.deferReply();
