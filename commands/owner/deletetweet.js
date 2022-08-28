@@ -7,7 +7,7 @@ const { twiConsumer, twiConsumerSecret, twiToken, twiTokenSecret } = process.env
 
 export default {
 	data: new SlashCommandBuilder()
-		.setName('deletewteet')
+		.setName('deletetweet')
 		.setDescription('Delete a tweet')
 		.addStringOption(option =>
 			option.setName('tweetid')
