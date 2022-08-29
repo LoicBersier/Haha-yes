@@ -260,8 +260,21 @@ export default {
 		if (!hasPrefix) return;
 
 		const messageArray = message.content.match(/"[^"]*"|\S+/g).map(m => m.slice(0, 1) === '"' ? m.slice(1, -1) : m);
-		const commandName = messageArray[1].toLowerCase();
+		let commandName = messageArray[1].toLowerCase();
 		let messageArgs = messageArray.splice(2, messageArray.length);
+
+		// Search for alias
+		client.commands.find(c => {
+			if (c.alias) {
+				if (c.alias.includes(commandName)) {
+					commandName = c.data.name;
+				}
+			}
+		});
+
+		const command = client.commands.get(commandName);
+
+		if (!command) return;
 
 		const globalBlacklist = await db.Blacklists.findOne({ where: { type:'global', uid:message.author.id } });
 		const commandBlacklist = await db.Blacklists.findOne({ where: { type:commandName, uid:message.author.id } });
@@ -275,10 +288,6 @@ export default {
 
 		const userTag = message.author.tag;
 		const userID = message.author.id;
-
-		const command = client.commands.get(commandName);
-
-		if (!command) return;
 
 		console.log(`\x1b[33m${userTag} (${userID})\x1b[0m launched command \x1b[33m${commandName}\x1b[0m`);
 
