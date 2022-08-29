@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } from 'discord.js';
+import { SlashCommandBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, PermissionFlagsBits } from 'discord.js';
 import db from '../../models/index.js';
 
 export default {
@@ -6,6 +6,7 @@ export default {
 		.setName('autoresponse')
 		.setDescription('Enable or disable autoresponse'),
 	category: 'utility',
+	userPermissions: [PermissionFlagsBits.ManageMessages],
 	async execute(interaction, args, client) {
 		const autoresponseStat = await db.autoresponseStat.findOne({ where: { serverID: interaction.guild.id } });
 
