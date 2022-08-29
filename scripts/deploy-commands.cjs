@@ -115,6 +115,10 @@ const commands = [
 				.setRequired(true)),
 
 	new SlashCommandBuilder()
+		.setName('autoresponse')
+		.setDescription('Enable or disable autoresponse'),
+
+	new SlashCommandBuilder()
 		.setName('die')
 		.setDescription('Kill the bot'),
 
