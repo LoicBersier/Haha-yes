@@ -24,6 +24,7 @@ export default {
 				.setDescription('Compress the video?')
 				.setRequired(false)),
 	category: 'utility',
+	alias: ['dl'],
 
 	async execute(interaction, args, c) {
 		client = c;
