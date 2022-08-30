@@ -5,7 +5,7 @@ export default {
 	data: new SlashCommandBuilder()
 		.setName('quotation')
 		.setDescription('Enable or disable quotations'),
-	category: 'utility',
+	category: 'admin',
 	userPermissions: [PermissionFlagsBits.ManageMessages],
 	async execute(interaction, args, client) {
 		const quotationstat = await db.quotationstat.findOne({ where: { serverID: interaction.guild.id } });
@@ -13,7 +13,7 @@ export default {
 		if (quotationstat.stat !== 'enable') {
 			const body = { serverID: interaction.guild.id, stat: 'enable' };
 			await db.quotationstat.create(body);
-			return await interaction.reply({ content: 'Quotation has been enabled.' });
+			return await interaction.reply({ content: 'Quotation has been enabled.', ephemeral: true });
 		}
 
 		const row = new ActionRowBuilder()
@@ -30,7 +30,7 @@ export default {
 					.setStyle(ButtonStyle.Danger),
 			);
 
-		await interaction.reply({ content: 'Quotation is already enabled, do you wish to disable it?', components: [row] });
+		await interaction.reply({ content: 'Quotation is already enabled, do you wish to disable it?', components: [row], ephemeral: true });
 
 		client.once('interactionCreate', async (interactionMenu) => {
 			if (!interactionMenu.isButton) return;
@@ -38,10 +38,10 @@ export default {
 			if (interactionMenu.customId === 'yes') {
 				const body = { serverID: interaction.guild.id, stat: 'disable' };
 				await db.quotationstat.update(body, { where: { serverID: interaction.guild.id } });
-				return interaction.editReply('Quotation has been disabled.');
+				return interaction.editReply({ content: 'Quotation has been disabled.', ephemeral: true });
 			}
 			else {
-				return interaction.editReply('Nothing has been changed.');
+				return interaction.editReply({ content: 'Nothing has been changed.', ephemeral: true });
 			}
 		});
 	},
