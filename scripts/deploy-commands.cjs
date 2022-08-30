@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
+const { PermissionFlagsBits } = require('discord.js');
 require('dotenv').config();
 const { clientId, guildId, token } = process.env;
 
@@ -115,10 +116,6 @@ const commands = [
 				.setRequired(true)),
 
 	new SlashCommandBuilder()
-		.setName('autoresponse')
-		.setDescription('Enable or disable autoresponse'),
-
-	new SlashCommandBuilder()
 		.setName('die')
 		.setDescription('Kill the bot'),
 
@@ -145,6 +142,30 @@ const commands = [
 			option.setName('tweetid')
 				.setDescription('The id of the tweet you wish to delete.')
 				.setRequired(true)),
+
+	new SlashCommandBuilder()
+		.setName('autoresponse')
+		.setDescription('Enable or disable autoresponse')
+		.setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
+
+	new SlashCommandBuilder()
+		.setName('bye')
+		.setDescription('Set a leave message')
+		.addStringOption(option =>
+			option.setName('message')
+				.setDescription('The message you want the bot to say when someone leave in the current channel.')),
+
+	new SlashCommandBuilder()
+		.setName('quotation')
+		.setDescription('Enable or disable quotations')
+		.setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
+
+	new SlashCommandBuilder()
+		.setName('welcome')
+		.setDescription('Set a join message')
+		.addStringOption(option =>
+			option.setName('message')
+				.setDescription('The message you want the bot to say when someone join in the current channel.')),
 ]
 	.map(command => command.toJSON());
 
