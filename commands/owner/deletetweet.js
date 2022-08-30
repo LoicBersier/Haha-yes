@@ -1,8 +1,6 @@
 import { SlashCommandBuilder } from 'discord.js';
 import Twit from 'twit';
 
-import dotenv from 'dotenv';
-dotenv.config();
 const { twiConsumer, twiConsumerSecret, twiToken, twiTokenSecret } = process.env;
 
 export default {

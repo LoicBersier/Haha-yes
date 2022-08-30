@@ -1,6 +1,4 @@
 import { exec } from 'node:child_process';
-import dotenv from 'dotenv';
-dotenv.config();
 const { statusChannel, NODE_ENV } = process.env;
 
 export default {

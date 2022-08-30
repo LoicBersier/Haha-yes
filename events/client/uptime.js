@@ -1,6 +1,4 @@
 import https from 'node:https';
-import dotenv from 'dotenv';
-dotenv.config();
 const { uptimeURL, uptimeInterval } = process.env;
 
 export default {

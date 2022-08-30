@@ -2,8 +2,6 @@ import { PermissionFlagsBits, InteractionType } from 'discord.js';
 import db from '../../models/index.js';
 const ratelimit = {};
 
-import dotenv from 'dotenv';
-dotenv.config();
 const { ownerId } = process.env;
 
 export default {

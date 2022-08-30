@@ -2,8 +2,6 @@ import db from '../../models/index.js';
 const guildBlacklist = db.guildBlacklist;
 import { EmbedBuilder } from 'discord.js';
 
-import dotenv from 'dotenv';
-dotenv.config();
 const { statusChannel, NODE_ENV } = process.env;
 
 export default {

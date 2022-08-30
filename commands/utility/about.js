@@ -4,8 +4,6 @@ import { exec } from 'node:child_process';
 import db from '../../models/index.js';
 const donator = db.donator;
 
-import dotenv from 'dotenv';
-dotenv.config();
 const { ownerId } = process.env;
 
 export default {

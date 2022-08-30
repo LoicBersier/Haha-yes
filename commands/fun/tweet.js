@@ -7,8 +7,6 @@ import fs from 'node:fs';
 
 import db from '../../models/index.js';
 import wordToCensor from '../../json/censor.json' assert {type: 'json'};
-import dotenv from 'dotenv';
-dotenv.config();
 const { twiConsumer, twiConsumerSecret, twiToken, twiTokenSecret, twiChannel, twiLogChannel } = process.env;
 
 const Blacklists = db.Blacklists;
