@@ -18,6 +18,7 @@ const client = new Client({
 // Load commands
 client.commands = new Collection();
 await loadCommandFromDir('fun');
+await loadCommandFromDir('secret');
 await loadCommandFromDir('utility');
 await loadCommandFromDir('admin');
 await loadCommandFromDir('owner');

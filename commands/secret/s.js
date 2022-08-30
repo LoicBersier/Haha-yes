@@ -8,7 +8,7 @@ export default {
 			option.setName('something')
 				.setDescription('🤫')
 				.setRequired(true)),
-	category: 'fun',
+	category: 'secret',
 	async execute(interaction, args) {
 		const command = args[0];
 
