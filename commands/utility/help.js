@@ -20,10 +20,8 @@ export default {
 			}, command.data);
 
 			const usage = command.data.options.map(cmd => {
-				console.log(cmd);
 				let type = 'String';
 				const constructorName = cmd.constructor.name.toLowerCase();
-				console.log(constructorName);
 				if (constructorName.includes('boolean')) {
 					type = 'True/False';
 				}
@@ -53,17 +51,18 @@ export default {
 			}
 
 			if (command.alias) {
-				if (command.alias.length > 1) {
-					embed.addField({ name: 'Aliases', value: `\`${command.alias.join('` `')}\``, inline: true });
+				console.log(command.alias.length);
+				if (command.alias.length >= 1) {
+					embed.addFields({ name: 'Aliases', value: `\`${command.alias.join('` `')}\``, inline: true });
 				}
 
 			}
 			if (command.userPermissions) {
-				embed.addField({ name: 'User permission', value: `\`${command.userPermissions.join('` `')}\``, inline: true });
+				embed.addFields({ name: 'User permission', value: `\`${command.userPermissions.join('` `')}\``, inline: true });
 			}
 
 			if (command.clientPermissions) {
-				embed.addField({ name: 'Bot permission', value: `\`${command.clientPermissions.join('` `')}\``, inline: true });
+				embed.addFields({ name: 'Bot permission', value: `\`${command.clientPermissions.join('` `')}\``, inline: true });
 			}
 
 			if (fs.existsSync(`./asset/img/command/${command.category}/${command.data.name}.png`)) {
@@ -80,6 +79,7 @@ export default {
 
 			const object = { };
 			for (const command of client.commands.values()) {
+				if (command.category === 'secret') continue;
 				if (object[command.category]) {
 					object[command.category].push(command.data.name);
 				}
@@ -89,7 +89,6 @@ export default {
 			}
 
 			for (const category in object) {
-				console.log(category);
 				let title;
 				if (interaction.user.id == ownerId) {
 					title = {
