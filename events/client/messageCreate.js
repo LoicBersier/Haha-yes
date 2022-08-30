@@ -7,8 +7,6 @@ import db from '../../models/index.js';
 import { rand } from '../../utils/rand.js';
 const ratelimit = {};
 
-import dotenv from 'dotenv';
-dotenv.config();
 const { ownerId, prefix } = process.env;
 const prefixs = prefix.split(',');
 
@@ -308,8 +306,8 @@ export default {
 		}
 
 		// Check if the user has the needed permissions
-		if (command.userPermissions) {
-			if (!message.member.permissions.has(command.userPermissions)) {
+		if (command.default_member_permissions) {
+			if (!message.member.permissions.has(command.default_member_permissions)) {
 				return message.reply({ content: `❌ You are missing one of the following permission(s): \`${new PermissionFlagsBits(command.userPermissions).toArray()}\``, ephemeral: true });
 			}
 		}

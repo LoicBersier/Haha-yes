@@ -4,9 +4,9 @@ import db from '../../models/index.js';
 export default {
 	data: new SlashCommandBuilder()
 		.setName('autoresponse')
-		.setDescription('Enable or disable autoresponse'),
+		.setDescription('Enable or disable autoresponse')
+		.setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
 	category: 'admin',
-	userPermissions: [PermissionFlagsBits.ManageMessages],
 	async execute(interaction, args, client) {
 		const autoresponseStat = await db.autoresponseStat.findOne({ where: { serverID: interaction.guild.id } });
 

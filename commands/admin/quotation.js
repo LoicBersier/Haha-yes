@@ -4,9 +4,9 @@ import db from '../../models/index.js';
 export default {
 	data: new SlashCommandBuilder()
 		.setName('quotation')
-		.setDescription('Enable or disable quotations'),
+		.setDescription('Enable or disable quotations')
+		.setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
 	category: 'admin',
-	userPermissions: [PermissionFlagsBits.ManageMessages],
 	async execute(interaction, args, client) {
 		const quotationstat = await db.quotationstat.findOne({ where: { serverID: interaction.guild.id } });
 

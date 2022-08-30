@@ -37,7 +37,7 @@ export default {
 		}
 
 		// Check if the bot has the needed permissions
-		if (command.clientPermissions) {
+		if (command.default_permission) {
 			const clientMember = await interaction.guild.members.fetch(client.user.id);
 			if (!clientMember.permissions.has(command.clientPermissions)) {
 				return interaction.reply({ content: `❌ I am missing one of the following permission(s): \`${new PermissionFlagsBits(command.clientPermissions).toArray()}\``, ephemeral: true });
@@ -45,11 +45,13 @@ export default {
 		}
 
 		// Check if the user has the needed permissions
-		if (command.userPermissions) {
+		/*
+		if (command.default_member_permissions) {
 			if (!interaction.member.permissions.has(command.userPermissions)) {
 				return interaction.reply({ content: `❌ You are missing one of the following permission(s): \`${new PermissionFlagsBits(command.userPermissions).toArray()}\``, ephemeral: true });
 			}
 		}
+		*/
 
 		try {
 			const date = new Date();
@@ -77,7 +79,6 @@ export default {
 
 			const args = [];
 			interaction.options.data.forEach(arg => {
-				console.log(arg);
 				if (arg.type === 'MENTIONABLE') {
 					return args.push(arg.member);
 				}
