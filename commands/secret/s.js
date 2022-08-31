@@ -10,7 +10,7 @@ export default {
 				.setRequired(true)),
 	category: 'secret',
 	async execute(interaction, args) {
-		const command = args[0];
+		const command = args.something;
 
 		if (command === 'levertowned') {
 			interaction.reply('Hello buddy bro <:youngtroll:488559163832795136> <@434762632004894746>');

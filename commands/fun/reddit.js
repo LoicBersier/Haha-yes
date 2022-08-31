@@ -13,7 +13,7 @@ export default {
 	category: 'fun',
 	async execute(interaction, args) {
 		await interaction.deferReply({ ephemeral: false });
-		const subreddit = args[0];
+		const subreddit = args.subreddit;
 		fetch('https://www.reddit.com/r/' + subreddit + '.json?limit=100').then((response) => {
 			return response.json();
 		}).then((response) => {

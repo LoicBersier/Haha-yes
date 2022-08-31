@@ -7,11 +7,15 @@ const prefixs = prefix.split(',');
 export default {
 	data: new SlashCommandBuilder()
 		.setName('help')
-		.setDescription('Displays a list of commands or information about a command.'),
+		.setDescription('Displays a list of commands or information about a command.')
+		.addStringOption(option =>
+			option.setName('command')
+				.setDescription('The command you want more details about.')),
 	category: 'utility',
 	async execute(interaction, args, client) {
-		if (args[0]) {
-			const command = client.commands.get(args[0]);
+		if (args.command) {
+			const command = client.commands.get(args.command);
+			if (!command) return interaction.reply(`Did not found any command named \`\`${args.command}\`\`. Please make sure it is a valid command and not an alias.`);
 			const description = Object.assign({
 				content: 'No description available.',
 				usage: '',

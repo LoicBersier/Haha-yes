@@ -75,15 +75,17 @@ export default {
 				}
 			}
 
-			const args = [];
+			const args = {};
+			// https://discord-api-types.dev/api/discord-api-types-v10/enum/ApplicationCommandOptionType
 			interaction.options.data.forEach(arg => {
-				if (arg.type === 'MENTIONABLE') {
-					return args.push(arg.member);
+				let payload = arg.value;
+				if (arg.type === 9) {
+					payload = arg.member;
 				}
-				else if (arg.type === 'ATTACHMENT') {
-					return args.push(arg.attachment);
+				else if (arg.type === 11) {
+					payload = arg.attachment;
 				}
-				args.push(arg.value);
+				args[arg.name] = payload;
 			});
 
 			await command.execute(interaction, args, client);

@@ -28,9 +28,9 @@ export default {
 
 	async execute(interaction, args, c) {
 		client = c;
-		const url = args[0];
-		const format = args[1];
-		interaction.doCompress = args[2];
+		const url = args.url;
+		const format = args.format;
+		interaction.doCompress = args.compress;
 		if (interaction.cleanUp) {
 			cleanUp = interaction.cleanUp;
 		}

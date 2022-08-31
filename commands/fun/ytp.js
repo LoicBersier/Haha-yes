@@ -16,7 +16,7 @@ export default {
 				.setRequired(false)),
 	category: 'fun',
 	async execute(interaction, args) {
-		if (!interaction.channel.nsfw && !args[0]) return interaction.reply(`Please execute this command in an NSFW channel ( Content might not be NSFW but since the video are user submitted better safe than sorry ) OR do \`\`${prefixs[0]}ytp --force\`\` to make the command work outside of nsfw channel BE AWARE THAT IT WON'T CHANGE THE FINAL RESULT SO NSFW CAN STILL HAPPEN`);
+		if (!interaction.channel.nsfw && !args.force) return interaction.reply(`Please execute this command in an NSFW channel ( Content might not be NSFW but since the video are user submitted better safe than sorry ) OR do \`\`${prefixs[0]}ytp --force\`\` to make the command work outside of nsfw channel BE AWARE THAT IT WON'T CHANGE THE FINAL RESULT SO NSFW CAN STILL HAPPEN`);
 
 		// Read userVid folder and select random vid and only take .mp4
 		const mp4 = [];
@@ -50,7 +50,7 @@ export default {
 			resources: './asset/ytp/resources/',
 			temp: os.tmpdir(),
 			sourceList: asset,
-			intro: args[0] ? './asset/ytp/intro.mp4' : null,
+			intro: args.force ? './asset/ytp/intro.mp4' : null,
 			outro: './asset/ytp/outro.mp4',
 			OUTPUT_FILE: `${os.tmpdir()}/${interaction.id}_YTP.mp4`,
 			MAX_CLIPS: MAX_CLIPS,

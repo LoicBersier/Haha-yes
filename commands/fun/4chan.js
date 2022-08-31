@@ -16,7 +16,7 @@ export default {
 				.setRequired(true)),
 	category: 'fun',
 	async execute(interaction, args) {
-		let board = args[0];
+		let board = args.board;
 
 		if (fourChan[board] == undefined) {
 			return interaction.reply({ content: 'Uh oh! The board you are looking for does not exist? You think this is a mistake? Please send a feedback telling me so!', ephemeral: true });

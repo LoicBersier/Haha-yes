@@ -20,12 +20,12 @@ export default {
 	clientPermissions: [ PermissionFlagsBits.ManageWebhooks ],
 	async execute(interaction, args) {
 		await interaction.deferReply({ ephemeral: true });
-		const member = args[0];
-		const message = args[1];
-		const attachment = args[2];
+		const member = args.user;
+		const message = args.message;
+		const attachment = args.image;
 
-
-		const webhook = await interaction.channel.createWebhook(member.user.username, {
+		const webhook = await interaction.channel.createWebhook({
+			name: member.user.username,
 			avatar: member.user.displayAvatarURL(),
 			reason: `Fakebot/user command triggered by: ${interaction.user.username}`,
 		});

@@ -27,8 +27,8 @@ export default {
 	ratelimit: 3,
 	cooldown: 3600,
 	async execute(interaction, args, client) {
-		const content = args[0];
-		const attachment = args[1];
+		const content = args.content;
+		const attachment = args.image;
 
 		if (!content && !attachment) {
 			return interaction.reply({ content: 'Uh oh! You are missing any content for me to tweet!', ephemeral: true });

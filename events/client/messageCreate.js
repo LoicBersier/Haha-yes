@@ -262,7 +262,7 @@ export default {
 
 		const messageArray = message.content.match(/"[^"]*"|\S+/g).map(m => m.slice(0, 1) === '"' ? m.slice(1, -1) : m);
 		let commandName = messageArray[1].toLowerCase();
-		let messageArgs = messageArray.splice(2, messageArray.length);
+		const messageArgs = messageArray.splice(2, messageArray.length);
 
 		// Search for alias
 		client.commands.find(c => {
@@ -368,31 +368,21 @@ export default {
 					msg.delete();
 				});
 			};
+			const args = {};
 
-			if (command.data.options.length > 0) {
-				// if (command.data.options.length === 1 || command.data.options[command.data.options.length - 1].constructor.name.toLowerCase().includes('attachment')) {
-				if (command.data.options.length === 1) {
-					const test = messageArgs.join(' ');
-					messageArgs = [];
-					messageArgs.push(test);
+			for (let i = 0; i < command.data.options.length; i++) {
+				const arg = command.data.options[i];
+				const type = arg.constructor.name.toLowerCase();
+				let payload = messageArgs[i];
+				if (type.includes('mentionable')) {
+					payload = message.mentions.members.first();
 				}
-
-				for (let i = 0; i < messageArgs.length; i++) {
-					const constructorName = command.data.options[i].constructor.name.toLowerCase();
-					if (constructorName.includes('boolean')) {
-						messageArgs[i] = (messageArgs[i].toLowerCase() === 'true');
-					}
-
-					if (constructorName.includes('mentionable')) {
-						messageArgs[i] = message.mentions.members.first();
-					}
+				else if (type.includes('attachment')) {
+					payload = message.attachments.first();
 				}
-				if (message.attachments) {
-					messageArgs.push(Array.from(message.attachments.values())[0]);
-				}
+				args[arg.name] = payload;
 			}
-
-			await command.execute(message, messageArgs, client);
+			await command.execute(message, args, client);
 		}
 		catch (error) {
 			console.error(error);

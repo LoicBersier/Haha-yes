@@ -18,7 +18,7 @@ export default {
 			.setTimestamp();
 
 		if (interaction.guild) Embed.addFields({ name: 'Guild', value: `${interaction.guild.name} (${interaction.guild.id})`, inline: true });
-		Embed.addFields({ name: 'Feedback', value: args[0], inline: true });
+		Embed.addFields({ name: 'Feedback', value: args.feedback, inline: true });
 
 		// Don't let new account use this command to prevent spam
 		const date = new Date();

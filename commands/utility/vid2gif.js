@@ -17,7 +17,7 @@ export default {
 	category: 'utility',
 	async execute(interaction, args) {
 		await interaction.deferReply({ ephemeral: false });
-		const url = args[0];
+		const url = args.url;
 
 		if (!await utils.stringIsAValidurl(url)) {
 			console.error(`Not a url!!! ${url}`);

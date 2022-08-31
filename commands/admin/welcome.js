@@ -13,13 +13,13 @@ export default {
 	async execute(interaction, args, client) {
 		const join = await db.joinChannel.findOne({ where: { guildID: interaction.guild.id } });
 
-		if (!join && !args[0]) {
+		if (!join && !args.message) {
 			return interaction.reply({ content: 'You need a message for me to say anything!', ephemeral: true });
 		}
 		else if (!join) {
-			const body = { guildID: interaction.guild.id, channelID: interaction.channel.id, message: args[0] };
+			const body = { guildID: interaction.guild.id, channelID: interaction.channel.id, message: args.message };
 			await db.joinChannel.create(body);
-			return interaction.reply({ content: `The join message have been set with ${args[0]}`, ephemeral: true });
+			return interaction.reply({ content: `The join message have been set with ${args.message}`, ephemeral: true });
 		}
 
 
@@ -49,12 +49,12 @@ export default {
 			if (!interactionMenu.isButton) return;
 			interactionMenu.update({ components: [] });
 			if (interactionMenu.customId === 'edit') {
-				if (!args[0]) {
+				if (!args.message) {
 					return interaction.reply({ content: 'You need to input a message for me to edit!', ephemeral: true });
 				}
-				const body = { guildID: interaction.guild.id, channelID: interaction.channel.id, message: args[0] };
+				const body = { guildID: interaction.guild.id, channelID: interaction.channel.id, message: args.message };
 				await db.joinChannel.update(body, { where: { guildID: interaction.guild.id } });
-				return interaction.editReply({ content: `The join message has been set to ${args[0]}`, ephemeral: true });
+				return interaction.editReply({ content: `The join message has been set to ${args.message}`, ephemeral: true });
 			}
 			else if (interactionMenu.customId === 'remove') {
 				db.joinChannel.destroy({ where: { guildID: interaction.guild.id, channelID: interaction.channel.id } });
