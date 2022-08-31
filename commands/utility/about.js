@@ -18,7 +18,8 @@ export default {
 		const owner = await client.users.fetch('267065637183029248');
 		const maintainer = await client.users.fetch(ownerId);
 
-		let description = `This bot is made using [discord.js](https://github.com/discordjs/discord.js)\nThanks to ${tina.tag} (336492042299637771) for inspiring me for making this bot!\n\nThe people who donated for the bot <3\n`;
+		let description = 'I\'m a fun multipurpose bot made using [discord.js](https://github.com/discordjs/discord.js)'
+		+ '\nFor a better experience use the slash commands!\n\nThe people who donated for the bot <3\n';
 
 		if (Donator[0]) {
 			for (let i = 0; i < Donator.length; i++) {
@@ -34,6 +35,8 @@ export default {
 		else {
 			description += 'No one :(\n';
 		}
+
+		description += `\nThanks to ${tina.tag} (336492042299637771) for inspiring me for making this bot!`;
 
 		// description += '\nThanks to Jetbrains for providing their IDE!';
 
