@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
+import { SlashCommandBuilder, EmbedBuilder, AttachmentBuilder } from 'discord.js';
 import fs from 'node:fs';
 
 const { ownerId, prefix } = process.env;
@@ -66,8 +66,9 @@ export default {
 			}
 
 			if (fs.existsSync(`./asset/img/command/${command.category}/${command.data.name}.png`)) {
-				embed.attachFiles(`./asset/img/command/${command.category}/${command.data.name}.png`);
+				const file = new AttachmentBuilder(`./asset/img/command/${command.category}/${command.data.name}.png`);
 				embed.setImage(`attachment://${command.data.name}.png`);
+				return interaction.reply({ embeds: [embed], files: [file] });
 			}
 			return interaction.reply({ embeds: [embed] });
 		}
