@@ -166,6 +166,14 @@ const commands = [
 		.addStringOption(option =>
 			option.setName('message')
 				.setDescription('The message you want the bot to say when someone join in the current channel.')),
+
+	new SlashCommandBuilder()
+		.setName('ytp')
+		.setDescription('Generate a YTP')
+		.addBooleanOption(option =>
+			option.setName('force')
+				.setDescription('Force the generation of the video in non-nsfw channel.')
+				.setRequired(false)),
 ]
 	.map(command => command.toJSON());
 
