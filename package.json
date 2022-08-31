@@ -27,7 +27,8 @@
     "safe-regex": "github:davisjam/safe-regex",
     "sequelize": "^6.21.3",
     "turndown": "^7.1.1",
-    "twit": "^2.2.11"
+    "twit": "^2.2.11",
+    "ytpplus-node": "github:Supositware/ytpplus-node"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.18.9",
