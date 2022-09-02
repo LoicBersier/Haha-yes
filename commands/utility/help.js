@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, EmbedBuilder, AttachmentBuilder } from 'discord.js';
+import { SlashCommandBuilder, EmbedBuilder, AttachmentBuilder, PermissionsBitField } from 'discord.js';
 import fs from 'node:fs';
 
 const { ownerId, prefix } = process.env;
@@ -27,7 +27,12 @@ export default {
 				let type = 'String';
 				const constructorName = cmd.constructor.name.toLowerCase();
 				if (constructorName.includes('boolean')) {
-					type = 'True/False';
+					if (interaction.isMessage) {
+						type = `--${cmd.name}`;
+					}
+					else {
+						type = 'True/False';
+					}
 				}
 				else if (constructorName.includes('mentionable')) {
 					type = 'User';
@@ -39,9 +44,14 @@ export default {
 				return `[${cmd.name}: ${type}]`;
 			});
 
+			let p = '/';
+			if (interaction.isMessage) {
+				p = prefixs[0];
+			}
+
 			const embed = new EmbedBuilder()
 				.setColor(interaction.member ? interaction.member.displayHexColor : 'NAVY')
-				.setTitle(`\`${prefixs[0]}${command.data.name} ${usage.join(' ')}\``)
+				.setTitle(`\`${p}${command.data.name} ${usage.join(' ')}\``)
 				.addFields(
 					{ name: 'Description', value: description.description },
 				)
@@ -53,6 +63,33 @@ export default {
 				const text = `${prefixs[0]}${command.alias[0]}`;
 				embed.addFields({ name: 'Examples', value: `\`${text} ${description.examples.join(`\`\n\`${text} `)}\``, inline: true });
 			}
+			else {
+				const example = command.data.options.map(cmd => {
+					let string = '"lorem ipsum"';
+					const constructorName = cmd.constructor.name.toLowerCase();
+					if (constructorName.includes('boolean')) {
+						if (interaction.isMessage) {
+							string = `--${cmd.name}`;
+						}
+						else {
+							string = 'True/False';
+						}
+					}
+					else if (constructorName.includes('mentionable')) {
+						string = `@${interaction.user.username}`;
+					}
+					else if (constructorName.includes('attachment')) {
+						string = 'Attachment';
+					}
+
+					if (!interaction.isMessage) {
+						string = `\`\`${cmd.name}:${string}\`\``;
+					}
+					return string;
+				});
+
+				embed.addFields({ name: 'Example', value: `${p}${command.data.name} ${example.join(' ')}`, inline: true });
+			}
 
 			if (command.alias) {
 				if (command.alias.length >= 1) {
@@ -61,11 +98,19 @@ export default {
 
 			}
 			if (command.userPermissions) {
-				embed.addFields({ name: 'User permission', value: `\`${command.userPermissions.join('` `')}\``, inline: true });
+				const perm = [];
+				command.userPermissions.forEach(permission => {
+					perm.push(new PermissionsBitField(permission).toArray());
+				});
+				embed.addFields({ name: 'User permission', value: `\`${perm.join('` `')}\``, inline: true });
 			}
 
 			if (command.clientPermissions) {
-				embed.addFields({ name: 'Bot permission', value: `\`${command.clientPermissions.join('` `')}\``, inline: true });
+				const perm = [];
+				command.clientPermissions.forEach(permission => {
+					perm.push(new PermissionsBitField(permission).toArray());
+				});
+				embed.addFields({ name: 'Bot permission', value: `\`${perm.join('` `')}\``, inline: true });
 			}
 
 			if (fs.existsSync(`./asset/img/command/${command.category}/${command.data.name}.png`)) {
