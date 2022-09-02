@@ -380,6 +380,15 @@ export default {
 				else if (type.includes('attachment')) {
 					payload = message.attachments.first();
 				}
+				else if (type.includes('boolean')) {
+					if (messageArgs[i].toLowerCase() === `--${arg.name.toLowerCase()}`) {
+						payload = true;
+					}
+					else {
+						payload = false;
+					}
+				}
+
 				args[arg.name] = payload;
 			}
 			await command.execute(message, args, client);
