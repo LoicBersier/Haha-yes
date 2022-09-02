@@ -6,6 +6,7 @@ export default {
 		.setName('inspirobot')
 		.setDescription('Get an image from inspirobot'),
 	category: 'fun',
+	alias: ['ib'],
 	async execute(interaction) {
 		fetch('http://inspirobot.me/api?generate=true')
 			.then(res => res.text())
