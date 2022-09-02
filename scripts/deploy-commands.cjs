@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder } = require('discord.js');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 const { PermissionFlagsBits } = require('discord.js');
@@ -174,6 +174,14 @@ const commands = [
 			option.setName('force')
 				.setDescription('Force the generation of the video in non-nsfw channel.')
 				.setRequired(false)),
+
+	new SlashCommandBuilder()
+		.setName('addytp')
+		.setDescription('Add a video to the pool of ytps')
+		.addStringOption(option =>
+			option.setName('url')
+				.setDescription('URL of the video you want to add.')
+				.setRequired(true)),
 ]
 	.map(command => command.toJSON());
 
