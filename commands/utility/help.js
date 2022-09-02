@@ -85,6 +85,7 @@ export default {
 			const object = { };
 			for (const command of client.commands.values()) {
 				if (command.category === 'secret') continue;
+				if (interaction.user.id !== ownerId && command.category === 'owner') continue;
 				if (object[command.category]) {
 					object[command.category].push(command.data.name);
 				}
@@ -95,7 +96,7 @@ export default {
 
 			for (const category in object) {
 				let title;
-				if (interaction.user.id == ownerId) {
+				if (interaction.user.id === ownerId) {
 					title = {
 						fun: '🎉\u2000Fun',
 						utility: '🔩\u2000Utility',
@@ -110,7 +111,7 @@ export default {
 						admin: '⚡\u2000Admin',
 					}[category];
 				}
-
+				console.log(title);
 				embed.addFields({ name: title, value: `\`${object[category].join('` `')}\`` });
 			}
 			return interaction.reply({ embeds: [embed] });
