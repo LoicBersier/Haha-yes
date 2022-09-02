@@ -1,5 +1,6 @@
 import { EmbedBuilder } from 'discord.js';
 import fs from 'node:fs';
+import db from '../../models/index.js';
 global.boards = {};
 
 export default {
@@ -18,6 +19,9 @@ export default {
 					return console.error(err);
 				});
 		}
+
+		const isOptOut = await db.optout.findOne({ where: { userID: reaction.message.author } });
+		if (isOptOut) return;
 
 		let starboardChannel, shameboardChannel;
 		let reactionCount = reaction.count;
