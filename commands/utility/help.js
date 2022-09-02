@@ -139,22 +139,13 @@ export default {
 			}
 
 			for (const category in object) {
-				let title;
-				if (interaction.user.id === ownerId) {
-					title = {
-						fun: '🎉\u2000Fun',
-						utility: '🔩\u2000Utility',
-						admin: '⚡\u2000Admin',
-						owner: '🛠️\u2000Owner',
-					}[category];
-				}
-				else {
-					title = {
-						fun: '🎉\u2000Fun',
-						utility: '🔩\u2000Utility',
-						admin: '⚡\u2000Admin',
-					}[category];
-				}
+				const title = {
+					fun: '🎉\u2000Fun',
+					utility: '🔩\u2000Utility',
+					admin: '⚡\u2000Admin',
+					owner: '🛠️\u2000Owner',
+				}[category];
+
 				embed.addFields({ name: title, value: `\`${object[category].join('` `')}\`` });
 			}
 			return interaction.reply({ embeds: [embed] });
