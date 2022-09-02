@@ -39,7 +39,7 @@ export default {
 			}
 		}
 
-		const loadingmsg = await interaction.reply(`Processing, this can take a ***long*** time, i'll ping you when i finished <a:loadingmin:527579785212329984>\nSome info: There are currently ${mp4.length} videos.\nLike ytp? Why not check out https://ytp.namejeff.xyz/`);
+		const loadingmsg = await interaction.reply(`Processing, this can take a ***long*** time, i'll ping you when I finished <a:loadingmin:527579785212329984>\nSome info: There are currently ${mp4.length} videos, why not add yours? You can do so with the \`\`addytp\`\` command.\nLike ytp? Why not check out https://ytp.namejeff.xyz/`);
 
 		const options = {
 			debug: false,
