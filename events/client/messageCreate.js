@@ -371,6 +371,7 @@ export default {
 			const args = {};
 
 			for (let i = 0; i < command.data.options.length; i++) {
+				if (!messageArgs[i]) continue;
 				const arg = command.data.options[i];
 				const type = arg.constructor.name.toLowerCase();
 				let payload = messageArgs[i];
