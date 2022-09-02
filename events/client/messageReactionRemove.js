@@ -26,11 +26,9 @@ export default {
 		reaction.users.cache.forEach(user => {
 			if (reaction.message.author == user) reactionCount--;
 		});
-		console.log(fs.existsSync(`./json/board/star${reaction.message.guild.id}.json`));
 
 		//	Starboard
 		if (fs.existsSync(`./json/board/star${reaction.message.guild.id}.json`)) {
-			console.log('hi');
 			starboardChannel = JSON.parse(fs.readFileSync(`./json/board/star${reaction.message.guild.id}.json`));
 			let staremote = starboardChannel.emote;
 			const starcount = starboardChannel.count;
