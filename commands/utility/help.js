@@ -55,7 +55,6 @@ export default {
 			}
 
 			if (command.alias) {
-				console.log(command.alias.length);
 				if (command.alias.length >= 1) {
 					embed.addFields({ name: 'Aliases', value: `\`${command.alias.join('` `')}\``, inline: true });
 				}
@@ -111,7 +110,6 @@ export default {
 						admin: '⚡\u2000Admin',
 					}[category];
 				}
-				console.log(title);
 				embed.addFields({ name: title, value: `\`${object[category].join('` `')}\`` });
 			}
 			return interaction.reply({ embeds: [embed] });
