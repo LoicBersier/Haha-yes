@@ -182,6 +182,13 @@ const commands = [
 			option.setName('url')
 				.setDescription('URL of the video you want to add.')
 				.setRequired(true)),
+
+	new SlashCommandBuilder()
+		.setName('help')
+		.setDescription('Displays a list of commands or information about a command.')
+		.addStringOption(option =>
+			option.setName('command')
+				.setDescription('The command you want more details about.')),
 ]
 	.map(command => command.toJSON());
 
