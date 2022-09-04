@@ -76,7 +76,7 @@ export default {
 					message.delete();
 				}
 
-				text = rand.random(text, message);
+				text = rand(text, message);
 
 				let attach = '';
 
