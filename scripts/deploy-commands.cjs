@@ -113,7 +113,11 @@ const commands = [
 		.addStringOption(option =>
 			option.setName('something')
 				.setDescription('🤫')
-				.setRequired(true)),
+				.setRequired(true))
+		.addStringOption(option =>
+			option.setName('somethingelse')
+				.setDescription('🤫')
+				.setRequired(false)),
 
 	new SlashCommandBuilder()
 		.setName('die')
