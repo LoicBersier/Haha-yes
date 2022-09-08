@@ -42,7 +42,7 @@ export default {
 
 		exec('git rev-parse --short HEAD', (err, stdout) => {
 			const aboutEmbed = new EmbedBuilder()
-				.setColor(interaction.member ? interaction.member.displayHexColor : 'NAVY')
+				.setColor(interaction.member ? interaction.member.displayHexColor : 'Navy')
 				.setAuthor({ name: client.user.tag, iconURL: client.user.displayAvatarURL(), url: 'https://libtar.de' })
 				.setTitle('About me')
 				.setDescription(description)

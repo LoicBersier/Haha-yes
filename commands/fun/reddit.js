@@ -29,7 +29,7 @@ export default {
 				return interaction.editReply('No nsfw');
 			}
 			const redditEmbed = new EmbedBuilder()
-				.setColor(interaction.member ? interaction.member.displayHexColor : 'NAVY')
+				.setColor(interaction.member ? interaction.member.displayHexColor : 'Navy')
 				.setTitle(response.data.children[i].data.title)
 				.setDescription(response.data.children[i].data.selftext)
 				.setURL('https://reddit.com' + response.data.children[i].data.permalink)

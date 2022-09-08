@@ -115,7 +115,7 @@ export default {
 async function download(url, interaction, originalInteraction) {
 	let format = 'bestvideo*+bestaudio/best';
 	const Embed = new EmbedBuilder()
-		.setColor(interaction.member ? interaction.member.displayHexColor : 'NAVY')
+		.setColor(interaction.member ? interaction.member.displayHexColor : 'Navy')
 		.setAuthor({ name: `Downloaded by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL(), url: url })
 		.setFooter({ text: `You can get the original video by clicking on the "Downloaded by ${interaction.user.tag}" message!` });
 

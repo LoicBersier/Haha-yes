@@ -34,7 +34,7 @@ export default {
 		};
 
 		const statsEmbed = new EmbedBuilder()
-			.setColor(interaction.member ? interaction.member.displayHexColor : 'NAVY')
+			.setColor(interaction.member ? interaction.member.displayHexColor : 'Navy')
 			.setTitle('Bot stats')
 			.setAuthor({ name: client.user.tag, iconURL: client.user.displayAvatarURL(), url: 'https://libtar.de' })
 			.addFields(

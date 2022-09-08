@@ -14,7 +14,7 @@ export default {
 		});
 
 		const Embed = new EmbedBuilder()
-			.setColor(interaction.member ? interaction.member.displayHexColor : 'NAVY')
+			.setColor(interaction.member ? interaction.member.displayHexColor : 'Navy')
 			.setTitle('Donation link')
 			.setDescription(desc);
 

@@ -67,7 +67,7 @@ export default {
 			}
 
 			const FourchanEmbed = new EmbedBuilder()
-				.setColor(interaction.member ? interaction.member.displayHexColor : 'NAVY')
+				.setColor(interaction.member ? interaction.member.displayHexColor : 'Navy')
 				.setTitle(turndown.turndown(title))
 				.setDescription(turndown.turndown(description))
 				.setImage(`https://i.4cdn.org/${board}/${response.threads[i].posts[0].tim}${response.threads[i].posts[0].ext}`)

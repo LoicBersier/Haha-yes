@@ -50,7 +50,7 @@ export default {
 			}
 
 			const embed = new EmbedBuilder()
-				.setColor(interaction.member ? interaction.member.displayHexColor : 'NAVY')
+				.setColor(interaction.member ? interaction.member.displayHexColor : 'Navy')
 				.setTitle(`\`${p}${command.data.name} ${usage.join(' ')}\``)
 				.addFields(
 					{ name: 'Description', value: description.description },
@@ -122,7 +122,7 @@ export default {
 		}
 		else {
 			const embed = new EmbedBuilder()
-				.setColor(interaction.member ? interaction.member.displayHexColor : 'NAVY')
+				.setColor(interaction.member ? interaction.member.displayHexColor : 'Navy')
 				.addFields({ name: 'Command List', value: `This is a list of commands.\nTo view details for a command, do \`${prefixs[0]}help <command>\`.` })
 				.setFooter({ text: `All the available prefix: ${prefixs.join('| ')}` });
 

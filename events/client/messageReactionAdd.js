@@ -119,7 +119,7 @@ export default {
 			}
 
 			const Embed = new EmbedBuilder()
-				.setColor(reaction.message.member ? reaction.message.member.displayHexColor : 'NAVY')
+				.setColor(reaction.message.member ? reaction.message.member.displayHexColor : 'Navy')
 				.setAuthor({ name: reaction.message.author.username, iconURL: reaction.message.author.displayAvatarURL() })
 				.addFields(
 					{ name: 'Jump to', value: `[message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`, inline: true },
