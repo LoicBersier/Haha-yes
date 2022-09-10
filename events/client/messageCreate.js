@@ -381,13 +381,10 @@ export default {
 				else if (type.includes('attachment')) {
 					payload = message.attachments.first();
 				}
-				else if (type.includes('boolean')) {
-					if (messageArgs[i].toLowerCase() === `--${arg.name.toLowerCase()}`) {
-						payload = true;
-					}
-					else {
-						payload = false;
-					}
+
+				if (payload.startsWith('--')) {
+					arg.name = payload.substring(2);
+					payload = true;
 				}
 
 				args[arg.name] = payload;
