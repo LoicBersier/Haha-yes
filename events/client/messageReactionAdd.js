@@ -13,14 +13,16 @@ export default {
 				});
 		}
 
+		/* I don't really know why this is causing issues.
 		if (reaction.message.partial) {
 			await reaction.message.fetch()
 				.catch(err => {
 					return console.error(err);
 				});
 		}
+		*/
 
-		const isOptOut = await db.optout.findOne({ where: { userID: reaction.message.author } });
+		const isOptOut = await db.optout.findOne({ where: { userID: reaction.message.author.id } });
 		if (isOptOut) return;
 
 		let starboardChannel, shameboardChannel;
