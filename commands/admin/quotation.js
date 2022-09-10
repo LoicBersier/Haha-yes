@@ -8,11 +8,11 @@ export default {
 		.setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
 	category: 'admin',
 	async execute(interaction, args, client) {
-		const quotationstat = await db.quotationstat.findOne({ where: { serverID: interaction.guild.id } });
+		const quotationstat = await db.quotationStat.findOne({ where: { serverID: interaction.guild.id } });
 
 		if (quotationstat.stat !== 'enable') {
 			const body = { serverID: interaction.guild.id, stat: 'enable' };
-			await db.quotationstat.create(body);
+			await db.quotationStat.create(body);
 			return await interaction.reply({ content: 'Quotation has been enabled.', ephemeral: true });
 		}
 
@@ -38,7 +38,7 @@ export default {
 			interactionMenu.update({ components: [] });
 			if (interactionMenu.customId === 'yes') {
 				const body = { serverID: interaction.guild.id, stat: 'disable' };
-				await db.quotationstat.update(body, { where: { serverID: interaction.guild.id } });
+				await db.quotationStat.update(body, { where: { serverID: interaction.guild.id } });
 				return interaction.editReply({ content: 'Quotation has been disabled.', ephemeral: true });
 			}
 			else {
