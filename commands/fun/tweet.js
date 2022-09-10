@@ -59,7 +59,7 @@ export default {
 
 		if (tweet) {
 			// Detect banned word (Blacklist the user directly)
-			if (wordToCensor.includes(tweet) || wordToCensor.includes(tweet.substr(0, tweet.length - 1)) || wordToCensor.includes(tweet.substr(1, tweet.length))) {
+			if (wordToCensor.includes(tweet) || wordToCensor.includes(tweet.substring(0, tweet.length - 1)) || wordToCensor.includes(tweet.substring(1, tweet.length))) {
 				const body = { type:'tweet', uid: interaction.user.id, reason: 'Automatic ban from banned word.' };
 				Blacklists.create(body);
 
