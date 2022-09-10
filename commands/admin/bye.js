@@ -44,7 +44,8 @@ export default {
 
 		await interaction.reply({ content: 'The server already has a message set, do you want to edit it or remove it?', components: [row], ephemeral: true });
 
-		client.once('interactionCreate', async (interactionMenu) => {
+		client.on('interactionCreate', async (interactionMenu) => {
+			if (interaction.user !== interactionMenu.user) return;
 			if (!interactionMenu.isButton) return;
 			interactionMenu.update({ components: [] });
 			if (interactionMenu.customId === 'edit') {

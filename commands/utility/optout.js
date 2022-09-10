@@ -31,7 +31,8 @@ export default {
 
 		await interaction.reply({ content: 'You are already opt out, do you wish to opt in?', components: [row] });
 
-		client.once('interactionCreate', async (interactionMenu) => {
+		client.on('interactionCreate', async (interactionMenu) => {
+			if (interaction.user !== interactionMenu.user) return;
 			if (!interactionMenu.isButton) return;
 			interactionMenu.update({ components: [] });
 			if (interactionMenu.customId === 'yes') {

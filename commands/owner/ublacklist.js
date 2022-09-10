@@ -54,7 +54,8 @@ export default {
 
 			await interaction.editReply({ content: 'This user is already blacklisted, do you want to unblacklist him?', ephemeral: true, components: [row] });
 
-			interaction.client.once('interactionCreate', async (interactionMenu) => {
+			interaction.client.on('interactionCreate', async (interactionMenu) => {
+				if (interaction.user !== interactionMenu.user) return;
 				if (!interactionMenu.isButton) return;
 				interactionMenu.update({ components: [] });
 				if (interactionMenu.customId === 'yes') {

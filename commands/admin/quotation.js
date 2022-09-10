@@ -32,7 +32,8 @@ export default {
 
 		await interaction.reply({ content: 'Quotation is already enabled, do you wish to disable it?', components: [row], ephemeral: true });
 
-		client.once('interactionCreate', async (interactionMenu) => {
+		client.on('interactionCreate', async (interactionMenu) => {
+			if (interaction.user !== interactionMenu.user) return;
 			if (!interactionMenu.isButton) return;
 			interactionMenu.update({ components: [] });
 			if (interactionMenu.customId === 'yes') {
