@@ -1,0 +1,93 @@
+// Tried something to make it work purely with slash commands but it did not work.
+// The interaction created from a modal lack the showModal function so I can't just call another modal on top
+// A "solution" for this that I could see is creating a button between each response asking the player to continue or stop which would create a new interaction and (maybe) allow to display a new modal
+import { SlashCommandBuilder, ActionRowBuilder, TextInputBuilder, SelectMenuBuilder, ModalBuilder, TextInputStyle, InteractionType } from 'discord.js';
+
+export default {
+	data: new SlashCommandBuilder()
+		.setName('guess')
+		.setDescription('Guess the number'),
+	category: 'fun',
+	async execute(interaction, args, client) {
+		const row = new ActionRowBuilder()
+			.addComponents(
+				new SelectMenuBuilder()
+					.setCustomId('difficulty')
+					.setPlaceholder('Nothing selected')
+					.addOptions([
+						{ label: 'Easy', value: '100' },
+						{ label: 'Normal', value: '1000' },
+						{ label: 'Hard', value: '10000' },
+					]),
+			);
+		await interaction.reply({ content: 'Which difficulty do you want to play?', ephemeral: true, components: [row] });
+
+		let numberTry = 0;
+		let secretnumber = 0;
+
+		client.on('interactionCreate', async (interactionMenu) => {
+			if (interaction.user !== interactionMenu.user) return;
+
+			const modal = new ModalBuilder()
+				.setCustomId('guessModal')
+				.setTitle('Your guess');
+
+
+			const textRow = new ActionRowBuilder()
+				.addComponents(
+					new TextInputBuilder()
+						.setCustomId('input')
+						.setLabel('What is the number?')
+						.setStyle(TextInputStyle.Short),
+				);
+
+			modal.addComponents(textRow);
+
+			async function tryAgain(input) {
+				if (input != secretnumber) {
+					if (input > secretnumber) {
+						modal.setTitle('Its less!\nWhat is the number?');
+					}
+					else if (input < secretnumber) {
+						modal.setTitle('Its more!\nWhat is the number?');
+					}
+				}
+				await interactionMenu.showModal(modal);
+			}
+
+			async function checkNumber(input) {
+				numberTry++;
+				if (input.toLowerCase() === 'stop') {
+					return interaction.reply('Ok, let\'s stop playing :(');
+				}
+				else if (input != secretnumber) {
+					console.log('trying again');
+					tryAgain(input);
+				}
+				else if (numberTry > 1) {
+					return interaction.reply(`Congratulations! You won! It took you ${numberTry} turns!`);
+				}
+				else {
+					return interaction.reply('Congratulations! You won! It took you 1 Turn!');
+				}
+			}
+
+			if (interactionMenu.type === InteractionType.ModalSubmit) {
+				if (interactionMenu.customId === 'guessModal') {
+					const input = interactionMenu.fields.getTextInputValue('input');
+					checkNumber(input);
+				}
+
+			}
+			else if (interactionMenu.isSelectMenu()) {
+				if (interactionMenu.customId === 'difficulty') {
+					secretnumber = Math.floor((Math.random() * parseInt(interactionMenu.values[0])) + 1);
+					console.log(secretnumber);
+
+					// await interaction.followUp({ content: 'What is the number?', ephemeral: true });
+					await interactionMenu.showModal(modal);
+				}
+			}
+		});
+	},
+};
