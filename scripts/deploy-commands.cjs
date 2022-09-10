@@ -193,6 +193,34 @@ const commands = [
 		.addStringOption(option =>
 			option.setName('command')
 				.setDescription('The command you want more details about.')),
+
+	new SlashCommandBuilder()
+		.setName('shameboard')
+		.setDescription('Set shameboard to the current channel.')
+		.addStringOption(option =>
+			option.setName('emote')
+				.setDescription('The emote that should be used to enter the shameboard.'))
+		.addStringOption(option =>
+			option.setName('count')
+				.setDescription('How many react for it to enter shameboard.'))
+		.addBooleanOption(option =>
+			option.setName('remove')
+				.setDescription('Remove the shameboard')
+				.setRequired(false)),
+
+	new SlashCommandBuilder()
+		.setName('starboard')
+		.setDescription('Set starboard to the current channel.')
+		.addStringOption(option =>
+			option.setName('emote')
+				.setDescription('The emote that should be used to enter the starboard.'))
+		.addStringOption(option =>
+			option.setName('count')
+				.setDescription('How many react for it to enter starboard.'))
+		.addBooleanOption(option =>
+			option.setName('remove')
+				.setDescription('Remove the starboard')
+				.setRequired(false)),
 ]
 	.map(command => command.toJSON());
 
