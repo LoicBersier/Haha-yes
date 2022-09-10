@@ -63,6 +63,7 @@ export default {
 			const options = [];
 
 			qualitys.formats.forEach(f => {
+				if (f.format.includes('storyboard')) return;
 				options.push({
 					label: f.resolution ? f.resolution : 'Unknown format',
 					description: `${f.format} V: ${f.vcodec} A: ${f.acodec}`,
@@ -99,7 +100,8 @@ export default {
 			await interaction.deleteReply();
 			await interaction.followUp({ content: 'Which quality do you want?', ephemeral: true, components: [row] });
 
-			client.once('interactionCreate', async (interactionMenu) => {
+			client.on('interactionCreate', async (interactionMenu) => {
+				if (interaction.user !== interactionMenu.user) return;
 				if (!interactionMenu.isSelectMenu()) return;
 				if (interactionMenu.customId === 'downloadQuality') {
 					await interactionMenu.deferReply({ ephemeral: false });
@@ -153,7 +155,8 @@ async function download(url, interaction, originalInteraction) {
 
 				await interaction.deleteReply();
 				await interaction.followUp({ content: 'Which compression preset do you want?', ephemeral: true, components: [row] });
-				client.once('interactionCreate', async (interactionMenu) => {
+				client.on('interactionCreate', async (interactionMenu) => {
+					if (interaction.user !== interactionMenu.user) return;
 					if (!interactionMenu.isSelectMenu()) return;
 					if (interactionMenu.customId === 'preset') {
 						await interactionMenu.deferReply({ ephemeral: false });
