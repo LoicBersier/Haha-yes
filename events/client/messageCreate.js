@@ -381,8 +381,7 @@ export default {
 				else if (type.includes('attachment')) {
 					payload = message.attachments.first();
 				}
-
-				if (payload.startsWith('--')) {
+				else if (payload.startsWith('--')) {
 					arg.name = payload.substring(2);
 					payload = true;
 				}
