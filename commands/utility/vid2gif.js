@@ -68,7 +68,7 @@ async function gifski(output, input) {
 			if (stderr) {
 				console.error(stderr);
 			}
-			resolve(stdout);
+			resolve();
 		});
 	});
 }
@@ -82,7 +82,7 @@ async function gifsicle(input, output) {
 			if (stderr) {
 				console.error(stderr);
 			}
-			resolve(stdout);
+			resolve();
 		});
 	});
 }

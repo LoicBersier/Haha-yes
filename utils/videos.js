@@ -17,7 +17,7 @@ async function downloadVideo(urlArg, output, format = 'bestvideo*+bestaudio/best
 			if (stderr) {
 				console.error(stderr);
 			}
-			resolve(stdout);
+			resolve();
 		});
 	});
 }
@@ -45,7 +45,7 @@ async function ffmpeg(command) {
 			if (stderr) {
 				console.error(stderr);
 			}
-			resolve(stdout);
+			resolve();
 		});
 	});
 }
@@ -69,7 +69,7 @@ async function compressVideo(input, output, preset) {
 			if (stderr) {
 				console.error(stderr);
 			}
-			resolve(stdout);
+			resolve();
 		});
 	});
 }
