@@ -4,7 +4,7 @@ import { exec } from 'node:child_process';
 import db from '../../models/index.js';
 const donator = db.donator;
 
-const { ownerId } = process.env;
+const { ownerId, uptimePage } = process.env;
 
 export default {
 	data: new SlashCommandBuilder()
@@ -51,7 +51,8 @@ export default {
 					{ name: 'Current maintainer', value: `${maintainer.tag} (${ownerId})` },
 					{ name: 'Gitea (Main)', value: 'https://git.namejeff.xyz/Supositware/Haha-Yes', inline: true },
 					{ name: 'Github (Mirror)', value: 'https://github.com/Supositware/Haha-yes', inline: true },
-					{ name: 'Privacy Policy', value: 'https://libtar.de/discordprivacy.txt' },
+					{ name: 'Privacy Policy', value: 'https://libtar.de/discordprivacy.txt', inline: true },
+					{ name: 'Status page', value: uptimePage.toString(), inline: true },
 
 				)
 				.setFooter({ text: `Original bot made by ${owner.tag} (267065637183029248)` });
