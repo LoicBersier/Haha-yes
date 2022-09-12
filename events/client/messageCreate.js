@@ -375,15 +375,16 @@ export default {
 				const arg = command.data.options[i];
 				const type = arg.constructor.name.toLowerCase();
 				let payload = messageArgs[i];
-				if (type.includes('mentionable')) {
+
+				if (payload.startsWith('--')) {
+					arg.name = payload.substring(2);
+					payload = true;
+				}
+				else if (type.includes('mentionable')) {
 					payload = message.mentions.members.first();
 				}
 				else if (type.includes('attachment')) {
 					payload = message.attachments.first();
-				}
-				else if (payload.startsWith('--')) {
-					arg.name = payload.substring(2);
-					payload = true;
 				}
 
 				args[arg.name] = payload;
