@@ -370,15 +370,17 @@ export default {
 			};
 			const args = {};
 
-			for (let i = 0; i < command.data.options.length; i++) {
+			for (let i = 0, j = 0; i < command.data.options.length; i++, j++) {
 				if (!messageArgs[i]) continue;
-				const arg = command.data.options[i];
+				const arg = command.data.options[j];
 				const type = arg.constructor.name.toLowerCase();
+				let payloadName = arg.name;
 				let payload = messageArgs[i];
 
-				if (payload.startsWith('--')) {
-					arg.name = payload.substring(2);
+				if (messageArgs[i].startsWith('--')) {
+					payloadName = payload.substring(2);
 					payload = true;
+					j--;
 				}
 				else if (type.includes('mentionable')) {
 					payload = message.mentions.members.first();
@@ -387,7 +389,7 @@ export default {
 					payload = message.attachments.first();
 				}
 
-				args[arg.name] = payload;
+				args[payloadName] = payload;
 			}
 			await command.execute(message, args, client);
 		}
