@@ -10,7 +10,11 @@ export default {
 		.addStringOption(option =>
 			option.setName('feedback')
 				.setDescription('The message you want to send me.')
-				.setRequired(true)),
+				.setRequired(true))
+		.addAttachmentOption(option =>
+			option.setName('image')
+				.setDescription('Optional attachment.')
+				.setRequired(false)),
 	category: 'utility',
 	async execute(interaction, args) {
 		const Embed = new EmbedBuilder()
@@ -27,7 +31,12 @@ export default {
 		}
 
 		const channel = interaction.client.channels.resolve(feedbackChannelId);
-		channel.send({ embeds: [Embed] });
+		if (args.image) {
+			channel.send({ embeds: [Embed], files: [args.image] });
+		}
+		else {
+			channel.send({ embeds: [Embed] });
+		}
 		await interaction.reply({ content: 'Your feedback has been sent! Don\'t forget to have dm open if you want to get an answer from the dev!', ephemeral: true });
 	},
 };
