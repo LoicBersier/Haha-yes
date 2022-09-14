@@ -227,7 +227,7 @@ export default {
 
 					const Embed = new EmbedBuilder()
 						.setAuthor({ name: quote.author.username, iconURL: quote.author.displayAvatarURL() })
-						.setColor(message.member ? message.member.displayHexColor : 'NAVY')
+						.setColor(message.member ? message.member.displayHexColor : 'Navy')
 						.addFields(
 							{ name: 'Jump to', value: `[message](https://discordapp.com/channels/${message.guild.id}/${channelID}/${messageID})`, inline: true },
 							{ name: 'In channel', value: quote.channel.name.toString(), inline: true },
