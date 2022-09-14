@@ -25,19 +25,19 @@ export default {
 		const row = new ActionRowBuilder()
 			.addComponents(
 				new ButtonBuilder()
-					.setCustomId('edit')
+					.setCustomId(`edit${interaction.user.id}`)
 					.setLabel('Edit')
 					.setStyle(ButtonStyle.Primary),
 			)
 			.addComponents(
 				new ButtonBuilder()
-					.setCustomId('remove')
+					.setCustomId(`remove${interaction.user.id}`)
 					.setLabel('Remove')
 					.setStyle(ButtonStyle.Danger),
 			)
 			.addComponents(
 				new ButtonBuilder()
-					.setCustomId('nothing')
+					.setCustomId(`nothing${interaction.user.id}`)
 					.setLabel('Do nothing')
 					.setStyle(ButtonStyle.Secondary),
 			);
@@ -48,7 +48,7 @@ export default {
 			if (interaction.user !== interactionMenu.user) return;
 			if (!interactionMenu.isButton) return;
 			interactionMenu.update({ components: [] });
-			if (interactionMenu.customId === 'edit') {
+			if (interactionMenu.customId === `edit${interaction.user.id}`) {
 				if (!args.message) {
 					return interaction.reply({ content: 'You need to input a message for me to edit!', ephemeral: true });
 				}
@@ -56,7 +56,7 @@ export default {
 				await db.leaveChannel.update(body, { where: { guildID: interaction.guild.id } });
 				return interaction.editReply({ content: `The leave message has been set to ${args.message}`, ephemeral: true });
 			}
-			else if (interactionMenu.customId === 'remove') {
+			else if (interactionMenu.customId === `remove${interaction.user.id}`) {
 				db.leaveChannel.destroy({ where: { guildID: interaction.guild.id, channelID: interaction.channel.id } });
 				return interaction.editReply({ content: 'The leave message has been deleted.', ephemeral: true });
 			}

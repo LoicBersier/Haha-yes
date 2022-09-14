@@ -90,7 +90,7 @@ export default {
 			const row = new ActionRowBuilder()
 				.addComponents(
 					new SelectMenuBuilder()
-						.setCustomId('downloadQuality')
+						.setCustomId(`downloadQuality${interaction.user.id}`)
 						.setPlaceholder('Nothing selected')
 						.setMinValues(1)
 						.setMaxValues(2)
@@ -103,7 +103,7 @@ export default {
 			client.on('interactionCreate', async (interactionMenu) => {
 				if (interaction.user !== interactionMenu.user) return;
 				if (!interactionMenu.isSelectMenu()) return;
-				if (interactionMenu.customId === 'downloadQuality') {
+				if (interactionMenu.customId === `downloadQuality${interaction.user.id}`) {
 					await interactionMenu.deferReply({ ephemeral: false });
 					download(url, interactionMenu, interaction);
 				}
@@ -121,7 +121,7 @@ async function download(url, interaction, originalInteraction) {
 		.setAuthor({ name: `Downloaded by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL(), url: url })
 		.setFooter({ text: `You can get the original video by clicking on the "Downloaded by ${interaction.user.tag}" message!` });
 
-	if (interaction.customId === 'downloadQuality') {
+	if (interaction.customId === `downloadQuality${interaction.user.id}`) {
 		format = interaction.values[0];
 		if (interaction.values[1]) format += '+' + interaction.values[1];
 	}
@@ -148,7 +148,7 @@ async function download(url, interaction, originalInteraction) {
 				const row = new ActionRowBuilder()
 					.addComponents(
 						new SelectMenuBuilder()
-							.setCustomId('preset')
+							.setCustomId(`preset${interaction.user.id}`)
 							.setPlaceholder('Nothing selected')
 							.addOptions(options),
 					);
@@ -158,7 +158,7 @@ async function download(url, interaction, originalInteraction) {
 				client.on('interactionCreate', async (interactionMenu) => {
 					if (interaction.user !== interactionMenu.user) return;
 					if (!interactionMenu.isSelectMenu()) return;
-					if (interactionMenu.customId === 'preset') {
+					if (interactionMenu.customId === `preset${interaction.user.id}`) {
 						await interactionMenu.deferReply({ ephemeral: false });
 						compress(file, interactionMenu, Embed);
 						if (interaction.isMessage) cleanUp();

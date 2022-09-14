@@ -19,13 +19,13 @@ export default {
 		const row = new ActionRowBuilder()
 			.addComponents(
 				new ButtonBuilder()
-					.setCustomId('yes')
+					.setCustomId(`yes${interaction.user.id}`)
 					.setLabel('Yes')
 					.setStyle(ButtonStyle.Primary),
 			)
 			.addComponents(
 				new ButtonBuilder()
-					.setCustomId('no')
+					.setCustomId(`no${interaction.user.id}`)
 					.setLabel('No')
 					.setStyle(ButtonStyle.Danger),
 			);
@@ -36,7 +36,7 @@ export default {
 			if (interaction.user !== interactionMenu.user) return;
 			if (!interactionMenu.isButton) return;
 			interactionMenu.update({ components: [] });
-			if (interactionMenu.customId === 'yes') {
+			if (interactionMenu.customId === `yes${interaction.user.id}`) {
 				const body = { serverID: interaction.guild.id, stat: 'disable' };
 				await db.quotationStat.update(body, { where: { serverID: interaction.guild.id } });
 				return interaction.editReply({ content: 'Quotation has been disabled.', ephemeral: true });

@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { exec } from 'node:child_process';
+const { NODE_ENV } = process.env;
 
 
 export default {
@@ -68,6 +69,7 @@ async function gifski(output, input) {
 			if (stderr) {
 				console.error(stderr);
 			}
+			console.log(NODE_ENV === 'development' ? stdout : null);
 			resolve();
 		});
 	});
@@ -82,6 +84,7 @@ async function gifsicle(input, output) {
 			if (stderr) {
 				console.error(stderr);
 			}
+			console.log(NODE_ENV === 'development' ? stdout : null);
 			resolve();
 		});
 	});
