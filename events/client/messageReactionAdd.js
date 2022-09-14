@@ -45,10 +45,10 @@ export default {
 
 			if (reaction.emoji == staremote || reaction.emoji.name == staremote) {
 				if (global.boards[reaction.message.id] && reactionCount > starcount) {
-					return editEmbed('starboard', staremote, global.boards[reaction.message.id], c);
+					return editEmbed('starboard', staremote, global.boards[reaction.message.id]);
 				}
 				else if (reactionCount == starcount) {
-					return sendEmbed('starboard', staremote, c);
+					return sendEmbed('starboard', staremote);
 				}
 			}
 		}
@@ -65,25 +65,24 @@ export default {
 
 			if (reaction.emoji == shameemote || reaction.emoji.name == shameemote) {
 				if (global.boards[reaction.message.id] && reactionCount > shamecount) {
-					return editEmbed('shameboard', shameemote, global.boards[reaction.message.id], c);
+					return editEmbed('shameboard', shameemote, global.boards[reaction.message.id]);
 				}
 				else if (reactionCount == shamecount) {
-					return sendEmbed('shameboard', shameemote, c);
+					return sendEmbed('shameboard', shameemote);
 				}
 			}
 		}
 
-		async function editEmbed(name, emote, boardID, client) {
+		async function editEmbed(name, emote, boardID) {
 			let channel;
 			if (name == 'starboard') {
-				channel = client.channels.resolve(starboardChannel.starboard);
+				channel = c.channels.resolve(starboardChannel.starboard);
 			}
 			else {
-				channel = client.channels.resolve(shameboardChannel.shameboard);
+				channel = c.channels.resolve(shameboardChannel.shameboard);
 			}
 
 			const message = await channel.messages.resolve(boardID);
-
 			// If the message doesn't have embeds assume it got deleted so don't do anything
 			if (!message) return;
 
@@ -94,7 +93,7 @@ export default {
 			}
 
 			const Embed = new EmbedBuilder()
-				.setColor(reaction.message.member ? reaction.message.member.displayHexColor : 'NAVY')
+				.setColor(reaction.message.member ? reaction.message.member.displayHexColor : 'Navy')
 				.setAuthor({ name: reaction.message.author.username, iconURL: reaction.message.author.displayAvatarURL() })
 				.addFields(
 					{ name: 'Jump to', value: `[message](https://discordapp.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`, inline: true },
@@ -106,18 +105,18 @@ export default {
 
 			if (reaction.message.guild.emojis.resolve(emote)) Embed.setFooter(reactionCount, reaction.message.guild.emojis.resolve(emote).url);
 
-			message.edit({ embed: Embed });
+			message.edit({ embeds: [Embed] });
 		}
 
-		async function sendEmbed(name, emote, client) {
+		async function sendEmbed(name, emote) {
 			let messageAttachments = reaction.message.attachments.map(u => u.url)[0];
-			// Should change this so it automatically pic the channel ( I'm lazy right now )
+			// Should change this so it automatically pick the channel ( I'm lazy right now )
 			let channel;
 			if (name == 'starboard') {
-				channel = client.channels.resolve(starboardChannel.starboard);
+				channel = c.channels.resolve(starboardChannel.starboard);
 			}
 			else {
-				channel = client.channels.resolve(shameboardChannel.shameboard);
+				channel = c.channels.resolve(shameboardChannel.shameboard);
 			}
 
 			const Embed = new EmbedBuilder()

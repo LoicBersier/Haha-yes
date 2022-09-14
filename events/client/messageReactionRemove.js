@@ -53,7 +53,7 @@ export default {
 				message.delete();
 			}
 			else if ((reaction.emoji == staremote || reaction.emoji.name == staremote) && reactionCount >= starcount) {
-				return editEmbed('starboard', staremote, global.boards[reaction.message.id], this.client);
+				return editEmbed('starboard', staremote, global.boards[reaction.message.id]);
 			}
 		}
 
@@ -77,17 +77,17 @@ export default {
 				message.delete();
 			}
 			else if ((reaction.emoji == shameemote || reaction.emoji.name == shameemote) && reactionCount >= shamecount) {
-				return editEmbed('shameboard', shameemote, global.boards[reaction.message.id], this.client);
+				return editEmbed('shameboard', shameemote, global.boards[reaction.message.id]);
 			}
 		}
 
-		async function editEmbed(name, emote, boardID, client) {
+		async function editEmbed(name, emote, boardID) {
 			let channel;
 			if (name == 'starboard') {
-				channel = client.channels.resolve(starboardChannel.starboard);
+				channel = c.channels.resolve(starboardChannel.starboard);
 			}
 			else {
-				channel = client.channels.resolve(shameboardChannel.shameboard);
+				channel = c.channels.resolve(shameboardChannel.shameboard);
 			}
 
 			const message = await channel.messages.resolve(boardID);
@@ -114,7 +114,7 @@ export default {
 
 			if (reaction.message.guild.emojis.resolve(emote)) Embed.setFooter(reactionCount, reaction.message.guild.emojis.resolve(emote).url);
 
-			message.edit({ embed: Embed });
+			message.edit({ embeds: [Embed] });
 		}
 	},
 };
