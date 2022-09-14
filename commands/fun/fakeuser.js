@@ -20,6 +20,7 @@ export default {
 	clientPermissions: [ PermissionFlagsBits.ManageWebhooks ],
 	async execute(interaction, args) {
 		await interaction.deferReply({ ephemeral: true });
+		await interaction.guild.members.fetch();
 		const member = args.user;
 		const message = args.message;
 		const attachment = args.image;
