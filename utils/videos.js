@@ -1,5 +1,6 @@
 import os from 'node:os';
 import { exec } from 'node:child_process';
+const { NODE_ENV } = process.env;
 
 export default {
 	downloadVideo,
@@ -17,6 +18,7 @@ async function downloadVideo(urlArg, output, format = 'bestvideo*+bestaudio/best
 			if (stderr) {
 				console.error(stderr);
 			}
+			console.log(NODE_ENV === 'development' ? stdout : null);
 			resolve();
 		});
 	});
@@ -45,6 +47,7 @@ async function ffmpeg(command) {
 			if (stderr) {
 				console.error(stderr);
 			}
+			console.log(NODE_ENV === 'development' ? stdout : null);
 			resolve();
 		});
 	});
@@ -69,6 +72,7 @@ async function compressVideo(input, output, preset) {
 			if (stderr) {
 				console.error(stderr);
 			}
+			console.log(NODE_ENV === 'development' ? stdout : null);
 			resolve();
 		});
 	});
