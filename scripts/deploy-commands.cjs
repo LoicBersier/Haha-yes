@@ -49,7 +49,11 @@ const commands = [
 		.addStringOption(option =>
 			option.setName('feedback')
 				.setDescription('The message you want to send me.')
-				.setRequired(true)),
+				.setRequired(true))
+		.addAttachmentOption(option =>
+			option.setName('image')
+				.setDescription('Optional attachment.')
+				.setRequired(false)),
 
 	new SlashCommandBuilder()
 		.setName('inspirobot')
