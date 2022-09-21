@@ -28,10 +28,15 @@ export default {
 			if (response.data.children[i].data.over_18 == true && !interaction.channel.nsfw) {
 				return interaction.editReply('No nsfw');
 			}
+
+			let description = response.data.children[i].data.selftext;
+			if (description === '') {
+				description = 'No description.';
+			}
 			const redditEmbed = new EmbedBuilder()
 				.setColor(interaction.member ? interaction.member.displayHexColor : 'Navy')
 				.setTitle(response.data.children[i].data.title)
-				.setDescription(response.data.children[i].data.selftext)
+				.setDescription(description)
 				.setURL('https://reddit.com' + response.data.children[i].data.permalink)
 				.setFooter({ text: `/r/${response.data.children[i].data.subreddit} | ⬆ ${response.data.children[i].data.ups} 🗨 ${response.data.children[i].data.num_comments}` });
 
