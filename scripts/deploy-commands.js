@@ -14,6 +14,7 @@ const commands = [];
 await loadCommandFromDir('fun');
 await loadCommandFromDir('secret');
 await loadCommandFromDir('utility');
+await loadCommandFromDir('voice');
 await loadCommandFromDir('admin');
 await loadCommandFromDir('owner');
 commands.map(command => command.toJSON());

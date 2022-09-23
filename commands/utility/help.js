@@ -144,6 +144,7 @@ export default {
 					utility: '🔩\u2000Utility',
 					admin: '⚡\u2000Admin',
 					owner: '🛠️\u2000Owner',
+					voice: '🗣️\u2000Voice',
 				}[category];
 
 				embed.addFields({ name: title, value: `\`${object[category].join('` `')}\`` });
