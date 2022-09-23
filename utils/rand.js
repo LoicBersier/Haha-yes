@@ -1,5 +1,6 @@
 import fs from 'node:fs';
-export function rand(text, message) {
+export function rand(text, interaction) {
+	interaction.author = interaction.user;
 	// Find a value in an array of objects in Javascript - https://stackoverflow.com/a/12462387
 	function search(nameKey, myArray) {
 		for (let i = 0; i < myArray.length; i++) {
@@ -23,15 +24,15 @@ export function rand(text, message) {
 	const variables = [
 		{
 			name: /\[author\]/,
-			value: message ? message.author.username : '',
+			value: interaction ? interaction.author.username : '',
 		},
 		{
 			name: /\[member\]/,
-			value: message ? message.guild ? message.guild.members.cache.random().user.username : '' : '',
+			value: interaction ? interaction.guild ? interaction.guild.members.cache.random().user.username : '' : '',
 		},
 		{
 			name: /\[memberRand\]/,
-			value: (() => message.guild ? message.guild.members.cache.random().user.username : ''),
+			value: (() => interaction.guild ? interaction.guild.members.cache.random().user.username : ''),
 		},
 		{
 			name: /\[dice\d*\]/,
