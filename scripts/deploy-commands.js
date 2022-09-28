@@ -11,12 +11,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const commands = [];
-await loadCommandFromDir('fun');
-await loadCommandFromDir('secret');
-await loadCommandFromDir('utility');
-await loadCommandFromDir('voice');
-await loadCommandFromDir('admin');
-await loadCommandFromDir('owner');
+const categoryPath = fs.readdirSync(`${__dirname}/../commands`);
+categoryPath.forEach(category => {
+	loadCommandFromDir(category);
+});
 commands.map(command => command.toJSON());
 
 const rest = new REST({ version: '9' }).setToken(token);
