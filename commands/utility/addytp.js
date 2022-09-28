@@ -36,7 +36,8 @@ export default {
 					await interaction.editReply({ content: '❌ Uh oh! The video is too big!', ephemeral: true });
 				}
 				else {
-					fs.renameSync(output, `./asset/ytp/userVid/${file}`);
+					// CopyFile instead of rename in case you have /tmp and the asset folder on different a disk.
+					fs.copyFileSync(output, `./asset/ytp/userVid/${file}`);
 					const mp4 = [];
 					fs.readdirSync('./asset/ytp/userVid/').forEach(f => {
 						if (f.endsWith('mp4')) {
