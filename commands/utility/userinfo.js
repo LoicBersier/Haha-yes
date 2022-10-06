@@ -58,7 +58,10 @@ export default {
 			// Show guild nickname
 			if (member.nickname) Embed.addFields({ name: 'Nickname', value: member.nickname, inline: true });
 			// Show member roles
-			if (member.roles) Embed.addFields({ name: 'Roles', value: `${[...member.roles.cache.values()].join(', ')}` });
+			if (member.roles) {
+				Embed.addFields({ name: 'Roles', value: `${[...member.roles.cache.values()].join(', ')}` });
+				Embed.addFields({ name: 'Permissions', value: `\`${member.permissions.toArray().join(', ')}\`` });
+			}
 		}
 
 		return interaction.reply({ embeds: [Embed] });
