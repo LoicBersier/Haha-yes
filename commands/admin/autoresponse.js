@@ -9,12 +9,13 @@ export default {
 	category: 'admin',
 	async execute(interaction, args, client) {
 		const autoresponseStat = await db.autoresponseStat.findOne({ where: { serverID: interaction.guild.id } });
-
-		if (autoresponseStat.stat !== 'enable') {
+		console.log(autoresponseStat);
+		if (!autoresponseStat) {
 			const body = { serverID: interaction.guild.id, stat: 'enable' };
 			await db.autoresponseStat.create(body);
 			return await interaction.reply({ content: 'Autoresponse has been enabled.', ephemeral: true });
 		}
+
 
 		const row = new ActionRowBuilder()
 			.addComponents(
@@ -30,7 +31,14 @@ export default {
 					.setStyle(ButtonStyle.Danger),
 			);
 
-		await interaction.reply({ content: 'Autoresponse is already enabled, do you wish to disable it?', components: [row], ephemeral: true });
+		if (autoresponseStat.stat === 'enable') {
+			await interaction.reply({ content: 'Autoresponse is already enabled, do you wish to disable it?', components: [row], ephemeral: true });
+		}
+		else {
+			const body = { serverID: interaction.guild.id, stat: 'enable' };
+			await db.autoresponseStat.update(body, { where: { serverID: interaction.guild.id } });
+			return interaction.editReply({ content: 'Auto response has been enabled.', ephemeral: true });
+		}
 
 		client.on('interactionCreate', async (interactionMenu) => {
 			if (interaction.user !== interactionMenu.user) return;

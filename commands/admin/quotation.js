@@ -10,11 +10,12 @@ export default {
 	async execute(interaction, args, client) {
 		const quotationstat = await db.quotationStat.findOne({ where: { serverID: interaction.guild.id } });
 
-		if (quotationstat.stat !== 'enable') {
+		if (!quotationstat) {
 			const body = { serverID: interaction.guild.id, stat: 'enable' };
 			await db.quotationStat.create(body);
 			return await interaction.reply({ content: 'Quotation has been enabled.', ephemeral: true });
 		}
+
 
 		const row = new ActionRowBuilder()
 			.addComponents(
@@ -30,7 +31,14 @@ export default {
 					.setStyle(ButtonStyle.Danger),
 			);
 
-		await interaction.reply({ content: 'Quotation is already enabled, do you wish to disable it?', components: [row], ephemeral: true });
+		if (quotationstat.stat === 'enable') {
+			await interaction.reply({ content: 'Quotation is already enabled, do you wish to disable it?', components: [row], ephemeral: true });
+		}
+		else {
+			const body = { serverID: interaction.guild.id, stat: 'enable' };
+			await db.autoresponseStat.update(body, { where: { serverID: interaction.guild.id } });
+			return interaction.editReply({ content: 'Quotation has been enabled.', ephemeral: true });
+		}
 
 		client.on('interactionCreate', async (interactionMenu) => {
 			if (interaction.user !== interactionMenu.user) return;
