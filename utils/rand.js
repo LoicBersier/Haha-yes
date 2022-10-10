@@ -1,6 +1,8 @@
 import fs from 'node:fs';
 export function rand(text, interaction) {
-	interaction.author = interaction.user;
+	if (interaction) {
+		interaction.author = interaction.user;
+	}
 	// Find a value in an array of objects in Javascript - https://stackoverflow.com/a/12462387
 	function search(nameKey, myArray) {
 		for (let i = 0; i < myArray.length; i++) {
