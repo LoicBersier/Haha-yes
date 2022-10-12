@@ -6,7 +6,6 @@ const { statusChannel, NODE_ENV } = process.env;
 
 export default {
 	name: 'guildDelete',
-	once: true,
 	async execute(guild, client) {
 		const guildOwner = await client.users.fetch(guild.ownerId);
 
