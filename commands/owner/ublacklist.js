@@ -20,12 +20,12 @@ export default {
 				.setRequired(false)),
 	category: 'owner',
 	ownerOnly: true,
-	async execute(interaction) {
+	async execute(interaction, args) {
 		await interaction.deferReply({ ephemeral: true });
 		const client = interaction.client;
-		const command = interaction.options.getString('command');
-		const userid = interaction.options.getString('userid');
-		const reason = interaction.options.getString('reason');
+		const command = args.command;
+		const userid = args.userid;
+		const reason = args.reason;
 
 		const blacklist = await Blacklists.findOne({ where: { type:command, uid:userid } });
 

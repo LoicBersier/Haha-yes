@@ -13,7 +13,7 @@ export default {
 				.setRequired(true)),
 	category: 'owner',
 	ownerOnly: true,
-	async execute(interaction) {
+	async execute(interaction, args) {
 		await interaction.deferReply();
 		try {
 			const T = new Twit({
@@ -24,7 +24,7 @@ export default {
 			});
 
 			T.post('statuses/destroy', {
-				id: interaction.options.getString('tweetid'),
+				id: args.tweetid,
 			});
 			return interaction.editReply('Tweet have been deleted!');
 		}
