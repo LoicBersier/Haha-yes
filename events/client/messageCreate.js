@@ -370,12 +370,16 @@ export default {
 			};
 			const args = {};
 
-			for (let i = 0, j = 0; i < command.data.options.length; i++, j++) {
+			const argsLength = command.data.options.length;
+			for (let i = 0, j = 0; i < argsLength; i++, j++) {
 				if (!messageArgs[i]) continue;
 				const arg = command.data.options[j];
 				const type = arg.constructor.name.toLowerCase();
 				let payloadName = arg.name;
 				let payload = messageArgs[i];
+				if (i >= argsLength - 1) {
+					payload = messageArgs.slice(i).join(' ');
+				}
 
 				if (messageArgs[i].startsWith('--')) {
 					payloadName = payload.substring(2);
@@ -383,7 +387,8 @@ export default {
 					j--;
 				}
 				else if (type.includes('mentionable')) {
-					payload = message.mentions.members.first();
+					await message.guild.members.fetch();
+					payload = message.mentions.members.first() ? message.mentions.members.first() : message.guild.members.cache.find(u => u.user.username.toLowerCase().includes(payload.toLowerCase()));
 				}
 				else if (type.includes('attachment')) {
 					payload = message.attachments.first();
