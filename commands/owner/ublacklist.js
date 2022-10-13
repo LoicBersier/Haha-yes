@@ -33,7 +33,7 @@ export default {
 			const body = { type:command, uid: userid, reason: reason };
 			Blacklists.create(body);
 			let user = userid;
-			if (command !== 'guild') {user = client.users.resolve(userid).tag;}
+			if (command !== 'guild') {user = client.users.fetch(userid).tag;}
 
 			return interaction.editReply(`${user} has been blacklisted from ${command} with the following reason ${reason}`);
 		}
