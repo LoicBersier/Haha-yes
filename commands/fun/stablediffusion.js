@@ -16,20 +16,11 @@ export default {
 	category: 'fun',
 	async execute(interaction, args, client) {
 		await interaction.deferReply();
-		generate(interaction, args.prompt);
-
-		client.on('interactionCreate', async (interactionMenu) => {
-			if (interaction.user !== interactionMenu.user) return;
-			if (!interactionMenu.isButton) return;
-			if (interactionMenu.customId === `regenerate${interactionMenu.user.id}`) {
-				await interactionMenu.deferReply();
-				await generate(interactionMenu, args.prompt);
-			}
-		});
+		generate(interaction, args.prompt, client);
 	},
 };
 
-async function generate(i, prompt) {
+async function generate(i, prompt, client) {
 	const body = {
 		prompt: prompt,
 		params: {
@@ -60,11 +51,20 @@ async function generate(i, prompt) {
 		.addComponents(
 			new ButtonBuilder()
 				.setCustomId(`regenerate${i.user.id}`)
-				.setLabel('🔄')
+				.setLabel('🔄 Regenerate')
 				.setStyle(ButtonStyle.Primary),
 		);
 
 	fs.writeFileSync(`${os.tmpdir()}/${i.id}.png`, response.generations[0].img, 'base64');
 
 	await i.editReply({ embeds: [stableEmbed], components: [row], files: [`${os.tmpdir()}/${i.id}.png`] });
+
+	client.once('interactionCreate', async (interactionMenu) => {
+		if (i.user !== interactionMenu.user) return;
+		if (!interactionMenu.isButton) return;
+		if (interactionMenu.customId === `regenerate${interactionMenu.user.id}`) {
+			await interactionMenu.deferReply();
+			await generate(interactionMenu, prompt, client);
+		}
+	});
 }
