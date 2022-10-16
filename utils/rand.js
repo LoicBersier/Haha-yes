@@ -26,7 +26,7 @@ export function rand(text, interaction) {
 	const variables = [
 		{
 			name: /\[author\]/,
-			value: interaction ? interaction.author.username : '',
+			value: interaction ? interaction.author ? interaction.author.username : '' : '',
 		},
 		{
 			name: /\[member\]/,
