@@ -3,6 +3,8 @@ import fetch from 'node-fetch';
 import fs from 'node:fs';
 import os from 'node:os';
 
+const { stableHordeApi } = process.env;
+
 export default {
 	data: new SlashCommandBuilder()
 		.setName('stablediffusion')
@@ -42,7 +44,7 @@ async function generate(i, prompt) {
 	const fetchParameters = {
 		method: 'post',
 		body: JSON.stringify(body),
-		headers: { 'Content-Type': 'application/json', 'apikey': '0000000000' },
+		headers: { 'Content-Type': 'application/json', 'apikey': stableHordeApi },
 	};
 
 	let response = await fetch('https://stablehorde.net/api/v2/generate/sync', fetchParameters);
