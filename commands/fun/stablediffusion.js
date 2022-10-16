@@ -3,7 +3,7 @@ import fetch from 'node-fetch';
 import fs from 'node:fs';
 import os from 'node:os';
 
-const { stableHordeApi } = process.env;
+const { stableHordeApi, stableHordeID } = process.env;
 
 export default {
 	data: new SlashCommandBuilder()
@@ -41,11 +41,15 @@ async function generate(i, prompt, client) {
 	let response = await fetch('https://stablehorde.net/api/v2/generate/sync', fetchParameters);
 
 	response = await response.json();
+
+	let creditResponse = await fetch(`https://stablehorde.net/api/v2/users/${stableHordeID}`);
+	creditResponse = await creditResponse.json();
+
 	const stableEmbed = new EmbedBuilder()
 		.setColor(i.member ? i.member.displayHexColor : 'Navy')
 		.setTitle(prompt)
 		.setURL('https://aqualxx.github.io/stable-ui/')
-		.setFooter({ text: `Seed: ${response.generations[0].seed} worker ID: ${response.generations[0].worker_id} worker name: ${response.generations[0].worker_name}` });
+		.setFooter({ text: `**Credit left: ${creditResponse.kudos}** Seed: ${response.generations[0].seed} worker ID: ${response.generations[0].worker_id} worker name: ${response.generations[0].worker_name}` });
 
 	const row = new ActionRowBuilder()
 		.addComponents(
