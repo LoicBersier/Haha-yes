@@ -29,7 +29,7 @@ async function generate(i, prompt, client) {
 			height: 512,
 		},
 		nsfw: true,
-		censor_nsfw: i.channel.nsfw ? true : false,
+		censor_nsfw: i.channel.nsfw ? false : true,
 	};
 
 	const fetchParameters = {
