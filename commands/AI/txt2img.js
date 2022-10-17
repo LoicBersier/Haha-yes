@@ -7,13 +7,13 @@ const { stableHordeApi, stableHordeID } = process.env;
 
 export default {
 	data: new SlashCommandBuilder()
-		.setName('stablediffusion')
+		.setName('txt2img')
 		.setDescription('AI generated image with stable diffusion (If credit are low it may be slow)')
 		.addStringOption(option =>
 			option.setName('prompt')
 				.setDescription('What do you want the AI to generate?')
 				.setRequired(true)),
-	category: 'fun',
+	category: 'AI',
 	async execute(interaction, args, client) {
 		await interaction.deferReply();
 		generate(interaction, args.prompt, client);
