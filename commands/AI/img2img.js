@@ -40,7 +40,7 @@ async function generate(i, prompt, b64Img) {
 			width: 512,
 			height: 512,
 		},
-		cfg_scale: 5,
+		cfg_scale: 9,
 		use_gfpgan: true,
 		use_real_esrgan: true,
 		use_ldsr: true,
