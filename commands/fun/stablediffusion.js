@@ -8,7 +8,7 @@ const { stableHordeApi, stableHordeID } = process.env;
 export default {
 	data: new SlashCommandBuilder()
 		.setName('stablediffusion')
-		.setDescription('AI generated image with stable diffusion (This can take very long)')
+		.setDescription('AI generated image with stable diffusion (If credit are low it may be slow)')
 		.addStringOption(option =>
 			option.setName('prompt')
 				.setDescription('What do you want the AI to generate?')
@@ -28,8 +28,14 @@ async function generate(i, prompt, client) {
 			width: 512,
 			height: 512,
 		},
-		nsfw: true,
-		censor_nsfw: i.channel.nsfw ? false : true,
+		cfg_scale: 5,
+		use_gfpgan: true,
+		use_real_esrgan: true,
+		use_ldsr: true,
+		use_upscaling: true,
+		steps: 50,
+		nsfw: i.channel.nsfw ? true : false,
+		censor_nsfw: i.channel.nsfw ? true : false,
 	};
 
 	const fetchParameters = {
