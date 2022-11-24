@@ -176,7 +176,7 @@ export default {
 
 				const Embed = new EmbedBuilder()
 					.setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL() })
-					.setDescription(tweet)
+					.setDescription(tweet ? tweet : 'No content.')
 					.addFields(
 						{ name: 'Link', value: TweetLink, inline: true },
 						{ name: 'Tweet ID', value: tweetid, inline: true },
