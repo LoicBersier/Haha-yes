@@ -25,7 +25,7 @@ export default {
 		const client = interaction.client;
 		const command = args.command;
 		const userid = args.userid;
-		const reason = args.reason;
+		const reason = args.reason ? args.reason : 'No reason has been specified.';
 
 		const blacklist = await Blacklists.findOne({ where: { type:command, uid:userid } });
 
@@ -33,12 +33,11 @@ export default {
 			const body = { type:command, uid: userid, reason: reason };
 			Blacklists.create(body);
 			let user = userid;
-			if (command !== 'guild') {
-				await client.users.resolve(userid);
-				user = client.users.fetch(userid).tag;
-			}
+			await client.users.fetch(userid);
+			user = client.users.resolve(userid).tag;
 
-			return interaction.editReply(`${user} has been blacklisted from ${command} with the following reason ${reason}`);
+
+			return interaction.editReply(`${user} has been blacklisted from ${command} with the following reason \`${reason}\``);
 		}
 		else {
 			const row = new ActionRowBuilder()
@@ -57,7 +56,7 @@ export default {
 
 			await interaction.editReply({ content: 'This user is already blacklisted, do you want to unblacklist him?', ephemeral: true, components: [row] });
 
-			interaction.client.on('interactionCreate', async (interactionMenu) => {
+			interaction.client.once('interactionCreate', async (interactionMenu) => {
 				if (interaction.user !== interactionMenu.user) return;
 				if (!interactionMenu.isButton) return;
 				interactionMenu.update({ components: [] });
