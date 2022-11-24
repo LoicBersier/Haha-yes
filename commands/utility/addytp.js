@@ -8,12 +8,14 @@ const { ytpChannelId } = process.env;
 export default {
 	data: new SlashCommandBuilder()
 		.setName('addytp')
-		.setDescription('Add a video to the pool of ytps')
+		.setDescription('Add a video to the pool of ytps. You can add 5 per day.')
 		.addStringOption(option =>
 			option.setName('url')
 				.setDescription('URL of the video you want to add.')
 				.setRequired(true)),
 	category: 'utility',
+	ratelimit: 5,
+	cooldown: 3600,
 	async execute(interaction, args) {
 		const url = args.url;
 		if (!await utils.stringIsAValidurl(url)) {
