@@ -75,6 +75,8 @@ export default {
 				}
 			}
 
+			interaction.prefix = '/';
+
 			const args = {};
 			// https://discord-api-types.dev/api/discord-api-types-v10/enum/ApplicationCommandOptionType
 			interaction.options.data.forEach(arg => {

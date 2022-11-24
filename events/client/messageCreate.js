@@ -337,6 +337,7 @@ export default {
 			}
 			message.user = message.author;
 			message.isMessage = true;
+			message.prefix = `${messageArray[0]} `;
 
 			let waitingmsg;
 			const toDelete = [];
@@ -368,6 +369,7 @@ export default {
 					msg.delete();
 				});
 			};
+
 			const args = {};
 			const argsLength = command.data.options.length;
 
