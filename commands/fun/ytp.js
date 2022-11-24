@@ -3,9 +3,6 @@ import fs from 'node:fs';
 import os from 'node:os';
 import YTPGenerator from 'ytpplus-node';
 
-const { prefix } = process.env;
-const prefixs = prefix.split(',');
-
 export default {
 	data: new SlashCommandBuilder()
 		.setName('ytp')
@@ -16,7 +13,7 @@ export default {
 				.setRequired(false)),
 	category: 'fun',
 	async execute(interaction, args) {
-		if (!interaction.channel.nsfw && !args.force) return interaction.reply(`Please execute this command in an NSFW channel ( Content might not be NSFW but since the video are user submitted better safe than sorry ) OR do \`\`${prefixs[0]}ytp --force\`\` to make the command work outside of nsfw channel BE AWARE THAT IT WON'T CHANGE THE FINAL RESULT SO NSFW CAN STILL HAPPEN`);
+		if (!interaction.channel.nsfw && !args.force) return interaction.reply(`Please execute this command in an NSFW channel ( Content might not be NSFW but since the video are user submitted better safe than sorry ) OR do \`\`${interaction.prefix}ytp --force\`\` to make the command work outside of nsfw channel BE AWARE THAT IT WON'T CHANGE THE FINAL RESULT SO NSFW CAN STILL HAPPEN`);
 
 		// Read userVid folder and select random vid and only take .mp4
 		const mp4 = [];
