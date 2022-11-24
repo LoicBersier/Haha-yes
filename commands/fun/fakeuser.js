@@ -24,9 +24,10 @@ export default {
 		const member = args.user;
 		const message = args.message;
 		const attachment = args.image;
+		const username = member.nickname ? member.nickname : member.user.username;
 
 		const webhook = await interaction.channel.createWebhook({
-			name: member.user.username,
+			name: username,
 			avatar: member.user.displayAvatarURL(),
 			reason: `Fakebot/user command triggered by: ${interaction.user.username}`,
 		});
@@ -37,6 +38,12 @@ export default {
 			await webhook.send({ content: message });
 		}
 		await webhook.delete(`Fakebot/user command triggered by: ${interaction.user.username}`);
-		await interaction.editReply({ content: `Faked the user ${member}` });
+		if (interaction.isMessage) {
+			await interaction.delete();
+			await interaction.deleteReply();
+		}
+		else {
+			await interaction.editReply({ content: `Faked the user ${member}` });
+		}
 	},
 };
