@@ -2,7 +2,7 @@
  * Make this shit work.
 */
 
-import { EmbedBuilder, PermissionFlagsBits } from 'discord.js';
+import { ApplicationCommandOptionType, EmbedBuilder, PermissionFlagsBits } from 'discord.js';
 import db from '../../models/index.js';
 import { rand } from '../../utils/rand.js';
 const ratelimit = {};
@@ -369,14 +369,21 @@ export default {
 				});
 			};
 			const args = {};
-
 			const argsLength = command.data.options.length;
+
+			command.data.options.forEach(obj => {
+				if (obj.type === ApplicationCommandOptionType.Attachment) {
+					args[obj.name] = message.attachments.first();
+				}
+			});
+
 			for (let i = 0, j = 0; i < argsLength; i++, j++) {
 				if (!messageArgs[i]) continue;
 				const arg = command.data.options[j];
-				const type = arg.constructor.name.toLowerCase();
+				if (arg.type === ApplicationCommandOptionType.Attachment) continue;
 				let payloadName = arg.name;
 				let payload = messageArgs[i];
+
 				if (i >= argsLength - 1) {
 					payload = messageArgs.slice(i).join(' ');
 				}
@@ -386,12 +393,10 @@ export default {
 					payload = true;
 					j--;
 				}
-				else if (type.includes('mentionable')) {
+
+				if (arg.type === ApplicationCommandOptionType.Mentionable) {
 					await message.guild.members.fetch();
 					payload = message.mentions.members.first() ? message.mentions.members.first() : message.guild.members.cache.find(u => u.user.username.toLowerCase().includes(payload.toLowerCase()));
-				}
-				else if (type.includes('attachment')) {
-					payload = message.attachments.first();
 				}
 
 				args[payloadName] = payload;
