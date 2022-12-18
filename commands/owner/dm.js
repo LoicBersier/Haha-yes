@@ -18,6 +18,7 @@ export default {
 				.setDescription('Optional attachment.')
 				.setRequired(false)),
 	category: 'owner',
+	ownerOnly: true,
 	async execute(interaction, args, client) {
 		/* Too lazy to implement that now (Watch it rest untouched for months)
 		async function uuidv4() {
