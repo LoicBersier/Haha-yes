@@ -6,7 +6,6 @@ export default {
 	once: true,
 	async execute(client) {
 		// Init global variables.
-		global.ratelimit = {};
 		global.boards = {};
 
 		const ytdlpVersion = await new Promise((resolve, reject) => {
