@@ -1,12 +1,12 @@
 import { PermissionFlagsBits, InteractionType } from 'discord.js';
 import db from '../../models/index.js';
+import ratelimiter from '../../utils/ratelimiter.js';
 
 const { ownerId } = process.env;
 
 export default {
 	name: 'interactionCreate',
 	async execute(interaction) {
-		const ratelimit = global.ratelimit;
 		const client = interaction.client;
 		if (interaction.type !== InteractionType.ApplicationCommand) return;
 
@@ -27,7 +27,7 @@ export default {
 
 		if (!command) return;
 
-		console.log(`\x1b[33m${userTag} (${userID})\x1b[0m launched command \x1b[33m${commandName}\x1b[0m`);
+		console.log(`\x1b[33m${userTag} (${userID})\x1b[0m launched command \x1b[33m${commandName}\x1b[0m with slash`);
 
 		// Owner only check
 		if (command.ownerOnly && interaction.user.id !== ownerId) {
@@ -51,35 +51,15 @@ export default {
 		}
 		*/
 
+		// Check the ratelimit
+		const doRateLimit = ratelimiter.check(interaction.user, commandName, command);
+		if (doRateLimit) {
+			console.log(`\x1b[33m${userTag} (${userID})\x1b[0m is rate limited on \x1b[33m${commandName}\x1b[0m for ${ratelimiter.timeLeft(userID, commandName)} seconds`);
+			return interaction.reply({ content: doRateLimit, ephemeral: true });
+
+		}
+
 		try {
-			if (!ratelimit[userID]) {
-				ratelimit[userID] = {};
-			}
-
-			const date = new Date();
-			if (ratelimit[userID][commandName]) {
-				if (ratelimit[userID][commandName].cooldown) {
-					if (date > ratelimit[userID][commandName].cooldown) {
-						ratelimit[userID][commandName].limit = 0;
-						ratelimit[userID][commandName].cooldown = undefined;
-					}
-				}
-
-				if (command.ratelimit === ratelimit[userID][commandName].limit) {
-					return await interaction.reply({ content: `You are being rate limited. You can try again in ${Math.floor((ratelimit[userID][commandName].cooldown - date) / 1000)} seconds.`, ephemeral: true });
-				}
-			}
-
-
-			if (command.ratelimit) {
-				ratelimit[userID][commandName] = { limit: ratelimit[userID][commandName] ? ratelimit[userID][commandName].limit + 1 : 1 };
-				if (command.ratelimit === ratelimit[userID][commandName].limit) {
-					date.setSeconds(date.getSeconds() + command.cooldown);
-
-					ratelimit[userID][commandName] = { limit: ratelimit[userID][commandName].limit, cooldown: date };
-				}
-			}
-
 			interaction.prefix = '/';
 
 			const args = {};
