@@ -327,7 +327,7 @@ export default {
 				}
 
 				if (command.ratelimit === ratelimit[userID][commandName].limit) {
-					return await message.reply({ content: `You are being rate limited. You can try again in ${Math.floor((ratelimit[userID][commandName].cooldown - date) / 1000)} seconds.`, ephemeral: true });
+					return await message.reply({ content: `You are being rate limited. You can try again in ${Math.floor((ratelimit[userID][commandName].cooldown - date) / 1000)}huh seconds.`, ephemeral: true });
 				}
 			}
 
