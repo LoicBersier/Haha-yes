@@ -5,6 +5,10 @@ export default {
 	name: 'ready',
 	once: true,
 	async execute(client) {
+		// Init global variables.
+		global.ratelimit = {};
+		global.boards = {};
+
 		const ytdlpVersion = await new Promise((resolve, reject) => {
 			exec('./bin/yt-dlp --version', (err, stdout, stderr) => {
 				if (err) {
