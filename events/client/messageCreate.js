@@ -5,7 +5,6 @@
 import { ApplicationCommandOptionType, EmbedBuilder, PermissionFlagsBits } from 'discord.js';
 import db from '../../models/index.js';
 import { rand } from '../../utils/rand.js';
-const ratelimit = {};
 
 const { ownerId, prefix } = process.env;
 const prefixs = prefix.split(',');
@@ -313,26 +312,32 @@ export default {
 		}
 
 		try {
+			const ratelimit = global.ratelimit;
+			if (!ratelimit[userID]) {
+				ratelimit[userID] = {};
+			}
+
 			const date = new Date();
-			if (ratelimit[userID]) {
-				if (ratelimit[userID].cooldown) {
-					if (commandName === ratelimit[userID].command && date > ratelimit[userID].cooldown) {
-						ratelimit[userID].limit = 0;
-						ratelimit[userID].cooldown = undefined;
+			if (ratelimit[userID][commandName]) {
+				if (ratelimit[userID][commandName].cooldown) {
+					if (date > ratelimit[userID][commandName].cooldown) {
+						ratelimit[userID][commandName].limit = 0;
+						ratelimit[userID][commandName].cooldown = undefined;
 					}
 				}
 
-				if (commandName === ratelimit[userID].command && command.ratelimit === ratelimit[userID].limit) {
-					return await message.reply({ content: `You are being rate limited. You can try again in ${Math.floor((ratelimit[userID].cooldown - date) / 1000)} seconds.`, ephemeral: true });
-
+				if (command.ratelimit === ratelimit[userID][commandName].limit) {
+					return await message.reply({ content: `You are being rate limited. You can try again in ${Math.floor((ratelimit[userID][commandName].cooldown - date) / 1000)} seconds.`, ephemeral: true });
 				}
 			}
+
+
 			if (command.ratelimit) {
-				ratelimit[userID] = { command: commandName, limit: ratelimit[userID] ? ratelimit[userID].limit + 1 : 1 };
-				if (command.ratelimit === ratelimit[userID].limit) {
+				ratelimit[userID][commandName] = { limit: ratelimit[userID][commandName] ? ratelimit[userID][commandName].limit + 1 : 1 };
+				if (command.ratelimit === ratelimit[userID][commandName].limit) {
 					date.setSeconds(date.getSeconds() + command.cooldown);
 
-					ratelimit[userID] = { command: commandName, limit: ratelimit[userID].limit, cooldown: date };
+					ratelimit[userID][commandName] = { limit: ratelimit[userID][commandName].limit, cooldown: date };
 				}
 			}
 			message.user = message.author;
