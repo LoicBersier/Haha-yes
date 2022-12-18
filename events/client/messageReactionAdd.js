@@ -1,7 +1,6 @@
 import { EmbedBuilder } from 'discord.js';
 import fs from 'node:fs';
 import db from '../../models/index.js';
-global.boards = {};
 
 export default {
 	name: 'messageReactionAdd',
