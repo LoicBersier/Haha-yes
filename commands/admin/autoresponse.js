@@ -9,7 +9,6 @@ export default {
 	category: 'admin',
 	async execute(interaction, args, client) {
 		const autoresponseStat = await db.autoresponseStat.findOne({ where: { serverID: interaction.guild.id } });
-		console.log(autoresponseStat);
 		if (!autoresponseStat) {
 			const body = { serverID: interaction.guild.id, stat: 'enable' };
 			await db.autoresponseStat.create(body);

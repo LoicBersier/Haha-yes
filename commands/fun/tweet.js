@@ -29,7 +29,8 @@ export default {
 	async execute(interaction, args, client) {
 		const content = args.content;
 		const attachment = args.image;
-
+		console.log(args);
+		console.log(attachment);
 		if (!content && !attachment) {
 			return interaction.reply({ content: 'Uh oh! You are missing any content for me to tweet!', ephemeral: true });
 		}
