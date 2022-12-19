@@ -15,7 +15,7 @@ export default {
 				.setRequired(true)),
 	category: 'utility',
 	ratelimit: 5,
-	cooldown: 3600,
+	cooldown: 86400,
 	async execute(interaction, args) {
 		const url = args.url;
 		if (!await utils.stringIsAValidurl(url)) {

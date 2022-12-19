@@ -25,7 +25,7 @@ export default {
 				.setRequired(false)),
 	category: 'fun',
 	ratelimit: 3,
-	cooldown: 3600,
+	cooldown: 86400,
 	async execute(interaction, args, client) {
 		const content = args.content;
 		const attachment = args.image;
