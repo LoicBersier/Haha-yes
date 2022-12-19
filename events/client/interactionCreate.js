@@ -54,7 +54,6 @@ export default {
 		// Check the ratelimit
 		const doRateLimit = ratelimiter.check(interaction.user, commandName, command);
 		if (doRateLimit) {
-			console.log(`\x1b[33m${userTag} (${userID})\x1b[0m is rate limited on \x1b[33m${commandName}\x1b[0m for ${ratelimiter.timeLeft(userID, commandName)} seconds`);
 			return interaction.reply({ content: doRateLimit, ephemeral: true });
 
 		}
