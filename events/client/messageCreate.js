@@ -356,18 +356,24 @@ export default {
 			};
 
 			const args = {};
-			const argsLength = command.data.options.length;
 
+			let argsToDelete = 0;
 			command.data.options.forEach(obj => {
 				if (obj.type === ApplicationCommandOptionType.Attachment) {
 					args[obj.name] = message.attachments.first();
+					delete command.data.options[command.data.options.indexOf(obj)];
+					argsToDelete++;
 				}
 			});
+
+			const argsLength = command.data.options.length - argsToDelete;
 
 			for (let i = 0, j = 0; i < argsLength; i++, j++) {
 				if (!messageArgs[i]) continue;
 				const arg = command.data.options[j];
+
 				if (arg.type === ApplicationCommandOptionType.Attachment) continue;
+
 				let payloadName = arg.name;
 				let payload = messageArgs[i];
 
