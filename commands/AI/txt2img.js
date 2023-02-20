@@ -1,7 +1,5 @@
 import { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } from 'discord.js';
 import fetch from 'node-fetch';
-import fs from 'node:fs';
-import os from 'node:os';
 
 const { stableHordeApi, stableHordeID } = process.env;
 
@@ -44,37 +42,77 @@ async function generate(i, prompt, client) {
 		headers: { 'Content-Type': 'application/json', 'apikey': stableHordeApi },
 	};
 
-	let response = await fetch('https://stablehorde.net/api/v2/generate/sync', fetchParameters);
+	let response = await fetch('https://stablehorde.net/api/v2/generate/async', fetchParameters);
 
 	response = await response.json();
+	let wait_time = 5000;
+	let checkURL = `https://stablehorde.net/api/v2/generate/check/${response.id}`;
+	const checking = setInterval(async () => {
+		const checkResult = await checkGeneration(checkURL);
 
-	let creditResponse = await fetch(`https://stablehorde.net/api/v2/users/${stableHordeID}`);
-	creditResponse = await creditResponse.json();
-
-	const stableEmbed = new EmbedBuilder()
-		.setColor(i.member ? i.member.displayHexColor : 'Navy')
-		.setTitle(prompt)
-		.setURL('https://aqualxx.github.io/stable-ui/')
-		.setFooter({ text: `**Credit left: ${creditResponse.kudos}** Seed: ${response.generations[0].seed} worker ID: ${response.generations[0].worker_id} worker name: ${response.generations[0].worker_name}` });
-
-	const row = new ActionRowBuilder()
-		.addComponents(
-			new ButtonBuilder()
-				.setCustomId(`regenerate${i.user.id}`)
-				.setLabel('🔄 Regenerate')
-				.setStyle(ButtonStyle.Primary),
-		);
-
-	fs.writeFileSync(`${os.tmpdir()}/${i.id}.png`, response.generations[0].img, 'base64');
-
-	await i.editReply({ embeds: [stableEmbed], components: [row], files: [`${os.tmpdir()}/${i.id}.png`] });
-
-	client.once('interactionCreate', async (interactionMenu) => {
-		if (i.user !== interactionMenu.user) return;
-		if (!interactionMenu.isButton) return;
-		if (interactionMenu.customId === `regenerate${interactionMenu.user.id}`) {
-			await interactionMenu.deferReply();
-			await generate(interactionMenu, prompt, client);
+		if (checkResult === undefined) return;
+		if (!checkResult.done) {
+			if (checkResult.wait_time < 0) {
+				clearInterval(checking);
+				return i.editReply({ content: 'No servers are currently available to fulfill your request, please try again later.' });
+			}
+			if (checkResult.wait_time === 0) {
+				checkURL = `https://stablehorde.net/api/v2/generate/status/${response.id}`;
+			}
+			wait_time = checkResult.wait_time;
 		}
-	});
+		else if (checkResult.done && checkResult.image) {
+			clearInterval(checking);
+			let creditResponse = await fetch(`https://stablehorde.net/api/v2/users/${stableHordeID}`);
+			creditResponse = await creditResponse.json();
+
+			const imageData = await fetch(checkResult.image);
+			let imgBuffer = await imageData.arrayBuffer();
+			imgBuffer = Buffer.from(imgBuffer).toString('base64');
+			const img = `data:image/${imageData.headers.get('content-type')};base64,${imgBuffer}`;
+
+			const stableEmbed = new EmbedBuilder()
+				.setColor(i.member ? i.member.displayHexColor : 'Navy')
+				.setTitle(prompt)
+				.setURL('https://aqualxx.github.io/stable-ui/')
+				.setImage(`attachment:${img}`)
+				.setFooter({ text: `**Credit left: ${creditResponse.kudos}** Seed: ${checkResult.seed} worker ID: ${checkResult.worker_id} worker name: ${checkResult.worker_name}` });
+
+			const row = new ActionRowBuilder()
+				.addComponents(
+					new ButtonBuilder()
+						.setCustomId(`regenerate${i.user.id}`)
+						.setLabel('🔄 Regenerate')
+						.setStyle(ButtonStyle.Primary),
+				);
+
+			await i.editReply({ embeds: [stableEmbed], components: [row] });
+
+			client.once('interactionCreate', async (interactionMenu) => {
+				if (i.user !== interactionMenu.user) return;
+				if (!interactionMenu.isButton) return;
+				if (interactionMenu.customId === `regenerate${interactionMenu.user.id}`) {
+					await interactionMenu.deferReply();
+					await generate(interactionMenu, prompt, client);
+				}
+			});
+		}
+	}, wait_time);
+}
+
+async function checkGeneration(url) {
+	let check = await fetch(url);
+	check = await check.json();
+
+	if (!check.is_possible) {
+		return { done: false, wait_time: -1 };
+	}
+
+	if (check.done) {
+		if (!check.generations) {
+			return { done: false, wait_time: check.wait_time * 1000 };
+		}
+
+		return { done: true, image: check.generations[0].img, seed: check.generations[0].seed, worker_id: check.generations[0].worker_id, worker_name: check.generations[0].worker_name };
+	}
 }
