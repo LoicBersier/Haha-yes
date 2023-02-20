@@ -1,5 +1,8 @@
-import { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } from 'discord.js';
+import { SlashCommandBuilder, EmbedBuilder, AttachmentBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } from 'discord.js';
 import fetch from 'node-fetch';
+import os from 'node:os';
+import fs from 'node:fs';
+
 
 const { stableHordeApi, stableHordeID } = process.env;
 
@@ -66,16 +69,16 @@ async function generate(i, prompt, client) {
 			let creditResponse = await fetch(`https://stablehorde.net/api/v2/users/${stableHordeID}`);
 			creditResponse = await creditResponse.json();
 
-			const imageData = await fetch(checkResult.image);
-			let imgBuffer = await imageData.arrayBuffer();
-			imgBuffer = Buffer.from(imgBuffer).toString('base64');
-			const img = `data:image/${imageData.headers.get('content-type')};base64,${imgBuffer}`;
+			await fetch(checkResult.image)
+				.then(res => res.body.pipe(fs.createWriteStream(`${os.tmpdir()}/${i.id}.webp`)));
+
+			const generatedImg = new AttachmentBuilder(`${os.tmpdir()}/${i.id}.webp`);
 
 			const stableEmbed = new EmbedBuilder()
 				.setColor(i.member ? i.member.displayHexColor : 'Navy')
 				.setTitle(prompt)
 				.setURL('https://aqualxx.github.io/stable-ui/')
-				.setImage(`attachment:${img}`)
+				.setImage(`attachment://${i.id}.webp`)
 				.setFooter({ text: `**Credit left: ${creditResponse.kudos}** Seed: ${checkResult.seed} worker ID: ${checkResult.worker_id} worker name: ${checkResult.worker_name}` });
 
 			const row = new ActionRowBuilder()
@@ -86,7 +89,7 @@ async function generate(i, prompt, client) {
 						.setStyle(ButtonStyle.Primary),
 				);
 
-			await i.editReply({ embeds: [stableEmbed], components: [row] });
+			await i.editReply({ embeds: [stableEmbed], components: [row], files: [generatedImg] });
 
 			client.once('interactionCreate', async (interactionMenu) => {
 				if (i.user !== interactionMenu.user) return;
