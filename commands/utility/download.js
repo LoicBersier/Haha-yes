@@ -129,13 +129,13 @@ async function download(url, interaction, originalInteraction) {
 	utils.downloadVideo(url, interaction.id, format)
 		.then(async () => {
 			const file = fs.readdirSync(os.tmpdir()).filter(fn => fn.startsWith(interaction.id));
-			const output = `${os.tmpdir()}/${file}`;
+			let output = `${os.tmpdir()}/${file}`;
 
 			const fileStat = fs.statSync(output);
 			const fileSize = fileStat.size / 1000000.0;
 			const compressInteraction = originalInteraction ? originalInteraction : interaction;
 			if (compressInteraction.doCompress) {
-				const presets = [ 'Discord Tiny 5 Minutes 240p30', 'Discord Small 2 Minutes 360p30', 'Discord Nitro Small 10-20 Minutes 480p30', 'Discord Nitro Medium 5-10 Minutes 720p30', 'Discord Nitro Large 3-6 Minutes 1080p30' ];
+				const presets = [ 'Social 8 MB 3 Minutes 360p30', 'Social 50 MB 10 Minutes 480p30', 'Social 50 MB 5 Minutes 720p30', 'Social 100 MB 5 Minutes 1080p30' ];
 				const options = [];
 
 				presets.forEach(p => {
@@ -167,6 +167,17 @@ async function download(url, interaction, originalInteraction) {
 				return;
 			}
 
+			// If the video format is not one compatible with Discord, reencode it.
+			const bannedFormats = ['hevc'];
+			const codec = await utils.getVideoCodec(output);
+
+			if (bannedFormats.includes(codec)) {
+				console.log('Reencoding video');
+				const oldOutput = output;
+				output = `${os.tmpdir()}/264${file}`;
+				await utils.ffmpeg(`-i ${oldOutput} -vcodec libx264 -acodec aac ${output}`);
+			}
+
 			if (fileSize > 100) {
 				await interaction.deleteReply();
 				await interaction.followUp('Uh oh! The video you tried to download is too big!', { ephemeral: true });
@@ -194,6 +205,8 @@ async function download(url, interaction, originalInteraction) {
 
 async function compress(input, interaction, embed) {
 	const output = `compressed${input}.mp4`;
+	// Delete the file as it apparently don't overwrite?
+	fs.rmSync(output);
 	utils.compressVideo(`${os.tmpdir()}/${input}`, output, interaction.values[0])
 		.then(async () => {
 			const fileStat = fs.statSync(`${os.tmpdir()}/${output}`);
