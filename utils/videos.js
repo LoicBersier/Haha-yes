@@ -8,6 +8,7 @@ export default {
 	ffmpeg,
 	stringIsAValidurl,
 	compressVideo,
+	getVideoCodec,
 };
 async function downloadVideo(urlArg, output, format = 'bestvideo*+bestaudio/best') {
 	await new Promise((resolve, reject) => {
@@ -74,6 +75,19 @@ async function compressVideo(input, output, preset) {
 			}
 			console.log(NODE_ENV === 'development' ? stdout : null);
 			resolve();
+		});
+	});
+}
+async function getVideoCodec(input) {
+	return await new Promise((resolve, reject) => {
+		exec(`ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1 ${input}`, (err, stdout, stderr) => {
+			if (err) {
+				reject(stderr);
+			}
+			if (stderr) {
+				console.error(stderr);
+			}
+			resolve(stdout.trim());
 		});
 	});
 }
