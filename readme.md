@@ -11,8 +11,8 @@ These instructions will get you a copy of the project up and running on your loc
 You need to install the following
 
 
-* ffmpeg (Optional but very recommanded: for yt-dlp to merge video/audio formats)
-* yt-dlp ([a file can download it for you](prereq.cjs))
+* ffmpeg (Optional but very recommanded: for yt-dlp to merge video/audio formats and Handbrake to compress videos.)
+* yt-dlp ([a file can download it for you](scripts/updateytdlp.js))
 * HandBrakeCLI (For [download](commands/utility/download.js))
 * gifsicle (For [vid2gif](commands/utility/vid2gif.js))
 * gifki (For [vid2gif](commands/utility/vid2gif.js))
