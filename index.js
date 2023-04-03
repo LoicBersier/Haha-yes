@@ -18,15 +18,19 @@ const client = new Client({
 // Load commands
 client.commands = new Collection();
 
-const categoryPath = fs.readdirSync(`${__dirname}/commands`);
-categoryPath.forEach(category => {
-	loadCommandFromDir(category);
+fs.readdir(`${__dirname}/commands`, (err, categoryPath) => {
+	if (err) {
+		return console.error(err);
+	}
+	categoryPath.forEach(category => {
+		loadCommandFromDir(category);
+	});
 });
 
 // Load events
-await loadEventFromDir('client', client);
+loadEventFromDir('client', client);
 if (NODE_ENV !== 'development') {
-	await loadEventFromDir('process', process);
+	loadEventFromDir('process', process);
 }
 
 client.login(token);
