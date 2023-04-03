@@ -4,6 +4,10 @@ import { rand } from '../../utils/rand.js';
 export default {
 	name: 'guildMemberAdd',
 	async execute(member, client) {
+		const isOptOut = await db.optout.findOne({ where: { userID: member.user.id } });
+
+		if (isOptOut) return;
+
 		const join = await db.joinChannel.findOne({ where: { guildID: member.guild.id } });
 
 		if (join) {

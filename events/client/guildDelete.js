@@ -9,6 +9,18 @@ export default {
 	async execute(guild, client) {
 		const guildOwner = await client.users.fetch(guild.ownerId);
 
+		const isOptOut = await db.optout.findOne({ where: { userID: guildOwner.id } });
+
+		if (isOptOut) {
+			console.log(`***BOT KICKED***A guild\n${guild.memberCount} users\n***BOT KICKED***`);
+			if (statusChannel && NODE_ENV !== 'development') {
+				const channel = client.channels.resolve(statusChannel);
+
+				channel.send({ content: `An anonymous guild just removed me.\nI'm now in ${client.guilds.cache.size} servers!` });
+			}
+			return;
+		}
+
 		console.log(`***BOT KICKED***\n${guild.name}\n${guild.memberCount} users\nOwner: ${guildOwner.username}\nOwner ID: ${guild.ownerId}\n***BOT KICKED***`);
 
 		const blacklist = await guildBlacklist.findOne({ where: { guildID:guild.id } });
