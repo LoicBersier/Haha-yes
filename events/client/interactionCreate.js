@@ -27,7 +27,15 @@ export default {
 
 		if (!command) return;
 
-		console.log(`\x1b[33m${userTag} (${userID})\x1b[0m launched command \x1b[33m${commandName}\x1b[0m with slash`);
+		const isOptOut = await db.optout.findOne({ where: { userID: interaction.user.id } });
+
+		if (isOptOut) {
+			console.log(`A user launched command \x1b[33m${commandName}\x1b[0m with slash`);
+		}
+		else {
+			console.log(`\x1b[33m${userTag} (${userID})\x1b[0m launched command \x1b[33m${commandName}\x1b[0m with slash`);
+		}
+
 
 		// Owner only check
 		if (command.ownerOnly && interaction.user.id !== ownerId) {
@@ -73,6 +81,10 @@ export default {
 				}
 				args[arg.name] = payload;
 			});
+
+			if (!isOptOut) {
+				console.log(`\x1b[33m${commandName}\x1b[0m with args ${JSON.stringify(args)}`);
+			}
 
 			await command.execute(interaction, args, client);
 		}

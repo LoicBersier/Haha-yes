@@ -290,7 +290,14 @@ export default {
 		const userTag = message.author.tag;
 		const userID = message.author.id;
 
-		console.log(`\x1b[33m${userTag} (${userID})\x1b[0m launched command \x1b[33m${commandName}\x1b[0m with prefix`);
+		const isOptOut = await db.optout.findOne({ where: { userID: message.author.id } });
+
+		if (isOptOut) {
+			console.log(`A user launched command \x1b[33m${commandName}\x1b[0m with prefix`);
+		}
+		else {
+			console.log(`\x1b[33m${userTag} (${userID})\x1b[0m launched command \x1b[33m${commandName}\x1b[0m with prefix`);
+		}
 
 		// Owner only check
 		if (command.ownerOnly && message.author.id !== ownerId) {
@@ -394,6 +401,11 @@ export default {
 
 				args[payloadName] = payload;
 			}
+
+			if (!isOptOut) {
+				console.log(`\x1b[33m${commandName}\x1b[0m with args ${JSON.stringify(args)}`);
+			}
+
 			await command.execute(message, args, client);
 		}
 		catch (error) {
