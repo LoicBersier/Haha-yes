@@ -4,7 +4,7 @@ import db from '../../models/index.js';
 export default {
 	data: new SlashCommandBuilder()
 		.setName('optout')
-		.setDescription('Opt out of the non commands features.'),
+		.setDescription('Opt out of the non commands features and arguments logging (for debugging purposes)'),
 	category: 'utility',
 	async execute(interaction, args, client) {
 		const isOptOut = await db.optout.findOne({ where: { userID: interaction.user.id } });
