@@ -35,7 +35,7 @@ export default {
 		if (!res.ok) return interaction.editReply('An error has occured while trying to download your image.');
 		await streamPipeline(res.body, fs.createWriteStream(`${os.tmpdir()}/${args.image.name}.webp`));
 
-		const b64Image = fs.readFileSync(`${os.tmpdir()}/${args.image.name}`, { encoding: 'base64' });
+		const b64Image = fs.readFileSync(`${os.tmpdir()}/${args.image.name}.webp`, { encoding: 'base64' });
 		generate(interaction, args.prompt, client, b64Image);
 	},
 };
