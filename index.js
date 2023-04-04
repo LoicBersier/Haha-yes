@@ -41,11 +41,13 @@ async function loadCommandFromDir(dir) {
 
 	for (const file of commandFiles) {
 		const filePath = path.join(commandsPath, file);
-		let command = await import(filePath);
-		command = command.default;
-
-		client.commands.set(command.data.name, command);
-		console.log(`Successfully loaded command \x1b[32m${command.category}/${command.data.name}\x1b[0m`);
+		import(filePath)
+			.then(importedCommand => {
+				const command = importedCommand.default;
+				client.commands.set(command.data.name, command);
+				console.log(`Successfully loaded command \x1b[32m${command.category}/${command.data.name}\x1b[0m`);
+			})
+			.catch(error => console.error(`Failed to load command for path: ${filePath}`, error));
 	}
 }
 
@@ -55,13 +57,16 @@ async function loadEventFromDir(dir, listener) {
 
 	for (const file of eventFiles) {
 		const filePath = path.join(eventsPath, file);
-		let event = await import(filePath);
-		event = event.default;
-		if (event.once) {
-			listener.once(event.name, (...args) => event.execute(...args, client));
-		}
-		else {
-			listener.on(event.name, (...args) => event.execute(...args, client));
-		}
+		import(filePath)
+			.then(importedEvent => {
+				const event = importedEvent.default;
+				if (event.once) {
+					listener.once(event.name, (...args) => event.execute(...args, client));
+				}
+				else {
+					listener.on(event.name, (...args) => event.execute(...args, client));
+				}
+			})
+			.catch(error => console.error(`Failed to load event for path: ${filePath}`, error));
 	}
 }
