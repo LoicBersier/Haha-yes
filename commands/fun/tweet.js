@@ -4,6 +4,8 @@ import Twit from 'twit';
 import fetch from 'node-fetch';
 import os from 'node:os';
 import fs from 'node:fs';
+import util from 'node:util';
+import stream from 'node:stream';
 
 import db from '../../models/index.js';
 import wordToCensor from '../../json/censor.json' assert {type: 'json'};
@@ -29,8 +31,7 @@ export default {
 	async execute(interaction, args, client) {
 		const content = args.content;
 		const attachment = args.image;
-		console.log(args);
-		console.log(attachment);
+
 		if (!content && !attachment) {
 			return interaction.reply({ content: 'Uh oh! You are missing any content for me to tweet!', ephemeral: true });
 		}
@@ -91,34 +92,32 @@ export default {
 			// Make sure there is an attachment and if its an image
 			if (attachment) {
 				if (attachment.name.toLowerCase().endsWith('.jpg') || attachment.name.toLowerCase().endsWith('.png') || attachment.name.toLowerCase().endsWith('.gif')) {
-					fetch(attachment.url)
-						.then(res => {
-							const dest = fs.createWriteStream(`${os.tmpdir()}/${attachment.name}`);
-							res.body.pipe(dest);
-							dest.on('finish', () => {
-								const file = fs.statSync(`${os.tmpdir()}/${attachment.name}`);
-								const fileSize = file.size / 1000000.0;
+					const streamPipeline = util.promisify(stream.pipeline);
+					const res = await fetch(attachment.url);
+					if (!res.ok) return interaction.editReply('An error has occured while trying to download your image.');
+					await streamPipeline(res.body, fs.createWriteStream(`${os.tmpdir()}/${attachment.name}`));
 
-								if ((attachment.name.toLowerCase().endsWith('.jpg') || attachment.name.toLowerCase().endsWith('.png')) && fileSize > 5) {
-									return interaction.editReply({ content: 'Images can\'t be larger than 5 MB!' });
-								}
-								else if (attachment.name.toLowerCase().endsWith('.gif') && fileSize > 15) {
-									return interaction.editReply({ content: 'Gifs can\'t be larger than 15 MB!' });
-								}
+					const file = fs.statSync(`${os.tmpdir()}/${attachment.name}`);
+					const fileSize = file.size / 1000000.0;
 
-								const b64Image = fs.readFileSync(`${os.tmpdir()}/${attachment.name}`, { encoding: 'base64' });
-								T.post('media/upload', { media_data: b64Image }, function(err, data) {
-									if (err) {
-										console.log('OH NO AN ERROR!!!!!!!');
-										console.error(err);
-										return interaction.editReply({ content: 'OH NO!!! AN ERROR HAS occurred!!! please hold on while i find what\'s causing this issue! ' });
-									}
-									else {
-										Tweet(data);
-									}
-								});
-							});
-						});
+					if ((attachment.name.toLowerCase().endsWith('.jpg') || attachment.name.toLowerCase().endsWith('.png')) && fileSize > 5) {
+						return interaction.editReply({ content: 'Images can\'t be larger than 5 MB!' });
+					}
+					else if (attachment.name.toLowerCase().endsWith('.gif') && fileSize > 15) {
+						return interaction.editReply({ content: 'Gifs can\'t be larger than 15 MB!' });
+					}
+
+					const b64Image = fs.readFileSync(`${os.tmpdir()}/${attachment.name}`, { encoding: 'base64' });
+					T.post('media/upload', { media_data: b64Image }, function(err, data) {
+						if (err) {
+							console.log('OH NO AN ERROR!!!!!!!');
+							console.error(err);
+							return interaction.editReply({ content: 'OH NO!!! AN ERROR HAS occurred!!! please hold on while i find what\'s causing this issue! ' });
+						}
+						else {
+							Tweet(data);
+						}
+					});
 				}
 				else {
 					await interaction.editReply({ content: 'File type not supported, you can only send jpg/png/gif' });
