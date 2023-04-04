@@ -96,13 +96,13 @@ export default {
 
 			await interaction.editReply({ content: 'This tag already exist, do you want to update it, remove it or do nothing?', components: [row], ephemeral: true });
 
-			client.on('interactionCreate', async (interactionMenu) => {
+			client.once('interactionCreate', async (interactionMenu) => {
 				if (interaction.user !== interactionMenu.user) return;
 				if (!interactionMenu.isButton) return;
-				interactionMenu.update({ components: [] });
+				await interactionMenu.update({ components: [] });
 				if (interactionMenu.customId === `edit${interaction.user.id}`) {
 					const body = { trigger: args.trigger, response: args.response, ownerID: interaction.user.id, serverID: interaction.guild.id };
-					await db.joinChannel.update(body, { where: { guildID: interaction.guild.id } });
+					await db.Tag.update(body, { where: { serverID: interaction.guild.id } });
 					return interaction.editReply({ content: `The tag ${args.trigger} has been set to ${args.response}`, ephemeral: true });
 				}
 				else if (interactionMenu.customId === `remove${interaction.user.id}`) {
@@ -116,17 +116,6 @@ export default {
 		}
 		else {
 			return interaction.editReply(`You are not the owner of this tag, if you think it is problematic ask an admin to remove it by doing ${this.client.commandHandler.prefix[0]}tag ${args.trigger} --remove`);
-		}
-
-		const join = await db.joinChannel.findOne({ where: { guildID: interaction.guild.id } });
-
-		if (!join && !args.message) {
-			return interaction.editReply({ content: 'You need a message for me to say anything!', ephemeral: true });
-		}
-		else if (!join) {
-			const body = { guildID: interaction.guild.id, channelID: interaction.channel.id, message: args.message };
-			await db.joinChannel.create(body);
-			return interaction.editReply({ content: `The join message have been set with ${args.message}`, ephemeral: true });
 		}
 	},
 };
