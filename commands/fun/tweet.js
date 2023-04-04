@@ -168,7 +168,7 @@ export default {
 				}
 
 				const tweetid = response.id_str;
-				const FunnyWords = ['oppaGangnamStyle', '69', '420', 'cum', 'funnyMan', 'GUCCISmartToilet', 'TwitterForClowns', 'fart', 'mcDotnamejeffDotxyz', 'ok', 'hi', 'howAreYou', 'WhatsNinePlusTen', '21'];
+				const FunnyWords = ['oppaGangnamStyle', '69', '420', 'cum', 'funnyMan', 'GUCCISmartToilet', 'TwitterForClowns', 'fart', 'ok', 'hi', 'howAreYou', 'WhatsNinePlusTen', '21'];
 				const TweetLink = `https://twitter.com/${FunnyWords[Math.floor((Math.random() * FunnyWords.length))]}/status/${tweetid}`;
 
 				// Im too lazy for now to make an entry in config.json
