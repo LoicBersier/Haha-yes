@@ -1,8 +1,16 @@
+/* TODO
+ *
+ * To be merged with commands/AI/img2img.js
+ *
+*/
 import { SlashCommandBuilder, EmbedBuilder, AttachmentBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } from 'discord.js';
 import fetch from 'node-fetch';
 import os from 'node:os';
 import fs from 'node:fs';
+import stream from 'node:stream';
+import util from 'node:util';
 
+import db from '../../models/index.js';
 
 const { stableHordeApi, stableHordeID } = process.env;
 
@@ -37,7 +45,14 @@ async function generate(i, prompt, client) {
 		steps: 50,
 		nsfw: i.channel.nsfw ? true : false,
 		censor_nsfw: i.channel.nsfw ? true : false,
+		shared: true,
 	};
+
+	const isOptOut = await db.optout.findOne({ where: { userID: i.user.id } });
+
+	if (isOptOut) {
+		body.shared = false;
+	}
 
 	const fetchParameters = {
 		method: 'post',
@@ -69,8 +84,10 @@ async function generate(i, prompt, client) {
 			let creditResponse = await fetch(`https://stablehorde.net/api/v2/users/${stableHordeID}`);
 			creditResponse = await creditResponse.json();
 
-			await fetch(checkResult.image)
-				.then(res => res.body.pipe(fs.createWriteStream(`${os.tmpdir()}/${i.id}.webp`)));
+			const streamPipeline = util.promisify(stream.pipeline);
+			const res = await fetch(checkResult.image);
+			if (!res.ok) return i.editReply('An error has occured while trying to download your image.');
+			await streamPipeline(res.body, fs.createWriteStream(`${os.tmpdir()}/${i.id}.webp`));
 
 			const generatedImg = new AttachmentBuilder(`${os.tmpdir()}/${i.id}.webp`);
 
