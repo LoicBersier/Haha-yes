@@ -46,11 +46,11 @@ export function rand(text, interaction) {
 		},
 		{
 			name: /\[kick\]/,
-			value: '',
+			value: '[This used to kick you but no more!]',
 		},
 		{
 			name: /\[ban\]/,
-			value: '',
+			value: '[This used to ban you but no more!]',
 		},
 		{
 			name: /\[delete\]/,

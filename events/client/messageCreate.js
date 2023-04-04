@@ -66,13 +66,16 @@ export default {
 			if (tag) {
 				db.Tag.findOne({ where: { trigger: message.content.toLowerCase(), serverID: message.guild.id } });
 				let text = tag.get('response');
+				/*
 				if (text.includes('[ban]')) {
 					message.member.ban('Tag ban :^)');
 				}
 				else if (text.includes('[kick]')) {
 					message.member.kick('Tag kick :^)');
 				}
-				else if (text.includes('[delete]')) {
+				else
+				*/
+				if (text.includes('[delete]')) {
 					message.delete();
 				}
 
