@@ -20,13 +20,13 @@ export default {
 		const row = new ActionRowBuilder()
 			.addComponents(
 				new ButtonBuilder()
-					.setCustomId(`yes${interaction.user.id}`)
+					.setCustomId(`yes${interaction.user.id}${interaction.id}`)
 					.setLabel('Yes')
 					.setStyle(ButtonStyle.Primary),
 			)
 			.addComponents(
 				new ButtonBuilder()
-					.setCustomId(`no${interaction.user.id}`)
+					.setCustomId(`no${interaction.user.id}${interaction.id}`)
 					.setLabel('No')
 					.setStyle(ButtonStyle.Danger),
 			);
@@ -40,18 +40,23 @@ export default {
 			return interaction.editReply({ content: 'Quotation has been enabled.', ephemeral: true });
 		}
 
-		client.on('interactionCreate', async (interactionMenu) => {
-			if (interaction.user !== interactionMenu.user) return;
-			if (!interactionMenu.isButton) return;
-			interactionMenu.update({ components: [] });
-			if (interactionMenu.customId === `yes${interaction.user.id}`) {
-				const body = { serverID: interaction.guild.id, stat: 'disable' };
-				await db.quotationStat.update(body, { where: { serverID: interaction.guild.id } });
-				return interaction.editReply({ content: 'Quotation has been disabled.', ephemeral: true });
-			}
-			else {
-				return interaction.editReply({ content: 'Nothing has been changed.', ephemeral: true });
-			}
-		});
+		return listenButton(client, interaction, interaction.user);
 	},
 };
+
+async function listenButton(client, interaction, user = interaction.user, originalId = interaction.id) {
+	client.once('interactionCreate', async (interactionMenu) => {
+		if (user !== interactionMenu.user) return listenButton(client, interaction, user, originalId);
+		if (!interactionMenu.isButton()) return;
+
+		interactionMenu.update({ components: [] });
+
+		if (interactionMenu.customId === `yes${interaction.user.id}${originalId}`) {
+			await db.quotationStat.destroy({ where: { serverID: interaction.guild.id } });
+			return interaction.editReply({ content: 'Quotation has been disabled.', ephemeral: true });
+		}
+		else {
+			return interaction.editReply({ content: 'Nothing has been changed.', ephemeral: true });
+		}
+	});
+}

@@ -77,45 +77,51 @@ export default {
 			const row = new ActionRowBuilder()
 				.addComponents(
 					new ButtonBuilder()
-						.setCustomId(`edit${interaction.user.id}`)
+						.setCustomId(`edit${interaction.user.id}${interaction.id}`)
 						.setLabel('Edit')
 						.setStyle(ButtonStyle.Primary),
 				)
 				.addComponents(
 					new ButtonBuilder()
-						.setCustomId(`remove${interaction.user.id}`)
+						.setCustomId(`remove${interaction.user.id}${interaction.id}`)
 						.setLabel('Remove')
 						.setStyle(ButtonStyle.Danger),
 				)
 				.addComponents(
 					new ButtonBuilder()
-						.setCustomId(`nothing${interaction.user.id}`)
+						.setCustomId(`nothing${interaction.user.id}${interaction.id}`)
 						.setLabel('Do nothing')
 						.setStyle(ButtonStyle.Secondary),
 				);
 
 			await interaction.editReply({ content: 'This tag already exist, do you want to update it, remove it or do nothing?', components: [row], ephemeral: true });
 
-			client.once('interactionCreate', async (interactionMenu) => {
-				if (interaction.user !== interactionMenu.user) return;
-				if (!interactionMenu.isButton) return;
-				await interactionMenu.update({ components: [] });
-				if (interactionMenu.customId === `edit${interaction.user.id}`) {
-					const body = { trigger: args.trigger, response: args.response, ownerID: interaction.user.id, serverID: interaction.guild.id };
-					await db.Tag.update(body, { where: { serverID: interaction.guild.id } });
-					return interaction.editReply({ content: `The tag ${args.trigger} has been set to ${args.response}`, ephemeral: true });
-				}
-				else if (interactionMenu.customId === `remove${interaction.user.id}`) {
-					db.Tag.destroy({ where: { trigger: args.trigger, serverID: interaction.guild.id } });
-					return interaction.editReply({ content: `The tag ${args.trigger} has been deleted`, ephemeral: true });
-				}
-				else {
-					return interaction.editReply({ content: 'Nothing has been changed.', ephemeral: true });
-				}
-			});
+			return listenButton(client, interaction, args, interaction.user);
 		}
 		else {
 			return interaction.editReply(`You are not the owner of this tag, if you think it is problematic ask an admin to remove it by doing ${this.client.commandHandler.prefix[0]}tag ${args.trigger} --remove`);
 		}
 	},
 };
+
+async function listenButton(client, interaction, args, user = interaction.user, originalId = interaction.id) {
+	client.once('interactionCreate', async (interactionMenu) => {
+		if (user !== interactionMenu.user) return listenButton(client, interaction, args, user, originalId);
+		if (!interactionMenu.isButton()) return;
+
+		await interactionMenu.update({ components: [] });
+
+		if (interactionMenu.customId === `edit${interaction.user.id}${originalId}`) {
+			const body = { trigger: args.trigger, response: args.response, ownerID: interaction.user.id, serverID: interaction.guild.id };
+			db.Tag.update(body, { where: { serverID: interaction.guild.id } });
+			return interaction.editReply({ content: `The tag ${args.trigger} has been set to ${args.response}`, ephemeral: true });
+		}
+		else if (interactionMenu.customId === `remove${interaction.user.id}${originalId}`) {
+			db.Tag.destroy({ where: { trigger: args.trigger, serverID: interaction.guild.id } });
+			return interaction.editReply({ content: `The tag ${args.trigger} has been deleted`, ephemeral: true });
+		}
+		else {
+			return interaction.editReply({ content: 'Nothing has been changed.', ephemeral: true });
+		}
+	});
+}

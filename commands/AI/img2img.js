@@ -116,21 +116,14 @@ async function generate(i, prompt, client, b64Img) {
 			const row = new ActionRowBuilder()
 				.addComponents(
 					new ButtonBuilder()
-						.setCustomId(`regenerate${i.user.id}`)
+						.setCustomId(`regenerate${i.user.id}${i.id}`)
 						.setLabel('🔄 Regenerate')
 						.setStyle(ButtonStyle.Primary),
 				);
 
 			await i.editReply({ embeds: [stableEmbed], components: [row], files: [generatedImg] });
 
-			client.once('interactionCreate', async (interactionMenu) => {
-				if (i.user !== interactionMenu.user) return;
-				if (!interactionMenu.isButton) return;
-				if (interactionMenu.customId === `regenerate${interactionMenu.user.id}`) {
-					await interactionMenu.deferReply();
-					await generate(interactionMenu, prompt, client);
-				}
-			});
+			listenButton(client, i, prompt);
 		}
 	}, wait_time);
 }
@@ -150,4 +143,17 @@ async function checkGeneration(url) {
 
 		return { done: true, image: check.generations[0].img, seed: check.generations[0].seed, worker_id: check.generations[0].worker_id, worker_name: check.generations[0].worker_name };
 	}
+}
+
+async function listenButton(client, interaction, prompt) {
+	client.once('interactionCreate', async (interactionMenu) => {
+		if (!interactionMenu.isButton()) return;
+
+		await interactionMenu.update({ components: [] });
+
+		if (interactionMenu.customId === `regenerate${interactionMenu.user.id}${interaction.id}`) {
+			await interactionMenu.deferReply();
+			await generate(interactionMenu, prompt, client);
+		}
+	});
 }

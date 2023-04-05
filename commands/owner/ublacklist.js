@@ -43,31 +43,37 @@ export default {
 			const row = new ActionRowBuilder()
 				.addComponents(
 					new ButtonBuilder()
-						.setCustomId(`yes${interaction.user.id}`)
+						.setCustomId(`yes${interaction.user.id}${interaction.id}`)
 						.setLabel('Yes')
 						.setStyle(ButtonStyle.Primary),
 				)
 				.addComponents(
 					new ButtonBuilder()
-						.setCustomId(`no${interaction.user.id}`)
+						.setCustomId(`no${interaction.user.id}${interaction.id}`)
 						.setLabel('No')
 						.setStyle(ButtonStyle.Danger),
 				);
 
 			await interaction.editReply({ content: 'This user is already blacklisted, do you want to unblacklist him?', ephemeral: true, components: [row] });
 
-			interaction.client.once('interactionCreate', async (interactionMenu) => {
-				if (interaction.user !== interactionMenu.user) return;
-				if (!interactionMenu.isButton) return;
-				interactionMenu.update({ components: [] });
-				if (interactionMenu.customId === `yes${interaction.user.id}`) {
-					Blacklists.destroy({ where: { type:command, uid:userid } });
-					return interaction.editReply(`The following ID have been unblacklisted from ${command}: ${userid}`);
-				}
-				else {
-					return interaction.editReply('No one has been unblacklisted.');
-				}
-			});
+			return listenButton(client, interaction, command, userid, interaction.user);
 		}
 	},
 };
+
+async function listenButton(client, interaction, command, userid, user = interaction.user, originalId = interaction.id) {
+	client.once('interactionCreate', async (interactionMenu) => {
+		if (user !== interactionMenu.user) return listenButton(client, interaction, command, userid, user, originalId);
+		if (!interactionMenu.isButton()) return;
+
+		await interactionMenu.update({ components: [] });
+
+		if (interactionMenu.customId === `yes${interaction.user.id}${originalId}`) {
+			Blacklists.destroy({ where: { type:command, uid:userid } });
+			return interaction.editReply(`The following ID have been unblacklisted from ${command}: ${userid}`);
+		}
+		else {
+			return interaction.editReply('No one has been unblacklisted.');
+		}
+	});
+}
