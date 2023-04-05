@@ -1,3 +1,4 @@
+import { ActivityType } from 'discord.js';
 import game from '../../json/playing.json' assert {type: 'json'};
 import watch from '../../json/watching.json' assert {type: 'json'};
 
@@ -6,33 +7,35 @@ export default {
 	once: true,
 	async execute(client) {
 		// Bot status
-		setStatus();
+		await setStatus();
 		// Change status every 30 minutes
 		setInterval(async () => {
-			setStatus();
+			await setStatus();
 		}, 1800000);
 
 		async function setStatus() {
 			const random = Math.floor((Math.random() * 2));
+			let types, status;
 			// Random "Watching" status taken from json
 			if (random === 0) {
 				console.log('Status type: \x1b[32mWatching\x1b[0m');
 
-				let status = watch[Math.floor((Math.random() * watch.length))];
+				status = watch[Math.floor((Math.random() * watch.length))];
 				status = status + ' | Now with slash commands!';
 				console.log(`Setting status to: ${status}`);
-				client.user.setActivity(status, { type: 'WATCHING' });
+				types = [ ActivityType.Watching ];
 			}
 			// Random "Playing" status taken from json
 			else if (random === 1) {
 				console.log('Status type: \x1b[32mPlaying\x1b[0m');
 
-				let status = game[Math.floor((Math.random() * game.length))];
+				status = game[Math.floor((Math.random() * game.length))];
 				status = status + ' | Now with slash commands!';
 
 				console.log(`Setting status to: ${status}`);
-				client.user.setActivity(status, { type: 'PLAYING' });
+				types = [ ActivityType.Playing, ActivityType.Competing ];
 			}
+			await client.user.setActivity(status, { type: types[Math.floor((Math.random() * types.length))] });
 		}
 	},
 };
