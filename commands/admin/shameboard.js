@@ -6,7 +6,7 @@ export default {
 		.setName('shameboard')
 		.setDescription('Set shameboard to the current channel.')
 		.addStringOption(option =>
-			option.setName('emote') 
+			option.setName('emote')
 				.setDescription('The emote that should be used to enter the shameboard.'))
 		.addStringOption(option =>
 			option.setName('count')

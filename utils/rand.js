@@ -65,7 +65,9 @@ export function rand(text, interaction) {
 	const matches = text.matchAll(/\[.*?\]\s?/g);
 
 	for (const match of matches) {
-		if (search(match[0].trim(), variables)) { text = text.replace(match[0].trim(), search(match[0].trim(), variables).value); }
+		if (search(match[0].trim(), variables)) {
+			text = text.replace(match[0].trim(), search(match[0].trim(), variables).value);
+		}
 	}
 
 	return text;
