@@ -12,26 +12,38 @@ export default {
 		if (!isOptOut) {
 			const body = { userID: interaction.user.id };
 			await db.optout.create(body);
-			return await interaction.reply({ content: 'You have successfully been opt out.' });
+			await interaction.reply({ content: 'You have successfully been opt out.', ephemeral: true });
+		}
+		else {
+			const row = new ActionRowBuilder()
+				.addComponents(
+					new ButtonBuilder()
+						.setCustomId(`yes${interaction.user.id}${interaction.id}`)
+						.setLabel('Yes')
+						.setStyle(ButtonStyle.Primary),
+				)
+				.addComponents(
+					new ButtonBuilder()
+						.setCustomId(`no${interaction.user.id}${interaction.id}`)
+						.setLabel('No')
+						.setStyle(ButtonStyle.Danger),
+				);
+
+			await interaction.reply({ content: 'You are already opt out, do you wish to opt in?', components: [row], ephemeral: true });
+
+			listenButton(client, interaction, interaction.user);
 		}
 
-		const row = new ActionRowBuilder()
-			.addComponents(
-				new ButtonBuilder()
-					.setCustomId(`yes${interaction.user.id}${interaction.id}`)
-					.setLabel('Yes')
-					.setStyle(ButtonStyle.Primary),
-			)
-			.addComponents(
-				new ButtonBuilder()
-					.setCustomId(`no${interaction.user.id}${interaction.id}`)
-					.setLabel('No')
-					.setStyle(ButtonStyle.Danger),
-			);
-
-		await interaction.reply({ content: 'You are already opt out, do you wish to opt in?', components: [row] });
-
-		return listenButton(client, interaction, interaction.user);
+		return interaction.followUp({
+			content:
+			'As a reminder here what opting out does:\n'
+			+	'- Your user ID will no longer be used for debug logging.\n'
+			+ 	'- servers will no longer be shown in added/kicked stats.\n'
+			+	'- Your messages won\'t be quoted.\n'
+			+	'- Won\'t show the arguments from commands.',
+			ephemeral: true,
+		},
+		);
 	},
 };
 
@@ -45,10 +57,10 @@ async function listenButton(client, interaction, user = interaction.user, origin
 
 		if (interactionMenu.customId === `yes${interaction.user.id}${originalId}`) {
 			db.optout.destroy({ where: { userID: interaction.user.id } });
-			return interaction.editReply('You have successfully been opt in');
+			return interaction.editReply({ content: 'You have successfully been opt in', ephemeral: true });
 		}
 		else {
-			return interaction.editReply('Nothing has been changed.');
+			return interaction.editReply({ content: 'Nothing has been changed.', ephemeral: true });
 		}
 	});
 }
