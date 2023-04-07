@@ -75,7 +75,7 @@ export default {
 				return interaction.reply({ content: 'Here is your YTP! Remember, it might contain nsfw, so be careful!', files: [`${os.tmpdir()}/${interaction.id}_YTP.mp4`] })
 					.catch(err => {
 						console.error(err);
-						return interaction.reply('Whoops, look like the vid might be too big for discord, my bad, please try again');
+						return interaction.reply({ files: [`./asset/ytp/error${Math.floor(Math.random() * 2) + 1}.mp4`] });
 					});
 			})
 			.catch(err => {
