@@ -405,8 +405,8 @@ export default {
 				args[payloadName] = payload;
 			}
 
-			if (!isOptOut) {
-				console.log(`\x1b[33m${commandName}\x1b[0m with args ${JSON.stringify(args)}`);
+			if (!isOptOut && argsLength > 0) {
+				console.log(`\x1b[33m⤷\x1b[0m with args ${JSON.stringify(args)}`);
 			}
 
 			await command.execute(message, args, client);
