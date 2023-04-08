@@ -41,7 +41,7 @@ async function upload(file) {
 
 async function ffmpeg(command) {
 	return await new Promise((resolve, reject) => {
-		exec(`ffmpeg ${command}`, (err, stdout, stderr) => {
+		exec(`ffmpeg -hide_banner ${command}`, (err, stdout, stderr) => {
 			if (err) {
 				reject(stderr);
 			}
