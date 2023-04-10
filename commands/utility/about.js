@@ -15,7 +15,7 @@ export default {
 		const Donator = await donator.findAll({ order: ['id'] });
 		const client = interaction.client;
 		const tina = await client.users.fetch('336492042299637771');
-		const owner = await client.users.fetch('267065637183029248');
+		const creator = await client.users.fetch('267065637183029248');
 		const maintainer = await client.users.fetch(ownerId);
 
 		let description = 'I\'m a fun multipurpose bot made using [discord.js](https://github.com/discordjs/discord.js)'
@@ -55,7 +55,7 @@ export default {
 					{ name: 'Status page', value: uptimePage.toString(), inline: true },
 
 				)
-				.setFooter({ text: `Original bot made by ${owner.tag} (267065637183029248)` });
+				.setFooter({ text: `Original bot made by ${creator.tag} (267065637183029248)` });
 
 			interaction.reply({ embeds: [aboutEmbed] });
 		});
