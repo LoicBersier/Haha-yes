@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, SelectMenuBuilder } from 'discord.js';
+import { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder } from 'discord.js';
 import { exec } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -89,8 +89,8 @@ export default {
 
 			const row = new ActionRowBuilder()
 				.addComponents(
-					new SelectMenuBuilder()
-						.setCustomId(`downloadQuality${interaction.user.id}`)
+					new StringSelectMenuBuilder()
+						.setCustomId(`downloadQuality${interaction.user.id}${interaction.id}`)
 						.setPlaceholder('Nothing selected')
 						.setMinValues(1)
 						.setMaxValues(2)
@@ -103,7 +103,7 @@ export default {
 			client.on('interactionCreate', async (interactionMenu) => {
 				if (interaction.user !== interactionMenu.user) return;
 				if (!interactionMenu.isSelectMenu()) return;
-				if (interactionMenu.customId === `downloadQuality${interaction.user.id}`) {
+				if (interactionMenu.customId === `downloadQuality${interaction.user.id}${interaction.id}`) {
 					await interactionMenu.deferReply({ ephemeral: false });
 					download(url, interactionMenu, interaction);
 				}
@@ -147,8 +147,8 @@ async function download(url, interaction, originalInteraction) {
 
 				const row = new ActionRowBuilder()
 					.addComponents(
-						new SelectMenuBuilder()
-							.setCustomId(`preset${interaction.user.id}`)
+						new StringSelectMenuBuilder()
+							.setCustomId(`preset${interaction.user.id}${interaction.id}`)
 							.setPlaceholder('Nothing selected')
 							.addOptions(options),
 					);
@@ -158,7 +158,7 @@ async function download(url, interaction, originalInteraction) {
 				client.on('interactionCreate', async (interactionMenu) => {
 					if (interaction.user !== interactionMenu.user) return;
 					if (!interactionMenu.isSelectMenu()) return;
-					if (interactionMenu.customId === `preset${interaction.user.id}`) {
+					if (interactionMenu.customId === `preset${interaction.user.id}${interaction.id}`) {
 						await interactionMenu.deferReply({ ephemeral: false });
 						compress(file, interactionMenu, Embed);
 						if (interaction.isMessage) cleanUp();
