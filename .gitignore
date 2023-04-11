@@ -4,5 +4,9 @@ config/config.json
 json/board/
 unloaded/
 database.sqlite3
-bin/yt-dlp
 tmp/*.js
+
+bin/yt-dlp
+bin/HandBrakeCLI
+bin/upload.sh
+bin/dectalk
