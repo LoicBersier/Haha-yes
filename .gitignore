@@ -1,7 +1,8 @@
 .env
 node_modules/
-bin/
 config/config.json
 json/board/
 unloaded/
 database.sqlite3
+bin/yt-dlp
+tmp/*.js
