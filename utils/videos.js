@@ -9,6 +9,7 @@ export default {
 	stringIsAValidurl,
 	compressVideo,
 	getVideoCodec,
+	getVideoSize,
 	getMaxFileSize,
 };
 async function downloadVideo(urlArg, output, format = 'bestvideo*+bestaudio/best') {
@@ -93,10 +94,23 @@ async function getVideoCodec(input) {
 	});
 }
 
-async function getMaxFileSize(guild) {
+async function getVideoSize(urlArg, format = 'bestvideo*+bestaudio/best') {
 	return await new Promise((resolve, reject) => {
+		exec(`yt-dlp ${urlArg} -f ${format} -O "%(filesize,filesize_approx)s"`, (err, stdout, stderr) => {
+			if (err) {
+				reject(stderr);
+			}
+			if (stderr) {
+				console.error(stderr);
+			}
+			resolve(stdout / 1000000.0);
+		});
+	});
+}
+
+async function getMaxFileSize(guild) {
+	return await new Promise((resolve) => {
 		const tier = guild.premiumTier;
-		console.log(tier);
 		switch (tier) {
 		case 0:
 		case 1:
@@ -109,7 +123,7 @@ async function getMaxFileSize(guild) {
 			resolve('100');
 			break;
 		default:
-			reject('An error has occured');
+			resolve('8');
 			break;
 		}
 	});
