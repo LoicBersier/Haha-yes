@@ -9,6 +9,7 @@ export default {
 	stringIsAValidurl,
 	compressVideo,
 	getVideoCodec,
+	getMaxFileSize,
 };
 async function downloadVideo(urlArg, output, format = 'bestvideo*+bestaudio/best') {
 	await new Promise((resolve, reject) => {
@@ -89,5 +90,27 @@ async function getVideoCodec(input) {
 			}
 			resolve(stdout.trim());
 		});
+	});
+}
+
+async function getMaxFileSize(guild) {
+	return await new Promise((resolve, reject) => {
+		const tier = guild.premiumTier;
+		console.log(tier);
+		switch (tier) {
+		case 0:
+		case 1:
+			resolve(8);
+			break;
+		case 2:
+			resolve('50');
+			break;
+		case 3:
+			resolve('100');
+			break;
+		default:
+			reject('An error has occured');
+			break;
+		}
 	});
 }
