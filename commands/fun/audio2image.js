@@ -41,7 +41,7 @@ export default {
 		const file = fs.statSync(`${os.tmpdir()}/${args.audio.name}.png`);
 		const fileSize = (file.size / 1000000.0).toFixed(2);
 
-		if (fileSize > utils.getMaxFileSize(interaction.guild)) return interaction.editReply('error');
+		if (fileSize > await utils.getMaxFileSize(interaction.guild)) return interaction.editReply('error');
 		interaction.editReply({ content: `Image file is ${fileSize} MB` });
 		return interaction.followUp({ files: [`${os.tmpdir()}/${args.audio.name}.png`] });
 	},

@@ -46,7 +46,7 @@ export default {
 					await interaction.deleteReply();
 					await interaction.followUp('❌ Uh oh! The video once converted is too big!', { ephemeral: true });
 				}
-				else if (fileSize > utils.getMaxFileSize(interaction.guild)) {
+				else if (fileSize > await utils.getMaxFileSize(interaction.guild)) {
 					const fileURL = await utils.upload(gifsicleOutput)
 						.catch(err => {
 							console.error(err);
