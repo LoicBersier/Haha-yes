@@ -182,7 +182,7 @@ async function download(url, interaction, originalInteraction) {
 				await interaction.deleteReply();
 				await interaction.followUp('Uh oh! The video you tried to download is too big!', { ephemeral: true });
 			}
-			else if (fileSize > 8) {
+			else if (fileSize > utils.getMaxFileSize(interaction.guild)) {
 				const fileurl = await utils.upload(output)
 					.catch(err => {
 						console.error(err);
@@ -212,7 +212,7 @@ async function compress(input, interaction, embed) {
 			const fileStat = fs.statSync(`${os.tmpdir()}/${output}`);
 			const fileSize = fileStat.size / 1000000.0;
 
-			if (fileSize > 8) {
+			if (fileSize > utils.getMaxFileSize(interaction.guild)) {
 				await interaction.editReply({ content: 'File was bigger than 8 mb. but due to the compression it is not being uploaded externally.', ephemeral: true });
 			}
 			else {
