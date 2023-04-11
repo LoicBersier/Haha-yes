@@ -33,5 +33,5 @@ labels:
 
 **Did someone already report that bug?**
 
-- [ ] Yes <!-- If you have to put yes you don't need to submit that feature request. -->
+- [ ] Yes <!-- If you have to put yes you don't need to submit that bug report. -->
 - [ ] No
