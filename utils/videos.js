@@ -96,7 +96,7 @@ async function getVideoCodec(input) {
 
 async function getVideoSize(urlArg, format = 'bestvideo*+bestaudio/best') {
 	return await new Promise((resolve, reject) => {
-		exec(`yt-dlp ${urlArg} -f ${format} -O "%(filesize,filesize_approx)s"`, (err, stdout, stderr) => {
+		exec(`./bin/yt-dlp ${urlArg} -f ${format} -O "%(filesize,filesize_approx)s"`, (err, stdout, stderr) => {
 			if (err) {
 				reject(stderr);
 			}
