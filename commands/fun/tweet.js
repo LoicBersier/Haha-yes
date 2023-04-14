@@ -60,7 +60,17 @@ export default {
 		}
 
 		if (tweet) {
+			wordToCensor.forEach(async word => {
+				if (tweet.toLowerCase().includes(word.toLowerCase())) {
+					const body = { type:'tweet', uid: interaction.user.id, reason: 'Automatic ban from banned word.' };
+					Blacklists.create(body);
+
+					await interaction.editReply({ content: 'Sike, you just posted cringe! Enjoy the blacklist :)' });
+					return;
+				}
+			});
 			// Detect banned word (Blacklist the user directly)
+			/* No worky (I don't remember what the fuck I wrote here)
 			if (wordToCensor.includes(tweet) || wordToCensor.includes(tweet.substring(0, tweet.length - 1)) || wordToCensor.includes(tweet.substring(1, tweet.length))) {
 				const body = { type:'tweet', uid: interaction.user.id, reason: 'Automatic ban from banned word.' };
 				Blacklists.create(body);
@@ -68,6 +78,7 @@ export default {
 				await interaction.editReply({ content: 'Sike, you just posted cringe! Enjoy the blacklist :)' });
 				return;
 			}
+			*/
 
 			// Very simple link detection
 			if (new RegExp('([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?(/.*)?').test(tweet) && !tweet.includes('twitter.com')) {
@@ -80,6 +91,7 @@ export default {
 				return;
 			}
 		}
+
 
 		const T = new Twit({
 			consumer_key: twiConsumer,
