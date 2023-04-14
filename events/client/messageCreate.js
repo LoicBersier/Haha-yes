@@ -307,6 +307,11 @@ export default {
 			return message.reply({ content: '❌ This command is reserved for the owner!', ephemeral: true });
 		}
 
+		// Guild only check
+		if (command.guildOnly && !message.guild) {
+			return message.reply({ content: '❌ This command only work in a server!', ephemeral: true });
+		}
+
 		// Check if the bot has the needed permissions
 		if (command.clientPermissions) {
 			const clientMember = await message.guild.members.fetch(client.user.id);

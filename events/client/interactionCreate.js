@@ -42,6 +42,11 @@ export default {
 			return interaction.reply({ content: '❌ This command is reserved for the owner!', ephemeral: true });
 		}
 
+		// Guild only check
+		if (command.guildOnly && !interaction.guild) {
+			return interaction.reply({ content: '❌ This command only work in a server!', ephemeral: true });
+		}
+
 		// Check if the bot has the needed permissions
 		if (command.default_permission) {
 			const clientMember = await interaction.guild.members.fetch(client.user.id);
