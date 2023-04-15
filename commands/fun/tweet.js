@@ -28,6 +28,7 @@ export default {
 	category: 'fun',
 	ratelimit: 3,
 	cooldown: 86400,
+	guildOnly: true,
 	async execute(interaction, args, client) {
 		const content = args.content;
 		const attachment = args.image;
@@ -39,13 +40,31 @@ export default {
 		await interaction.deferReply({ ephemeral: false });
 		let tweet = content;
 		const date = new Date();
+
+		// If guild is less than 1 month old don't accept the tweet
+		if (interaction.guild.createdAt > date.setMonth(date.getMonth() - 1)) {
+			await interaction.editReply({ content: 'The server need to be 1 month old to be able to use this command!' });
+			return;
+		}
+
+		// Reset the date for the next check
+		date.setTime(Date.now());
+
+		// If the bot has been in the guild for less than 1 week don't accept the tweet.
+		if (interaction.guild.createdAt > date.setDate(date.getDate() - 7)) {
+			await interaction.editReply({ content: 'I need to be in this server for a week to be able to use this command!' });
+		}
+
+		// Reset the date for the next check
+		date.setTime(Date.now());
+
 		// If account is less than 6 months old don't accept the tweet ( alt prevention )
 		if (interaction.user.createdAt > date.setMonth(date.getMonth() - 6)) {
 			await interaction.editReply({ content: 'Your account is too new to be able to use this command!' });
 			return;
 		}
 
-		// Reset the current date so it checks correctly for the 1 year requirement.
+		// Reset the date for the next check
 		date.setTime(Date.now());
 
 		// If account is less than 1 year old don't accept attachment
@@ -54,12 +73,14 @@ export default {
 			return;
 		}
 
-		// remove zero width space
 		if (tweet) {
+			// remove zero width space
 			tweet = tweet.replace('​', '');
-		}
+			// This should only happen if someone tweets a zero width space
+			if (tweet.length === 0) {
+				return interaction.reply({ content: 'Uh oh! You are missing any content for me to tweet!', ephemeral: true });
+			}
 
-		if (tweet) {
 			wordToCensor.forEach(async word => {
 				if (tweet.toLowerCase().includes(word.toLowerCase())) {
 					const body = { type:'tweet', uid: interaction.user.id, reason: 'Automatic ban from banned word.' };
