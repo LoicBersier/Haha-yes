@@ -14,8 +14,13 @@ export default {
 		.addStringOption(option =>
 			option.setName('url')
 				.setDescription('URL of the video you want to convert')
-				.setRequired(true)),
+				.setRequired(true))
+		.addBooleanOption(option =>
+			option.setName('noloop')
+				.setDescription('Stop the gif from looping')
+				.setRequired(false)),
 	category: 'utility',
+	alias: ['v2g'],
 	async execute(interaction, args) {
 		await interaction.deferReply({ ephemeral: false });
 		const url = args.url;
@@ -37,7 +42,7 @@ export default {
 				// Make it look better
 				await gifski(gifskiOutput, `${os.tmpdir()}/frame${interaction.id}*`);
 				// Optimize it
-				await gifsicle(gifskiOutput, gifsicleOutput);
+				await gifsicle(gifskiOutput, gifsicleOutput, args.noloop);
 
 				const fileStat = fs.statSync(gifsicleOutput);
 				const fileSize = fileStat.size / 1000000.0;
@@ -75,9 +80,9 @@ async function gifski(output, input) {
 	});
 }
 
-async function gifsicle(input, output) {
+async function gifsicle(input, output, loop = false) {
 	return await new Promise((resolve, reject) => {
-		exec(`gifsicle --colors 256 -i ${input} -o ${output}`, (err, stdout, stderr) => {
+		exec(`gifsicle --colors 256 ${loop ? '--no-loopcount' : ''} -i ${input} -o ${output}`, (err, stdout, stderr) => {
 			if (err) {
 				reject(stderr);
 			}
