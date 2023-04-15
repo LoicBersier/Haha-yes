@@ -30,10 +30,10 @@ export default {
 		const isOptOut = await db.optout.findOne({ where: { userID: interaction.user.id } });
 
 		if (isOptOut) {
-			console.log(`A user launched command \x1b[33m${commandName}\x1b[0m with slash`);
+			console.log(`A user launched command \x1b[33m${commandName}\x1b[0m using slash`);
 		}
 		else {
-			console.log(`\x1b[33m${userTag} (${userID})\x1b[0m launched command \x1b[33m${commandName}\x1b[0m with slash`);
+			console.log(`\x1b[33m${userTag} (${userID})\x1b[0m launched command \x1b[33m${commandName}\x1b[0m using slash`);
 		}
 
 
