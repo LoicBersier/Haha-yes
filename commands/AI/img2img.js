@@ -27,6 +27,7 @@ export default {
 				.setDescription('What do you want the AI to generate?')
 				.setRequired(true)),
 	category: 'AI',
+	alias: ['i2i'],
 	async execute(interaction, args, client) {
 		await interaction.deferReply();
 

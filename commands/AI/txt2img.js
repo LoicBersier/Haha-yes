@@ -23,6 +23,7 @@ export default {
 				.setDescription('What do you want the AI to generate?')
 				.setRequired(true)),
 	category: 'AI',
+	alias: ['t2i'],
 	async execute(interaction, args, client) {
 		await interaction.deferReply();
 		generate(interaction, args.prompt, client);

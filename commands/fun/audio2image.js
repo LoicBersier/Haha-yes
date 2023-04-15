@@ -20,6 +20,7 @@ export default {
 				.setDescription('The audio that will become image.')
 				.setRequired(true)),
 	category: 'fun',
+	alias: ['a2i'],
 	async execute(interaction, args) {
 		if (!args.audio) return interaction.reply('Please attach an image with your message.');
 

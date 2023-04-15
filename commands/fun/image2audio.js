@@ -20,6 +20,7 @@ export default {
 				.setDescription('The image that will become audio. Only tested with png and jpg.')
 				.setRequired(true)),
 	category: 'fun',
+	alias: ['i2a'],
 	async execute(interaction, args) {
 		if (!args.img) return interaction.reply('Please attach an image with your message.');
 
