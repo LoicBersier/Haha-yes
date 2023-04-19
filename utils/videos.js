@@ -114,16 +114,16 @@ async function getMaxFileSize(guild) {
 		switch (tier) {
 		case 0:
 		case 1:
-			resolve(8);
+			resolve(25);
 			break;
 		case 2:
-			resolve('50');
+			resolve(50);
 			break;
 		case 3:
-			resolve('100');
+			resolve(100);
 			break;
 		default:
-			resolve('8');
+			resolve(25);
 			break;
 		}
 	});
