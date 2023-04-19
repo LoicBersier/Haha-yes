@@ -16,7 +16,7 @@ You need to install the following
 * HandBrakeCLI (For [download](commands/utility/download.js))
 * gifsicle (For [vid2gif](commands/utility/vid2gif.js))
 * gifki (For [vid2gif](commands/utility/vid2gif.js))
-* Somewhere to upload files larger than 8 mb (I use a self hosted [XBackBone](https://github.com/SergiX44/XBackBone/) with the upload.sh script made from it, you can use anything else just need to be located in bin/upload.sh)
+* Somewhere to upload files larger than the file limit, currently 25 mb. (I use a self hosted [XBackBone](https://github.com/SergiX44/XBackBone/) with the upload.sh script made from it, you can use anything else just need to be located in bin/upload.sh)
 
 ### Installing
 ```

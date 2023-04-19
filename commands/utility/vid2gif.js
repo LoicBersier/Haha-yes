@@ -23,6 +23,7 @@ export default {
 	alias: ['v2g'],
 	async execute(interaction, args) {
 		await interaction.deferReply({ ephemeral: false });
+		const maxFileSize = await utils.getMaxFileSize(interaction.guild);
 		const url = args.url;
 
 		if (!await utils.stringIsAValidurl(url)) {
@@ -51,12 +52,12 @@ export default {
 					await interaction.deleteReply();
 					await interaction.followUp('❌ Uh oh! The video once converted is too big!', { ephemeral: true });
 				}
-				else if (fileSize > await utils.getMaxFileSize(interaction.guild)) {
+				else if (fileSize > maxFileSize) {
 					const fileURL = await utils.upload(gifsicleOutput)
 						.catch(err => {
 							console.error(err);
 						});
-					await interaction.editReply({ content: `ℹ️ File was bigger than 8 mb. It has been uploaded to an external site.\n${fileURL}`, ephemeral: false });
+					await interaction.editReply({ content: `ℹ️ File was bigger than ${maxFileSize} mb. It has been uploaded to an external site.\n${fileURL}`, ephemeral: false });
 				}
 				else {
 					await interaction.editReply({ files: [gifsicleOutput], ephemeral: false });
