@@ -1,4 +1,6 @@
 const ratelimit = {};
+const { ownerId } = process.env;
+
 import db from '../models/index.js';
 
 export default {
@@ -7,6 +9,11 @@ export default {
 function check(user, commandName, commands) {
 	const userID = user.id;
 	const userTag = user.tag;
+
+	// Don't apply the rate limit to bot owner
+	if (userID === ownerId) {
+		return false;
+	}
 
 	if (!ratelimit[userID]) {
 		ratelimit[userID] = {};
