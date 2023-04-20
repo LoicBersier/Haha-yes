@@ -49,15 +49,6 @@ export default {
 			return interaction.editReply({ content: '❌ This does not look like a valid url!', ephemeral: true });
 		}
 
-		const aproxFileSize = await utils.getVideoSize(url, format);
-
-		if (aproxFileSize > 100 && !args.compress) {
-			await interaction.followUp('Uh oh! The video you tried to download is larger than 100 mb! Try again with compression.', { ephemeral: true });
-		}
-		else if (aproxFileSize > 500) {
-			await interaction.followUp('Uh oh! The video you tried to download is larger than 500 mb!', { ephemeral: true });
-		}
-
 		if (format) {
 			let qualitys = await new Promise((resolve, reject) => {
 				exec(`./bin/yt-dlp "${url}" --print "%()j"`, (err, stdout, stderr) => {
@@ -70,8 +61,8 @@ export default {
 					resolve(stdout);
 				});
 			});
-			qualitys = JSON.parse(qualitys);
 
+			qualitys = JSON.parse(qualitys);
 			const options = [];
 
 			qualitys.formats.forEach(f => {
@@ -117,11 +108,30 @@ export default {
 				if (!interactionMenu.isSelectMenu()) return;
 				if (interactionMenu.customId === `downloadQuality${interaction.user.id}${interaction.id}`) {
 					await interactionMenu.deferReply({ ephemeral: false });
+
+					const aproxFileSize = await utils.getVideoSize(url, interactionMenu.values[0]);
+
+					if (aproxFileSize > 100 && !args.compress) {
+						await interaction.followUp('Uh oh! The video you tried to download is larger than 100 mb! Try again with compression.', { ephemeral: true });
+					}
+					else if (aproxFileSize > 500) {
+						await interaction.followUp('Uh oh! The video you tried to download is larger than 500 mb!', { ephemeral: true });
+					}
+
 					download(url, interactionMenu, interaction);
 				}
 			});
 			return;
 		}
+		const aproxFileSize = await utils.getVideoSize(url);
+
+		if (aproxFileSize > 100 && !args.compress) {
+			await interaction.followUp('Uh oh! The video you tried to download is larger than 100 mb! Try again with compression.', { ephemeral: true });
+		}
+		else if (aproxFileSize > 500) {
+			await interaction.followUp('Uh oh! The video you tried to download is larger than 500 mb!', { ephemeral: true });
+		}
+
 		download(url, interaction);
 	},
 };
