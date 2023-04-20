@@ -16,10 +16,10 @@ const Blacklists = db.Blacklists;
 export default {
 	data: new SlashCommandBuilder()
 		.setName('tweet')
-		.setDescription('Send tweet from Haha yes twitter account. Please do not use it for advertisement and keep it english')
+		.setDescription('Send tweet from the bot twitter account. Please do not use it for advertisement and keep it english')
 		.addStringOption(option =>
 			option.setName('content')
-				.setDescription('The content of the tweet you want to send me.')
+				.setDescription('!THIS IS NOT FEEDBACK! The content of the tweet you want to send me.')
 				.setRequired(false))
 		.addAttachmentOption(option =>
 			option.setName('image')
