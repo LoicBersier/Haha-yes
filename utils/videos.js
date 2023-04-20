@@ -14,7 +14,7 @@ export default {
 };
 async function downloadVideo(urlArg, output, format = 'bestvideo*+bestaudio/best') {
 	await new Promise((resolve, reject) => {
-		exec(`./bin/yt-dlp -f ${format} "${urlArg}" -o "${os.tmpdir()}/${output}.%(ext)s" --force-overwrites --no-playlist --remux-video=mp4/webm/mov`, (err, stdout, stderr) => {
+		exec(`./bin/yt-dlp -f "${format}" "${urlArg}" -o "${os.tmpdir()}/${output}.%(ext)s" --force-overwrites --no-playlist --remux-video=mp4/webm/mov`, (err, stdout, stderr) => {
 			if (err) {
 				reject(stderr);
 			}
@@ -68,7 +68,7 @@ async function stringIsAValidurl(s) {
 
 async function compressVideo(input, output, preset) {
 	await new Promise((resolve, reject) => {
-		exec(`./bin/HandBrakeCLI -i '${input}' -Z '${preset}' -o '${os.tmpdir()}/${output}'`, (err, stdout, stderr) => {
+		exec(`./bin/HandBrakeCLI -i "${input}" -Z "${preset}" -o "${os.tmpdir()}/${output}"`, (err, stdout, stderr) => {
 			if (err) {
 				reject(stderr);
 			}
@@ -82,7 +82,7 @@ async function compressVideo(input, output, preset) {
 }
 async function getVideoCodec(input) {
 	return await new Promise((resolve, reject) => {
-		exec(`ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1 ${input}`, (err, stdout, stderr) => {
+		exec(`ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1 "${input}"`, (err, stdout, stderr) => {
 			if (err) {
 				reject(stderr);
 			}
@@ -96,7 +96,7 @@ async function getVideoCodec(input) {
 
 async function getVideoSize(urlArg, format = 'bestvideo*+bestaudio/best') {
 	return await new Promise((resolve, reject) => {
-		exec(`./bin/yt-dlp ${urlArg} -f ${format} -O "%(filesize,filesize_approx)s"`, (err, stdout, stderr) => {
+		exec(`./bin/yt-dlp "${urlArg}" -f "${format}" -O "%(filesize,filesize_approx)s"`, (err, stdout, stderr) => {
 			if (err) {
 				reject(stderr);
 			}
