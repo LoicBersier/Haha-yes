@@ -78,6 +78,12 @@ async function generate(i, prompt, client, b64Img) {
 	let response = await fetch('https://stablehorde.net/api/v2/generate/async', fetchParameters);
 
 	response = await response.json();
+
+	if (!response.id) {
+		console.log(response);
+		return i.editReply({ content: `An error has occured, please try again later. \`${response.message}\`` });
+	}
+
 	let wait_time = 5000;
 	let checkURL = `https://stablehorde.net/api/v2/generate/check/${response.id}`;
 	const checking = setInterval(async () => {
@@ -85,8 +91,13 @@ async function generate(i, prompt, client, b64Img) {
 
 		if (checkResult === undefined) return;
 		if (!checkResult.done) {
+			if (checkResult.wait_time === -1) {
+				console.log(checkResult.raw);
+				return i.editReply({ content: `An error has occured, please try again later. \`${checkResult.raw.message}\`` });
+			}
+
 			if (checkResult.wait_time < 0) {
-				console.log(checkResult);
+				console.log(checkResult.raw);
 				clearInterval(checking);
 				return i.editReply({ content: 'No servers are currently available to fulfill your request, please try again later.' });
 			}
@@ -134,15 +145,15 @@ async function checkGeneration(url) {
 	check = await check.json();
 
 	if (!check.is_possible) {
-		return { done: false, wait_time: -1 };
+		return { done: false, wait_time: -1, raw: check };
 	}
 
 	if (check.done) {
 		if (!check.generations) {
-			return { done: false, wait_time: check.wait_time * 1000 };
+			return { done: false, wait_time: check.wait_time * 1000, raw: check };
 		}
 
-		return { done: true, image: check.generations[0].img, seed: check.generations[0].seed, worker_id: check.generations[0].worker_id, worker_name: check.generations[0].worker_name };
+		return { done: true, image: check.generations[0].img, seed: check.generations[0].seed, worker_id: check.generations[0].worker_id, worker_name: check.generations[0].worker_name, raw: check };
 	}
 }
 
