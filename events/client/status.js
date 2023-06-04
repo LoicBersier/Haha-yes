@@ -1,5 +1,6 @@
 import { ActivityType } from 'discord.js';
 import game from '../../json/playing.json' assert {type: 'json'};
+import music from '../../json/listening.json' assert {type: 'json'};
 import watch from '../../json/watching.json' assert {type: 'json'};
 
 export default {
@@ -14,7 +15,7 @@ export default {
 		}, 1800000);
 
 		async function setStatus() {
-			const random = Math.floor((Math.random() * 2));
+			const random = Math.floor((Math.random() * 3));
 			let types, status;
 			// Random "Watching" status taken from json
 			if (random === 0) {
@@ -34,6 +35,15 @@ export default {
 
 				console.log(`Setting status to: ${status}`);
 				types = [ ActivityType.Playing, ActivityType.Competing ];
+			}
+			else if (random === 2) {
+				console.log('Status type: \x1b[32mPlaying\x1b[0m');
+
+				status = music[Math.floor((Math.random() * music.length))];
+				status = status + ' | Now with slash commands!';
+
+				console.log(`Setting status to: ${status}`);
+				types = [ ActivityType.Listening ];
 			}
 			await client.user.setActivity(status, { type: types[Math.floor((Math.random() * types.length))] });
 		}
