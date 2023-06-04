@@ -27,7 +27,7 @@
     "safe-regex": "github:davisjam/safe-regex",
     "sequelize": "^6.21.3",
     "turndown": "^7.1.1",
-    "twit": "^1.1.20",
+    "twitter-api-v2": "^1.15.0",
     "ytpplus-node": "github:Supositware/ytpplus-node"
   },
   "devDependencies": {

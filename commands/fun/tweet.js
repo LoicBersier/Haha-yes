@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from 'discord.js';
 import { EmbedBuilder } from 'discord.js';
-import Twit from 'twit';
+import { TwitterApi } from 'twitter-api-v2';
 import fetch from 'node-fetch';
 import os from 'node:os';
 import fs from 'node:fs';
@@ -114,11 +114,11 @@ export default {
 		}
 
 
-		const T = new Twit({
-			consumer_key: twiConsumer,
-			consumer_secret: twiConsumerSecret,
-			access_token: twiToken,
-			access_token_secret: twiTokenSecret,
+		const userClient = new TwitterApi({
+			appKey: twiConsumer,
+			appSecret: twiConsumerSecret,
+			accessToken: twiToken,
+			accessSecret: twiTokenSecret,
 		});
 
 		try {
@@ -140,7 +140,9 @@ export default {
 						return interaction.editReply({ content: 'Gifs can\'t be larger than 15 MB!' });
 					}
 
-					const b64Image = fs.readFileSync(`${os.tmpdir()}/${attachment.name}`, { encoding: 'base64' });
+					const image = await userClient.v1.uploadMedia(`${os.tmpdir()}/${attachment.name}`);
+					Tweet(image);
+					/*
 					T.post('media/upload', { media_data: b64Image }, function(err, data) {
 						if (err) {
 							console.log('OH NO AN ERROR!!!!!!!');
@@ -151,6 +153,7 @@ export default {
 							Tweet(data);
 						}
 					});
+					*/
 				}
 				else {
 					await interaction.editReply({ content: 'File type not supported, you can only send jpg/png/gif' });
@@ -167,74 +170,51 @@ export default {
 			return;
 		}
 
-		function Tweet(data) {
-			let options = {
-				status: tweet,
-			};
-
-			if (data && tweet) {
-				options = {
-					status: tweet,
-					media_ids: new Array(data.media_id_string),
-				};
+		async function Tweet(img) {
+			console.log(img);
+			let options = null;
+			if (img) {
+				options = { media: { media_ids: new Array(img) } };
 			}
-			else if (data) {
-				options = {
-					media_ids: new Array(data.media_id_string),
-				};
+			const tweeted = await userClient.v2.tweet(tweet, options);
+
+			console.log(tweeted);
+
+
+			const tweetid = tweeted.data.id;
+			const FunnyWords = ['oppaGangnamStyle', '69', '420', 'cum', 'funnyMan', 'GUCCISmartToilet', 'TwitterForClowns', 'fart', 'ok', 'hi', 'howAreYou', 'WhatsNinePlusTen', '21'];
+			const TweetLink = `https://twitter.com/${FunnyWords[Math.floor((Math.random() * FunnyWords.length))]}/status/${tweetid}`;
+
+			let channel = await client.channels.resolve(twiChannel);
+			channel.send(TweetLink);
+
+			const Embed = new EmbedBuilder()
+				.setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL() })
+				.setDescription(tweet ? tweet : 'No content.')
+				.addFields(
+					{ name: 'Link', value: TweetLink, inline: true },
+					{ name: 'Tweet ID', value: tweetid, inline: true },
+					{ name: 'Channel ID', value: interaction.channel.id, inline: true },
+					{ name: 'Message ID', value: interaction.id, inline: true },
+					{ name: 'Author', value: `${interaction.user.username} (${interaction.user.id})`, inline: true },
+				)
+				.setTimestamp();
+
+			if (interaction.guild) {
+				Embed.addFields(
+					{ name: 'Guild', value: `${interaction.guild.name} (${interaction.guild.id})`, inline: true },
+					{ name: 'message link', value: `https://discord.com/channels/${interaction.guild.id}/${interaction.channel.id}/${interaction.id}`, inline: true },
+				);
+			}
+			else {
+				Embed.addFields({ name: 'message link', value: `https://discord.com/channels/@me/${interaction.channel.id}/${interaction.id}` });
 			}
 
-			T.post('statuses/update', options, function(err, response) {
-				if (err) {
-					// Rate limit exceeded
-					if (err.code == 88) return interaction.editReply({ content: err.interaction });
-					// Tweet needs to be a bit shorter.
-					if (err.code == 186) return interaction.editReply({ content: `${err.interaction} Your interaction was ${tweet.length} characters, you need to remove ${tweet.length - 280} characters (This count may be inaccurate if your interaction contained link)` });
-					// Status is a duplicate.
-					if (err.code == 187) return interaction.editReply({ content: err.interaction });
-					// To protect our users from spam and other malicious activity, this account is temporarily locked.
-					if (err.code == 326) return interaction.editReply({ content: err.interaction });
-					console.error('OH NO!!!!');
-					console.error(err);
-					return interaction.editReply({ content: 'OH NO!!! AN ERROR HAS occurred!!! please hold on while i find what\'s causing this issue!' });
-				}
+			if (attachment) Embed.setImage(attachment.url);
 
-				const tweetid = response.id_str;
-				const FunnyWords = ['oppaGangnamStyle', '69', '420', 'cum', 'funnyMan', 'GUCCISmartToilet', 'TwitterForClowns', 'fart', 'ok', 'hi', 'howAreYou', 'WhatsNinePlusTen', '21'];
-				const TweetLink = `https://twitter.com/${FunnyWords[Math.floor((Math.random() * FunnyWords.length))]}/status/${tweetid}`;
-
-				// Im too lazy for now to make an entry in config.json
-				let channel = client.channels.resolve(twiChannel);
-				channel.send(TweetLink);
-
-				const Embed = new EmbedBuilder()
-					.setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL() })
-					.setDescription(tweet ? tweet : 'No content.')
-					.addFields(
-						{ name: 'Link', value: TweetLink, inline: true },
-						{ name: 'Tweet ID', value: tweetid, inline: true },
-						{ name: 'Channel ID', value: interaction.channel.id, inline: true },
-						{ name: 'Message ID', value: interaction.id, inline: true },
-						{ name: 'Author', value: `${interaction.user.username} (${interaction.user.id})`, inline: true },
-					)
-					.setTimestamp();
-
-				if (interaction.guild) {
-					Embed.addFields(
-						{ name: 'Guild', value: `${interaction.guild.name} (${interaction.guild.id})`, inline: true },
-						{ name: 'message link', value: `https://discord.com/channels/${interaction.guild.id}/${interaction.channel.id}/${interaction.id}`, inline: true },
-					);
-				}
-				else {
-					Embed.addFields({ name: 'message link', value: `https://discord.com/channels/@me/${interaction.channel.id}/${interaction.id}` });
-				}
-
-				if (attachment) Embed.setImage(attachment.url);
-
-				channel = client.channels.resolve(twiLogChannel);
-				channel.send({ embeds: [Embed] });
-				return interaction.editReply({ content: `Go see ur epic tweet ${TweetLink}` });
-			});
+			channel = await client.channels.resolve(twiLogChannel);
+			channel.send({ embeds: [Embed] });
+			return interaction.editReply({ content: `Go see ur epic tweet ${TweetLink}` });
 		}
 	},
 };
