@@ -142,18 +142,6 @@ export default {
 
 					const image = await userClient.v1.uploadMedia(`${os.tmpdir()}/${attachment.name}`);
 					Tweet(image);
-					/*
-					T.post('media/upload', { media_data: b64Image }, function(err, data) {
-						if (err) {
-							console.log('OH NO AN ERROR!!!!!!!');
-							console.error(err);
-							return interaction.editReply({ content: 'OH NO!!! AN ERROR HAS occurred!!! please hold on while i find what\'s causing this issue! ' });
-						}
-						else {
-							Tweet(data);
-						}
-					});
-					*/
 				}
 				else {
 					await interaction.editReply({ content: 'File type not supported, you can only send jpg/png/gif' });
@@ -171,15 +159,11 @@ export default {
 		}
 
 		async function Tweet(img) {
-			console.log(img);
 			let options = null;
 			if (img) {
 				options = { media: { media_ids: new Array(img) } };
 			}
 			const tweeted = await userClient.v2.tweet(tweet, options);
-
-			console.log(tweeted);
-
 
 			const tweetid = tweeted.data.id;
 			const FunnyWords = ['oppaGangnamStyle', '69', '420', 'cum', 'funnyMan', 'GUCCISmartToilet', 'TwitterForClowns', 'fart', 'ok', 'hi', 'howAreYou', 'WhatsNinePlusTen', '21'];
