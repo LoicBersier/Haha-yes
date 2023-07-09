@@ -111,7 +111,7 @@ export default {
 				.setFooter({ text: `${emote} ${reactionCount}` })
 				.setTimestamp();
 
-			if (reaction.message.guild.emojis.resolve(emote)) Embed.setFooter(reactionCount, reaction.message.guild.emojis.resolve(emote).url);
+			if (reaction.message.guild.emojis.resolve(emote)) Embed.setFooter({ text: `${reactionCount}`, iconURL: reaction.message.guild.emojis.resolve(emote).url });
 
 			message.edit({ embeds: [Embed] });
 		}
