@@ -18,6 +18,11 @@ export default {
 	cooldown: 86400,
 	async execute(interaction, args) {
 		const url = args.url;
+		// This is rather rudementary, a proper way would be using yt-dlp to know if it is a playlist
+		if (url.includes('list=')) {
+			return interaction.reply({ content: '❌ Playlists are not allowed!', ephemeral: true });
+		}
+
 		if (!await utils.stringIsAValidurl(url)) {
 			console.error(`Not a url!!! ${url}`);
 			return interaction.reply({ content: '❌ This does not look like a valid url!', ephemeral: true });
