@@ -43,7 +43,7 @@ export default {
 			.setTimestamp();
 
 		user.send({ embeds: [Embed] });
-		return interaction.reply({ content: `DM sent to ${user.username}` });
+		return interaction.reply({ content: `DM sent to ${user.username} (${user.id})` });
 		/*
 		const Attachment = (message.attachments).array();
 		if (Attachment[0]) {
