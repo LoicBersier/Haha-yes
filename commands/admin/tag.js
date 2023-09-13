@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, PermissionFlagsBits } from 'discord.js';
+import { SlashCommandBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, PermissionFlagsBits, PermissionsBitField } from 'discord.js';
 import os from 'node:os';
 import fs from 'node:fs';
 
@@ -51,7 +51,7 @@ export default {
 
 		if (args.remove) {
 			if (tag) {
-				if (tag.get('ownerID') == interaction.user.id || interaction.member.permissionsIn(interaction.channel).has('ADMINISTRATOR') || interaction.user.id == ownerId) {
+				if (tag.get('ownerID') == interaction.user.id || interaction.member.permissionsIn(interaction.channel).has(PermissionsBitField.Flags.Administrator) || interaction.user.id == ownerId) {
 					db.Tag.destroy({ where: { trigger: args.trigger, serverID: interaction.guild.id } });
 					return interaction.editReply('successfully deleted the following tag: ' + args.trigger);
 				}
