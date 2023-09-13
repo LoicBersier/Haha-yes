@@ -58,10 +58,10 @@ export default {
 		else {
 			client.users.resolve(user).send(Embed)
 				.then(() => {
-					return interaction.reply(`DM sent to ${user.tag}`);
+					return interaction.reply(`DM sent to ${user.username}`);
 				})
 				.catch(() => {
-					return interaction.reply(`Could not send a DM to ${user.tag}`);
+					return interaction.reply(`Could not send a DM to ${user.username}`);
 				});
 		}
         */

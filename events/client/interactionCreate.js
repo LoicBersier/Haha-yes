@@ -19,7 +19,7 @@ export default {
 			return interaction.reply({ content: `You are blacklisted for the following reason: \`${commandBlacklist.reason}\``, ephemeral: true });
 		}
 
-		const userTag = interaction.user.tag;
+		const userTag = interaction.user.username;
 		const userID = interaction.user.id;
 		const commandName = interaction.commandName;
 

@@ -8,7 +8,7 @@ export default {
 };
 function check(user, commandName, commands) {
 	const userID = user.id;
-	const userTag = user.tag;
+	const userTag = user.username;
 
 	// Don't apply the rate limit to bot owner
 	if (userID === ownerId) {

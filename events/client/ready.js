@@ -21,7 +21,7 @@ export default {
 		});
 
 		const commandSize = client.commands.size;
-		const clientTag = client.user.tag;
+		const clientTag = client.user.username;
 		const guildSize = client.guilds.cache.size;
 		const channelSize = client.channels.cache.size;
 		const clientID = client.user.id;

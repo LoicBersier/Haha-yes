@@ -17,7 +17,7 @@ export default {
 		if (Donator[0]) {
 			for (let i = 0; i < Donator.length; i++) {
 				const user = await client.users.fetch(Donator[i].get('userID').toString());
-				if (user !== null) {donatorMessage += `**${user.tag} (${user.id}) | ${Donator[i].get('comment')}**\n`;}
+				if (user !== null) {donatorMessage += `**${user.username} (${user.id}) | ${Donator[i].get('comment')}**\n`;}
 				else {donatorMessage += `**A user of discord (${user.id}) | ${Donator[i].get('comment')} (This user no longer share a server with the bot)**\n`;}
 
 			}

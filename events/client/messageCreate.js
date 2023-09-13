@@ -290,7 +290,7 @@ export default {
 			return message.reply({ content: `You are blacklisted for the following reason: \`${commandBlacklist.reason}\``, ephemeral: true });
 		}
 
-		const userTag = message.author.tag;
+		const userTag = message.author.username;
 		const userID = message.author.id;
 
 		const isOptOut = await db.optout.findOne({ where: { userID: message.author.id } });

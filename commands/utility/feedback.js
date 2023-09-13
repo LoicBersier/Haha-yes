@@ -18,7 +18,7 @@ export default {
 	category: 'utility',
 	async execute(interaction, args) {
 		const Embed = new EmbedBuilder()
-			.setAuthor({ name: `${interaction.user.tag} (${interaction.user.id})`, iconURL: interaction.user.avatarURL() })
+			.setAuthor({ name: `${interaction.user.username} (${interaction.user.id})`, iconURL: interaction.user.avatarURL() })
 			.setTimestamp();
 
 		if (interaction.guild) Embed.addFields({ name: 'Guild', value: `${interaction.guild.name} (${interaction.guild.id})`, inline: true });

@@ -36,7 +36,7 @@ export default {
 		const statsEmbed = new EmbedBuilder()
 			.setColor(interaction.member ? interaction.member.displayHexColor : 'Navy')
 			.setTitle('Bot stats')
-			.setAuthor({ name: client.user.tag, iconURL: client.user.displayAvatarURL(), url: 'https://libtar.de' })
+			.setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL(), url: 'https://libtar.de' })
 			.addFields(
 				{ name: 'Servers', value: client.guilds.cache.size.toString(), inline: true },
 				{ name: 'Channels', value: client.channels.cache.size.toString(), inline: true },

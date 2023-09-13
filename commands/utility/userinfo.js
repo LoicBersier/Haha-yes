@@ -20,7 +20,7 @@ export default {
 		}
 		const Embed = new EmbedBuilder()
 			.setColor(member ? member.displayHexColor : 'Navy')
-			.setAuthor({ name: `${user.tag} (${user.id})`, iconURL:  user.displayAvatarURL() })
+			.setAuthor({ name: `${user.username} (${user.id})`, iconURL:  user.displayAvatarURL() })
 			.addFields(
 				{ name: 'Current rank hex color', value: member ? member.displayHexColor : 'No rank color', inline: true },
 				{ name: 'Joined guild at', value: member ? member.joinedAt.toString() : 'Not in this guild', inline: true },
