@@ -59,36 +59,36 @@ function check(user, commandName, commands) {
 }
 
 function addParallel(commandName) {
-	console.log(`[ADD] Adding parallel to ${commandName}`);
+	// console.log(`[ADD] Adding parallel to ${commandName}`);
 	if (!parallelLimit[commandName]) parallelLimit[commandName] = 0;
 
 	const prevNumber = parallelLimit[commandName];
 
-	console.log(`[ADD] Previous parallel executions: ${prevNumber}`);
-	console.log(`[ADD] Current parallel executions: ${JSON.stringify(parallelLimit)}`);
+	// console.log(`[ADD] Previous parallel executions: ${prevNumber}`);
+	// console.log(`[ADD] Current parallel executions: ${JSON.stringify(parallelLimit)}`);
 	parallelLimit[commandName] = prevNumber + 1;
 }
 
 function removeParallel(commandName) {
-	console.log(`[REMOVE] Removing parallel to ${commandName}`);
+	// console.log(`[REMOVE] Removing parallel to ${commandName}`);
 
 	// This shouldn't be possible
 	if (!parallelLimit[commandName]) parallelLimit[commandName] = 0;
 
 	const prevNumber = parallelLimit[commandName];
 
-	console.log(`[REMOVE] previous number: ${prevNumber}`);
-	console.log(`[REMOVE] previous parallel limit: ${JSON.stringify(parallelLimit)}`);
+	// console.log(`[REMOVE] previous number: ${prevNumber}`);
+	// console.log(`[REMOVE] previous parallel limit: ${JSON.stringify(parallelLimit)}`);
 	parallelLimit[commandName] = prevNumber - 1;
-	console.log(`[REMOVE] current parallel limit: ${JSON.stringify(parallelLimit)}`);
+	// console.log(`[REMOVE] current parallel limit: ${JSON.stringify(parallelLimit)}`);
 }
 
 function checkParallel(user, commandName, command) {
 	// Don't apply the rate limit to bot owner
-	// if (user.id === ownerId) return false;
+	if (user.id === ownerId) return false;
 
-	console.log(`[CHECK] command limit: ${command.parallelLimit}`);
-	console.log(`[CHECK] current parallel executions: ${parallelLimit[commandName]}`);
+	// console.log(`[CHECK] command limit: ${command.parallelLimit}`);
+	// console.log(`[CHECK] current parallel executions: ${parallelLimit[commandName]}`);
 	if (parallelLimit[commandName] >= command.parallelLimit) {
 		return 'There are currently too many parallel execution of this command, please wait before retrying.';
 	}
