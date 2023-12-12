@@ -10,3 +10,7 @@ bin/yt-dlp
 bin/HandBrakeCLI
 bin/upload.sh
 bin/dectalk
+
+asset/ytp/sources
+asset/ytp/music
+asset/ytp/sounds
