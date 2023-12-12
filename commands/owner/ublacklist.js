@@ -34,10 +34,10 @@ export default {
 			Blacklists.create(body);
 			let user = userid;
 			await client.users.fetch(userid);
-			user = client.users.resolve(userid).tag;
+			user = client.users.resolve(userid).username;
 
 
-			return interaction.editReply(`${user} has been blacklisted from ${command} with the following reason \`${reason}\``);
+			return interaction.editReply(`${user} (${userid}) has been blacklisted from ${command} with the following reason \`${reason}\``);
 		}
 		else {
 			const row = new ActionRowBuilder()

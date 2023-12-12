@@ -23,11 +23,11 @@ async function download(url, output) {
 				fs.renameSync(tmpPath, path);
 				fs.chmodSync(path, '755');
 				console.log(`${url} download finished.`);
-				resolve(true);
+				return resolve(true);
 			});
 			filePath.on('error', (err) => {
 				filePath.close();
-				reject(err);
+				return reject(err);
 			});
 		});
 	});
