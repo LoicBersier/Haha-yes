@@ -281,11 +281,17 @@ export default {
 		if (!command) return;
 
 		const globalBlacklist = await db.Blacklists.findOne({ where: { type:'global', uid:message.author.id } });
+		// const serverBlacklist = await db.Blacklists.findOne({ where: { type:'guild', uid:message.guild.id } });
 		const commandBlacklist = await db.Blacklists.findOne({ where: { type:commandName, uid:message.author.id } });
 
 		if (globalBlacklist) {
 			return message.reply({ content: `You are globally blacklisted for the following reason: \`${globalBlacklist.reason}\``, ephemeral: true });
 		}
+		/* Server blacklist is untested
+		else if (serverBlacklist) {
+			return message.reply({ content: `This guild has been blacklisted for the following reason: \`${serverBlacklist.reason}\``, ephemeral: true });
+		}
+		*/
 		else if (commandBlacklist) {
 			return message.reply({ content: `You are blacklisted for the following reason: \`${commandBlacklist.reason}\``, ephemeral: true });
 		}
@@ -325,6 +331,18 @@ export default {
 			if (!message.member.permissions.has(command.default_member_permissions)) {
 				return message.reply({ content: `❌ You are missing one of the following permission(s): \`${new PermissionFlagsBits(command.userPermissions).toArray()}\``, ephemeral: true });
 			}
+		}
+
+		// Check if the limit of parallel execution has been reached
+		if (command.parallelLimit) {
+			console.log('Command has a parallel limit');
+			const doParallelLimit = ratelimiter.checkParallel(message.author, commandName, command);
+			console.log(doParallelLimit);
+			if (doParallelLimit) {
+				return await message.reply({ content: doParallelLimit, ephemeral: true });
+			}
+
+			ratelimiter.addParallel(commandName);
 		}
 
 		// Check the ratelimit
@@ -414,7 +432,11 @@ export default {
 				console.log(`\x1b[33m⤷\x1b[0m with args ${JSON.stringify(args)}`);
 			}
 
-			await command.execute(message, args, client);
+			await command.execute(message, args, client)
+				.then(() => {
+					const hasPrallelLimit = ratelimiter.checkParallel(message.author, commandName, command);
+					if (hasPrallelLimit) ratelimiter.removeParallel(commandName);
+				});
 		}
 		catch (error) {
 			console.error(error);

@@ -11,10 +11,17 @@ export default {
 		if (interaction.type !== InteractionType.ApplicationCommand) return;
 
 		const globalBlacklist = await db.Blacklists.findOne({ where: { type:'global', uid:interaction.user.id } });
+		// const serverBlacklist = await db.Blacklists.findOne({ where: { type:'guild', uid:interaction.guild.id } });
 		const commandBlacklist = await db.Blacklists.findOne({ where: { type:interaction.commandName, uid:interaction.user.id } });
+
 		if (globalBlacklist) {
 			return interaction.reply({ content: `You are globally blacklisted for the following reason: \`${globalBlacklist.reason}\``, ephemeral: true });
 		}
+		/* Server blacklist is untested
+		else if (serverBlacklist) {
+			return interaction.reply({ content: `This guild has been blacklisted for the following reason: \`${serverBlacklist.reason}\``, ephemeral: true });
+		}
+		*/
 		else if (commandBlacklist) {
 			return interaction.reply({ content: `You are blacklisted for the following reason: \`${commandBlacklist.reason}\``, ephemeral: true });
 		}
@@ -64,6 +71,18 @@ export default {
 		}
 		*/
 
+		// Check if the limit of parallel execution has been reached
+		if (command.parallelLimit) {
+			console.log('Command has a parallel limit');
+			const doParallelLimit = ratelimiter.checkParallel(interaction.user, commandName, command);
+			console.log(doParallelLimit);
+			if (doParallelLimit) {
+				return await interaction.reply({ content: doParallelLimit, ephemeral: true });
+			}
+
+			ratelimiter.addParallel(commandName);
+		}
+
 		// Check the ratelimit
 		const doRateLimit = ratelimiter.check(interaction.user, commandName, command);
 		if (doRateLimit) {
@@ -91,7 +110,11 @@ export default {
 				console.log(`\x1b[33m⤷\x1b[0m with args ${JSON.stringify(args)}`);
 			}
 
-			await command.execute(interaction, args, client);
+			await command.execute(interaction, args, client)
+				.then(() => {
+					const hasPrallelLimit = ratelimiter.checkParallel(interaction.user, commandName, command);
+					if (hasPrallelLimit) ratelimiter.removeParallel(commandName);
+				});
 		}
 		catch (error) {
 			console.error(error);
