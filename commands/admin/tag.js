@@ -56,7 +56,7 @@ export default {
 					return interaction.editReply('successfully deleted the following tag: ' + args.trigger);
 				}
 				else {
-					return interaction.editReply(`You are not the owner of this tag, if you think it is problematic ask an admin to remove it by doing ${this.client.commandHandler.prefix[0]}tag ${args.trigger} --remove`);
+					return interaction.editReply(`You are not the owner of this tag, if you think it is problematic ask a user with the 'Administrator' permission to remove it by doing ${this.client.commandHandler.prefix[0]}tag ${args.trigger} --remove`);
 				}
 			}
 			else {

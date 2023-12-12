@@ -18,7 +18,7 @@ export default {
 
 		const streamPipeline = util.promisify(stream.pipeline);
 		const res = await fetch(args.file.url);
-		if (!res.ok) return interaction.editReply('An error has occured while trying to download your image.');
+		if (!res.ok) return interaction.editReply('An error has occured while trying to download the command.');
 		await streamPipeline(res.body, fs.createWriteStream(`./tmp/${args.file.name}`));
 
 		let command = await import(`../../tmp/${args.file.name}`);

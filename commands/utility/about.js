@@ -25,7 +25,7 @@ export default {
 			for (let i = 0; i < Donator.length; i++) {
 				const user = await client.users.fetch(Donator[i].get('userID').toString());
 				if (user !== null) {
-					description += `**${user.tag} (${user.id}) | ${Donator[i].get('comment')}**\n`;
+					description += `**${user.username} (${user.id}) | ${Donator[i].get('comment')}**\n`;
 				}
 				else {
 					description += `**A user of discord (${user.id}) | ${Donator[i].get('comment')} (This user no longer share a server with the bot)**\n`;
@@ -36,19 +36,19 @@ export default {
 			description += 'No one :(\n';
 		}
 
-		description += `\nThanks to ${tina.tag} (336492042299637771) for inspiring me for making this bot!`;
+		description += `\nThanks to ${tina.username} (336492042299637771) for inspiring me for making this bot!`;
 
 		// description += '\nThanks to Jetbrains for providing their IDE!';
 
 		exec('git rev-parse --short HEAD', (err, stdout) => {
 			const aboutEmbed = new EmbedBuilder()
 				.setColor(interaction.member ? interaction.member.displayHexColor : 'Navy')
-				.setAuthor({ name: client.user.tag, iconURL: client.user.displayAvatarURL(), url: 'https://libtar.de' })
+				.setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL(), url: 'https://libtar.de' })
 				.setTitle('About me')
 				.setDescription(description)
 				.addFields(
 					{ name: 'Current commit', value: stdout },
-					{ name: 'Current maintainer', value: `${maintainer.tag} (${ownerId})` },
+					{ name: 'Current maintainer', value: `${maintainer.username} (${ownerId})` },
 					{ name: 'Gitea (Main)', value: 'https://git.namejeff.xyz/Supositware/Haha-Yes', inline: true },
 					{ name: 'Github (Mirror)', value: 'https://github.com/Supositware/Haha-yes', inline: true },
 					{ name: 'Privacy Policy', value: 'https://libtar.de/discordprivacy.txt', inline: true },
