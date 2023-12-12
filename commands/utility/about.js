@@ -55,7 +55,7 @@ export default {
 					{ name: 'Status page', value: uptimePage.toString(), inline: true },
 
 				)
-				.setFooter({ text: `Original bot made by ${creator.tag} (267065637183029248)` });
+				.setFooter({ text: `Original bot made by ${creator.username} (267065637183029248)` });
 
 			interaction.reply({ embeds: [aboutEmbed] });
 		});
