@@ -36,12 +36,8 @@ export default {
 
 		const isOptOut = await db.optout.findOne({ where: { userID: interaction.user.id } });
 
-		if (isOptOut) {
-			console.log(`A user launched command \x1b[33m${commandName}\x1b[0m using slash`);
-		}
-		else {
-			console.log(`\x1b[33m${userTag} (${userID})\x1b[0m launched command \x1b[33m${commandName}\x1b[0m using slash`);
-		}
+		const timestamp = new Date();
+		console.log(`[${timestamp.toISOString()}] \x1b[33m${ isOptOut ? 'A user' : `${userTag} (${userID})`}\x1b[0m launched command \x1b[33m${commandName}\x1b[0m using slash`);
 
 
 		// Owner only check
@@ -107,7 +103,7 @@ export default {
 			});
 
 			if (!isOptOut) {
-				console.log(`\x1b[33m⤷\x1b[0m with args ${JSON.stringify(args)}`);
+				console.log(`[${timestamp.toISOString()}] \x1b[33m⤷\x1b[0m with args ${JSON.stringify(args)}`);
 			}
 
 			await command.execute(interaction, args, client)

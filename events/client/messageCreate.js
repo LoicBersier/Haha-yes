@@ -301,12 +301,9 @@ export default {
 
 		const isOptOut = await db.optout.findOne({ where: { userID: message.author.id } });
 
-		if (isOptOut) {
-			console.log(`A user launched command \x1b[33m${commandName}\x1b[0m using prefix`);
-		}
-		else {
-			console.log(`\x1b[33m${userTag} (${userID})\x1b[0m launched command \x1b[33m${commandName}\x1b[0m using prefix`);
-		}
+		const timestamp = new Date();
+		console.log(`[${timestamp.toISOString()}] \x1b[33m${ isOptOut ? 'A user' : `${userTag} (${userID})`}\x1b[0m launched command \x1b[33m${commandName}\x1b[0m using slash`);
+
 
 		// Owner only check
 		if (command.ownerOnly && message.author.id !== ownerId) {
@@ -429,7 +426,7 @@ export default {
 			}
 
 			if (!isOptOut && argsLength > 0) {
-				console.log(`\x1b[33m⤷\x1b[0m with args ${JSON.stringify(args)}`);
+				console.log(`[${timestamp.toISOString()}]\x1b[33m⤷\x1b[0m with args ${JSON.stringify(args)}`);
 			}
 
 			await command.execute(message, args, client)
