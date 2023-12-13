@@ -71,8 +71,8 @@ export default {
 		if (command.parallelLimit) {
 			console.log('Command has a parallel limit');
 			const doParallelLimit = ratelimiter.checkParallel(interaction.user, commandName, command);
-			console.log(doParallelLimit);
-			if (doParallelLimit) {
+			console.log(doParallelLimit.limited);
+			if (doParallelLimit.limited) {
 				return await interaction.reply({ content: doParallelLimit, ephemeral: true });
 			}
 

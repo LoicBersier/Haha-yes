@@ -334,8 +334,8 @@ export default {
 		if (command.parallelLimit) {
 			console.log('Command has a parallel limit');
 			const doParallelLimit = ratelimiter.checkParallel(message.author, commandName, command);
-			console.log(doParallelLimit);
-			if (doParallelLimit) {
+			console.log(doParallelLimit.limited);
+			if (doParallelLimit.limited) {
 				return await message.reply({ content: doParallelLimit, ephemeral: true });
 			}
 
@@ -426,7 +426,7 @@ export default {
 			}
 
 			if (!isOptOut && argsLength > 0) {
-				console.log(`[${timestamp.toISOString()}]\x1b[33m⤷\x1b[0m with args ${JSON.stringify(args)}`);
+				console.log(`[${timestamp.toISOString()}] \x1b[33m⤷\x1b[0m with args ${JSON.stringify(args)}`);
 			}
 
 			await command.execute(message, args, client)

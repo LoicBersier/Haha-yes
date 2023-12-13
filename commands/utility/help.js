@@ -1,5 +1,6 @@
 import { SlashCommandBuilder, EmbedBuilder, AttachmentBuilder, PermissionsBitField } from 'discord.js';
 import fs from 'node:fs';
+import ratelimiter from '../../utils/ratelimiter.js';
 
 const { ownerId, prefix } = process.env;
 const prefixs = prefix.split(',');
@@ -111,6 +112,13 @@ export default {
 					perm.push(new PermissionsBitField(permission).toArray());
 				});
 				embed.addFields({ name: 'Bot permission', value: `\`${perm.join('` `')}\``, inline: true });
+			}
+
+			if (command.parallelLimit) {
+				const paralellimit = ratelimiter.checkParallel(interaction.user, command.data.name, command);
+
+				embed.addFields({ name: 'Current number of executions', value: `\`${paralellimit.current}\``, inline: false });
+				embed.addFields({ name: 'Maximum number of executions', value: `\`${command.parallelLimit}\``, inline: true });
 			}
 
 			if (fs.existsSync(`./asset/img/command/${command.category}/${command.data.name}.png`)) {

@@ -1,6 +1,6 @@
 const ratelimit = {};
 const parallelLimit = {};
-const { ownerId } = process.env;
+const { ownerId, NODE_ENV } = process.env;
 
 import db from '../models/index.js';
 
@@ -85,13 +85,19 @@ function removeParallel(commandName) {
 
 function checkParallel(user, commandName, command) {
 	// Don't apply the rate limit to bot owner
-	if (user.id === ownerId) return false;
+	if (NODE_ENV !== 'development') {
+		if (user.id === ownerId) {
+			return false;
+		}
+	}
+
+	if (!parallelLimit[commandName]) parallelLimit[commandName] = 0;
 
 	// console.log(`[CHECK] command limit: ${command.parallelLimit}`);
 	// console.log(`[CHECK] current parallel executions: ${parallelLimit[commandName]}`);
 	if (parallelLimit[commandName] >= command.parallelLimit) {
-		return 'There are currently too many parallel execution of this command, please wait before retrying.';
+		return { limited: true, current: parallelLimit[commandName], max: command.parallelLimit, msg: `There are currently too many parallel execution of this command, please wait before retrying. (${parallelLimit[commandName]}/${command.parallelLimit})` };
 	}
 
-	return false;
+	return { limited: false, current: parallelLimit[commandName], max: command.parallelLimit };
 }
