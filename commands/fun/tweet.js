@@ -167,7 +167,7 @@ export default {
 
 			const tweetid = tweeted.data.id;
 			const FunnyWords = ['oppaGangnamStyle', '69', '420', 'cum', 'funnyMan', 'GUCCISmartToilet', 'TwitterForClowns', 'fart', 'ok', 'hi', 'howAreYou', 'WhatsNinePlusTen', '21'];
-			const TweetLink = `https://twitter.com/${FunnyWords[Math.floor((Math.random() * FunnyWords.length))]}/status/${tweetid}`;
+			const TweetLink = `https://vxtwitter.com/${FunnyWords[Math.floor((Math.random() * FunnyWords.length))]}/status/${tweetid}`;
 
 			let channel = await client.channels.resolve(twiChannel);
 			channel.send(TweetLink);
