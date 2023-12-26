@@ -15,6 +15,10 @@ export default {
 			option.setName('url')
 				.setDescription('URL of the video you want to convert')
 				.setRequired(true))
+		.addIntegerOption(option =>
+			option.setName('quality')
+				.setDescription('Quality of the gif conversion. Default 70. Number between 1 and 100')
+				.setRequired(false))
 		.addBooleanOption(option =>
 			option.setName('noloop')
 				.setDescription('Stop the gif from looping')
@@ -25,6 +29,13 @@ export default {
 		await interaction.deferReply({ ephemeral: false });
 		const maxFileSize = await utils.getMaxFileSize(interaction.guild);
 		const url = args.url;
+		let quality = args.quality;
+		if (quality <= 0) {
+			quality = 1;
+		}
+		else if (quality > 100) {
+			quality = 100;
+		}
 
 		if (!await utils.stringIsAValidurl(url)) {
 			console.error(`Not a url!!! ${url}`);
@@ -41,7 +52,7 @@ export default {
 				// Extract every frame for gifski
 				await utils.ffmpeg(`-i ${output} ${os.tmpdir()}/frame${interaction.id}%04d.png`);
 				// Make it look better
-				await gifski(gifskiOutput, `${os.tmpdir()}/frame${interaction.id}*`);
+				await gifski(gifskiOutput, `${os.tmpdir()}/frame${interaction.id}*`, quality);
 				// Optimize it
 				await gifsicle(gifskiOutput, gifsicleOutput, args.noloop);
 
@@ -66,9 +77,9 @@ export default {
 	},
 };
 
-async function gifski(output, input) {
+async function gifski(output, input, quality) {
 	return await new Promise((resolve, reject) => {
-		exec(`gifski --quality 70 -o ${output} ${input}`, (err, stdout, stderr) => {
+		exec(`gifski --quality ${quality ? quality : 70} -o ${output} ${input}`, (err, stdout, stderr) => {
 			if (err) {
 				reject(stderr);
 			}
