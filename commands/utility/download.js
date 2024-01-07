@@ -126,10 +126,10 @@ export default {
 		const aproxFileSize = await utils.getVideoSize(url);
 
 		if (aproxFileSize > 100 && !args.compress) {
-			await interaction.followUp('Uh oh! The video you tried to download is larger than 100 mb! Try again with compression.', { ephemeral: true });
+			return await interaction.followUp('Uh oh! The video you tried to download is larger than 100 mb! Try again with compression.', { ephemeral: true });
 		}
 		else if (aproxFileSize > 500) {
-			await interaction.followUp('Uh oh! The video you tried to download is larger than 500 mb!', { ephemeral: true });
+			return await interaction.followUp('Uh oh! The video you tried to download is larger than 500 mb!', { ephemeral: true });
 		}
 
 		download(url, interaction);
