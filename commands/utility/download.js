@@ -137,8 +137,7 @@ export default {
 };
 
 async function download(url, interaction, originalInteraction) {
-	let format = 'bestvideo*+bestaudio/best';
-
+	let format = undefined;
 	const Embed = new EmbedBuilder()
 		.setColor(interaction.member ? interaction.member.displayHexColor : 'Navy')
 		.setAuthor({ name: `Downloaded by ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL(), url: url })

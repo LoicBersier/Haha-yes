@@ -12,7 +12,7 @@ export default {
 	getVideoSize,
 	getMaxFileSize,
 };
-async function downloadVideo(urlArg, output, format = 'bestvideo*+bestaudio/best') {
+async function downloadVideo(urlArg, output, format = 'bestvideo[height<=?720]*+bestaudio/best') {
 	await new Promise((resolve, reject) => {
 		exec(`./bin/yt-dlp -f "${format}" "${urlArg}" -o "${os.tmpdir()}/${output}.%(ext)s" --force-overwrites --no-playlist --remux-video=mp4/webm/mov`, (err, stdout, stderr) => {
 			if (err) {
