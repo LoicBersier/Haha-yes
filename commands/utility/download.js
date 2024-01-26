@@ -5,7 +5,6 @@ import os from 'node:os';
 import utils from '../../utils/videos.js';
 
 let client;
-let cleanUp;
 let maxFileSize;
 
 let { ytdlpMaxResolution } = process.env;
@@ -37,10 +36,6 @@ export default {
 		const format = args.format;
 		maxFileSize = await utils.getMaxFileSize(interaction.guild);
 		interaction.doCompress = args.compress;
-
-		if (interaction.cleanUp) {
-			cleanUp = interaction.cleanUp;
-		}
 
 		await interaction.deferReply({ ephemeral: false });
 
@@ -168,7 +163,7 @@ async function download(url, interaction, originalInteraction, format = undefine
 					if (interactionMenu.customId === `preset${interaction.user.id}${interaction.id}`) {
 						await interactionMenu.deferReply({ ephemeral: false });
 						compress(file, interactionMenu, Embed);
-						if (interaction.isMessage) cleanUp();
+						if (interaction.isMessage) interaction.cleanUp();
 					}
 				});
 				return;
@@ -188,6 +183,7 @@ async function download(url, interaction, originalInteraction, format = undefine
 			const fileSize = fileStat.size / 1000000.0;
 
 			Embed.setAuthor({ name: `${Embed.data.author.name} (${fileSize.toFixed(2)} MB)`, iconURL: Embed.data.author.icon_url, url: Embed.data.author.url });
+
 
 			let message = null;
 			if (interaction.isMessage && interaction.reference !== null) {
@@ -220,7 +216,7 @@ async function download(url, interaction, originalInteraction, format = undefine
 				await interaction.editReply({ embeds: [Embed], files: [output], ephemeral: false });
 			}
 
-			if (interaction.isMessage) cleanUp();
+			if (interaction.isMessage) interaction.cleanUp();
 		})
 		.catch(async err => {
 			console.error(err);
