@@ -8,6 +8,10 @@ let client;
 let cleanUp;
 let maxFileSize;
 
+let { ytdlpMaxResolution } = process.env;
+// Convert to number as process.env is always a string
+ytdlpMaxResolution = Number(ytdlpMaxResolution);
+
 export default {
 	data: new SlashCommandBuilder()
 		.setName('download')
@@ -109,42 +113,24 @@ export default {
 				if (interactionMenu.customId === `downloadQuality${interaction.user.id}${interaction.id}`) {
 					await interactionMenu.deferReply({ ephemeral: false });
 
-					const aproxFileSize = await utils.getVideoSize(url, interactionMenu.values[0]);
-
-					if (aproxFileSize > 100 && !args.compress) {
-						await interaction.followUp('Uh oh! The video you tried to download is larger than 100 mb! Try again with compression.', { ephemeral: true });
-					}
-					else if (aproxFileSize > 500) {
-						await interaction.followUp('Uh oh! The video you tried to download is larger than 500 mb!', { ephemeral: true });
-					}
-
-					download(url, interactionMenu, interaction);
+					await checkSize(url, interactionMenu.values[0], args, interaction);
+					return download(url, interactionMenu, interaction);
 				}
 			});
 			return;
 		}
-		const aproxFileSize = await utils.getVideoSize(url);
-
-		if (aproxFileSize > 100 && !args.compress) {
-			return await interaction.followUp('Uh oh! The video you tried to download is larger than 100 mb! Try again with compression.', { ephemeral: true });
-		}
-		else if (aproxFileSize > 500) {
-			return await interaction.followUp('Uh oh! The video you tried to download is larger than 500 mb!', { ephemeral: true });
-		}
-
-		download(url, interaction);
+		const newFormat = await checkSize(url, undefined, args, interaction);
+		return download(url, interaction, interaction, newFormat);
 	},
 };
 
-async function download(url, interaction, originalInteraction) {
-	let format = undefined;
+async function download(url, interaction, originalInteraction, format = undefined) {
 	const Embed = new EmbedBuilder()
 		.setColor(interaction.member ? interaction.member.displayHexColor : 'Navy')
 		.setAuthor({ name: `Downloaded by ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL(), url: url })
 		.setFooter({ text: `You can get the original video by clicking on the "Downloaded by ${interaction.user.username}" message!` });
 
-
-	if (interaction.customId === `downloadQuality${interaction.user.id}`) {
+	if (interaction.customId === `downloadQuality${interaction.user.id}${originalInteraction.id}` && !format) {
 		format = interaction.values[0];
 		if (interaction.values[1]) format += '+' + interaction.values[1];
 	}
@@ -203,6 +189,11 @@ async function download(url, interaction, originalInteraction) {
 
 			Embed.setAuthor({ name: `${Embed.data.author.name} (${fileSize.toFixed(2)} MB)`, iconURL: Embed.data.author.icon_url, url: Embed.data.author.url });
 
+			let message = null;
+			if (interaction.isMessage && interaction.reference !== null) {
+				const channel = client.channels.resolve(interaction.reference.channelId);
+				message = await channel.messages.fetch(interaction.reference.messageId);
+			}
 
 			if (fileSize > 100) {
 				await interaction.deleteReply();
@@ -213,13 +204,23 @@ async function download(url, interaction, originalInteraction) {
 					.catch(err => {
 						console.error(err);
 					});
+
 				await interaction.editReply({ content: `File was bigger than ${maxFileSize} mb. It has been uploaded to an external site.`, embeds: [Embed], ephemeral: false });
-				await interaction.followUp({ content: fileurl, ephemeral: false });
+				if (interaction.isMessage) {
+					await message.reply({ content: fileurl });
+					cleanUp();
+				}
+				else {
+					await interaction.followUp({ content: fileurl, ephemeral: false });
+				}
+			}
+			else if (interaction.isMessage) {
+				await message.reply({ embeds: [Embed], files: [output] });
+				cleanUp();
 			}
 			else {
 				await interaction.editReply({ embeds: [Embed], files: [output], ephemeral: false });
 			}
-			if (interaction.isMessage) cleanUp();
 		})
 		.catch(async err => {
 			console.error(err);
@@ -250,4 +251,30 @@ async function compress(input, interaction, embed) {
 				await interaction.editReply({ embeds: [embed], files: [`${os.tmpdir()}/${output}`], ephemeral: false });
 			}
 		});
+}
+
+async function checkSize(url, format, args, interaction, tries = 0) {
+	const resolutions = [144, 240, 360, 480, 720, 1080, 1440, 2160];
+
+	while (tries < 4) {
+		format = `bestvideo[height<=?${resolutions[resolutions.indexOf(ytdlpMaxResolution) - tries]}]+bestaudio/best`;
+		const aproxFileSize = await utils.getVideoSize(url, format);
+
+		if (format || tries >= 4) {
+			if (aproxFileSize > 100 && !args.compress && tries > 4) {
+				return await interaction.followUp(`Uh oh! The video you tried to download is larger than 100 mb (is ${aproxFileSize} mb)! Try again with a lower resolution format.`);
+			}
+			else if (aproxFileSize > 500 && tries > 4) {
+				return await interaction.followUp(`Uh oh! The video you tried to download is larger than 500 mb (is ${aproxFileSize} mb)! Try again with a lower resolution format.`);
+			}
+		}
+
+		if (aproxFileSize < 100) {
+			return format;
+		}
+
+		if (tries < 4 && aproxFileSize > 100) {
+			tries++;
+		}
+	}
 }
