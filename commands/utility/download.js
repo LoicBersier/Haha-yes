@@ -206,21 +206,21 @@ async function download(url, interaction, originalInteraction, format = undefine
 					});
 
 				await interaction.editReply({ content: `File was bigger than ${maxFileSize} mb. It has been uploaded to an external site.`, embeds: [Embed], ephemeral: false });
-				if (interaction.isMessage) {
+				if (interaction.isMessage && message) {
 					await message.reply({ content: fileurl });
-					cleanUp();
 				}
 				else {
 					await interaction.followUp({ content: fileurl, ephemeral: false });
 				}
 			}
-			else if (interaction.isMessage) {
+			else if (interaction.isMessage && message) {
 				await message.reply({ embeds: [Embed], files: [output] });
-				cleanUp();
 			}
 			else {
 				await interaction.editReply({ embeds: [Embed], files: [output], ephemeral: false });
 			}
+
+			if (interaction.isMessage) cleanUp();
 		})
 		.catch(async err => {
 			console.error(err);
@@ -259,6 +259,7 @@ async function checkSize(url, format, args, interaction, tries = 0) {
 	while (tries < 4) {
 		format = `bestvideo[height<=?${resolutions[resolutions.indexOf(ytdlpMaxResolution) - tries]}]+bestaudio/best`;
 		const aproxFileSize = await utils.getVideoSize(url, format);
+		if (isNaN(aproxFileSize)) return format;
 
 		if (format || tries >= 4) {
 			if (aproxFileSize > 100 && !args.compress && tries > 4) {
