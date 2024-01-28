@@ -411,13 +411,16 @@ export default {
 					payload = messageArgs.slice(i).join(' ');
 				}
 
-				if (messageArgs[i].startsWith('--')) {
+				if (arg.type === ApplicationCommandOptionType.Boolean && !messageArgs[i].startsWith('--')) {
+					continue;
+				}
+				else if (messageArgs[i].startsWith('--')) {
 					payloadName = payload.substring(2);
 					payload = true;
 					j--;
 				}
 
-				if (arg.type === ApplicationCommandOptionType.Mentionable) {
+				if (arg.type === ApplicationCommandOptionType.Mentionable || arg.type === ApplicationCommandOptionType.User) {
 					await message.guild.members.fetch();
 					payload = message.mentions.members.first() ? message.mentions.members.first() : message.guild.members.cache.find(u => u.user.username.toLowerCase().includes(payload.toLowerCase()));
 				}
