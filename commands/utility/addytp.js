@@ -30,7 +30,7 @@ export default {
 
 		await interaction.deferReply({ ephemeral: true });
 
-		utils.downloadVideo(url, interaction.id, 'mp4')
+		utils.downloadVideo(url, interaction.id, 'bestvideo[height<=?480]+bestaudio/best')
 			.then(async () => {
 				const file = fs.readdirSync(os.tmpdir()).filter(fn => fn.startsWith(interaction.id));
 				const output = `${os.tmpdir()}/${file}`;
