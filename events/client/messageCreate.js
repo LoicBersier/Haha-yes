@@ -253,6 +253,7 @@ export default {
 		}
 
 		// Command handling from message
+		// TODO: Moving that to a dedicated function that works for both messages and interactions
 
 		let hasPrefix = false;
 		prefixs.forEach(p => {
@@ -440,7 +441,11 @@ export default {
 		}
 		catch (error) {
 			console.error(error);
-			await message.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+			await message.reply({ content: `There was an error while executing this command!\n\`${error}\`` })
+				.catch(async () => {
+					await message.channel.send({ content: `There was an error while executing this command!\n\`${error}\`` });
+				});
+
 		}
 	},
 };

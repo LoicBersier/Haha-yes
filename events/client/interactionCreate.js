@@ -1,3 +1,5 @@
+// TODO: Moving that to a dedicated function that works for both messages and interactions
+
 import { PermissionFlagsBits, InteractionType } from 'discord.js';
 import db from '../../models/index.js';
 import ratelimiter from '../../utils/ratelimiter.js';
@@ -114,7 +116,7 @@ export default {
 		}
 		catch (error) {
 			console.error(error);
-			await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true });
+			await interaction.followUp({ content: `There was an error while executing this command!\n\`${error}\``, ephemeral: true });
 		}
 	},
 };
