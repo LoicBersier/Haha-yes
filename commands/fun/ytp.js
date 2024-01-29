@@ -12,6 +12,9 @@ export default {
 				.setDescription('Force the generation of the video in non-nsfw channel.')
 				.setRequired(false)),
 	category: 'fun',
+	ratelimit: 2,
+	cooldown: 60,
+	parallelLimit: 30,
 	async execute(interaction, args) {
 		if (!interaction.channel.nsfw && !args.force) return interaction.reply(`Please execute this command in an NSFW channel ( Content might not be NSFW but since the video are user submitted better safe than sorry ) OR do \`\`${interaction.prefix}ytp --force\`\` to make the command work outside of nsfw channel BE AWARE THAT IT WON'T CHANGE THE FINAL RESULT SO NSFW CAN STILL HAPPEN`);
 
@@ -69,19 +72,19 @@ export default {
 			},
 		};
 
-		new YTPGenerator().configurateAndGo(options)
+		await new YTPGenerator().configurateAndGo(options)
 			.then(() => {
 				loadingmsg.delete();
-				return interaction.reply({ content: 'Here is your YTP! Remember, it might contain nsfw, so be careful!', files: [`${os.tmpdir()}/${interaction.id}_YTP.mp4`] })
+				return interaction.followUp({ content: 'Here is your YTP! Remember, it might contain nsfw, so be careful!', files: [`${os.tmpdir()}/${interaction.id}_YTP.mp4`] })
 					.catch(err => {
 						console.error(err);
-						return interaction.reply({ files: [`./asset/ytp/error${Math.floor(Math.random() * 2) + 1}.mp4`] });
+						return interaction.followUp({ files: [`./asset/ytp/error${Math.floor(Math.random() * 2) + 1}.mp4`] });
 					});
 			})
 			.catch(err => {
 				console.error(err);
 				loadingmsg.delete();
-				return interaction.reply({ files: [`./asset/ytp/error${Math.floor(Math.random() * 2) + 1}.mp4`] });
+				return interaction.followUp({ files: [`./asset/ytp/error${Math.floor(Math.random() * 2) + 1}.mp4`] });
 			});
 	},
 };
