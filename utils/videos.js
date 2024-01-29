@@ -1,6 +1,7 @@
 import os from 'node:os';
 import { exec } from 'node:child_process';
 const { NODE_ENV } = process.env;
+const ytdlpMaxResolution = 2160;
 
 export default {
 	downloadVideo,
@@ -12,17 +13,19 @@ export default {
 	getVideoSize,
 	getMaxFileSize,
 };
-async function downloadVideo(urlArg, output, format = 'bestvideo[height<=?720]*+bestaudio/best') {
+async function downloadVideo(urlArg, output, format = `bestvideo[height<=?${ytdlpMaxResolution}]+bestaudio/best`) {
 	await new Promise((resolve, reject) => {
-		exec(`./bin/yt-dlp -f "${format}" "${urlArg}" -o "${os.tmpdir()}/${output}.%(ext)s" --force-overwrites --no-playlist --remux-video=mp4/webm/mov`, (err, stdout, stderr) => {
+		exec(`./bin/yt-dlp -f "${format}" "${urlArg}" -o "${os.tmpdir()}/${output}.%(ext)s" --force-overwrites --no-playlist --remux-video=mp4/webm/mov --no-warnings`, (err, stdout, stderr) => {
 			if (err) {
-				reject(stderr);
+				return reject(stderr);
 			}
 			if (stderr) {
 				console.error(stderr);
+				// Should already be rejected at that points
+				return reject(stderr);
 			}
 			console.log(NODE_ENV === 'development' ? stdout : null);
-			resolve();
+			return resolve();
 		});
 	});
 }
@@ -94,9 +97,9 @@ async function getVideoCodec(input) {
 	});
 }
 
-async function getVideoSize(urlArg, format = 'bestvideo*+bestaudio/best') {
+async function getVideoSize(urlArg, format = `bestvideo[height<=?${ytdlpMaxResolution}]+bestaudio/best`) {
 	return await new Promise((resolve, reject) => {
-		exec(`./bin/yt-dlp "${urlArg}" -f "${format}" -O "%(filesize,filesize_approx)s"`, (err, stdout, stderr) => {
+		exec(`./bin/yt-dlp "${urlArg}" -f "${format}" --no-warnings -O "%(filesize,filesize_approx)s"`, (err, stdout, stderr) => {
 			if (err) {
 				reject(stderr);
 			}
