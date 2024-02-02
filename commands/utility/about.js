@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from 'discord.js';
 import { EmbedBuilder } from 'discord.js';
-import { exec } from 'node:child_process';
+import { execFile } from 'node:child_process';
 import db from '../../models/index.js';
 const donator = db.donator;
 
@@ -40,7 +40,7 @@ export default {
 
 		// description += '\nThanks to Jetbrains for providing their IDE!';
 
-		exec('git rev-parse --short HEAD', (err, stdout) => {
+		execFile('git', ['rev-parse', '--short', 'HEAD'], (err, stdout) => {
 			const aboutEmbed = new EmbedBuilder()
 				.setColor(interaction.member ? interaction.member.displayHexColor : 'Navy')
 				.setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL(), url: 'https://libtar.de' })

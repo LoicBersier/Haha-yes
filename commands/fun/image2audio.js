@@ -35,8 +35,8 @@ export default {
 		if (!res.ok) return interaction.editReply('An error has occured while trying to download your image.');
 		await streamPipeline(res.body, fs.createWriteStream(`${os.tmpdir()}/${args.img.name}`));
 
-		await utils.ffmpeg(`-i ${os.tmpdir()}/${args.img.name} -f rawvideo ${os.tmpdir()}/1${args.img.name}`);
-		await utils.ffmpeg(`-sample_rate 44100 -ac 1 -f s16le -i ${os.tmpdir()}/1${args.img.name} ${os.tmpdir()}/${args.img.name}.mp3`);
+		await utils.ffmpeg(['-i', `${os.tmpdir()}/${args.img.name}`, '-f', 'rawvideo', `${os.tmpdir()}/1${args.img.name}`]);
+		await utils.ffmpeg(['-sample_rate', '44100', '-ac', '1', '-f', 's16le', '-i', `${os.tmpdir()}/1${args.img.name}`, `${os.tmpdir()}/${args.img.name}.mp3`]);
 
 		const file = fs.statSync(`${os.tmpdir()}/${args.img.name}.mp3`);
 		const fileSize = (file.size / 1000000.0).toFixed(2);

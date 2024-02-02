@@ -1,4 +1,4 @@
-import { exec } from 'node:child_process';
+import { execFile } from 'node:child_process';
 const { statusChannel, NODE_ENV } = process.env;
 import { version } from 'discord.js';
 
@@ -10,7 +10,7 @@ export default {
 		global.boards = {};
 
 		const ytdlpVersion = await new Promise((resolve, reject) => {
-			exec('./bin/yt-dlp --version', (err, stdout, stderr) => {
+			execFile('./bin/yt-dlp', ['--version'], (err, stdout, stderr) => {
 				if (err) {
 					reject(stderr);
 				}

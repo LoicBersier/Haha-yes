@@ -36,8 +36,8 @@ export default {
 		if (!res.ok) return interaction.editReply('An error has occured while trying to download your image.');
 		await streamPipeline(res.body, fs.createWriteStream(`${os.tmpdir()}/${args.audio.name}`));
 
-		await utils.ffmpeg(`-i ${os.tmpdir()}/${args.audio.name} -sample_rate 44100 -ac 1 -f s16le -acodec pcm_s16le  ${os.tmpdir()}/${args.audio.name}.sw`);
-		await utils.ffmpeg(`-pixel_format rgb24 -video_size 128x128 -f rawvideo -i ${os.tmpdir()}/${args.audio.name}.sw -frames:v 1 ${os.tmpdir()}/${args.audio.name}.png`);
+		await utils.ffmpeg(['-i', `${os.tmpdir()}/${args.audio.name}`, '-sample_rate', '44100', '-ac', '1', '-f', 's16le', '-acodec', 'pcm_s16le', `${os.tmpdir()}/${args.audio.name}.sw`]);
+		await utils.ffmpeg(['-pixel_format', 'rgb24', '-video_size', '128x128', '-f', 'rawvideo', '-i', `${os.tmpdir()}/${args.audio.name}.sw`, '-frames:v', '1', `${os.tmpdir()}/${args.audio.name}.png`]);
 
 		const file = fs.statSync(`${os.tmpdir()}/${args.audio.name}.png`);
 		const fileSize = (file.size / 1000000.0).toFixed(2);

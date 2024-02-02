@@ -3,7 +3,7 @@ import utils from '../../utils/videos.js';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { exec } from 'node:child_process';
+import { execFile } from 'node:child_process';
 const { NODE_ENV } = process.env;
 
 
@@ -50,7 +50,7 @@ export default {
 				const gifsicleOutput = output.replace(path.extname(output), 'gifsicle.gif');
 
 				// Extract every frame for gifski
-				await utils.ffmpeg(`-i ${output} ${os.tmpdir()}/frame${interaction.id}%04d.png`);
+				await utils.ffmpeg(['-i', output, `${os.tmpdir()}/frame${interaction.id}%04d.png`]);
 				// Make it look better
 				await gifski(gifskiOutput, `${os.tmpdir()}/frame${interaction.id}*`, quality);
 				// Optimize it
@@ -79,7 +79,8 @@ export default {
 
 async function gifski(output, input, quality) {
 	return await new Promise((resolve, reject) => {
-		exec(`gifski --quality ${quality ? quality : 70} -o ${output} ${input}`, (err, stdout, stderr) => {
+		// Shell: true should be fine as no user input is being passed
+		execFile('gifski', ['--quality', quality ? quality : 70, '-o', output, input], { shell: true }, (err, stdout, stderr) => {
 			if (err) {
 				reject(stderr);
 			}
@@ -94,7 +95,8 @@ async function gifski(output, input, quality) {
 
 async function gifsicle(input, output, loop = false) {
 	return await new Promise((resolve, reject) => {
-		exec(`gifsicle --colors 256 ${loop ? '--no-loopcount' : ''} -i ${input} -o ${output}`, (err, stdout, stderr) => {
+		// Shell: true should be fine as no user input is being passed
+		execFile('gifsicle', ['--colors', '256', loop ? '--no-loopcount' : '', '-i', input, '-o', output], { shell: true }, (err, stdout, stderr) => {
 			if (err) {
 				reject(stderr);
 			}

@@ -1,5 +1,5 @@
 import { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder } from 'discord.js';
-import { exec } from 'node:child_process';
+import { execFile } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
 import utils from '../../utils/videos.js';
@@ -50,7 +50,7 @@ export default {
 
 		if (format) {
 			let qualitys = await new Promise((resolve, reject) => {
-				exec(`./bin/yt-dlp "${url}" --print "%()j"`, (err, stdout, stderr) => {
+				execFile('./bin/yt-dlp', [url, '--print', '%()j'], (err, stdout, stderr) => {
 					if (err) {
 						reject(stderr);
 					}
@@ -137,7 +137,7 @@ async function download(url, interaction, originalInteraction, format = undefine
 
 			const compressInteraction = originalInteraction ? originalInteraction : interaction;
 			if (compressInteraction.doCompress) {
-				const presets = [ 'Social 8 MB 3 Minutes 360p30', 'Social 50 MB 10 Minutes 480p30', 'Social 50 MB 5 Minutes 720p30', 'Social 100 MB 5 Minutes 1080p30' ];
+				const presets = [ 'Social 25 MB 5 Minutes 360p60', 'Social 50 MB 10 Minutes 480p30', 'Social 50 MB 5 Minutes 720p30', 'Social 100 MB 5 Minutes 1080p30' ];
 				const options = [];
 
 				presets.forEach(p => {
@@ -176,7 +176,7 @@ async function download(url, interaction, originalInteraction, format = undefine
 			if (bannedFormats.includes(codec)) {
 				const oldOutput = output;
 				output = `${os.tmpdir()}/264${file}`;
-				await utils.ffmpeg(`-i ${oldOutput} -vcodec libx264 -acodec aac ${output}`);
+				await utils.ffmpeg(['-i', oldOutput, '-vcodec', 'libx264', '-acodec', 'aac', output]);
 			}
 
 			const fileStat = fs.statSync(output);
