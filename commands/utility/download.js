@@ -163,7 +163,10 @@ async function download(url, interaction, originalInteraction, format = undefine
 					if (interactionMenu.customId === `preset${interaction.user.id}${interaction.id}`) {
 						await interactionMenu.deferReply({ ephemeral: false });
 						compress(file, interactionMenu, Embed);
-						if (interaction.isMessage) interaction.cleanUp();
+						if (interaction.isMessage) {
+							interaction.deleteReply();
+							interaction.cleanUp();
+						}
 					}
 				});
 				return;
@@ -216,7 +219,10 @@ async function download(url, interaction, originalInteraction, format = undefine
 				await interaction.editReply({ embeds: [Embed], files: [output], ephemeral: false });
 			}
 
-			if (interaction.isMessage) interaction.cleanUp();
+			if (interaction.isMessage) {
+				interaction.deleteReply();
+				interaction.cleanUp();
+			}
 		})
 		.catch(async err => {
 			console.error(err);
