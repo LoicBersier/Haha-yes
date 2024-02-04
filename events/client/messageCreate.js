@@ -333,9 +333,7 @@ export default {
 
 		// Check if the limit of parallel execution has been reached
 		if (command.parallelLimit) {
-			console.log('Command has a parallel limit');
 			const doParallelLimit = ratelimiter.checkParallel(message.author, commandName, command);
-			console.log(doParallelLimit.limited);
 			if (doParallelLimit.limited) {
 				return await message.reply({ content: doParallelLimit, ephemeral: true });
 			}
