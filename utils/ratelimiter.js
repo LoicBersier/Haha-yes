@@ -10,13 +10,15 @@ export default {
 	removeParallel,
 	checkParallel,
 };
-function check(user, commandName, commands) {
+async function check(user, commandName, commands) {
 	const userID = user.id;
 	const userTag = user.username;
 
 	// Don't apply the rate limit to bot owner
-	if (userID === ownerId) {
-		return false;
+	if (NODE_ENV !== 'development') {
+		if (user.id === ownerId) {
+			return false;
+		}
 	}
 
 	if (!ratelimit[userID]) {
@@ -38,7 +40,7 @@ function check(user, commandName, commands) {
 			const hours = Math.floor(minutes / 60);
 			const dateString = `${hours > 0 ? ` ${Math.floor(hours)} hours` : ''}${minutes > 0 ? ` ${Math.floor(minutes % 60)} minutes` : ''}${seconds > 0 ? ` ${Math.floor(seconds % 60)} seconds` : ''}`;
 
-			const isOptOut = db.optout.findOne({ where: { userID: userID } });
+			const isOptOut = await db.optout.findOne({ where: { userID: userID } });
 
 			const timestamp = new Date();
 			console.log(`[${timestamp.toISOString()}] \x1b[33m${ isOptOut ? 'A user' : `${userTag} (${userID})`}\x1b[0m is rate limited on \x1b[33m${commandName}\x1b[0m for${dateString}.`);
@@ -56,7 +58,7 @@ function check(user, commandName, commands) {
 	return false;
 }
 
-function addParallel(commandName) {
+async function addParallel(commandName) {
 	// console.log(`[ADD] Adding parallel to ${commandName}`);
 	if (!parallelLimit[commandName]) parallelLimit[commandName] = 0;
 
@@ -67,7 +69,7 @@ function addParallel(commandName) {
 	parallelLimit[commandName] = prevNumber + 1;
 }
 
-function removeParallel(commandName) {
+async function removeParallel(commandName) {
 	// console.log(`[REMOVE] Removing parallel to ${commandName}`);
 
 	// This shouldn't be possible
@@ -81,7 +83,7 @@ function removeParallel(commandName) {
 	// console.log(`[REMOVE] current parallel limit: ${JSON.stringify(parallelLimit)}`);
 }
 
-function checkParallel(user, commandName, command) {
+async function checkParallel(user, commandName, command) {
 	// Don't apply the rate limit to bot owner
 	if (NODE_ENV !== 'development') {
 		if (user.id === ownerId) {

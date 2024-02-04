@@ -333,16 +333,16 @@ export default {
 
 		// Check if the limit of parallel execution has been reached
 		if (command.parallelLimit) {
-			const doParallelLimit = ratelimiter.checkParallel(message.author, commandName, command);
+			const doParallelLimit = await ratelimiter.checkParallel(message.author, commandName, command);
 			if (doParallelLimit.limited) {
-				return await message.reply({ content: doParallelLimit, ephemeral: true });
+				return await message.reply({ content: doParallelLimit.msg, ephemeral: true });
 			}
 
 			ratelimiter.addParallel(commandName);
 		}
 
 		// Check the ratelimit
-		const doRateLimit = ratelimiter.check(message.author, commandName, command);
+		const doRateLimit = await ratelimiter.check(message.author, commandName, command);
 		if (doRateLimit) {
 			return message.reply({ content: doRateLimit, ephemeral: true });
 
@@ -432,8 +432,8 @@ export default {
 			}
 
 			await command.execute(message, args, client)
-				.then(() => {
-					const hasPrallelLimit = ratelimiter.checkParallel(message.author, commandName, command);
+				.then(async () => {
+					const hasPrallelLimit = await ratelimiter.checkParallel(message.author, commandName, command);
 					if (hasPrallelLimit) ratelimiter.removeParallel(commandName);
 				});
 		}
