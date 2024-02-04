@@ -1,7 +1,6 @@
 import os from 'node:os';
 import { execFile } from 'node:child_process';
-const { NODE_ENV } = process.env;
-const ytdlpMaxResolution = 2160;
+const { NODE_ENV, ytdlpMaxResolution } = process.env;
 
 export default {
 	downloadVideo,
