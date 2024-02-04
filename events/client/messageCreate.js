@@ -303,7 +303,7 @@ export default {
 		const isOptOut = await db.optout.findOne({ where: { userID: message.author.id } });
 
 		const timestamp = new Date();
-		console.log(`[${timestamp.toISOString()}] \x1b[33m${ isOptOut ? 'A user' : `${userTag} (${userID})`}\x1b[0m launched command \x1b[33m${commandName}\x1b[0m using slash`);
+		console.log(`[${timestamp.toISOString()}] \x1b[33m${ isOptOut ? 'A user' : `${userTag} (${userID})`}\x1b[0m launched command \x1b[33m${commandName}\x1b[0m using prefix`);
 
 
 		// Owner only check
