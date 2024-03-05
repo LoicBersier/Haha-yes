@@ -26,6 +26,10 @@ export default {
 		.addBooleanOption(option =>
 			option.setName('compress')
 				.setDescription('Compress the video?')
+				.setRequired(false))
+		.addBooleanOption(option =>
+			option.setName('description')
+				.setDescription('Include the video description?')
 				.setRequired(false)),
 	category: 'utility',
 	alias: ['dl'],
@@ -109,21 +113,25 @@ export default {
 					await interactionMenu.deferReply({ ephemeral: false });
 
 					await checkSize(url, interactionMenu.values[0], args, interaction);
-					return download(url, interactionMenu, interaction);
+					return download(url, interactionMenu, interaction, undefined, true);
 				}
 			});
 			return;
 		}
 		const newFormat = await checkSize(url, undefined, args, interaction);
-		return download(url, interaction, interaction, newFormat);
+		return download(url, interaction, interaction, newFormat, args.description);
 	},
 };
 
-async function download(url, interaction, originalInteraction, format = undefined) {
+async function download(url, interaction, originalInteraction, format = undefined, description = false) {
 	const Embed = new EmbedBuilder()
 		.setColor(interaction.member ? interaction.member.displayHexColor : 'Navy')
 		.setAuthor({ name: `Downloaded by ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL(), url: url })
 		.setFooter({ text: `You can get the original video by clicking on the "Downloaded by ${interaction.user.username}" message!` });
+
+	if (description) {
+		Embed.setDescription(await getVideoDescription(url));
+	}
 
 	if (interaction.customId === `downloadQuality${interaction.user.id}${originalInteraction.id}` && !format) {
 		format = interaction.values[0];
@@ -186,7 +194,6 @@ async function download(url, interaction, originalInteraction, format = undefine
 			const fileSize = fileStat.size / 1000000.0;
 
 			Embed.setAuthor({ name: `${Embed.data.author.name} (${fileSize.toFixed(2)} MB)`, iconURL: Embed.data.author.icon_url, url: Embed.data.author.url });
-
 
 			let message = null;
 			if (interaction.isMessage && interaction.reference !== null) {
@@ -280,4 +287,18 @@ async function checkSize(url, format, args, interaction, tries = 0) {
 			tries++;
 		}
 	}
+}
+
+async function getVideoDescription(urlArg) {
+	return await new Promise((resolve, reject) => {
+		execFile('./bin/yt-dlp', [urlArg, '--no-warnings', '-O', '%(description)s'], (err, stdout, stderr) => {
+			if (err) {
+				reject(stderr);
+			}
+			if (stderr) {
+				console.error(stderr);
+			}
+			resolve(stdout.slice(0, 240));
+		});
+	});
 }
