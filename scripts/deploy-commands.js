@@ -18,6 +18,10 @@ for (let i = 0; i < categoryPath.length; i++) {
 	for (const file of commandFiles) {
 		const filePath = path.join(commandsPath, file);
 		const command = await import(filePath);
+
+		if (command.default.data.name === 'download') {
+			Object.assign(command.default.data, { integration_types: [0, 1] });
+		}
 		commands.push(command.default.data.toJSON());
 	}
 }
