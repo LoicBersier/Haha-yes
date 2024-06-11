@@ -18,7 +18,9 @@ export default {
 			}
 		}
 		else {
-			return interaction.reply(`You can add me from here: https://discord.com/oauth2/authorize?client_id=${client.user.id}&permissions=2684406848&scope=bot%20applications.commands`);
+			return interaction.reply(`
+				You can add me for your server from here: https://discord.com/oauth2/authorize?client_id=${client.user.id}&permissions=2684406848&scope=bot%20applications.commands` +
+				`\nIf you want to use my commands no matter the server you can install me as a user applications from here: https://discord.com/oauth2/authorize?client_id=${client.user.id}`);
 		}
 	},
 };
