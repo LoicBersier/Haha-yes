@@ -112,6 +112,10 @@ async function getVideoSize(urlArg, format = `bestvideo[height<=?${ytdlpMaxResol
 
 async function getMaxFileSize(guild) {
 	return await new Promise((resolve) => {
+		if (!guild) {
+			resolve(25);
+		}
+
 		const tier = guild.premiumTier;
 		switch (tier) {
 		case 0:
