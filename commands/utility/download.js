@@ -33,6 +33,7 @@ export default {
 				.setRequired(false)),
 	category: 'utility',
 	alias: ['dl'],
+	integration_types: [0, 1],
 
 	async execute(interaction, args, c) {
 		client = c;

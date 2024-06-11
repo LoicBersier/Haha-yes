@@ -19,8 +19,9 @@ for (let i = 0; i < categoryPath.length; i++) {
 		const filePath = path.join(commandsPath, file);
 		const command = await import(filePath);
 
-		if (command.default.data.name === 'download') {
-			Object.assign(command.default.data, { integration_types: [0, 1] });
+		if (command.default.integration_types) {
+			Object.assign(command.default.data, { integration_types: command.default.integration_types });
+			Object.assign(command.default.data, { contexts: [0, 1, 2] });
 		}
 		commands.push(command.default.data.toJSON());
 	}
