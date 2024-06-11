@@ -124,8 +124,14 @@ export default {
 };
 
 async function download(url, interaction, originalInteraction, format = undefined, description = false) {
+	let embedColour = 'Navy';
+	if (interaction.member) {
+		if (interaction.member.displayHexColor) {
+			embedColour = interaction.member.displayHexColor;
+		}
+	}
 	const Embed = new EmbedBuilder()
-		.setColor(interaction.member ? interaction.member.displayHexColor : 'Navy')
+		.setColor(embedColour)
 		.setAuthor({ name: `Downloaded by ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL(), url: url })
 		.setFooter({ text: `You can get the original video by clicking on the "Downloaded by ${interaction.user.username}" message!` });
 
