@@ -24,7 +24,9 @@ export default {
 				.setDescription('Stop the gif from looping')
 				.setRequired(false)),
 	category: 'utility',
-	alias: ['v2g'],
+	alias: ['v2g', 'togif'],
+	integration_types: [0, 1],
+
 	async execute(interaction, args) {
 		await interaction.deferReply({ ephemeral: false });
 		const maxFileSize = await utils.getMaxFileSize(interaction.guild);
@@ -59,7 +61,7 @@ export default {
 				const fileStat = fs.statSync(gifsicleOutput);
 				const fileSize = fileStat.size / 1000000.0;
 
-				if (fileSize > 100) {
+				if (fileSize > 25) {
 					await interaction.deleteReply();
 					await interaction.followUp('❌ Uh oh! The video once converted is too big!', { ephemeral: true });
 				}
