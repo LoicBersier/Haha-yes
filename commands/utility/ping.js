@@ -5,8 +5,9 @@ export default {
 		.setName('ping')
 		.setDescription('Replies with Pong!'),
 	category: 'utility',
-	async execute(interaction) {
+	integration_types: [0, 1],
 
+	async execute(interaction) {
 		const row = new ActionRowBuilder()
 			.addComponents(
 				new ButtonBuilder()
