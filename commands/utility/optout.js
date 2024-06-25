@@ -6,6 +6,8 @@ export default {
 		.setName('optout')
 		.setDescription('Opt out of the non commands features and arguments logging (for debugging purposes)'),
 	category: 'utility',
+	integration_types: [0, 1],
+
 	async execute(interaction, args, client) {
 		const isOptOut = await db.optout.findOne({ where: { userID: interaction.user.id } });
 
