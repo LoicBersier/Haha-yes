@@ -12,18 +12,20 @@ export default {
 		const client = interaction.client;
 		if (interaction.type !== InteractionType.ApplicationCommand) return;
 
-		const globalBlacklist = await db.Blacklists.findOne({ where: { type:'global', uid:interaction.user.id } });
-		// const serverBlacklist = await db.Blacklists.findOne({ where: { type:'guild', uid:interaction.guild.id } });
+		const globalBlacklist = await db.Blacklists.findOne({ where: { type:'global', uid:interaction.user.id } })
 		const commandBlacklist = await db.Blacklists.findOne({ where: { type:interaction.commandName, uid:interaction.user.id } });
+		
+		if (interaction.guild) {
+			const serverBlacklist = await db.Blacklists.findOne({ where: { type:'guild', uid:interaction.guild.id } });
+			if (serverBlacklist) {
+				interaction.reply({ content: `This guild has been blacklisted for the following reason: \`${serverBlacklist.reason}\``, ephemeral: true });
+				return interaction.guild.leave();
+			}
+		}
 
 		if (globalBlacklist) {
 			return interaction.reply({ content: `You are globally blacklisted for the following reason: \`${globalBlacklist.reason}\``, ephemeral: true });
 		}
-		/* Server blacklist is untested
-		else if (serverBlacklist) {
-			return interaction.reply({ content: `This guild has been blacklisted for the following reason: \`${serverBlacklist.reason}\``, ephemeral: true });
-		}
-		*/
 		else if (commandBlacklist) {
 			return interaction.reply({ content: `You are blacklisted for the following reason: \`${commandBlacklist.reason}\``, ephemeral: true });
 		}

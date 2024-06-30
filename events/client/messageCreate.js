@@ -282,17 +282,19 @@ export default {
 		if (!command) return;
 
 		const globalBlacklist = await db.Blacklists.findOne({ where: { type:'global', uid:message.author.id } });
-		// const serverBlacklist = await db.Blacklists.findOne({ where: { type:'guild', uid:message.guild.id } });
 		const commandBlacklist = await db.Blacklists.findOne({ where: { type:commandName, uid:message.author.id } });
+
+		if (message.guild) {
+			const serverBlacklist = await db.Blacklists.findOne({ where: { type:'guild', uid:message.guild.id } });
+			if (serverBlacklist) {
+				message.reply({ content: `This guild has been blacklisted for the following reason: \`${serverBlacklist.reason}\``, ephemeral: true });
+				return message.guild.leave();
+			}
+		}
 
 		if (globalBlacklist) {
 			return message.reply({ content: `You are globally blacklisted for the following reason: \`${globalBlacklist.reason}\``, ephemeral: true });
-		}
-		/* Server blacklist is untested
-		else if (serverBlacklist) {
-			return message.reply({ content: `This guild has been blacklisted for the following reason: \`${serverBlacklist.reason}\``, ephemeral: true });
-		}
-		*/
+		}		
 		else if (commandBlacklist) {
 			return message.reply({ content: `You are blacklisted for the following reason: \`${commandBlacklist.reason}\``, ephemeral: true });
 		}

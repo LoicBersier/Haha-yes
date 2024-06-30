@@ -32,12 +32,22 @@ export default {
 		if (!blacklist) {
 			const body = { type:command, uid: userid, reason: reason };
 			Blacklists.create(body);
-			let user = userid;
-			await client.users.fetch(userid);
-			user = client.users.resolve(userid).username;
+			if (command === 'guild') {
+				let guildid = userid;
+				await client.guilds.fetch(guildid);
+				const guild =client.guilds.resolve(guildid).name;
+	
+				return interaction.editReply(`The guild ${guild} (${guildid}) has been blacklisted with the following reason \`${reason}\``);	
 
-
-			return interaction.editReply(`${user} (${userid}) has been blacklisted from ${command} with the following reason \`${reason}\``);
+			}
+			else {
+				let user = userid;
+				await client.users.fetch(userid);
+				user = client.users.resolve(userid).username;
+	
+	
+				return interaction.editReply(`${user} (${userid}) has been blacklisted from ${command} with the following reason \`${reason}\``);	
+			}
 		}
 		else {
 			const row = new ActionRowBuilder()
