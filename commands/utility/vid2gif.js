@@ -19,6 +19,10 @@ export default {
 			option.setName('quality')
 				.setDescription('Quality of the gif conversion. Default 70. Number between 1 and 100')
 				.setRequired(false))
+		.addIntegerOption(option =>
+			option.setName('fps')
+				.setDescription('Change the speed at which the gif play at. Default 20. Number between 1 and 100.')
+				.setRequired(false))
 		.addBooleanOption(option =>
 			option.setName('noloop')
 				.setDescription('Stop the gif from looping')
@@ -32,11 +36,22 @@ export default {
 		const maxFileSize = await utils.getMaxFileSize(interaction.guild);
 		const url = args.url;
 		let quality = args.quality;
-		if (quality <= 0) {
-			quality = 1;
+		if (quality) {
+			if (quality <= 0) {
+				quality = 1;
+			}
+			else if (quality > 100) {
+				quality = 100;
+			}
 		}
-		else if (quality > 100) {
-			quality = 100;
+		
+		if (args.fps) {
+			if (args.fps <= 0) {
+				args.fps = 1;
+			}
+			else if (args.fps > 100) {
+				args.fps = 100;
+			}
 		}
 
 		if (!await utils.stringIsAValidurl(url)) {
@@ -54,7 +69,7 @@ export default {
 				// Extract every frame for gifski
 				await utils.ffmpeg(['-i', output, `${os.tmpdir()}/frame${interaction.id}%04d.png`]);
 				// Make it look better
-				await gifski(gifskiOutput, `${os.tmpdir()}/frame${interaction.id}*`, quality);
+				await gifski(gifskiOutput, `${os.tmpdir()}/frame${interaction.id}*`, quality, args.fps);
 				// Optimize it
 				await gifsicle(gifskiOutput, gifsicleOutput, args.noloop);
 
@@ -79,10 +94,10 @@ export default {
 	},
 };
 
-async function gifski(output, input, quality) {
+async function gifski(output, input, quality, fps) {
 	return await new Promise((resolve, reject) => {
 		// Shell: true should be fine as no user input is being passed
-		execFile('gifski', ['--quality', quality ? quality : 70, '-o', output, input], { shell: true }, (err, stdout, stderr) => {
+		execFile('gifski', ['--quality', quality ? quality : 70, '--fps', fps ? fps : 20, '-o', output, input], { shell: true }, (err, stdout, stderr) => {
 			if (err) {
 				reject(stderr);
 			}
