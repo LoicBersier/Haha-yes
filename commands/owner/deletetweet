@@ -1,3 +1,5 @@
+// TODO
+// Switch to 'twitter-api-v2'
 import { SlashCommandBuilder } from 'discord.js';
 import Twit from 'twit';
 
