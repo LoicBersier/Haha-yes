@@ -42,7 +42,7 @@ export default {
 				{ name: 'Channels', value: client.channels.cache.size.toString(), inline: true },
 				{ name: 'Users', value: client.users.cache.size.toString(), inline: true },
 				{ name: 'Ram usage', value: `${bytesToSize(process.memoryUsage().heapUsed)}/${bytesToSize(os.totalmem)}`, inline: true },
-				{ name: 'CPU', value: `${os.cpus()[0].model} (${os.cpus().length} core)`, inline: true },
+				{ name: 'CPU', value: `${os.cpus()[0].model} (${os.cpus().length} core) (${os.arch()})`, inline: true },
 				{ name: 'OS', value: `${os.platform()} ${os.release()}`, inline: true },
 				{ name: 'Nodejs version', value: process.version, inline: true },
 				{ name: 'Discord.js version', value: version, inline: true },
