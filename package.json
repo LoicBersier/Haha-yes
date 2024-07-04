@@ -17,17 +17,15 @@
   "homepage": "https://libtar.de",
   "license": "AGPL",
   "dependencies": {
-    "@discordjs/rest": "^0.4.1",
-    "discord-api-types": "^0.33.5",
-    "discord.js": "^14.9.0",
+    "@discordjs/rest": "^2.3.0",
+    "discord-api-types": "^0.37.91",
+    "discord.js": "^14.15.3",
     "dotenv": "^16.0.1",
-    "mariadb": "^3.0.1",
-    "mysql2": "^2.3.3",
-    "node-fetch": "^3.2.6",
-    "safe-regex": "github:davisjam/safe-regex",
-    "sequelize": "^6.21.3",
-    "turndown": "^7.1.1",
-    "twitter-api-v2": "^1.15.0",
+    "mariadb": "^3.3.1",
+    "node-fetch": "^3.3.2",
+    "sequelize": "^6.37.3",
+    "turndown": "^7.2.0",
+    "twitter-api-v2": "^1.17.1",
     "ytpplus-node": "github:Supositware/ytpplus-node"
   },
   "devDependencies": {
@@ -36,6 +34,6 @@
     "@types/node": "^18.7.3",
     "eslint": "^8.16.0",
     "sequelize-cli": "^6.4.1",
-    "sqlite3": "^5.1.6"
+    "sqlite3": "^5.1.7"
   }
 }
