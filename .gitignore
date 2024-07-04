@@ -6,8 +6,8 @@ unloaded/
 database.sqlite3
 tmp/*.js
 
-bin/yt-dlp
-bin/HandBrakeCLI
+bin/yt-dlp*
+bin/HandBrakeCLI*
 bin/upload.sh
 bin/dectalk
 
