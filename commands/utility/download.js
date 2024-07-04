@@ -152,7 +152,7 @@ async function download(url, interaction, originalInteraction, format = undefine
 
 			const compressInteraction = originalInteraction ? originalInteraction : interaction;
 			if (compressInteraction.doCompress) {
-				const presets = [ 'Social 8 MB 3 Minutes 360p30', 'Social 50 MB 10 Minutes 480p30', 'Social 50 MB 5 Minutes 720p30', 'Social 100 MB 5 Minutes 1080p30' ];
+				const presets = [ 'Social 25 MB 5 Minutes 360p60', 'Social 25 MB 2 Minutes 540p60', 'Social 25 MB 1 Minute 720p60', 'Social 25 MB 30 Seconds 1080p60' ];
 				const options = [];
 
 				presets.forEach(p => {
