@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { Client, Collection, GatewayIntentBits, Partials } from 'discord.js';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -41,7 +41,7 @@ async function loadCommandFromDir(dir) {
 
 	for (const file of commandFiles) {
 		const filePath = path.join(commandsPath, file);
-		import(filePath)
+		import(pathToFileURL(filePath))
 			.then(importedCommand => {
 				const command = importedCommand.default;
 				client.commands.set(command.data.name, command);
@@ -57,7 +57,7 @@ async function loadEventFromDir(dir, listener) {
 
 	for (const file of eventFiles) {
 		const filePath = path.join(eventsPath, file);
-		import(filePath)
+		import(pathToFileURL(filePath))
 			.then(importedEvent => {
 				const event = importedEvent.default;
 				if (event.once) {
