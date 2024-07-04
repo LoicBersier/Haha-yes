@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from 'discord.js';
 import { EmbedBuilder } from 'discord.js';
-import donations from '../../json/donations.json' assert {type: 'json'};
+import donations from '../../json/donations.json' with {type: 'json'};
 
 export default {
 	data: new SlashCommandBuilder()

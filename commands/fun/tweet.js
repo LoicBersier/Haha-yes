@@ -8,7 +8,7 @@ import util from 'node:util';
 import stream from 'node:stream';
 
 import db from '../../models/index.js';
-import wordToCensor from '../../json/censor.json' assert {type: 'json'};
+import wordToCensor from '../../json/censor.json' with {type: 'json'};
 const { twiConsumer, twiConsumerSecret, twiToken, twiTokenSecret, twiChannel, twiLogChannel } = process.env;
 
 const Blacklists = db.Blacklists;

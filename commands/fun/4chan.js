@@ -4,7 +4,7 @@ import TurndownService from 'turndown';
 const turndown = new TurndownService();
 import fetch from 'node-fetch';
 
-import fourChan from '../../json/4chan.json' assert {type: 'json'};
+import fourChan from '../../json/4chan.json' with {type: 'json'};
 
 export default {
 	data: new SlashCommandBuilder()

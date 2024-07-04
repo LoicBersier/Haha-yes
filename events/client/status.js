@@ -1,7 +1,7 @@
 import { ActivityType } from 'discord.js';
-import game from '../../json/playing.json' assert {type: 'json'};
-import music from '../../json/listening.json' assert {type: 'json'};
-import watch from '../../json/watching.json' assert {type: 'json'};
+import game from '../../json/playing.json' with {type: 'json'};
+import music from '../../json/listening.json' with {type: 'json'};
+import watch from '../../json/watching.json' with {type: 'json'};
 
 export default {
 	name: 'ready',
