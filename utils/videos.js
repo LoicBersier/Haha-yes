@@ -146,7 +146,7 @@ async function autoCrop(input, output) {
 
 		execFile('ffprobe', 
 			['-f', 'lavfi', '-i', `movie=${ffprobeInput},cropdetect`, '-show_entries',
-			'packet_tags=lavfi.cropdetect.x1,lavfi.cropdetect.x2,lavfi.cropdetect.y1,lavfi.cropdetect.y2,lavfi.cropdetect.w,lavfi.cropdetect.h,lavfi.cropdetect.x,lavfi.cropdetect.y',
+			'packet_tags=lavfi.cropdetect.w,lavfi.cropdetect.h,lavfi.cropdetect.x,lavfi.cropdetect.y',
 			'-read_intervals', '%+#10', '-hide_banner', '-print_format', 'json'], async (err, stdout, stderr) => {
 			if (err) {
 				reject(stderr);
