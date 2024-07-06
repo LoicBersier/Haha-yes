@@ -11,6 +11,7 @@ export default {
 	getVideoCodec,
 	getVideoSize,
 	getMaxFileSize,
+	autoCrop,
 };
 async function downloadVideo(urlArg, output, format = `bestvideo[height<=?${ytdlpMaxResolution}]+bestaudio/best`) {
 	await new Promise((resolve, reject) => {
@@ -70,7 +71,7 @@ async function stringIsAValidurl(s) {
 
 async function compressVideo(input, output, preset) {
 	await new Promise((resolve, reject) => {
-		execFile('./bin/HandBrakeCLI', ['-i', input, '-Z', preset, '-o', `${os.tmpdir()}/${output}`], (err, stdout, stderr) => {
+		execFile('./bin/HandBrakeCLI', ['-i', input, '-Z', preset, '--turbo', '--optimize', '-o', `${os.tmpdir()}/${output}`], (err, stdout, stderr) => {
 			if (err) {
 				reject(stderr);
 			}
@@ -132,5 +133,41 @@ async function getMaxFileSize(guild) {
 			resolve(25);
 			break;
 		}
+	});
+}
+
+async function autoCrop(input, output) {
+	return await new Promise((resolve, reject) => {
+		let ffprobeInput = input;
+		if (process.platform === 'win32') { 
+			// ffprobe 'movie=' options does not like windows absolute path
+			ffprobeInput = input.replace(/\\/g, '/').replace(/\:/g, '\\\\:');
+		}
+
+		execFile('ffprobe', 
+			['-f', 'lavfi', '-i', `movie=${ffprobeInput},cropdetect`, '-show_entries',
+			'packet_tags=lavfi.cropdetect.x1,lavfi.cropdetect.x2,lavfi.cropdetect.y1,lavfi.cropdetect.y2,lavfi.cropdetect.w,lavfi.cropdetect.h,lavfi.cropdetect.x,lavfi.cropdetect.y',
+			'-read_intervals', '%+#10', '-hide_banner', '-print_format', 'json'], async (err, stdout, stderr) => {
+			if (err) {
+				reject(stderr);
+			}
+			if (stderr) {
+				console.error(stderr);
+			}
+			const packets = JSON.parse(stdout).packets;
+
+			for (let i = 0; i < packets.length; i++) {
+				const element = packets[i];
+				
+				if (element.tags) {
+					const cropdetect = element.tags;
+					await ffmpeg(['-i', input, '-vf', `crop=${cropdetect['lavfi.cropdetect.w']}:${cropdetect['lavfi.cropdetect.h']}:${cropdetect['lavfi.cropdetect.x']}:${cropdetect['lavfi.cropdetect.y']}`, '-vcodec', 'libx264', '-acodec', 'aac', output])
+					break;
+				}
+			}
+
+			console.log(NODE_ENV === 'development' ? stdout : null);
+			resolve();
+		});
 	});
 }

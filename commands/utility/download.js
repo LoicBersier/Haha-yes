@@ -25,11 +25,15 @@ export default {
 				.setRequired(false))
 		.addBooleanOption(option =>
 			option.setName('compress')
-				.setDescription('Compress the video?')
+				.setDescription('Compress the video.')
+				.setRequired(false))
+		.addBooleanOption(option =>
+			option.setName('autocrop')
+				.setDescription('Autocrop borders on videos. Ignored when using compress option.')
 				.setRequired(false))
 		.addBooleanOption(option =>
 			option.setName('description')
-				.setDescription('Include the video description?')
+				.setDescription('Include the video description.')
 				.setRequired(false)),
 	category: 'utility',
 	alias: ['dl'],
@@ -41,6 +45,7 @@ export default {
 		const format = args.format;
 		maxFileSize = await utils.getMaxFileSize(interaction.guild);
 		interaction.doCompress = args.compress;
+		interaction.doAutocrop = args.autocrop;
 
 		await interaction.deferReply({ ephemeral: false });
 
@@ -187,14 +192,21 @@ async function download(url, interaction, originalInteraction, format = undefine
 				return;
 			}
 
-			// If the video format is not one compatible with Discord, reencode it.
-			const bannedFormats = ['hevc'];
-			const codec = await utils.getVideoCodec(output);
-
-			if (bannedFormats.includes(codec)) {
+			// If the video format is not one compatible with Discord, reencode it unless autocrop is choosen in which case it gets reencoded anyway.
+			if (!interaction.doAutocrop) {
+				const bannedFormats = ['hevc'];
+				const codec = await utils.getVideoCodec(output);
+	
+				if (bannedFormats.includes(codec)) {
+					const oldOutput = output;
+					output = `${os.tmpdir()}/264${file}`;
+					await utils.ffmpeg(['-i', oldOutput, '-vcodec', 'libx264', '-acodec', 'aac', output]);
+				}
+			}
+			else if (interaction.doAutocrop && !compressInteraction.doCompress) {
 				const oldOutput = output;
-				output = `${os.tmpdir()}/264${file}`;
-				await utils.ffmpeg(['-i', oldOutput, '-vcodec', 'libx264', '-acodec', 'aac', output]);
+				output = `${os.tmpdir()}/autocrop${file}`;
+				await utils.autoCrop(oldOutput, output);
 			}
 
 			const fileStat = fs.statSync(output);
