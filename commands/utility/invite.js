@@ -8,6 +8,7 @@ export default {
 				.setDescription('The bot you want to make an invite link for.')
 				.setRequired(false)),
 	category: 'utility',
+	integration_types: [0, 1],
 	async execute(interaction, args, client) {
 		if (args.bot) {
 			if (args.bot.user.bot) {
