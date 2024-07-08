@@ -24,6 +24,10 @@ export default {
 				.setDescription('Change the speed at which the gif play at. Default 20. Number between 1 and 100.')
 				.setRequired(false))
 		.addBooleanOption(option =>
+			option.setName('autocrop')
+				.setDescription('Autocrop borders on gif.')
+				.setRequired(false))
+		.addBooleanOption(option =>
 			option.setName('noloop')
 				.setDescription('Stop the gif from looping')
 				.setRequired(false)),
@@ -62,7 +66,14 @@ export default {
 		utils.downloadVideo(url, interaction.id)
 			.then(async () => {
 				const file = fs.readdirSync(os.tmpdir()).filter(fn => fn.startsWith(interaction.id));
-				const output = `${os.tmpdir()}/${file}`;
+				let output = `${os.tmpdir()}/${file}`;
+
+				if (args.autocrop) {
+					const oldOutput = output;
+					output = `${os.tmpdir()}/autocrop${file}`;
+					await utils.autoCrop(oldOutput, output);
+				}
+
 				const gifskiOutput = output.replace(path.extname(output), '.gif');
 				const gifsicleOutput = output.replace(path.extname(output), 'gifsicle.gif');
 
