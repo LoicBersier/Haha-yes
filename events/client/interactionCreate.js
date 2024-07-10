@@ -40,6 +40,10 @@ export default {
 
 		const isOptOut = await db.optout.findOne({ where: { userID: interaction.user.id } });
 
+		if (commandName === 'optout') {
+			isOptOut = true
+		}
+		
 		const timestamp = new Date();
 		console.log(`[${timestamp.toISOString()}] \x1b[33m${ isOptOut ? 'A user' : `${userTag} (${userID})`}\x1b[0m launched command \x1b[33m${commandName}\x1b[0m using slash`);
 
