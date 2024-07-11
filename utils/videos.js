@@ -139,35 +139,35 @@ async function getMaxFileSize(guild) {
 async function autoCrop(input, output) {
 	return await new Promise((resolve, reject) => {
 		let ffprobeInput = input;
-		if (process.platform === 'win32') { 
+		if (process.platform === 'win32') {
 			// ffprobe 'movie=' options does not like windows absolute path
 			ffprobeInput = input.replace(/\\/g, '/').replace(/\:/g, '\\\\:');
 		}
 
-		execFile('ffprobe', 
+		execFile('ffprobe',
 			['-f', 'lavfi', '-i', `movie=${ffprobeInput},cropdetect`, '-show_entries',
-			'packet_tags=lavfi.cropdetect.w,lavfi.cropdetect.h,lavfi.cropdetect.x,lavfi.cropdetect.y',
-			'-read_intervals', '%+#10', '-hide_banner', '-print_format', 'json'], async (err, stdout, stderr) => {
-			if (err) {
-				reject(stderr);
-			}
-			if (stderr) {
-				console.error(stderr);
-			}
-			const packets = JSON.parse(stdout).packets;
-
-			for (let i = 0; i < packets.length; i++) {
-				const element = packets[i];
-				
-				if (element.tags) {
-					const cropdetect = element.tags;
-					await ffmpeg(['-i', input, '-vf', `crop=${cropdetect['lavfi.cropdetect.w']}:${cropdetect['lavfi.cropdetect.h']}:${cropdetect['lavfi.cropdetect.x']}:${cropdetect['lavfi.cropdetect.y']}`, '-vcodec', 'libx264', '-acodec', 'aac', output])
-					break;
+				'packet_tags=lavfi.cropdetect.w,lavfi.cropdetect.h,lavfi.cropdetect.x,lavfi.cropdetect.y',
+				'-read_intervals', '%+#10', '-hide_banner', '-print_format', 'json'], async (err, stdout, stderr) => {
+				if (err) {
+					reject(stderr);
 				}
-			}
+				if (stderr) {
+					console.error(stderr);
+				}
+				const packets = JSON.parse(stdout).packets;
 
-			console.log(NODE_ENV === 'development' ? stdout : null);
-			resolve();
-		});
+				for (let i = 0; i < packets.length; i++) {
+					const element = packets[i];
+
+					if (element.tags) {
+						const cropdetect = element.tags;
+						await ffmpeg(['-i', input, '-vf', `crop=${cropdetect['lavfi.cropdetect.w']}:${cropdetect['lavfi.cropdetect.h']}:${cropdetect['lavfi.cropdetect.x']}:${cropdetect['lavfi.cropdetect.y']}`, '-vcodec', 'libx264', '-acodec', 'aac', output]);
+						break;
+					}
+				}
+
+				console.log(NODE_ENV === 'development' ? stdout : null);
+				resolve();
+			});
 	});
 }

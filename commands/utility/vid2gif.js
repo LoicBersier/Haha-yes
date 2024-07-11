@@ -48,7 +48,7 @@ export default {
 				quality = 100;
 			}
 		}
-		
+
 		if (args.fps) {
 			if (args.fps <= 0) {
 				args.fps = 1;

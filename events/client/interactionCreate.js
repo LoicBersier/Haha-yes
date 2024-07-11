@@ -12,9 +12,9 @@ export default {
 		const client = interaction.client;
 		if (interaction.type !== InteractionType.ApplicationCommand) return;
 
-		const globalBlacklist = await db.Blacklists.findOne({ where: { type:'global', uid:interaction.user.id } })
+		const globalBlacklist = await db.Blacklists.findOne({ where: { type:'global', uid:interaction.user.id } });
 		const commandBlacklist = await db.Blacklists.findOne({ where: { type:interaction.commandName, uid:interaction.user.id } });
-		
+
 		if (interaction.guild) {
 			const serverBlacklist = await db.Blacklists.findOne({ where: { type:'guild', uid:interaction.guild.id } });
 			if (serverBlacklist) {
@@ -38,12 +38,12 @@ export default {
 
 		if (!command) return;
 
-		const isOptOut = await db.optout.findOne({ where: { userID: interaction.user.id } });
+		let isOptOut = await db.optout.findOne({ where: { userID: interaction.user.id } });
 
 		if (commandName === 'optout') {
-			isOptOut = true
+			isOptOut = true;
 		}
-		
+
 		const timestamp = new Date();
 		console.log(`[${timestamp.toISOString()}] \x1b[33m${ isOptOut ? 'A user' : `${userTag} (${userID})`}\x1b[0m launched command \x1b[33m${commandName}\x1b[0m using slash`);
 

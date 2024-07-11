@@ -196,7 +196,7 @@ async function download(url, interaction, originalInteraction, format = undefine
 			if (!interaction.doAutocrop) {
 				const bannedFormats = ['hevc'];
 				const codec = await utils.getVideoCodec(output);
-	
+
 				if (bannedFormats.includes(codec)) {
 					const oldOutput = output;
 					output = `${os.tmpdir()}/264${file}`;
