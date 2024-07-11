@@ -294,7 +294,7 @@ export default {
 
 		if (globalBlacklist) {
 			return message.reply({ content: `You are globally blacklisted for the following reason: \`${globalBlacklist.reason}\``, ephemeral: true });
-		}
+		}		
 		else if (commandBlacklist) {
 			return message.reply({ content: `You are blacklisted for the following reason: \`${commandBlacklist.reason}\``, ephemeral: true });
 		}
@@ -305,7 +305,7 @@ export default {
 		let isOptOut = await db.optout.findOne({ where: { userID: message.author.id } });
 
 		if (commandName === 'optout') {
-			isOptOut = true;
+			isOptOut = true
 		}
 
 		const timestamp = new Date();
@@ -402,16 +402,10 @@ export default {
 			});
 
 			const argsLength = command.data.options.length - argsToDelete;
-			const missingRequired = [];
 
 			for (let i = 0, j = 0; i < argsLength; i++, j++) {
-				const arg = command.data.options[j];
-
-				if (arg.required && !messageArgs[i]) {
-					missingRequired.push({ name: arg.name, description: arg.description });
-				}
-
 				if (!messageArgs[i]) continue;
+				const arg = command.data.options[j];
 
 				if (arg.type === ApplicationCommandOptionType.Attachment) continue;
 
@@ -441,14 +435,6 @@ export default {
 
 			if (!isOptOut && argsLength > 0) {
 				console.log(`[${timestamp.toISOString()}] \x1b[33m⤷\x1b[0m with args ${JSON.stringify(args)}`);
-			}
-
-			if (missingRequired) {
-				let missingMsg = '';
-				missingRequired.forEach(arg => {
-					missingMsg += `${arg.name} | ${arg.description}\n`;
-				});
-				return message.reply(`You are missing a required argument!\n\`${missingMsg}\``);
 			}
 
 			await command.execute(message, args, client)
