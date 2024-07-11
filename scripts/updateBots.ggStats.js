@@ -1,9 +1,6 @@
-import dotenv from 'dotenv';
 import fetch from 'node-fetch';
 import { Client, GatewayIntentBits } from 'discord.js';
 
-
-dotenv.config();
 const { botsggToken, botsggEndpoint, token } = process.env;
 
 const client = new Client({

@@ -11,7 +11,7 @@ These instructions will get you a copy of the project up and running on your loc
 You need to install the following
 
 
-* ffmpeg (Optional but very recommanded: for yt-dlp to merge video/audio formats and Handbrake to compress videos.)
+* ffmpeg & ffprobe (Optional but very recommanded: for yt-dlp to merge video/audio formats and Handbrake to compress videos.)
 * yt-dlp ([a file can download it for you](scripts/updateytdlp.js))
 * HandBrakeCLI (For [download](commands/utility/download.js))
 * gifsicle (For [vid2gif](commands/utility/vid2gif.js))
@@ -27,10 +27,10 @@ npm install
 ```
 
 To run the bot for the first time you need to execute [deploy-commands.js](scripts/deploy-commands.js) so the commands can be registered, don't forget to set your .env accordingly.
-``node scripts/deploy-commands.cjs``
+``node --env-file .env scripts/deploy-commands.cjs``
 
 then you can just run it normally.
-``node index.js``
+``node --env-file .env index.js``
 
 If you want to run the bot automatically you can use pm2
 ```
@@ -38,7 +38,7 @@ npm install -g pm2
 pm2 start index.js --name (insert name)
 ```
 If you are on linux and don't need automatic restart on crash you can just do
-``nohup node index.js &``
+``nohup node --env-file .env index.js &``
 
 ## Built With
 

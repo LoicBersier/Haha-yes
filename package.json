@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node .",
-    "deploy": "node scripts/deploy-commands.js",
-    "deployGlobally": "node scripts/deploy-commands.js global",
+    "start": "node --env-file .env .",
+    "deploy": "node --env-file .env scripts/deploy-commands.js",
+    "deployGlobally": "node --env-file .env scripts/deploy-commands.js global",
     "lint": "eslint .",
     "lintfix": "eslint . --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,7 +20,6 @@
     "@discordjs/rest": "^2.3.0",
     "discord-api-types": "^0.37.91",
     "discord.js": "^14.15.3",
-    "dotenv": "^16.0.1",
     "mariadb": "^3.3.1",
     "node-fetch": "^3.3.2",
     "sequelize": "^6.37.3",

@@ -2,8 +2,6 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { Client, Collection, GatewayIntentBits, Partials } from 'discord.js';
-import dotenv from 'dotenv';
-dotenv.config();
 const { token, NODE_ENV } = process.env;
 
 const __filename = fileURLToPath(import.meta.url);

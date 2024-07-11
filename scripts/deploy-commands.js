@@ -3,8 +3,6 @@ import { Routes } from 'discord-api-types/v9';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import dotenv from 'dotenv';
-dotenv.config();
 const { clientId, guildId, token } = process.env;
 
 const __filename = fileURLToPath(import.meta.url);
