@@ -193,9 +193,8 @@ async function download(url, interaction, originalInteraction, format = undefine
 			}
 
 			// If the video format is not one compatible with Discord, reencode it unless autocrop is choosen in which case it gets reencoded anyway.
-			/* Update: Discord now support hevc
 			if (!interaction.doAutocrop) {
-				const bannedFormats = ['hevc'];
+				const bannedFormats = ['av1'];
 				const codec = await utils.getVideoCodec(output);
 
 				if (bannedFormats.includes(codec)) {
@@ -204,9 +203,7 @@ async function download(url, interaction, originalInteraction, format = undefine
 					await utils.ffmpeg(['-i', oldOutput, '-vcodec', 'libx264', '-acodec', 'aac', output]);
 				}
 			}
-			else
-			*/
-			if (interaction.doAutocrop && !compressInteraction.doCompress) {
+			else if (interaction.doAutocrop && !compressInteraction.doCompress) {
 				const oldOutput = output;
 				output = `${os.tmpdir()}/autocrop${file}`;
 				await utils.autoCrop(oldOutput, output);
