@@ -30,7 +30,7 @@ export default {
 				data: ${JSON.stringify(client.commands.get(args.commandname).data)},
 				category: '${client.commands.get(args.commandname).category}',
 				async execute(interaction) {
-					return interaction.reply('${args.placeholder}');
+					return interaction.reply('${args.placeholder.replace(/'/g, '\\\'')}');
 				},
 			};
 			
