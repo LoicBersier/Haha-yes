@@ -459,6 +459,8 @@ export default {
 		}
 		catch (error) {
 			console.error(error);
+			const hasPrallelLimit = await ratelimiter.checkParallel(message.author, commandName, command);
+			if (hasPrallelLimit) ratelimiter.removeParallel(commandName);
 			await message.reply({ content: `There was an error while executing this command!\n\`${error}\`` })
 				.catch(async () => {
 					await message.channel.send({ content: `There was an error while executing this command!\n\`${error}\`` });

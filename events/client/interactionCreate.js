@@ -120,6 +120,8 @@ export default {
 		}
 		catch (error) {
 			console.error(error);
+			const hasPrallelLimit = await ratelimiter.checkParallel(interaction.user, commandName, command);
+			if (hasPrallelLimit) ratelimiter.removeParallel(commandName);
 			await interaction.followUp({ content: `There was an error while executing this command!\n\`${error}\``, ephemeral: true });
 		}
 	},
