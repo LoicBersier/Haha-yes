@@ -8,6 +8,7 @@ let client;
 let maxFileSize;
 
 let { ytdlpMaxResolution } = process.env;
+const { proxy } = process.env;
 // Convert to number as process.env is always a string
 ytdlpMaxResolution = Number(ytdlpMaxResolution);
 
@@ -60,7 +61,7 @@ export default {
 
 		if (format) {
 			let qualitys = await new Promise((resolve, reject) => {
-				execFile('./bin/yt-dlp', [url, '--print', '%()j'], (err, stdout, stderr) => {
+				execFile('./bin/yt-dlp', [proxy ? '--proxy' : '', proxy ? proxy : '', url, '--print', '%()j'], (err, stdout, stderr) => {
 					if (err) {
 						reject(stderr);
 					}
@@ -310,7 +311,7 @@ async function checkSize(url, format, args, interaction, tries = 0) {
 
 async function getVideoDescription(urlArg) {
 	return await new Promise((resolve, reject) => {
-		execFile('./bin/yt-dlp', [urlArg, '--no-warnings', '-O', '%(description)s'], (err, stdout, stderr) => {
+		execFile('./bin/yt-dlp', [proxy ? '--proxy' : '', proxy ? proxy : '', urlArg, '--no-warnings', '-O', '%(description)s'], (err, stdout, stderr) => {
 			if (err) {
 				reject(stderr);
 			}

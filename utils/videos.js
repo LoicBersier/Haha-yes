@@ -1,6 +1,6 @@
 import os from 'node:os';
 import { execFile } from 'node:child_process';
-const { NODE_ENV, ytdlpMaxResolution } = process.env;
+const { NODE_ENV, ytdlpMaxResolution, proxy } = process.env;
 
 export default {
 	downloadVideo,
@@ -15,7 +15,7 @@ export default {
 };
 async function downloadVideo(urlArg, output, format = `bestvideo[height<=?${ytdlpMaxResolution}]+bestaudio/best`) {
 	await new Promise((resolve, reject) => {
-		execFile('./bin/yt-dlp', ['-f', format, urlArg, '-o', `${os.tmpdir()}/${output}.%(ext)s`, '--force-overwrites', '--no-playlist', '--remux-video=mp4/webm/mov', '--no-warnings'], (err, stdout, stderr) => {
+		execFile('./bin/yt-dlp', [proxy ? '--proxy' : '', proxy ? proxy : '', '-f', format, urlArg, '-o', `${os.tmpdir()}/${output}.%(ext)s`, '--force-overwrites', '--no-playlist', '--remux-video=mp4/webm/mov', '--no-warnings'], (err, stdout, stderr) => {
 			if (err) {
 				return reject(stderr);
 			}
