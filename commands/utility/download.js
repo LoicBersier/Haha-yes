@@ -61,7 +61,12 @@ export default {
 
 		if (format) {
 			let qualitys = await new Promise((resolve, reject) => {
-				execFile('./bin/yt-dlp', [proxy ? '--proxy' : '', proxy ? proxy : '', url, '--print', '%()j'], (err, stdout, stderr) => {
+				const options = [url, '--print', '%()j'];
+				if (proxy) {
+					options.push('--proxy');
+					options.push(proxy);
+				};
+				execFile('./bin/yt-dlp', options, (err, stdout, stderr) => {
 					if (err) {
 						reject(stderr);
 					}
@@ -311,7 +316,12 @@ async function checkSize(url, format, args, interaction, tries = 0) {
 
 async function getVideoDescription(urlArg) {
 	return await new Promise((resolve, reject) => {
-		execFile('./bin/yt-dlp', [proxy ? '--proxy' : '', proxy ? proxy : '', urlArg, '--no-warnings', '-O', '%(description)s'], (err, stdout, stderr) => {
+		const options = [urlArg, '--no-warnings', '-O', '%(description)s'];
+		if (proxy) {
+			options.push('--proxy');
+			options.push(proxy);
+		};
+		execFile('./bin/yt-dlp', options, (err, stdout, stderr) => {
 			if (err) {
 				reject(stderr);
 			}

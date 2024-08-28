@@ -15,7 +15,12 @@ export default {
 };
 async function downloadVideo(urlArg, output, format = `bestvideo[height<=?${ytdlpMaxResolution}]+bestaudio/best`) {
 	await new Promise((resolve, reject) => {
-		execFile('./bin/yt-dlp', [proxy ? '--proxy' : '', proxy ? proxy : '', '-f', format, urlArg, '-o', `${os.tmpdir()}/${output}.%(ext)s`, '--force-overwrites', '--no-playlist', '--remux-video=mp4/webm/mov', '--no-warnings'], (err, stdout, stderr) => {
+		const options = ['-f', format, urlArg, '-o', `${os.tmpdir()}/${output}.%(ext)s`, '--force-overwrites', '--no-playlist', '--remux-video=mp4/webm/mov', '--no-warnings'];
+		if (proxy) {
+			options.push('--proxy');
+			options.push(proxy);
+		};
+		execFile('./bin/yt-dlp', options, (err, stdout, stderr) => {
 			if (err) {
 				return reject(stderr);
 			}
@@ -99,7 +104,12 @@ async function getVideoCodec(input) {
 
 async function getVideoSize(urlArg, format = `bestvideo[height<=?${ytdlpMaxResolution}]+bestaudio/best`) {
 	return await new Promise((resolve, reject) => {
-		execFile('./bin/yt-dlp', [proxy ? '--proxy' : '', proxy ? proxy : '', urlArg, '-f', format, '--no-warnings', '-O', '%(filesize,filesize_approx)s'], (err, stdout, stderr) => {
+		const options = [urlArg, '-f', format, '--no-warnings', '-O', '%(filesize,filesize_approx)s'];
+		if (proxy) {
+			options.push('--proxy');
+			options.push(proxy);
+		};
+		execFile('./bin/yt-dlp', options, (err, stdout, stderr) => {
 			if (err) {
 				reject(stderr);
 			}
