@@ -99,7 +99,7 @@ async function getVideoCodec(input) {
 
 async function getVideoSize(urlArg, format = `bestvideo[height<=?${ytdlpMaxResolution}]+bestaudio/best`) {
 	return await new Promise((resolve, reject) => {
-		execFile('./bin/yt-dlp', [urlArg, '-f', format, '--no-warnings', '-O', '%(filesize,filesize_approx)s'], (err, stdout, stderr) => {
+		execFile('./bin/yt-dlp', [proxy ? '--proxy' : '', proxy ? proxy : '', urlArg, '-f', format, '--no-warnings', '-O', '%(filesize,filesize_approx)s'], (err, stdout, stderr) => {
 			if (err) {
 				reject(stderr);
 			}
