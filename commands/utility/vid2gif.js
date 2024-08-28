@@ -63,6 +63,13 @@ export default {
 			return interaction.editReply({ content: '❌ This does not look like a valid url!', ephemeral: true });
 		}
 
+		const aproxFileSize = await utils.getVideoSize(url, 'bestvideo[height<=?480]');
+		console.log(aproxFileSize);
+
+		if (aproxFileSize > 4) {
+			return interaction.editReply('The file you are trying to convert is too big! Limit is 4 MB');
+		};
+
 		utils.downloadVideo(url, interaction.id)
 			.then(async () => {
 				const file = fs.readdirSync(os.tmpdir()).filter(fn => fn.startsWith(interaction.id));
