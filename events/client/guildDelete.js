@@ -7,6 +7,7 @@ const { statusChannel, NODE_ENV } = process.env;
 export default {
 	name: 'guildDelete',
 	async execute(guild, client) {
+		if (!guild.available) return;
 		const guildOwner = await client.users.fetch(guild.ownerId);
 
 		const isOptOut = await db.optout.findOne({ where: { userID: guildOwner.id } });
