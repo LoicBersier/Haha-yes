@@ -70,7 +70,7 @@ export default {
 			return interaction.editReply('The file you are trying to convert is too big! Limit is 4 MB');
 		};
 
-		utils.downloadVideo(url, interaction.id)
+		utils.downloadVideo(url, interaction.id, 'bestvideo[height<=?480]')
 			.then(async () => {
 				const file = fs.readdirSync(os.tmpdir()).filter(fn => fn.startsWith(interaction.id));
 				let output = `${os.tmpdir()}/${file}`;
