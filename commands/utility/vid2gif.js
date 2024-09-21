@@ -21,7 +21,7 @@ export default {
 				.setRequired(false))
 		.addIntegerOption(option =>
 			option.setName('fps')
-				.setDescription('Change the speed at which the gif play at. Default 20. Number between 1 and 100.')
+				.setDescription('Change the speed at which the gif play at. Number between 1 and 100.')
 				.setRequired(false))
 		.addBooleanOption(option =>
 			option.setName('autocrop')
@@ -81,13 +81,18 @@ export default {
 					await utils.autoCrop(oldOutput, output);
 				}
 
+				// Get the fps of the original video
+				if (!args.fps) {
+					args.fps = getVideoFramerate(output);
+				}
+
 				const gifskiOutput = output.replace(path.extname(output), '.gif');
 				const gifsicleOutput = output.replace(path.extname(output), 'gifsicle.gif');
 
 				// Extract every frame for gifski
 				await utils.ffmpeg(['-i', output, `${os.tmpdir()}/frame${interaction.id}%04d.png`]);
 				// Make it look better
-				await gifski(gifskiOutput, `${os.tmpdir()}/frame${interaction.id}*`, quality, args.fps);
+				await gifski(gifskiOutput, `${os.tmpdir()}/frame${interaction.id}*`, quality, await args.fps);
 				// Optimize it
 				await gifsicle(gifskiOutput, gifsicleOutput, args.noloop);
 
@@ -140,6 +145,22 @@ async function gifsicle(input, output, loop = false) {
 			}
 			console.log(NODE_ENV === 'development' ? stdout : null);
 			resolve();
+		});
+	});
+}
+
+async function getVideoFramerate(input) {
+	return await new Promise((resolve, reject) => {
+		execFile('ffprobe', ['-v', 'error', '-of', 'csv=p=0', '-select_streams', 'v:0', '-show_entries', 'stream=r_frame_rate', input], (err, stdout, stderr) => {
+			if (err) {
+				reject(stderr);
+			}
+			if (stderr) {
+				console.error(stderr);
+			}
+			const tempfps = stdout.trim().split('/');
+			const fps = tempfps[0] / tempfps[1];
+			return resolve(fps);
 		});
 	});
 }
