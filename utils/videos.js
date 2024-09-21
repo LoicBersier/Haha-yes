@@ -15,7 +15,7 @@ export default {
 };
 async function downloadVideo(urlArg, output, format = `bestvideo[height<=?${ytdlpMaxResolution}]+bestaudio/best`) {
 	await new Promise((resolve, reject) => {
-		const options = ['-f', format, urlArg, '-o', `${os.tmpdir()}/${output}.%(ext)s`, '--force-overwrites', '--no-playlist', '--remux-video=mp4/webm/mov', '--no-warnings'];
+		const options = ['-f', format, urlArg, '-o', `${os.tmpdir()}/${output}.%(ext)s`, '--force-overwrites', '--playlist-reverse', '--no-playlist', '--remux-video=mp4/webm/mov', '--no-warnings'];
 		if (proxy) {
 			options.push('--proxy');
 			options.push(proxy);
