@@ -6,7 +6,7 @@ export default {
 		.setDescription('Show user avatar')
 		.addMentionableOption(option =>
 			option.setName('member')
-				.setDescription('Who do you want to fake?')
+				.setDescription('The user you want the avatar of')
 				.setRequired(false)),
 	category: 'utility',
 	async execute(interaction, args) {
