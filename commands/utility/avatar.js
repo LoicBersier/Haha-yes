@@ -16,31 +16,31 @@ export default {
 
 
 		if (!args.member) {
-			const format = interaction.user.displayAvatarURL({ dynamic: true }).substr(interaction.user.displayAvatarURL({ dynamic: true }).length - 3);
-			if (format == 'gif') {
+			const extension = interaction.user.displayAvatarURL({ dynamic: true }).substr(interaction.user.displayAvatarURL({ dynamic: true }).length - 3);
+			if (extension == 'gif') {
 				avatarEmbed.setAuthor({ name: interaction.user.username });
-				avatarEmbed.setDescription(`[gif](${interaction.user.displayAvatarURL({ format: 'gif', size: 2048 })})`);
-				avatarEmbed.setImage(interaction.user.displayAvatarURL({ format: 'gif', size: 2048 }));
+				avatarEmbed.setDescription(`[gif](${interaction.user.displayAvatarURL({ extension: 'gif', size: 2048 })})`);
+				avatarEmbed.setImage(interaction.user.displayAvatarURL({ extension: 'gif', size: 2048 }));
 			}
 			else {
 				avatarEmbed.setAuthor({ name: interaction.user.username });
-				avatarEmbed.setDescription(`[png](${interaction.user.displayAvatarURL({ format: 'png', size: 2048 })}) | [jpeg](${interaction.user.displayAvatarURL({ format: 'jpg', size: 2048 })}) | [webp](${interaction.user.displayAvatarURL({ format: 'webp', size: 2048 })})`);
-				avatarEmbed.setImage(interaction.user.displayAvatarURL({ format: 'png', size: 2048 }));
+				avatarEmbed.setDescription(`[png](${interaction.user.displayAvatarURL({ extension: 'png', size: 2048 })}) | [jpeg](${interaction.user.displayAvatarURL({ extension: 'jpg', size: 2048 })}) | [webp](${interaction.user.displayAvatarURL({ extension: 'webp', size: 2048 })})`);
+				avatarEmbed.setImage(interaction.user.displayAvatarURL({ extension: 'png', size: 2048 }));
 			}
 			return interaction.reply({ embeds: [avatarEmbed] });
 		}
 		else {
 			await interaction.guild.members.fetch();
-			const format = args.member.displayAvatarURL({ dynamic: true }).substr(args.member.displayAvatarURL({ dynamic: true }).length - 3);
-			if (format == 'gif') {
+			const extension = args.member.displayAvatarURL({ dynamic: true }).substr(args.member.displayAvatarURL({ dynamic: true }).length - 3);
+			if (extension == 'gif') {
 				avatarEmbed.setAuthor({ name: args.member.user.username });
-				avatarEmbed.setDescription(`[gif](${args.member.displayAvatarURL({ format: 'gif', size: 2048 })})`);
-				avatarEmbed.setImage(args.member.displayAvatarURL({ format: 'gif', size: 2048 }));
+				avatarEmbed.setDescription(`[gif](${args.member.displayAvatarURL({ extension: 'gif', size: 2048 })})`);
+				avatarEmbed.setImage(args.member.displayAvatarURL({ extension: 'gif', size: 2048 }));
 			}
 			else {
 				avatarEmbed.setAuthor({ name: args.member.user.username });
-				avatarEmbed.setDescription(`[png](${args.member.displayAvatarURL({ format: 'png', size: 2048 })}) | [jpeg](${args.member.displayAvatarURL({ format: 'jpg', size: 2048 })}) | [webp](${args.member.displayAvatarURL({ format: 'webp', size: 2048 })})`);
-				avatarEmbed.setImage(args.member.displayAvatarURL({ format: 'png', size: 2048 }));
+				avatarEmbed.setDescription(`[png](${args.member.displayAvatarURL({ extension: 'png', size: 2048 })}) | [jpeg](${args.member.displayAvatarURL({ extension: 'jpg', size: 2048 })}) | [webp](${args.member.displayAvatarURL({ extension: 'webp', size: 2048 })})`);
+				avatarEmbed.setImage(args.member.displayAvatarURL({ extension: 'png', size: 2048 }));
 			}
 			return interaction.reply({ embeds: [avatarEmbed] });
 		}
