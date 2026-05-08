@@ -13,6 +13,7 @@ export default {
 	getMaxFileSize,
 	autoCrop,
 };
+
 async function downloadVideo(urlArg, output, format = `bestvideo[height<=?${ytdlpMaxResolution}]+bestaudio/best`) {
 	await new Promise((resolve, reject) => {
 		const options = ['-f', format, urlArg, '-o', `${os.tmpdir()}/${output}.%(ext)s`, '--force-overwrites', '--playlist-reverse', '--no-playlist', '--remux-video=mp4/webm/mov', '--no-warnings'];
@@ -124,14 +125,14 @@ async function getVideoSize(urlArg, format = `bestvideo[height<=?${ytdlpMaxResol
 async function getMaxFileSize(guild) {
 	return await new Promise((resolve) => {
 		if (!guild) {
-			resolve(25);
+			resolve(10);
 		}
 
 		const tier = guild.premiumTier;
 		switch (tier) {
 		case 0:
 		case 1:
-			resolve(25);
+			resolve(10);
 			break;
 		case 2:
 			resolve(50);
@@ -140,7 +141,7 @@ async function getMaxFileSize(guild) {
 			resolve(100);
 			break;
 		default:
-			resolve(25);
+			resolve(10);
 			break;
 		}
 	});
