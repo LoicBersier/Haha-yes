@@ -1,0 +1,13 @@
+[Unit]
+Description=Haha Yes Discord bot
+
+[Service]
+LogNamespace=hahayes
+User=hahayes
+WorkingDirectory=/restricted/hahayes/Haha-Yes
+ExecStart=/restricted/hahayes/.nvm/versions/node/v20.19.6/bin/node /restricted/hahayes/Haha-Yes/index.js
+EnvironmentFile=/restricted/hahayes/Haha-Yes/.env
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
