@@ -8,6 +8,10 @@ tmp/*.js
 
 bin/yt-dlp*
 bin/HandBrakeCLI*
+bin/ffmpeg
+bin/ffprobe
+bin/gifsicle
+bin/gifski
 bin/upload.sh
 bin/dectalk
 
