@@ -38,8 +38,6 @@ export default {
 
 		description += `\nThanks to ${tina.username} (336492042299637771) for inspiring me for making this bot!`;
 
-		// description += '\nThanks to Jetbrains for providing their IDE!';
-
 		execFile('git', ['rev-parse', '--short', 'HEAD'], (err, stdout) => {
 			const aboutEmbed = new EmbedBuilder()
 				.setColor(interaction.member ? interaction.member.displayHexColor : 'Navy')
@@ -49,9 +47,10 @@ export default {
 				.addFields(
 					{ name: 'Current commit', value: stdout },
 					{ name: 'Current maintainer', value: `${maintainer.username} (${ownerId})` },
-					{ name: 'Gitea (Main)', value: 'https://git.namejeff.xyz/Supositware/Haha-Yes', inline: true },
+					{ name: 'Forgejo (Main)', value: 'https://git.namejeff.xyz/Supositware/Haha-Yes', inline: true },
 					{ name: 'Github (Mirror)', value: 'https://github.com/Supositware/Haha-yes', inline: true },
-					{ name: 'Privacy Policy', value: 'https://libtar.de/discordprivacy.txt', inline: true },
+					{ name: 'Tangled (Mirror)', value: 'https://tangled.org/sup.passwor.de/haha-yes', inline: true },
+					{ name: 'Privacy Policy', value: 'https://libtar.de/blog/discord_privacy_policy', inline: true },
 					{ name: 'Status page', value: uptimePage.toString(), inline: true },
 
 				)
