@@ -75,10 +75,10 @@ export default {
 		async function editEmbed(name, emote, boardID) {
 			let channel;
 			if (name == 'starboard') {
-				channel = c.channels.resolve(starboardChannel.starboard);
+				channel = reaction.message.guild.channels.resolve(starboardChannel.starboard);
 			}
 			else {
-				channel = c.channels.resolve(shameboardChannel.shameboard);
+				channel = reaction.message.guild.channels.resolve(shameboardChannel.shameboard);
 			}
 
 			const message = await channel.messages.resolve(boardID);
@@ -112,10 +112,10 @@ export default {
 			// Should change this so it automatically pick the channel ( I'm lazy right now )
 			let channel;
 			if (name == 'starboard') {
-				channel = c.channels.resolve(starboardChannel.starboard);
+				channel = reaction.message.guild.channels.resolve(starboardChannel.starboard);
 			}
 			else {
-				channel = c.channels.resolve(shameboardChannel.shameboard);
+				channel = reaction.message.guild.channels.resolve(shameboardChannel.shameboard);
 			}
 
 			const Embed = new EmbedBuilder()
