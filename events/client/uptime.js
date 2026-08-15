@@ -2,7 +2,7 @@ import https from 'node:https';
 const { uptimeURL, uptimeInterval } = process.env;
 
 export default {
-	name: 'ready',
+	name: 'clientReady',
 	once: true,
 	async execute(client) {
 		if (uptimeURL != '') {

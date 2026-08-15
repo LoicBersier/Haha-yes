@@ -3,7 +3,7 @@ const { statusChannel, NODE_ENV } = process.env;
 import { version } from 'discord.js';
 
 export default {
-	name: 'ready',
+	name: 'clientReady',
 	once: true,
 	async execute(client) {
 		// Init global variables.

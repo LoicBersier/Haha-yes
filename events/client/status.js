@@ -4,7 +4,7 @@ import music from '../../json/listening.json' with {type: 'json'};
 import watch from '../../json/watching.json' with {type: 'json'};
 
 export default {
-	name: 'ready',
+	name: 'clientReady',
 	once: true,
 	async execute(client) {
 		// Bot status
