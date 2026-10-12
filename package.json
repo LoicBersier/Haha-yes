@@ -4,11 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "node --env-file .env --watch-path . .",
     "start": "node --env-file .env .",
     "deploy": "node --env-file .env scripts/deploy-commands.js",
-    "deployGlobally": "node --env-file .env scripts/deploy-commands.js global",
+    "deploy:globally": "node --env-file .env scripts/deploy-commands.js global",
     "lint": "eslint .",
-    "lintfix": "eslint . --fix",
+    "lint:fix": "eslint . --fix",
+    "format:check": "prettier -c .",
+    "format": "prettier . --write",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "type": "module",
@@ -18,8 +21,8 @@
   "license": "AGPL",
   "dependencies": {
     "@discordjs/rest": "^2.3.0",
-    "discord-api-types": "^0.37.91",
-    "discord.js": "^14.15.3",
+    "discord-api-types": "^0.38.47",
+    "discord.js": "^14.27.0",
     "mariadb": "^3.3.1",
     "node-fetch": "^3.3.2",
     "sequelize": "^6.37.3",
@@ -28,13 +31,12 @@
     "ytpplus-node": "github:Supositware/ytpplus-node"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.18.9",
     "@babel/plugin-syntax-import-assertions": "^7.18.6",
-    "@eslint/eslintrc": "^3.1.0",
-    "@eslint/js": "^9.6.0",
+    "@eslint/js": "^10.0.1",
     "@types/node": "^18.7.3",
-    "eslint": "^8.57.0",
-    "globals": "^15.8.0",
+    "eslint": "^10.12.0",
+    "globals": "^15.15.0",
+    "prettier": "3.9.9",
     "sequelize-cli": "^6.4.1",
     "sqlite3": "^5.1.7"
   }

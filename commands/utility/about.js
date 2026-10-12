@@ -1,62 +1,89 @@
-import { SlashCommandBuilder } from 'discord.js';
-import { EmbedBuilder } from 'discord.js';
-import { execFile } from 'node:child_process';
-import db from '../../models/index.js';
+import { SlashCommandBuilder } from "discord.js";
+import { EmbedBuilder } from "discord.js";
+import { execFile } from "node:child_process";
+import db from "../../models/index.js";
 const donator = db.donator;
 
 const { ownerId, uptimePage } = process.env;
 
 export default {
-	data: new SlashCommandBuilder()
-		.setName('about')
-		.setDescription('About me (The bot)'),
-	category: 'utility',
-	async execute(interaction) {
-		const Donator = await donator.findAll({ order: ['id'] });
-		const client = interaction.client;
-		const tina = await client.users.fetch('336492042299637771');
-		const creator = await client.users.fetch('267065637183029248');
-		const maintainer = await client.users.fetch(ownerId);
+  data: new SlashCommandBuilder()
+    .setName("about")
+    .setDescription("About me (The bot)"),
+  category: "utility",
+  async execute(interaction) {
+    const Donator = await donator.findAll({ order: ["id"] });
+    const client = interaction.client;
+    const tina = await client.users.fetch("336492042299637771");
+    const creator = await client.users.fetch("267065637183029248");
+    const maintainer = await client.users.fetch(ownerId);
 
-		let description = 'I\'m a fun multipurpose bot made using [discord.js](https://github.com/discordjs/discord.js)'
-		+ '\nFor a better experience use the slash commands!\n\nThe people who donated for the bot <3\n';
+    let description =
+      "I'm a fun multipurpose bot made using [discord.js](https://github.com/discordjs/discord.js)" +
+      "\nFor a better experience use the slash commands!\n\nThe people who donated for the bot <3\n";
 
-		if (Donator[0]) {
-			for (let i = 0; i < Donator.length; i++) {
-				const user = await client.users.fetch(Donator[i].get('userID').toString());
-				if (user !== null) {
-					description += `**${user.username} (${user.id}) | ${Donator[i].get('comment')}**\n`;
-				}
-				else {
-					description += `**A user of discord (${user.id}) | ${Donator[i].get('comment')} (This user no longer share a server with the bot)**\n`;
-				}
-			}
-		}
-		else {
-			description += 'No one :(\n';
-		}
+    if (Donator[0]) {
+      for (let i = 0; i < Donator.length; i++) {
+        const user = await client.users.fetch(
+          Donator[i].get("userID").toString(),
+        );
+        if (user !== null) {
+          description += `**${user.username} (${user.id}) | ${Donator[i].get("comment")}**\n`;
+        } else {
+          description += `**A user of discord (${user.id}) | ${Donator[i].get("comment")} (This user no longer share a server with the bot)**\n`;
+        }
+      }
+    } else {
+      description += "No one :(\n";
+    }
 
-		description += `\nThanks to ${tina.username} (336492042299637771) for inspiring me for making this bot!`;
+    description += `\nThanks to ${tina.username} (336492042299637771) for inspiring me for making this bot!`;
 
-		execFile('git', ['rev-parse', '--short', 'HEAD'], (err, stdout) => {
-			const aboutEmbed = new EmbedBuilder()
-				.setColor(interaction.member ? interaction.member.displayHexColor : 'Navy')
-				.setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL(), url: 'https://libtar.de' })
-				.setTitle('About me')
-				.setDescription(description)
-				.addFields(
-					{ name: 'Current commit', value: stdout },
-					{ name: 'Current maintainer', value: `${maintainer.username} (${ownerId})` },
-					{ name: 'Forgejo (Main)', value: 'https://git.namejeff.xyz/Supositware/Haha-Yes', inline: true },
-					{ name: 'Github (Mirror)', value: 'https://github.com/Supositware/Haha-yes', inline: true },
-					{ name: 'Tangled (Mirror)', value: 'https://tangled.org/sup.passwor.de/haha-yes', inline: true },
-					{ name: 'Privacy Policy', value: 'https://libtar.de/blog/discord_privacy_policy', inline: true },
-					{ name: 'Status page', value: uptimePage.toString(), inline: true },
+    execFile("git", ["rev-parse", "--short", "HEAD"], (err, stdout) => {
+      const aboutEmbed = new EmbedBuilder()
+        .setColor(
+          interaction.member ? interaction.member.displayHexColor : "Navy",
+        )
+        .setAuthor({
+          name: client.user.username,
+          iconURL: client.user.displayAvatarURL(),
+          url: "https://libtar.de",
+        })
+        .setTitle("About me")
+        .setDescription(description)
+        .addFields(
+          { name: "Current commit", value: stdout },
+          {
+            name: "Current maintainer",
+            value: `${maintainer.username} (${ownerId})`,
+          },
+          {
+            name: "Forgejo (Main)",
+            value: "https://git.namejeff.xyz/Supositware/Haha-Yes",
+            inline: true,
+          },
+          {
+            name: "Github (Mirror)",
+            value: "https://github.com/Supositware/Haha-yes",
+            inline: true,
+          },
+          {
+            name: "Tangled (Mirror)",
+            value: "https://tangled.org/sup.passwor.de/haha-yes",
+            inline: true,
+          },
+          {
+            name: "Privacy Policy",
+            value: "https://libtar.de/blog/discord_privacy_policy",
+            inline: true,
+          },
+          { name: "Status page", value: uptimePage.toString(), inline: true },
+        )
+        .setFooter({
+          text: `Original bot made by ${creator.username} (267065637183029248)`,
+        });
 
-				)
-				.setFooter({ text: `Original bot made by ${creator.username} (267065637183029248)` });
-
-			interaction.reply({ embeds: [aboutEmbed] });
-		});
-	},
+      interaction.reply({ embeds: [aboutEmbed] });
+    });
+  },
 };

@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable indent */
-'use strict';
+
+"use strict";
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Tags', {
+    return queryInterface.createTable("Tags", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -24,15 +24,15 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Tags');
-  }
+    return queryInterface.dropTable("Tags");
+  },
 };

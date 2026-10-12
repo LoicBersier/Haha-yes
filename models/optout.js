@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class optout extends Model {
     /**
@@ -13,11 +11,14 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  optout.init({
-    userID: DataTypes.BIGINT
-  }, {
-    sequelize,
-    modelName: 'optout',
-  });
+  optout.init(
+    {
+      userID: DataTypes.BIGINT,
+    },
+    {
+      sequelize,
+      modelName: "optout",
+    },
+  );
   return optout;
 };

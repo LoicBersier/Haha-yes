@@ -1,17 +1,13 @@
 ---
-
 name: "Feature request"
 about: "Use this if you want a new feature in the bot."
 title: "[Feature request] "
 ref: "main"
 labels:
-
-- Feature request
-
+  - Feature request
 ---
 
 **Describe the feature you want**
-
 
 **Did someone already request that feature?**
 

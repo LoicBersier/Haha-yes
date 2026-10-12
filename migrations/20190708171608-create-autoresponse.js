@@ -1,35 +1,35 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable indent */
-'use strict';
+
+"use strict";
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('autoresponses', {
+    return queryInterface.createTable("autoresponses", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       trigger: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       response: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       type: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('autoresponses');
-  }
+    return queryInterface.dropTable("autoresponses");
+  },
 };
