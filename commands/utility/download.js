@@ -70,18 +70,20 @@ export default {
     if (interaction.isMessage) {
       interaction.delete();
 
-      let urlRE = new RegExp(
-        "([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?([^ ])+",
-      );
-      await interaction.channel.messages
-        .fetch({ limit: 10 })
-        .then((messages) => {
-          messages.map((m) => {
-            if (m.content.match(urlRE)) {
-              url = m.content.match(urlRE)[0];
-            }
+      if (!url) {
+        let urlRE = new RegExp(
+          "([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?([^ ])+",
+        );
+        await interaction.channel.messages
+          .fetch({ limit: 10 })
+          .then((messages) => {
+            messages.map((m) => {
+              if (m.content.match(urlRE)) {
+                url = m.content.match(urlRE)[0];
+              }
+            });
           });
-        });
+      }
     }
 
     if (!(await utils.stringIsAValidurl(url))) {
