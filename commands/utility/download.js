@@ -25,7 +25,7 @@ export default {
       option
         .setName("url")
         .setDescription("url of the video you want to download.")
-        .setRequired(true),
+        .setRequired(false),
     )
     .addBooleanOption((option) =>
       option
@@ -59,7 +59,7 @@ export default {
 
   async execute(interaction, args, c) {
     client = c;
-    const url = args.url;
+    let url = args.url;
     const format = args.format;
     maxFileSize = await utils.getMaxFileSize(interaction.guild);
     interaction.doCompress = args.compress;
@@ -69,6 +69,19 @@ export default {
 
     if (interaction.isMessage) {
       interaction.delete();
+
+      let urlRE = new RegExp(
+        "([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?([^ ])+",
+      );
+      await interaction.channel.messages
+        .fetch({ limit: 10 })
+        .then((messages) => {
+          messages.map((m) => {
+            if (m.content.match(urlRE)) {
+              url = m.content.match(urlRE)[0];
+            }
+          });
+        });
     }
 
     if (!(await utils.stringIsAValidurl(url))) {

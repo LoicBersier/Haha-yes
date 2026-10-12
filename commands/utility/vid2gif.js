@@ -15,7 +15,7 @@ export default {
       option
         .setName("url")
         .setDescription("URL of the video you want to convert")
-        .setRequired(true),
+        .setRequired(false),
     )
     .addIntegerOption((option) =>
       option
@@ -52,7 +52,7 @@ export default {
   async execute(interaction, args) {
     await interaction.deferReply({ ephemeral: false });
     const maxFileSize = await utils.getMaxFileSize(interaction.guild);
-    const url = args.url;
+    let url = args.url;
     let quality = args.quality;
     if (quality) {
       if (quality <= 0) {
@@ -70,6 +70,21 @@ export default {
       }
     }
 
+    if (interaction.isMessage) {
+      let urlRE = new RegExp(
+        "([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?([^ ])+",
+      );
+      await interaction.channel.messages
+        .fetch({ limit: 10 })
+        .then((messages) => {
+          messages.map((m) => {
+            if (m.content.match(urlRE)) {
+              url = m.content.match(urlRE)[0];
+            }
+          });
+        });
+    }
+
     if (!(await utils.stringIsAValidurl(url))) {
       console.error(`Not a url!!! ${url}`);
       return interaction.editReply({
@@ -79,7 +94,6 @@ export default {
     }
 
     const aproxFileSize = await utils.getVideoSize(url, ytdlpFormat);
-    console.log(aproxFileSize);
 
     if (aproxFileSize > 4) {
       return interaction.editReply(
