@@ -5,7 +5,9 @@ const commandBlock = db.commandBlock;
 export default {
   data: new SlashCommandBuilder()
     .setName("commandblock")
-    .setDescription("Replies with Pong!")
+    .setDescription(
+      "Block a command. Execute that command again to unblock a command",
+    )
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
     .addStringOption((option) =>
       option
