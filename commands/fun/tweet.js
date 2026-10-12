@@ -183,7 +183,7 @@ export default {
           const res = await fetch(attachment.url);
           if (!res.ok)
             return interaction.editReply(
-              "An error has occured while trying to download your image.",
+              "An error has occurred while trying to download your image.",
             );
           await streamPipeline(
             res.body,

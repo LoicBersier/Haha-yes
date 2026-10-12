@@ -22,7 +22,7 @@ export default {
     const res = await fetch(args.file.url);
     if (!res.ok)
       return interaction.editReply(
-        "An error has occured while trying to download the command.",
+        "An error has occurred while trying to download the command.",
       );
     await streamPipeline(
       res.body,

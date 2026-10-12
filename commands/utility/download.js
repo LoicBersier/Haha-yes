@@ -340,7 +340,7 @@ async function download(
       console.error(err);
       await interaction.deleteReply();
       await interaction.followUp({
-        content: "Uh oh! An error has occured!",
+        content: "Uh oh! An error has occurred!",
         ephemeral: true,
       });
     });

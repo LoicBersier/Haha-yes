@@ -48,7 +48,7 @@ export default {
     const res = await fetch(args.image.url);
     if (!res.ok)
       return interaction.editReply(
-        "An error has occured while trying to download your image.",
+        "An error has occurred while trying to download your image.",
       );
     await streamPipeline(
       res.body,
@@ -106,7 +106,7 @@ async function generate(i, prompt, client, b64Img) {
   if (!response.id) {
     console.log(response);
     return i.editReply({
-      content: `An error has occured, please try again later. \`${response.message}\``,
+      content: `An error has occurred, please try again later. \`${response.message}\``,
     });
   }
 
@@ -120,7 +120,7 @@ async function generate(i, prompt, client, b64Img) {
       if (checkResult.wait_time === -1) {
         console.log(checkResult.raw);
         return i.editReply({
-          content: `An error has occured, please try again later. \`${checkResult.raw.message}\``,
+          content: `An error has occurred, please try again later. \`${checkResult.raw.message}\``,
         });
       }
 
@@ -147,7 +147,7 @@ async function generate(i, prompt, client, b64Img) {
       const res = await fetch(checkResult.image);
       if (!res.ok)
         return i.editReply(
-          "An error has occured while trying to download your image.",
+          "An error has occurred while trying to download your image.",
         );
       await streamPipeline(
         res.body,

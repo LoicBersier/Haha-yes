@@ -107,7 +107,7 @@ async function generate(i, prompt, client) {
       const res = await fetch(checkResult.image);
       if (!res.ok)
         return i.editReply(
-          "An error has occured while trying to download your image.",
+          "An error has occurred while trying to download your image.",
         );
       await streamPipeline(
         res.body,
