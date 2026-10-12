@@ -2,7 +2,7 @@
   description = "Dev environment for haha-yes";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -14,11 +14,12 @@
     flake-utils.lib.eachDefaultSystem (
       system: let
         pkgs = nixpkgs.legacyPackages.${system};
+        nodejs = pkgs.nodejs_26;
+        inherit (pkgs) yt-dlp handbrake gifsicle gifski ffmpeg;
       in {
         devShells.default = pkgs.mkShell {
-          packages = with pkgs; [
-            nodejs_20
-
+          packages = [
+            nodejs
             yt-dlp
             handbrake
             gifsicle
@@ -28,12 +29,12 @@
 
           shellHook = ''
             echo "Entering haha-yes dev environment."
-            echo "Node.JS: ${pkgs.nodejs_20.version}"
-            echo "yt-dlp: ${pkgs.yt-dlp.version}"
-            echo "HandbrakeCLI: ${pkgs.handbrake.version}"
-            echo "gifsicle: ${pkgs.gifsicle.version}"
-            echo "gifski: ${pkgs.gifski.version}"
-            echo "ffmpeg/ffprobe: ${pkgs.ffmpeg.version}"
+            echo "Node.JS: ${nodejs.version}"
+            echo "yt-dlp: ${yt-dlp.version}"
+            echo "HandbrakeCLI: ${handbrake.version}"
+            echo "gifsicle: ${gifsicle.version}"
+            echo "gifski: ${gifski.version}"
+            echo "ffmpeg/ffprobe: ${ffmpeg.version}"
 
             echo "Symlinking required binaries to bin"
             ln -vs $(which yt-dlp) bin/yt-dlp
